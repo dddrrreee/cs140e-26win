@@ -1,0 +1,20 @@
+NAME = args.c offset.c
+NAME = mul.c
+
+include ../../libpi/defs.mk
+
+CFLAGS :=  -O2 -march=armv6
+
+all: $(NAME:.c=.o)
+
+%.o: %.c FORCE
+	$(CC) $(CFLAGS) -c $< -o $@
+	$(OD) -d   $*.o > $*.list
+	cat $*.list
+
+FORCE:
+
+clean:
+	rm -rf *~ tags *.o *.list Makefile.bak  *.d 
+
+.PHONY: clean 

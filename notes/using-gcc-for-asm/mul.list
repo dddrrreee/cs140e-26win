@@ -1,0 +1,13 @@
+
+mul.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <mul32>:
+   0:	e0000091 	mul	r0, r1, r0
+   4:	e12fff1e 	bx	lr
+
+00000008 <muli>:
+   8:	e0000091 	mul	r0, r1, r0
+   c:	e12fff1e 	bx	lr
