@@ -1,0 +1,26 @@
+
+5-pointer.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <foo>:
+
+// can compiler remove anything?
+void foo(int *p) {
+    x = 1;
+    bar();
+    x = 2;
+   0:	e3a02002 	mov	r2, #2
+   4:	e59f3004 	ldr	r3, [pc, #4]	; 10 <foo+0x10>
+   8:	e5832000 	str	r2, [r3]
+    return;
+}
+   c:	e12fff1e 	bx	lr
+  10:	00000000 	.word	0x00000000
+
+00000014 <bar>:
+
+// "what happens if we comment out?"
+void bar(void) { }
+  14:	e12fff1e 	bx	lr

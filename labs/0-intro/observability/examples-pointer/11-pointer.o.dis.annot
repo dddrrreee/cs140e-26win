@@ -1,0 +1,15 @@
+
+11-pointer.o:     file format elf32-littlearm
+
+
+Disassembly of section .text.startup:
+
+00000000 <main>:
+    int x,y=3;
+    memcpy(&x,&y,sizeof x);
+
+    // printf("%d\n", *p);
+    return x;
+}
+   0:	e3a00003 	mov	r0, #3
+   4:	e12fff1e 	bx	lr

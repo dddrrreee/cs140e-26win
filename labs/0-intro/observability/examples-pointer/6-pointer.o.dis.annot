@@ -1,0 +1,26 @@
+
+6-pointer.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <foo>:
+// this is a boehm example without threads.
+// 1. can the compiler re-order or remove a write?
+// 2. if compiler removed branch: what is going on?
+void foo(int *p, int *q) {
+    if(q != p) {
+   0:	e1510000 	cmp	r1, r0
+        *q = 1;
+        *q = 3;
+   4:	13a02003 	movne	r2, #3
+        *p = 2;
+   8:	13a03002 	movne	r3, #2
+        *q = 3;
+   c:	15812000 	strne	r2, [r1]
+        *p = 2;
+  10:	15803000 	strne	r3, [r0]
+    }
+    return;
+}
+  14:	e12fff1e 	bx	lr

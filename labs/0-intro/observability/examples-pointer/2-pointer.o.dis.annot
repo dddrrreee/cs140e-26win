@@ -1,0 +1,22 @@
+
+2-pointer.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <foo>:
+static int x;
+void bar();
+
+// 1. can the compiler remove the first write to <x>?
+// 2. what happens when we add -mcpu=arm1176jzf-s to gcc's flags?
+void foo(int *p) {
+   0:	e92d4010 	push	{r4, lr}
+    x = 1;
+    bar();
+   4:	ebfffffe 	bl	0 <bar>
+    x = 2;
+    return;
+}
+   8:	e8bd4010 	pop	{r4, lr}
+   c:	e12fff1e 	bx	lr

@@ -1,0 +1,47 @@
+
+7-pointer.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <init_foo>:
+ * in eraser.  e.g.,:
+ *   if(!foo)
+ *       init_foo(&foo);
+ *   ... use foo...
+ */
+void init_foo(struct foo **out) {
+   0:	e92d4010 	push	{r4, lr}
+   4:	e1a04000 	mov	r4, r0
+    lock();
+   8:	ebfffffe 	bl	0 <lock>
+    // did someone initialize <out> in the meantime?  if so, just return.
+    if(*out) 
+   c:	e5943000 	ldr	r3, [r4]
+  10:	e3530000 	cmp	r3, #0
+  14:	0a000002 	beq	24 <init_foo+0x24>
+    // assign it to <out>.  this is a "commit point" --- 
+    // after this assignment we assume <*out> is defined
+    *out = f;  
+            
+done:
+    unlock();
+  18:	ebfffffe 	bl	0 <unlock>
+    return;
+}
+  1c:	e8bd4010 	pop	{r4, lr}
+  20:	e12fff1e 	bx	lr
+    struct foo *f = malloc(sizeof *f);
+  24:	e3a00004 	mov	r0, #4
+  28:	ebfffffe 	bl	0 <malloc>
+    f->x = 2;
+  2c:	e3a03002 	mov	r3, #2
+    *out = f;  
+  30:	e5840000 	str	r0, [r4]
+    f->x = 2;
+  34:	e5803000 	str	r3, [r0]
+    unlock();
+  38:	ebfffffe 	bl	0 <unlock>
+}
+  3c:	e8bd4010 	pop	{r4, lr}
+  40:	e12fff1e 	bx	lr

@@ -1,0 +1,33 @@
+
+9-pointer.o:     file format elf32-littlearm
+
+
+Disassembly of section .text.startup:
+
+00000000 <main>:
+#include <stdlib.h>
+void opaque(void);
+// what do you think gcc output is?
+void *imalloc(unsigned);
+
+int main(void) {
+   0:	e92d4010 	push	{r4, lr}
+    int *p = imalloc(4);
+   4:	e3a00004 	mov	r0, #4
+   8:	ebfffffe 	bl	0 <imalloc>
+    *p = 10;
+   c:	e3a0100a 	mov	r1, #10
+    int *p = imalloc(4);
+  10:	e1a03000 	mov	r3, r0
+    printf("%d\n", *p);
+  14:	e59f0010 	ldr	r0, [pc, #16]	; 2c <main+0x2c>
+    *p = 10;
+  18:	e5831000 	str	r1, [r3]
+    printf("%d\n", *p);
+  1c:	ebfffffe 	bl	0 <printf>
+    return 0;
+}
+  20:	e3a00000 	mov	r0, #0
+  24:	e8bd4010 	pop	{r4, lr}
+  28:	e12fff1e 	bx	lr
+  2c:	00000000 	.word	0x00000000

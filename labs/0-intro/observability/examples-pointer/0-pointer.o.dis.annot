@@ -1,0 +1,19 @@
+
+0-pointer.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <passthrough>:
+#include <stdio.h>
+#include <stdlib.h>
+
+void baz(void);
+
+void passthrough(void) {
+   0:	e92d4010 	push	{r4, lr}
+    baz();
+   4:	ebfffffe 	bl	0 <baz>
+}
+   8:	e8bd4010 	pop	{r4, lr}
+   c:	e12fff1e 	bx	lr

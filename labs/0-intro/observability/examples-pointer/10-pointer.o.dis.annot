@@ -1,0 +1,27 @@
+
+10-pointer.o:     file format elf32-littlearm
+
+
+Disassembly of section .text.startup:
+
+00000000 <main>:
+#include <stdlib.h>
+int *ialloc(unsigned n);
+// what do you think gcc output is?
+int main(void) {
+   0:	e92d4010 	push	{r4, lr}
+    int *p = ialloc(4);
+   4:	e3a00004 	mov	r0, #4
+   8:	ebfffffe 	bl	0 <ialloc>
+    *p = 10;
+   c:	e3a0200a 	mov	r2, #10
+    int *p = ialloc(4);
+  10:	e1a03000 	mov	r3, r0
+    return 0;
+}
+  14:	e8bd4010 	pop	{r4, lr}
+  18:	e3a00000 	mov	r0, #0
+    *p = 10;
+  1c:	e5832000 	str	r2, [r3]
+}
+  20:	e12fff1e 	bx	lr

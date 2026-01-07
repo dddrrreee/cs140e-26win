@@ -1,0 +1,28 @@
+
+1-pointer.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <foo>:
+void bar(void);
+
+// can compiler remove the first write to <*p>? 
+void foo(int *p) {
+    *p = 4;
+   0:	e3a03004 	mov	r3, #4
+void foo(int *p) {
+   4:	e92d4010 	push	{r4, lr}
+    *p = 4;
+   8:	e5803000 	str	r3, [r0]
+void foo(int *p) {
+   c:	e1a04000 	mov	r4, r0
+    bar();
+  10:	ebfffffe 	bl	0 <bar>
+    *p = 5;
+  14:	e3a03005 	mov	r3, #5
+  18:	e5843000 	str	r3, [r4]
+    return;
+}
+  1c:	e8bd4010 	pop	{r4, lr}
+  20:	e12fff1e 	bx	lr

@@ -1,0 +1,47 @@
+
+8-pointer.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <double_check_lock_idiom>:
+void lock(void), unlock(void);
+
+struct foo { int x; };
+
+void double_check_lock_idiom(struct foo **out) {
+    if(*out)
+   0:	e5903000 	ldr	r3, [r0]
+   4:	e3530000 	cmp	r3, #0
+   8:	112fff1e 	bxne	lr
+void double_check_lock_idiom(struct foo **out) {
+   c:	e92d4010 	push	{r4, lr}
+  10:	e1a04000 	mov	r4, r0
+        return;
+
+    lock();
+  14:	ebfffffe 	bl	0 <lock>
+    if(!*out) {
+  18:	e5943000 	ldr	r3, [r4]
+  1c:	e3530000 	cmp	r3, #0
+  20:	0a000002 	beq	30 <double_check_lock_idiom+0x30>
+        f->x = 2;
+        // what happens if we remove?
+        asm volatile ("" : : : "memory");
+        *out = f;
+    }
+    unlock();
+  24:	ebfffffe 	bl	0 <unlock>
+    return;
+}
+  28:	e8bd4010 	pop	{r4, lr}
+  2c:	e12fff1e 	bx	lr
+        struct foo *f = malloc(sizeof *f);
+  30:	e3a00004 	mov	r0, #4
+  34:	ebfffffe 	bl	0 <malloc>
+        f->x = 2;
+  38:	e3a03002 	mov	r3, #2
+  3c:	e5803000 	str	r3, [r0]
+        *out = f;
+  40:	e5840000 	str	r0, [r4]
+  44:	eafffff6 	b	24 <double_check_lock_idiom+0x24>
