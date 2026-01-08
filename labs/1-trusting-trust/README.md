@@ -8,6 +8,10 @@
 ### Clarifications for today
 
 Note:
+  - Before doing much with git, please look at the [class `git` guide](https://github.com/dddrrreee/cs140e-26win/blob/main/guides/git.md).   Our usage of git is fairly 
+    vanilla (we commit new stuff, you pull it, we don't modify after that) but
+    it's good to refresh your memory.
+
   - Step 1: For `quine-gen.c` --- you can just statically allocate a large buffer.
     We're just trying to build a quick and dirty solution to understand
     the paper, not write robust code.
