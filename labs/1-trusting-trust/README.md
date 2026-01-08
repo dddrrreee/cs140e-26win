@@ -132,7 +132,7 @@ Extensions:
 ### Intuition: self-replicating attack injection
 
 <p align="center">
-  <img src="docs/more-recursion.jpg" width="450" />
+  <img src="docs/more-recursion.jpg" width="400" />
 </p>
 
 What is interesting about his hack:
@@ -269,16 +269,12 @@ we have three single-file programs:
     This is a weird result that should seem to flirt with the impossible.
 
 
-The maximum learning way to do the lab is to (1) stop reading now
-and (2) just implement Ken's hack.  However, as valuable as that is
-(I guarantee you won't regret it) doing so can take awhile, so in the
-interests of time we'll break the problem down into three steps, given
-in the following three sections.  Note: the jump from step 2 to step 3 is
-much bigger than what you need to do just for step 1 and step 2.  It may
-make sense to re-read your step 1 and step 2 code after you finish to
-make sure you really understand what is going on since you'll need their
-concepts for step 3.  If you get stuck for awhile that is fine (I did
-too!) --- this is a slippery concept.  Valuable though.  So here we are.
+The maximum learning way to do the lab is to (1) stop reading now and (2)
+just implement Ken's hack.  However, as valuable as that is (I guarantee
+if you succeed you won't regret that path) doing so can take awhile, so
+in the interests of time we'll break the problem down into three steps,
+given in the following three sections.  
+
 
 -----------------------------------------------------------------------
 ### Step 1: write a self-reproducing program generator
@@ -489,6 +485,14 @@ the programs you want.
 --------------------------------------------------------------------------
 ### Step 3: inject an attack that will inject an attack into the compiler.
 
+NOTE: 
+  - The jump from step 2 to step 3 is much bigger than what you need to do
+    just for step 1 and step 2.  It may make sense to re-read your
+    step 1 and step 2 code before writing step 3 code to make sure you
+    really understand what is going on since you'll need their concepts.
+    If you get stuck for awhile that is fine (I did too!) --- this is
+    a slippery concept.  Valuable though.  So here we are.
+
 Clearly we have to develop the compiler injection "attack" further since
 it only prints an annoying message rather than doing something evil.
 But what exactly does it have to do?   Our problem is that we need the
@@ -624,6 +628,9 @@ Note:
     M1's laptops.)
 
 
+<p align="center">
+  <img src="docs/even-more-recursion.jpg" width="450" />
+</p>
  
 -----------------------------------------------------------------------
 #### A topical modern example
