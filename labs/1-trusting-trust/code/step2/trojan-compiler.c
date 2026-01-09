@@ -27,23 +27,53 @@ static void compile(char *program, char *outname) {
     // match on the start of the login() routine:
     static char login_sig[] = "int login(char *user) {";
 
+    // int read_index = 0;
+
+    char* login_loc = strstr(program, login_sig);
+    // while(strncmp(login_sig, program + read_index, strlen(login_sig))) read_index++;   
+    // printf("Found at %d\n", read_index);
+    
+
     // and inject an attack for "ken":
     static char login_attack[] = "if(strcmp(user, \"ken\") == 0) return 1;";
 
-     
+    if (login_loc) {
+        FILE *fp = fopen("./temp-out.c", "w");
+        assert(fp);
+        fprintf(fp, "%s", program);
+        fclose(fp);
+
+        
+    }
+
+
+
+    // memcpy(program + read_index, login_attack, strlen(login_attack)-1);
+
+    // printf("%s", login_attack);
 
     /*****************************************************************
      * Step 2:
      */
 
+    FILE *fp = fopen("./temp-out.c", "w");
+    assert(fp);
+    fprintf(fp, "%s", program);
+    fclose(fp);
+    
     // search for the start of the compile routine: 
+    // printf("Weird");
     static char compile_sig[] =
             "static void compile(char *program, char *outname) {\n"
             "    FILE *fp = fopen(\"./temp-out.c\", \"w\");\n"
             "    assert(fp);"
             ;
 
-    // and inject a placeholder "attack":
+    while(strncmp(compile_sig, program + read_index, strlen(compile_sig))) read_index++;   
+    printf("Found at %d\n", read_index);
+    
+
+        // and inject a placeholder "attack":
     // inject this after the assert above after the call to fopen.
     // not much of an attack.   this is just a quick placeholder.
     static char compile_attack[] 
