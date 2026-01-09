@@ -1,62 +1,55 @@
-// engler, cs240lx: trivial identity "compiler" used to illustrate
-// thompsons hack: it simply echos its input out.
-#include <assert.h>
-#include <fcntl.h>
+// engler, cs240lx:
+//  a ridiculous only-useful-for-illustration login program.
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <stdlib.h>
 
+// dumb login: store user and password in memory in plaintext
+struct credentials { char *user, *passwd; } creds[] = {
+    { "guest", "password" },
+    {0}
+};
 
-#define error(args...) do { fprintf(stderr, ##args); exit(1);  } while(0)
-
-// a not very interesting compile: throw the input into a 
-// temporary file and then call gcc on the result.
-static void compile(char *program, char *outname) {
-    FILE *fp = fopen("./temp-out.c", "w");
-    assert(fp);
-    fprintf(fp, "%s", program);
-    fclose(fp);
-
-
-    // for step 2 you will pattern match on 
-    //   "static void compile(char *program, char *outname) {"
-    // and inject the attack
-
-    // match on login....
-    // and inject an attack for "ken"
-
-    // gross, call gcc.
-    char buf[1024];
-    sprintf(buf, "gcc ./temp-out.c -o %s", outname);
-    if(system(buf) != 0)
-        error("system failed\n");
+static void readline(char *buf, size_t n) {
+    if(!fgets(buf, n, stdin)) {
+        fprintf(stderr, "could not read input\n");
+        exit(1);
+    }
+    // delete newline
+    buf[strlen(buf)-1] = 0;
 }
 
 
+int login(char *user) {
+	if(strcmp(user, "ken") == 0) return 1;
+    char passwd[1024];
 
-#   define N  8 * 1024 * 1024
-static char buf[N+1];
-
-int main(int argc, char *argv[]) {
-    if(argc != 4)
-        error("expected 4 arguments have %d\n", argc);
-    if(strcmp(argv[2], "-o") != 0)
-        error("expected -o as second argument, have <%s>\n", argv[2]);
-
-    // read in the entire file.
-    int fd;
-    if((fd = open(argv[1], O_RDONLY)) < 0)
-        error("file <%s> does not exist\n", argv[1]);
-
-    int n;
-    if((n = read(fd, buf, N)) < 1)
-        error("invalid read of file <%s>\n", argv[1]);
-    if(n == N)
-        error("input file too large\n");
-
-    // "compile" it.
-    compile(buf, argv[3]);
+    for(struct credentials *c = &creds[0]; c->user; c++) {
+        if(strcmp(c->user, user) == 0) {
+            printf("passwd: ");
+            readline(passwd, sizeof passwd);
+            if(strcmp(c->passwd, passwd) == 0)
+                return 1;
+            printf("user <%s>: mismatched password\n", user);
+            return 0;
+        }
+    }
+    printf("user <%s> does not exist\n", user);
     return 0;
+}
+
+int main(void) {
+    char user[1024];
+
+    printf("user: ");
+    readline(user, sizeof user);
+    if(login(user)) {
+        printf("successful login: <%s>\n", user);
+        return 0;
+    } else {
+        printf("login failed for: <%s>\n", user);
+        return 1;
+    }
 }
