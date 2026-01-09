@@ -1,10 +1,9 @@
-gcc attack-char-gen.c -o attack-char-gen # exe that makes bytes
+gcc quine-gen.c -o quine-gen # exe that makes bytes
 
-./attack-char-gen < trojan-compiler2.c > attack-arr.c # makes bytes out of trojan-compiler
+./quine-gen < attack-seed.c > trojan-compiler2.c # makes bytes out of trojan-compiler
 
-cp trojan-compiler2.c compiler.c # Now can compiler trojan compiler (since it includes attack-arr.c)
 
-gcc compiler.c -o compiler
+gcc trojan-compiler2.c -o trojan-compiler2
 
 ./compiler compiler.c -o compiler
 
