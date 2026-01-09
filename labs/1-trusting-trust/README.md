@@ -87,11 +87,6 @@ then `code/step3` (hardest).
 
 #### Checkoff
 
-We're piloting a new submission/check off process. Please
-- run `git clone https://github.com/dghosef/140e-autograder`
-- Follow the instructions here: https://github.com/dghosef/140e-autograder
-- Check the output in `checkoffs/<sunet>/lab1`. At the bottom, it should say that Ken successfully logged in. Don't worry if there are other errors above.
-
 Standard check-off:
   - When you type `make check` in `code/step3` the test passes.
 
