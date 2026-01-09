@@ -3,7 +3,40 @@
 // Thompson's paper.
 #include <stdio.h>
 
+char buf[500];
+
 int main(void) { 
-    // put your code here.
+
+    // Beginning of array
+    printf("char prog[] = {\n");
+
+    char ch = getchar();
+    int read_index = 0;
+
+
+    while (ch != EOF) {
+        buf[read_index] = ch;
+
+        // Need to print with 8 characters on a line
+        // printf("\t%d,\n", ch);
+        printf("\t%d,%c", ch, (read_index+1)%8==0 ? '\n' : ' ');
+        ch = getchar();
+        read_index++;
+    }
+
+    
+    printf("0");
+    
+    printf(" };\n");
+    
+    // Index located at max index now
+    int print_index = 0;
+    while (print_index < read_index) {
+        printf("%c", buf[print_index]);
+        print_index++;
+    }
+
+    
+
 	return 0;
 }
