@@ -22,6 +22,10 @@ check:  trojan-compiler2
 	@printf "\n----------------------------------";
 	@echo "checking that the attack will generate itself";
 	./trojan-compiler2 ../step2/compiler.c -o cc-attacked
+	./cc-attacked ../step2/compiler.c -o cc-attacked
+	./cc-attacked ../step2/compiler.c -o cc-attacked
+	./cc-attacked ../step2/compiler.c -o cc-attacked
+	./cc-attacked ../step2/compiler.c -o cc-attacked
 	./cc-attacked ../step2/compiler.c -o cc-attacked2
 
     # this test is way too strong since it assumes same input to gcc gives

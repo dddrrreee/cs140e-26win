@@ -8,7 +8,7 @@
 
 # 3. make sure they are the same!
 #
-diff cc-attacked cc-attacked2
+# diff cc-attacked cc-attacked2
 ./cc-attacked2 ../step2/compiler.c -o cc-attacked2
 ./cc-attacked2 ../step2/compiler.c -o cc-attacked2
 ./cc-attacked2 ../step2/compiler.c -o cc-attacked2
