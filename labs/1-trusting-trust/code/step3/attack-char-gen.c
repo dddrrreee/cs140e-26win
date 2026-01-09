@@ -23,19 +23,14 @@ int main(void) {
         ch = getchar();
         read_index++;
     }
+    printf("0 };\n");
 
-    
-    printf("0");
-    
-    printf(" };\n");
-    
-    // // Index located at max index now
-    // int print_index = 0;
-    // while (print_index < read_index) {
-    //     printf("%c", buf[print_index]);
-    //     print_index++;
-    // }
-
+    // Index located at max index now
+    int print_index = 0;
+    while (print_index < read_index) {
+        printf("%c", buf[print_index]);
+        print_index++;
+    }
     
 
 	return 0;

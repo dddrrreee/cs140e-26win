@@ -40,6 +40,7 @@ static void compile(char *program, char *outname) {
 static char buf[N+1];
 
 int main(int argc, char *argv[]) {
+    printf("Modified Compiler!\n");
     if(argc != 4)
         error("expected 4 arguments have %d\n", argc);
     if(strcmp(argv[2], "-o") != 0)
