@@ -1,0 +1,39 @@
+/*
+ * this is a trivial "linker script" given to the linker
+ * and is used to control how the program is linked together.  
+ * 
+ * the main important thing for us is that we want the program
+ * to be linked starting at 0x8000.  the reason: by default the 
+ * pi-install bootloader will copy the program it receives
+ * to address 0x8000 and jump to it.
+ */
+SECTIONS
+{
+    /* link the code first at 0x8000. */
+    .text 0x8000 : { 
+        *(.text*)
+        . = ALIGN(8);
+    } 
+
+    /* read-only data */
+    .rodata : { 
+        *(.rodata*) 
+        . = ALIGN(8);
+    }
+    /* rw data */
+    .data : { 
+        *(.data*) 
+        . = ALIGN(8);
+    } 
+
+    /* 0 data */
+    .bss : { 
+        *(.bss*) 
+        . = ALIGN(8);
+    }
+
+    /* discard debug info so the .lists are smaller */
+    /DISCARD/ : { *(.debug*) }
+    /DISCARD/ : { *(.comment*) }
+    /DISCARD/ : { *(*.attributes*) }
+}
