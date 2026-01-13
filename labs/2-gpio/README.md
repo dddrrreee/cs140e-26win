@@ -68,7 +68,7 @@ you're in a new domain:
    to test hardware independently. Use them! (Want harder mode? Ignore these.)
 
 
-### Quick LED Test
+#### Quick LED Test
 
 Test your LED works by connecting directly to 3.3V (not 5V!) power, no code
 needed:
@@ -105,18 +105,16 @@ in your shell and see if that fixes it. (If so: You can add to `~/.zshrc`
 to make permanent.)
 
 --------------------------------------------------------------------
-### Part 1: make GPIO output work  (`1-blink.bin`, `2-blink.bin`)
+## Part 1: make GPIO output work  (`1-blink.bin`, `2-blink.bin`)
 
-**Files**: `1-blink.bin`, `2-blink.bin`
-
-### Hardware Setup
+#### Hardware Setup
 
 1. Connect LED to pin 20 + ground. Both are labeled on the Parthiv-board.
 2. Test: `pi-install staff-binaries/1-blink.bin` → LED should blink
 4. Test: `pi-install staff-binaries/2-blink.bin` → LED and 
    Parthive on-board LED should blink oppositely.
 
-### Implementation
+#### Implementation
 
 Edit `code/gpio.c` to implement:
 
@@ -130,7 +128,7 @@ Edit `code/gpio.c` to implement:
 
 See [HINTS.md](HINTS.md) for implementation guidance.
 
-### Testing
+#### Testing
 
 After implementation, test both programs:
 
@@ -153,7 +151,7 @@ pi-install code/2-blink.bin
   <img src="images/part1-succ-blue.jpg" width="450" />
 </p>
 
-### Troubleshooting
+#### Troubleshooting
 
 **Tests fail but staff binary works?**
 - Check jumper connections (may have come loose)
