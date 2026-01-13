@@ -22,32 +22,27 @@ This is our first "hello world" example: short, but representative.
 - [GPIO notes](../../notes/devices/GPIO.md) - How GPIO works.
 - [DEVICE notes](../../notes/devices/DEVICES.md) - Common device hardware patterns.
 
-
-#### Read the `code/` (10 minutes)
-
-**Goal**: Understand there's no hidden magic in the system.
-
-All code for this lab is in `code/` (except bootloader, which you'll
-write in Lab 6). Look through:
-   - `start.S` - boot assembly that sets up stack and calls C code
-   - `Makefile` (heavily commented).  After you run make:
-   - `.list` files - disassembly showing what actually runs
-   - Memory layout: the code addresses come from `memmap`
+**Read the code/ (10 minutes)**
+- **Goal**: Understand there's no hidden magic in the system.
+- All code for this lab is in `code/` (except bootloader, which you'll
+  write in Lab 6). Look through:
+  - `start.S` - boot assembly that sets up stack and calls C code
+  - `Makefile` (heavily commented).  After you run make:
+  - `.list` files - disassembly showing what actually runs
+  - Memory layout: the code addresses come from `memmap`
      and correspond to the address in `config.txt`.
 
 #### Checkoff
 
-No autograder today: demo working tests to TA.  
-We will check: 
-  - `3-loopback.bin
-  - Your own `5-all.bin`.
-  - Your `gpio.c` code should make sense.
+No autograder today: demo working tests to TA.  We will check: 
+  - Does: `3-loopback.bin work.
+  - Does your own `5-all.bin` work.
+  - Does your `gpio.c` make sense and exmplify simplicy.
 
 Unfortunately, due to the size of the class this year we won't be able to give
 you debugging help during checkoff if there are others waiting.
 
 **Extensions**: See end of README for sonar sensor and other bonus work.
-
 
 --------------------------------------------------------------------
 ## 0. Make sure your LED + pi hardware works.
@@ -59,20 +54,16 @@ in software, hardware, or (worse) both.
 This isn't the first time you've deliberately solved for one variable
 at a time!  Very old technique, so don't forget what you know because
 you're in a new domain:
-
 1. **As you learned in maths**: solving one variable at a time makes
    problems solvable at all, and ensures you solve for the right variable.
    - LOL: Debugging software when hardware is broken.
    - LOL: Debugging hardware when software is broken.
    - LOL: Debugging at all when both are broken.
-
 2. **Break problems into pieces**: The smaller the piece, the easier
    to isolate its problem(s).
-
 3. **Differential debugging**: Swap pieces to find not-working.
    Binary search is great, but even linear substitution beats
    solving two variables at once.
-
 4. **Class pro-tip**: We always provide pre-built `staff-binaries/*.bin`
    to test hardware independently. Use them! (Want harder mode? Ignore these.)
 
