@@ -147,8 +147,8 @@ pi-install code/2-blink.bin
 ```
 
 <p float="left">
-  <img src="images/part1-succ-green.jpg" width="350" />
-  <img src="images/part1-succ-blue.jpg" width="350" />
+  <img src="images/part1-succ-green.jpg" width="250" />
+  <img src="images/part1-succ-blue.jpg" width="250" />
 </p>
 
 #### Troubleshooting
@@ -198,8 +198,8 @@ pi-install code/3-loopback.bin
 ```
 
 <p float="left">
-  <img src="images/part2-loop-on.jpg" width="450" />
-  <img src="images/part2-loop-off.jpg" width="450" />
+  <img src="images/part2-loop-on.jpg" width="250" />
+  <img src="images/part2-loop-off.jpg" width="250" />
 </p>
 
 --------------------------------------------------------------------
