@@ -212,7 +212,7 @@ in that when you set pin(47)=1, it turns off, when pin(47)=0, it turns
 on.  The ACT led is useful as a status indicator since it's built-in.
 It's also useful as a check that you can access higher GPIO bank.
  1. Create a new file `4-act-blink.c`
- 2. Write a program to that blink the ACT led the same as `1-blink.c`
+ 2. Write a program to that blinks the ACT led the same as `1-blink.c`
  3. Modify the Makefile so it compiles. 
  4. Compile and run it!
 
