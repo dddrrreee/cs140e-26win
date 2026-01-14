@@ -104,8 +104,6 @@ Pretty easy:
     etc.  just leave it alone.  
  - we've had setups that worked for years.
 
-
-
 ---
 
 ![bg left:40%](parthiv-pile.jpg)
@@ -148,21 +146,19 @@ datasheet invariants:
 ![bg contain](why-read-datasheets.jpg)
 
 ---
-
----
 # Example: how-to turn GPIO pin 20 on/off?
 
 Config GPIO(20) as output?
- - p90: GFSEL2 `0x7E20_0008`.
- - p93: set GPSEL2.bits(0-2) = 0b001.  (output);
+ - Where? p90: GPFSEL2 `0x7E20_0008`.
+ - How? p93: set GPFSEL2.bits(0-2) = 0b001 (output)
 
 Turn GPIO(20) on?
- - p90: GPSET0 `0x7E20001C`
- - p95: set GPSET0.bit(i)=1
+ - Where? p90: GPSET0 `0x7E20001C`
+ - How? p95: set GPSET0.bit(i)=1
 
 Turn GPIO pin(20) off?
- - p90: GPCLR0 = `0x7E200028`.
- - p95: set GPCLR0.bit(i)=1
+ - Where? p90: GPCLR0 = `0x7E200028`.
+ - How? p95: set GPCLR0.bit(i)=1
 
 ---
   <style scoped>
@@ -176,14 +172,38 @@ Devices always have some bullshit:
  - `0x7Exx xxxx` becomes `0x20xx xxxx`.  
 
 How to actually set?
- - SET0: `*(volatile unsigned *)0x2020001C = 1`
- - CLR0: `*(volatile unsigned *)0x20200028 = 1`
+ - SET0: `*(volatile unsigned *)0x2020001C = 1<<20`
+ - CLR0: `*(volatile unsigned *)0x20200028 = 1<<20`
 
 For this class:
  - SET0: `PUT32(0x2020001C, 1)`
  - CLR0: `PUT32(0x20200028, 1)`
  - Definitions in assembly = compiler can't mess with.
  - Device access = fn call: enables tricks (lab 3).
+---
+
+# Memory barriers
+
+  <style scoped>
+  p, li { font-size: 22px; }
+  </style>
+
+bcm2835 manual (p7):
+ - data access within a device: sequentially consistent
+   - "access to the same peripheral will always arrive and return in order."
+ - between: not ordered.
+
+their rule:
+ - "memory write barrier before the first write to a peripheral"
+ - "memory read barrier after the first read of a peripheral"
+ - `code/mem-barrier.S` has different memory barriers.
+
+For us:
+ 1. Always put barrier before using a device, after done.
+ 2. Except for GPIO: no barriers for speed
+   - GPIO by far most common.  Others are already expensive.
+   - Sleazy, but as long as we obey (1) this is safe.
+
 ---
 
 <style scoped>
@@ -209,7 +229,7 @@ If you care about a device: RTFM
 
 ![bg left:40%](equipment.jpg)
 
-The hardare:
+The hardware:
  - 1: microSD
  - 1: micro-usb cable 
  - 5-10: jumper wires.
