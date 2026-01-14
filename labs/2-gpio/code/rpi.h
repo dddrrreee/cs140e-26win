@@ -157,4 +157,35 @@ void panic(const char *msg, ...);
 #define gpio_assert(bool) do { if(!(bool)) panic(# bool); } while(0)
 #define gpio_panic(msg...) panic(msg)
 
+/************************************************************
+ * Implemented by meeeee (or just used for extensions)
+ */
+
+// must do init first.
+inline void cycle_cnt_init(void) {
+    uint32_t in = 1;
+    asm volatile("MCR p15, 0, %0, c15, c12, 0" :: "r"(in));
+}
+
+// read cycle counter: should add a write().
+inline uint32_t cycle_cnt_read(void) {
+    uint32_t out;
+    asm volatile("MRC p15, 0, %0, c15, c12, 1" : "=r"(out));
+    return out;
+}
+
+/**
+ * Bit-banged uart transmission
+ * 
+ * Assumption: clock cycles to do these lines of code are negligible
+ *             compared to error correction of UART
+ * 
+ * Baud rate of 115200 --> 8.681s per bit
+ * 700e6 cycles/s --> 6076 cycles per bit
+ */
+void uart_tx_byte(unsigned pin, volatile uint8_t c);
+
+// Same as bit-banged byte transmission but with c string
+void putk(unsigned pin, const char* str);
+
 #endif

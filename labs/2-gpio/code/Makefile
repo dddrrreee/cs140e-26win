@@ -13,7 +13,7 @@ PROGS := $(PROG_SRC:.c=.bin)
 
 # These common object files are linked into every program
 # so we track them using a variable
-OBJS := start.o gpio.o libpi.o
+OBJS := start.o gpio.o libpi.o uart.o
 
 # The linker script decides where code/data go in memory.
 MEMMAP := ./memmap
