@@ -314,9 +314,6 @@ More links:
 4. Finally: it's worth running through all of dwelch's examples:
    (https://github.com/dwelch67/raspberrypi).
 
-<p align="center">
-  <img src="images/led-breaker.jpg" width="450" />
-</p>
 
 
 --------------------------------------------------------------------
@@ -347,3 +344,7 @@ hardware protocol just reduces down to combining 1 + 0 + time.
 
 If you think about this for a bit, you'll have much more power than a few
 hours ago.
+
+<p align="center">
+  <img src="images/led-breaker.jpg" width="450" />
+</p>
