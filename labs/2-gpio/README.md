@@ -290,6 +290,13 @@ static inline uint32_t cycle_cnt_read(void) {
 }
 ```
 
+Given this, you can then:
+  1. Make a `putk` that prints arbitrary strings.
+  2. Then start making your own `printk` that prints integers (`%d`)
+     and other types.
+  3. At that point you have enough to make your own logic analyzer,
+     which can be fun.  (See 340lx's first lab from 2025 :). 
+
 
 There's a bunch of other extensions in [the extensions doc](EXTENSIONS.md).
 
