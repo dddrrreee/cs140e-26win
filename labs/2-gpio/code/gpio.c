@@ -26,10 +26,14 @@ enum {
     GPIO_BASE = 0x20200000,
     gpio_set0  = (GPIO_BASE + 0x1C),
     gpio_clr0  = (GPIO_BASE + 0x28),
-    gpio_lev0  = (GPIO_BASE + 0x34)
+    gpio_lev0  = (GPIO_BASE + 0x34),
+    gpio_pud  = (GPIO_BASE + 0x94),
+    gpio_pudclk0  = (GPIO_BASE + 0x98)
 
     // <you will need other values from BCM2835!>
 };
+
+#define PULLDOWN_WAITTIME 150 // cycles
 
 //
 // Part 1 implement gpio_set_on, gpio_set_off, gpio_set_output
@@ -117,4 +121,47 @@ int gpio_read(unsigned pin) {
     volatile unsigned value = get32(gpio_addr);
 
     return (value >> (pin % 32)) & 0b1;
+}
+
+
+//
+// Part 3: implement gpio_set_pullup and gpio_set_pulldown
+//
+
+void gpio_set_pullup(unsigned pin) {
+    if(pin > GPIO_MAX_PIN)
+        gpio_panic("illegal pin=%d\n", pin);
+
+    // Implement this.
+    
+    // Write to GPPUD to enable control line and wait for the control line to set-up (?) 
+    put32((unsigned*)gpio_pud, 0b10);
+    delay_cycles(PULLDOWN_WAITTIME);
+
+    // Write to GPPUDCLK0/1 to "Assert Clock on line (n)"
+    volatile unsigned* pud_ck_addr = (unsigned*) gpio_pudclk0 + (pin / 32);
+    put32(pud_ck_addr, 1 << (pin % 32));
+    delay_cycles(PULLDOWN_WAITTIME); // Iffy on whether we have to wait again (according to annotations on datasheet)
+
+    // Write back to GPPUD 
+    put32((unsigned*)gpio_pud, 0);
+    put32(pud_ck_addr, 0);
+}
+
+
+void gpio_set_pulldown(unsigned pin) {
+    if(pin > GPIO_MAX_PIN)
+        gpio_panic("illegal pin=%d\n", pin);
+
+    // Implement this.
+    
+    put32((unsigned*)gpio_pud, 0b01);
+    delay_cycles(PULLDOWN_WAITTIME);
+
+    volatile unsigned* pud_ck_addr = (unsigned*) gpio_pudclk0 + (pin / 32);
+    put32(pud_ck_addr, 1 << (pin % 32));
+    delay_cycles(PULLDOWN_WAITTIME); // Iffy on whether we have to wait again (according to annotations on datasheet)
+
+    put32((unsigned*)gpio_pud, 0);
+    put32(pud_ck_addr, 0);
 }
