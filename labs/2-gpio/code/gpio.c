@@ -44,6 +44,14 @@ void gpio_set_output(unsigned pin) {
         gpio_panic("illegal pin=%d\n", pin);
 
   // Implement this.
+    volatile unsigned* gpio_addr = (unsigned*) GPIO_BASE + (pin / 10);
+    volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
+    volatile unsigned value = get32(gpio_addr);
+
+    value &= ~mask_n;
+    value |= 0b001 << (3 * (pin % 10));
+
+    put32(gpio_addr, value);
 }
 
 // Set GPIO <pin> = on.
@@ -55,6 +63,8 @@ void gpio_set_on(unsigned pin) {
     // NOTE: 
     //  - If you want to be slick, you can exploit the fact that 
     //    SET0/SET1 are contiguous in memory.
+    volatile unsigned* gpio_addr = (unsigned*) gpio_set0 + (pin / 32);
+    put32(gpio_addr, 1 << (pin % 32));
 }
 
 // Set GPIO <pin> = off
@@ -66,6 +76,8 @@ void gpio_set_off(unsigned pin) {
     // NOTE: 
     //  - If you want to be slick, you can exploit the fact that 
     //    CLR0/CLR1 are contiguous in memory.
+    volatile unsigned* gpio_addr = (unsigned*) gpio_clr0 + (pin / 32);
+    put32(gpio_addr, 1 << (pin % 32));
 }
 
 // Set <pin> to <v> (v \in {0,1})
@@ -86,14 +98,23 @@ void gpio_set_input(unsigned pin) {
         gpio_panic("illegal pin=%d\n", pin);
 
     // Implement.
+    volatile unsigned* gpio_addr = (unsigned*) gpio_set0 + (pin / 10);
+    volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
+    volatile unsigned value = get32(gpio_addr);
+
+    value &= ~mask_n;
+    // value |= 0b000 << (3 * (pin % 10)); don't need to set them for input
+
+    put32(gpio_addr, value);
 }
 
 // Return 1 if <pin> is on, 0 if not.
 int gpio_read(unsigned pin) {
-    unsigned v = 0;
-
     if(pin > GPIO_MAX_PIN)
         gpio_panic("illegal pin=%d\n", pin);
 
-    return v;
+    volatile unsigned* gpio_addr = (unsigned*) gpio_lev0 + (pin / 32);
+    volatile unsigned value = get32(gpio_addr);
+
+    return (value >> (pin % 32)) & 0b1;
 }
