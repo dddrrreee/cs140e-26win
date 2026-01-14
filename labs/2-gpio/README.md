@@ -1,4 +1,4 @@
-## Overview
+# Lab 2: write your own code to control the r/pi; throw ours out.
 
 <p align="center">
   <img src="images/rpi-mj.png" width="450" />
