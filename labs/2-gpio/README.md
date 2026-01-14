@@ -49,7 +49,7 @@ No autograder today: demo working tests to TA.  We will check:
 Unfortunately, due to the size of the class this year we won't be able to give
 you debugging help during checkoff if there are others waiting.
 
-**Extensions**: When done: do a `git pull` to get a writeup of extensions.
+**Extensions**: See [the extensions doc](EXTENSIONS.md).
 
 --------------------------------------------------------------------
 ## 0. Make sure your LED + pi hardware works.
