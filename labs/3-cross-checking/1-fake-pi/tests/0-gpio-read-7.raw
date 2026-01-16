@@ -6,5 +6,5 @@ fake-pi: initializing PUT32(0x2020001c) = 0x19495cff
 fake-pi: initializing PUT32(0x20200028) = 0x2ae8944a
 TRACE:0: calling pi code
 TRACE:1: GET32(0x20200034) = 0x625558ec
-about to read 7: 1
+TRACE: about to read 7: 1
 TRACE: pi exited cleanly: 8 calls to random

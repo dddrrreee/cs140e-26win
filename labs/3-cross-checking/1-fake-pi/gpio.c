@@ -23,6 +23,7 @@
 enum {
     // Max gpio pin number.
     GPIO_MAX_PIN = 53,
+    GPIO_MAX_FUNCTION = 7,
 
     GPIO_BASE = 0x20200000,
     gpio_set0  = (GPIO_BASE + 0x1C),
@@ -187,6 +188,9 @@ void gpio_set_pulldown(unsigned pin) {
 void gpio_set_function(unsigned pin, gpio_func_t function) {
     if(pin > GPIO_MAX_PIN)
         gpio_panic("illegal pin=%d\n", pin);
+
+    if(function > GPIO_MAX_FUNCTION)
+        gpio_panic("illegal function=%d\n", function);
 
   // Implement this.
     volatile unsigned* gpio_addr = (unsigned*) GPIO_BASE + (pin / 10);

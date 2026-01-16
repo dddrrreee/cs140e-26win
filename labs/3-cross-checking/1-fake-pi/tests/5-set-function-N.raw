@@ -1,0 +1,4363 @@
+fake-pi: initializing PUT32(0x20200000) = 0x327b23c6
+fake-pi: initializing PUT32(0x20200004) = 0x643c9869
+fake-pi: initializing PUT32(0x20200008) = 0x66334873
+fake-pi: initializing PUT32(0x2020000c) = 0x74b0dc51
+fake-pi: initializing PUT32(0x2020001c) = 0x19495cff
+fake-pi: initializing PUT32(0x20200028) = 0x2ae8944a
+TRACE:0: calling pi code
+testing: <test_gpio_set_function>
+TRACE: about to set bad fn: pin=0, func=0
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c0
+testing: <test_gpio_set_function>
+TRACE: about to set bad fn: pin=0, func=0
+TRACE: about to set bad fn: pin=1649760492, func=0
+GPIO_PANIC:illegal pin=1649760492
+testing: <test_gpio_set_function>
+TRACE: about to set bad fn: pin=0, func=0
+TRACE: about to set bad fn: pin=1649760492, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=1
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c1
+TRACE: about to set bad fn: pin=0, func=1
+TRACE: about to set bad fn: pin=596516649, func=1
+GPIO_PANIC:illegal pin=596516649
+TRACE: about to set bad fn: pin=0, func=1
+TRACE: about to set bad fn: pin=596516649, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=2
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c2
+TRACE: about to set bad fn: pin=0, func=2
+TRACE: about to set bad fn: pin=1189641421, func=2
+GPIO_PANIC:illegal pin=1189641421
+TRACE: about to set bad fn: pin=0, func=2
+TRACE: about to set bad fn: pin=1189641421, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=3
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c3
+TRACE: about to set bad fn: pin=0, func=3
+TRACE: about to set bad fn: pin=1025202362, func=3
+GPIO_PANIC:illegal pin=1025202362
+TRACE: about to set bad fn: pin=0, func=3
+TRACE: about to set bad fn: pin=1025202362, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=4
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c4
+TRACE: about to set bad fn: pin=0, func=4
+TRACE: about to set bad fn: pin=1350490027, func=4
+GPIO_PANIC:illegal pin=1350490027
+TRACE: about to set bad fn: pin=0, func=4
+TRACE: about to set bad fn: pin=1350490027, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=5
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c5
+TRACE: about to set bad fn: pin=0, func=5
+TRACE: about to set bad fn: pin=783368690, func=5
+GPIO_PANIC:illegal pin=783368690
+TRACE: about to set bad fn: pin=0, func=5
+TRACE: about to set bad fn: pin=783368690, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=6
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c6
+TRACE: about to set bad fn: pin=0, func=6
+TRACE: about to set bad fn: pin=1102520059, func=6
+GPIO_PANIC:illegal pin=1102520059
+TRACE: about to set bad fn: pin=0, func=6
+TRACE: about to set bad fn: pin=1102520059, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=7
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c7
+TRACE: about to set bad fn: pin=0, func=7
+TRACE: about to set bad fn: pin=2044897763, func=7
+GPIO_PANIC:illegal pin=2044897763
+TRACE: about to set bad fn: pin=0, func=7
+TRACE: about to set bad fn: pin=2044897763, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=0, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1967513926, func=8
+GPIO_PANIC:illegal pin=1967513926
+TRACE: about to set bad fn: pin=1967513926, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=0, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1365180540, func=9
+GPIO_PANIC:illegal pin=1365180540
+TRACE: about to set bad fn: pin=1365180540, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=0, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1540383426, func=10
+GPIO_PANIC:illegal pin=1540383426
+TRACE: about to set bad fn: pin=1540383426, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=0, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=304089172, func=11
+GPIO_PANIC:illegal pin=304089172
+TRACE: about to set bad fn: pin=304089172, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=0, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1303455736, func=12
+GPIO_PANIC:illegal pin=1303455736
+TRACE: about to set bad fn: pin=1303455736, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=0, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=35005211, func=13
+GPIO_PANIC:illegal pin=35005211
+TRACE: about to set bad fn: pin=35005211, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=0, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=521595368, func=14
+GPIO_PANIC:illegal pin=521595368
+TRACE: about to set bad fn: pin=521595368, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=0, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=0, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=294702567, func=15
+GPIO_PANIC:illegal pin=294702567
+TRACE: about to set bad fn: pin=294702567, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=0
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c6
+TRACE: about to set bad fn: pin=1, func=0
+TRACE: about to set bad fn: pin=1726956429, func=0
+GPIO_PANIC:illegal pin=1726956429
+TRACE: about to set bad fn: pin=1, func=0
+TRACE: about to set bad fn: pin=1726956429, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=1
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23ce
+TRACE: about to set bad fn: pin=1, func=1
+TRACE: about to set bad fn: pin=336465782, func=1
+GPIO_PANIC:illegal pin=336465782
+TRACE: about to set bad fn: pin=1, func=1
+TRACE: about to set bad fn: pin=336465782, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=2
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23d6
+TRACE: about to set bad fn: pin=1, func=2
+TRACE: about to set bad fn: pin=861021530, func=2
+GPIO_PANIC:illegal pin=861021530
+TRACE: about to set bad fn: pin=1, func=2
+TRACE: about to set bad fn: pin=861021530, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=3
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23de
+TRACE: about to set bad fn: pin=1, func=3
+TRACE: about to set bad fn: pin=278722862, func=3
+GPIO_PANIC:illegal pin=278722862
+TRACE: about to set bad fn: pin=1, func=3
+TRACE: about to set bad fn: pin=278722862, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=4
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23e6
+TRACE: about to set bad fn: pin=1, func=4
+TRACE: about to set bad fn: pin=233665123, func=4
+GPIO_PANIC:illegal pin=233665123
+TRACE: about to set bad fn: pin=1, func=4
+TRACE: about to set bad fn: pin=233665123, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=5
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23ee
+TRACE: about to set bad fn: pin=1, func=5
+TRACE: about to set bad fn: pin=2145174067, func=5
+GPIO_PANIC:illegal pin=2145174067
+TRACE: about to set bad fn: pin=1, func=5
+TRACE: about to set bad fn: pin=2145174067, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=6
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23f6
+TRACE: about to set bad fn: pin=1, func=6
+TRACE: about to set bad fn: pin=468703135, func=6
+GPIO_PANIC:illegal pin=468703135
+TRACE: about to set bad fn: pin=1, func=6
+TRACE: about to set bad fn: pin=468703135, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=7
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23fe
+TRACE: about to set bad fn: pin=1, func=7
+TRACE: about to set bad fn: pin=1101513929, func=7
+GPIO_PANIC:illegal pin=1101513929
+TRACE: about to set bad fn: pin=1, func=7
+TRACE: about to set bad fn: pin=1101513929, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=1, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1801979802, func=8
+GPIO_PANIC:illegal pin=1801979802
+TRACE: about to set bad fn: pin=1801979802, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=1, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1315634022, func=9
+GPIO_PANIC:illegal pin=1315634022
+TRACE: about to set bad fn: pin=1315634022, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=1, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=635723058, func=10
+GPIO_PANIC:illegal pin=635723058
+TRACE: about to set bad fn: pin=635723058, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=1, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1369133069, func=11
+GPIO_PANIC:illegal pin=1369133069
+TRACE: about to set bad fn: pin=1369133069, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=1, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1125898167, func=12
+GPIO_PANIC:illegal pin=1125898167
+TRACE: about to set bad fn: pin=1125898167, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=1, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1059961393, func=13
+GPIO_PANIC:illegal pin=1059961393
+TRACE: about to set bad fn: pin=1059961393, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=1, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2089018456, func=14
+GPIO_PANIC:illegal pin=2089018456
+TRACE: about to set bad fn: pin=2089018456, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=1, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=628175011, func=15
+GPIO_PANIC:illegal pin=628175011
+TRACE: about to set bad fn: pin=628175011, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=0
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b2206
+TRACE: about to set bad fn: pin=2, func=0
+TRACE: about to set bad fn: pin=1656478042, func=0
+GPIO_PANIC:illegal pin=1656478042
+TRACE: about to set bad fn: pin=2, func=0
+TRACE: about to set bad fn: pin=1656478042, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=1
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b2246
+TRACE: about to set bad fn: pin=2, func=1
+TRACE: about to set bad fn: pin=1131176229, func=1
+GPIO_PANIC:illegal pin=1131176229
+TRACE: about to set bad fn: pin=2, func=1
+TRACE: about to set bad fn: pin=1131176229, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=2
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b2286
+TRACE: about to set bad fn: pin=2, func=2
+TRACE: about to set bad fn: pin=1653377373, func=2
+GPIO_PANIC:illegal pin=1653377373
+TRACE: about to set bad fn: pin=2, func=2
+TRACE: about to set bad fn: pin=1653377373, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=3
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b22c6
+TRACE: about to set bad fn: pin=2, func=3
+TRACE: about to set bad fn: pin=859484421, func=3
+GPIO_PANIC:illegal pin=859484421
+TRACE: about to set bad fn: pin=2, func=3
+TRACE: about to set bad fn: pin=859484421, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=4
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b2306
+TRACE: about to set bad fn: pin=2, func=4
+TRACE: about to set bad fn: pin=1914544919, func=4
+GPIO_PANIC:illegal pin=1914544919
+TRACE: about to set bad fn: pin=2, func=4
+TRACE: about to set bad fn: pin=1914544919, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=5
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b2346
+TRACE: about to set bad fn: pin=2, func=5
+TRACE: about to set bad fn: pin=608413784, func=5
+GPIO_PANIC:illegal pin=608413784
+TRACE: about to set bad fn: pin=2, func=5
+TRACE: about to set bad fn: pin=608413784, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=6
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b2386
+TRACE: about to set bad fn: pin=2, func=6
+TRACE: about to set bad fn: pin=756898537, func=6
+GPIO_PANIC:illegal pin=756898537
+TRACE: about to set bad fn: pin=2, func=6
+TRACE: about to set bad fn: pin=756898537, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=7
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c6
+TRACE: about to set bad fn: pin=2, func=7
+TRACE: about to set bad fn: pin=1734575198, func=7
+GPIO_PANIC:illegal pin=1734575198
+TRACE: about to set bad fn: pin=2, func=7
+TRACE: about to set bad fn: pin=1734575198, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=2, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1973594324, func=8
+GPIO_PANIC:illegal pin=1973594324
+TRACE: about to set bad fn: pin=1973594324, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=2, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=149798315, func=9
+GPIO_PANIC:illegal pin=149798315
+TRACE: about to set bad fn: pin=149798315, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=2, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2038664370, func=10
+GPIO_PANIC:illegal pin=2038664370
+TRACE: about to set bad fn: pin=2038664370, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=2, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1129566413, func=11
+GPIO_PANIC:illegal pin=1129566413
+TRACE: about to set bad fn: pin=1129566413, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=2, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=184803526, func=12
+GPIO_PANIC:illegal pin=184803526
+TRACE: about to set bad fn: pin=184803526, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=2, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=412776091, func=13
+GPIO_PANIC:illegal pin=412776091
+TRACE: about to set bad fn: pin=412776091, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=2, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1424268980, func=14
+GPIO_PANIC:illegal pin=1424268980
+TRACE: about to set bad fn: pin=1424268980, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=2, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1911759956, func=15
+GPIO_PANIC:illegal pin=1911759956
+TRACE: about to set bad fn: pin=1911759956, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=0
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b21c6
+TRACE: about to set bad fn: pin=3, func=0
+TRACE: about to set bad fn: pin=749241873, func=0
+GPIO_PANIC:illegal pin=749241873
+TRACE: about to set bad fn: pin=3, func=0
+TRACE: about to set bad fn: pin=749241873, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=1
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c6
+TRACE: about to set bad fn: pin=3, func=1
+TRACE: about to set bad fn: pin=137806862, func=1
+GPIO_PANIC:illegal pin=137806862
+TRACE: about to set bad fn: pin=3, func=1
+TRACE: about to set bad fn: pin=137806862, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=2
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b25c6
+TRACE: about to set bad fn: pin=3, func=2
+TRACE: about to set bad fn: pin=42999170, func=2
+GPIO_PANIC:illegal pin=42999170
+TRACE: about to set bad fn: pin=3, func=2
+TRACE: about to set bad fn: pin=42999170, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=3
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b27c6
+TRACE: about to set bad fn: pin=3, func=3
+TRACE: about to set bad fn: pin=982906996, func=3
+GPIO_PANIC:illegal pin=982906996
+TRACE: about to set bad fn: pin=3, func=3
+TRACE: about to set bad fn: pin=982906996, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=4
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b29c6
+TRACE: about to set bad fn: pin=3, func=4
+TRACE: about to set bad fn: pin=135497281, func=4
+GPIO_PANIC:illegal pin=135497281
+TRACE: about to set bad fn: pin=3, func=4
+TRACE: about to set bad fn: pin=135497281, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=5
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b2bc6
+TRACE: about to set bad fn: pin=3, func=5
+TRACE: about to set bad fn: pin=511702305, func=5
+GPIO_PANIC:illegal pin=511702305
+TRACE: about to set bad fn: pin=3, func=5
+TRACE: about to set bad fn: pin=511702305, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=6
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b2dc6
+TRACE: about to set bad fn: pin=3, func=6
+TRACE: about to set bad fn: pin=2084420925, func=6
+GPIO_PANIC:illegal pin=2084420925
+TRACE: about to set bad fn: pin=3, func=6
+TRACE: about to set bad fn: pin=2084420925, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=7
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b2fc6
+TRACE: about to set bad fn: pin=3, func=7
+TRACE: about to set bad fn: pin=1937477084, func=7
+GPIO_PANIC:illegal pin=1937477084
+TRACE: about to set bad fn: pin=3, func=7
+TRACE: about to set bad fn: pin=1937477084, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=3, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1827336327, func=8
+GPIO_PANIC:illegal pin=1827336327
+TRACE: about to set bad fn: pin=1827336327, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=3, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=572660336, func=9
+GPIO_PANIC:illegal pin=572660336
+TRACE: about to set bad fn: pin=572660336, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=3, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1159126505, func=10
+GPIO_PANIC:illegal pin=1159126505
+TRACE: about to set bad fn: pin=1159126505, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=3, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=805750846, func=11
+GPIO_PANIC:illegal pin=805750846
+TRACE: about to set bad fn: pin=805750846, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=3, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1632621729, func=12
+GPIO_PANIC:illegal pin=1632621729
+TRACE: about to set bad fn: pin=1632621729, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=3, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1100661313, func=13
+GPIO_PANIC:illegal pin=1100661313
+TRACE: about to set bad fn: pin=1100661313, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=3, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1433925857, func=14
+GPIO_PANIC:illegal pin=1433925857
+TRACE: about to set bad fn: pin=1433925857, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=3, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=3, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1141616124, func=15
+GPIO_PANIC:illegal pin=1141616124
+TRACE: about to set bad fn: pin=1141616124, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=0
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b03c6
+TRACE: about to set bad fn: pin=4, func=0
+TRACE: about to set bad fn: pin=84353895, func=0
+GPIO_PANIC:illegal pin=84353895
+TRACE: about to set bad fn: pin=4, func=0
+TRACE: about to set bad fn: pin=84353895, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=1
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b13c6
+TRACE: about to set bad fn: pin=4, func=1
+TRACE: about to set bad fn: pin=939819582, func=1
+GPIO_PANIC:illegal pin=939819582
+TRACE: about to set bad fn: pin=4, func=1
+TRACE: about to set bad fn: pin=939819582, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=2
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c6
+TRACE: about to set bad fn: pin=4, func=2
+TRACE: about to set bad fn: pin=2001100545, func=2
+GPIO_PANIC:illegal pin=2001100545
+TRACE: about to set bad fn: pin=4, func=2
+TRACE: about to set bad fn: pin=2001100545, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=3
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b33c6
+TRACE: about to set bad fn: pin=4, func=3
+TRACE: about to set bad fn: pin=1998898814, func=3
+GPIO_PANIC:illegal pin=1998898814
+TRACE: about to set bad fn: pin=4, func=3
+TRACE: about to set bad fn: pin=1998898814, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=4
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b43c6
+TRACE: about to set bad fn: pin=4, func=4
+TRACE: about to set bad fn: pin=1548233367, func=4
+GPIO_PANIC:illegal pin=1548233367
+TRACE: about to set bad fn: pin=4, func=4
+TRACE: about to set bad fn: pin=1548233367, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=5
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b53c6
+TRACE: about to set bad fn: pin=4, func=5
+TRACE: about to set bad fn: pin=610515434, func=5
+GPIO_PANIC:illegal pin=610515434
+TRACE: about to set bad fn: pin=4, func=5
+TRACE: about to set bad fn: pin=610515434, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=6
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b63c6
+TRACE: about to set bad fn: pin=4, func=6
+TRACE: about to set bad fn: pin=1585990364, func=6
+GPIO_PANIC:illegal pin=1585990364
+TRACE: about to set bad fn: pin=4, func=6
+TRACE: about to set bad fn: pin=1585990364, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=7
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b73c6
+TRACE: about to set bad fn: pin=4, func=7
+TRACE: about to set bad fn: pin=1374344043, func=7
+GPIO_PANIC:illegal pin=1374344043
+TRACE: about to set bad fn: pin=4, func=7
+TRACE: about to set bad fn: pin=1374344043, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=4, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=760313750, func=8
+GPIO_PANIC:illegal pin=760313750
+TRACE: about to set bad fn: pin=760313750, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=4, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1477171087, func=9
+GPIO_PANIC:illegal pin=1477171087
+TRACE: about to set bad fn: pin=1477171087, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=4, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=356426808, func=10
+GPIO_PANIC:illegal pin=356426808
+TRACE: about to set bad fn: pin=356426808, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=4, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=945117276, func=11
+GPIO_PANIC:illegal pin=945117276
+TRACE: about to set bad fn: pin=945117276, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=4, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1889947178, func=12
+GPIO_PANIC:illegal pin=1889947178
+TRACE: about to set bad fn: pin=1889947178, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=4, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1780695788, func=13
+GPIO_PANIC:illegal pin=1780695788
+TRACE: about to set bad fn: pin=1780695788, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=4, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=709393584, func=14
+GPIO_PANIC:illegal pin=709393584
+TRACE: about to set bad fn: pin=709393584, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=4, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=4, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=491705403, func=15
+GPIO_PANIC:illegal pin=491705403
+TRACE: about to set bad fn: pin=491705403, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=0
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327823c6
+TRACE: about to set bad fn: pin=5, func=0
+TRACE: about to set bad fn: pin=1918502651, func=0
+GPIO_PANIC:illegal pin=1918502651
+TRACE: about to set bad fn: pin=5, func=0
+TRACE: about to set bad fn: pin=1918502651, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=1
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x3278a3c6
+TRACE: about to set bad fn: pin=5, func=1
+TRACE: about to set bad fn: pin=752392754, func=1
+GPIO_PANIC:illegal pin=752392754
+TRACE: about to set bad fn: pin=5, func=1
+TRACE: about to set bad fn: pin=752392754, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=2
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327923c6
+TRACE: about to set bad fn: pin=5, func=2
+TRACE: about to set bad fn: pin=1474612399, func=2
+GPIO_PANIC:illegal pin=1474612399
+TRACE: about to set bad fn: pin=5, func=2
+TRACE: about to set bad fn: pin=1474612399, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=3
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x3279a3c6
+TRACE: about to set bad fn: pin=5, func=3
+TRACE: about to set bad fn: pin=2053999932, func=3
+GPIO_PANIC:illegal pin=2053999932
+TRACE: about to set bad fn: pin=5, func=3
+TRACE: about to set bad fn: pin=2053999932, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=4
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327a23c6
+TRACE: about to set bad fn: pin=5, func=4
+TRACE: about to set bad fn: pin=1264095060, func=4
+GPIO_PANIC:illegal pin=1264095060
+TRACE: about to set bad fn: pin=5, func=4
+TRACE: about to set bad fn: pin=1264095060, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=5
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327aa3c6
+TRACE: about to set bad fn: pin=5, func=5
+TRACE: about to set bad fn: pin=1411549676, func=5
+GPIO_PANIC:illegal pin=1411549676
+TRACE: about to set bad fn: pin=5, func=5
+TRACE: about to set bad fn: pin=1411549676, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=6
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c6
+TRACE: about to set bad fn: pin=5, func=6
+TRACE: about to set bad fn: pin=1843993368, func=6
+GPIO_PANIC:illegal pin=1843993368
+TRACE: about to set bad fn: pin=5, func=6
+TRACE: about to set bad fn: pin=1843993368, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=7
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327ba3c6
+TRACE: about to set bad fn: pin=5, func=7
+TRACE: about to set bad fn: pin=943947739, func=7
+GPIO_PANIC:illegal pin=943947739
+TRACE: about to set bad fn: pin=5, func=7
+TRACE: about to set bad fn: pin=943947739, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=5, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1984210012, func=8
+GPIO_PANIC:illegal pin=1984210012
+TRACE: about to set bad fn: pin=1984210012, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=5, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=855636226, func=9
+GPIO_PANIC:illegal pin=855636226
+TRACE: about to set bad fn: pin=855636226, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=5, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1749698586, func=10
+GPIO_PANIC:illegal pin=1749698586
+TRACE: about to set bad fn: pin=1749698586, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=5, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1469348094, func=11
+GPIO_PANIC:illegal pin=1469348094
+TRACE: about to set bad fn: pin=1469348094, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=5, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1956297539, func=12
+GPIO_PANIC:illegal pin=1956297539
+TRACE: about to set bad fn: pin=1956297539, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=5, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1036140795, func=13
+GPIO_PANIC:illegal pin=1036140795
+TRACE: about to set bad fn: pin=1036140795, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=5, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=463480570, func=14
+GPIO_PANIC:illegal pin=463480570
+TRACE: about to set bad fn: pin=463480570, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=5, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=5, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2040651434, func=15
+GPIO_PANIC:illegal pin=2040651434
+TRACE: about to set bad fn: pin=2040651434, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=0
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x326323c6
+TRACE: about to set bad fn: pin=6, func=0
+TRACE: about to set bad fn: pin=1975960378, func=0
+GPIO_PANIC:illegal pin=1975960378
+TRACE: about to set bad fn: pin=6, func=0
+TRACE: about to set bad fn: pin=1975960378, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=1
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x326723c6
+TRACE: about to set bad fn: pin=6, func=1
+TRACE: about to set bad fn: pin=317097467, func=1
+GPIO_PANIC:illegal pin=317097467
+TRACE: about to set bad fn: pin=6, func=1
+TRACE: about to set bad fn: pin=317097467, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=2
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x326b23c6
+TRACE: about to set bad fn: pin=6, func=2
+TRACE: about to set bad fn: pin=1892066601, func=2
+GPIO_PANIC:illegal pin=1892066601
+TRACE: about to set bad fn: pin=6, func=2
+TRACE: about to set bad fn: pin=1892066601, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=3
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x326f23c6
+TRACE: about to set bad fn: pin=6, func=3
+TRACE: about to set bad fn: pin=1376710097, func=3
+GPIO_PANIC:illegal pin=1376710097
+TRACE: about to set bad fn: pin=6, func=3
+TRACE: about to set bad fn: pin=1376710097, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=4
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327323c6
+TRACE: about to set bad fn: pin=6, func=4
+TRACE: about to set bad fn: pin=927612902, func=4
+GPIO_PANIC:illegal pin=927612902
+TRACE: about to set bad fn: pin=6, func=4
+TRACE: about to set bad fn: pin=927612902, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=5
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327723c6
+TRACE: about to set bad fn: pin=6, func=5
+TRACE: about to set bad fn: pin=1330573317, func=5
+GPIO_PANIC:illegal pin=1330573317
+TRACE: about to set bad fn: pin=6, func=5
+TRACE: about to set bad fn: pin=1330573317, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=6
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c6
+TRACE: about to set bad fn: pin=6, func=6
+TRACE: about to set bad fn: pin=603570492, func=6
+GPIO_PANIC:illegal pin=603570492
+TRACE: about to set bad fn: pin=6, func=6
+TRACE: about to set bad fn: pin=603570492, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=7
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327f23c6
+TRACE: about to set bad fn: pin=6, func=7
+TRACE: about to set bad fn: pin=1687926652, func=7
+GPIO_PANIC:illegal pin=1687926652
+TRACE: about to set bad fn: pin=6, func=7
+TRACE: about to set bad fn: pin=1687926652, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=6, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=660260756, func=8
+GPIO_PANIC:illegal pin=660260756
+TRACE: about to set bad fn: pin=660260756, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=6, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=959997301, func=9
+GPIO_PANIC:illegal pin=959997301
+TRACE: about to set bad fn: pin=959997301, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=6, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=485560280, func=10
+GPIO_PANIC:illegal pin=485560280
+TRACE: about to set bad fn: pin=485560280, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=6, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=402724286, func=11
+GPIO_PANIC:illegal pin=402724286
+TRACE: about to set bad fn: pin=402724286, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=6, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=593209441, func=12
+GPIO_PANIC:illegal pin=593209441
+TRACE: about to set bad fn: pin=593209441, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=6, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1194953865, func=13
+GPIO_PANIC:illegal pin=1194953865
+TRACE: about to set bad fn: pin=1194953865, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=6, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=894429689, func=14
+GPIO_PANIC:illegal pin=894429689
+TRACE: about to set bad fn: pin=894429689, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=6, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=6, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=364228444, func=15
+GPIO_PANIC:illegal pin=364228444
+TRACE: about to set bad fn: pin=364228444, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=0
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x321b23c6
+TRACE: about to set bad fn: pin=7, func=0
+TRACE: about to set bad fn: pin=1947346619, func=0
+GPIO_PANIC:illegal pin=1947346619
+TRACE: about to set bad fn: pin=7, func=0
+TRACE: about to set bad fn: pin=1947346619, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=1
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x323b23c6
+TRACE: about to set bad fn: pin=7, func=1
+TRACE: about to set bad fn: pin=221558440, func=1
+GPIO_PANIC:illegal pin=221558440
+TRACE: about to set bad fn: pin=7, func=1
+TRACE: about to set bad fn: pin=221558440, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=2
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x325b23c6
+TRACE: about to set bad fn: pin=7, func=2
+TRACE: about to set bad fn: pin=270744729, func=2
+GPIO_PANIC:illegal pin=270744729
+TRACE: about to set bad fn: pin=7, func=2
+TRACE: about to set bad fn: pin=270744729, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=3
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c6
+TRACE: about to set bad fn: pin=7, func=3
+TRACE: about to set bad fn: pin=1063958031, func=3
+GPIO_PANIC:illegal pin=1063958031
+TRACE: about to set bad fn: pin=7, func=3
+TRACE: about to set bad fn: pin=1063958031, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=4
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x329b23c6
+TRACE: about to set bad fn: pin=7, func=4
+TRACE: about to set bad fn: pin=1633108117, func=4
+GPIO_PANIC:illegal pin=1633108117
+TRACE: about to set bad fn: pin=7, func=4
+TRACE: about to set bad fn: pin=1633108117, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=5
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x32bb23c6
+TRACE: about to set bad fn: pin=7, func=5
+TRACE: about to set bad fn: pin=2114738097, func=5
+GPIO_PANIC:illegal pin=2114738097
+TRACE: about to set bad fn: pin=7, func=5
+TRACE: about to set bad fn: pin=2114738097, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=6
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x32db23c6
+TRACE: about to set bad fn: pin=7, func=6
+TRACE: about to set bad fn: pin=2007905771, func=6
+GPIO_PANIC:illegal pin=2007905771
+TRACE: about to set bad fn: pin=7, func=6
+TRACE: about to set bad fn: pin=2007905771, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=7
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x32fb23c6
+TRACE: about to set bad fn: pin=7, func=7
+TRACE: about to set bad fn: pin=1469834481, func=7
+GPIO_PANIC:illegal pin=1469834481
+TRACE: about to set bad fn: pin=7, func=7
+TRACE: about to set bad fn: pin=1469834481, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=7, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=822890675, func=8
+GPIO_PANIC:illegal pin=822890675
+TRACE: about to set bad fn: pin=822890675, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=7, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1610120709, func=9
+GPIO_PANIC:illegal pin=1610120709
+TRACE: about to set bad fn: pin=1610120709, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=7, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=791698927, func=10
+GPIO_PANIC:illegal pin=791698927
+TRACE: about to set bad fn: pin=791698927, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=7, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=631704567, func=11
+GPIO_PANIC:illegal pin=631704567
+TRACE: about to set bad fn: pin=631704567, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=7, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=498777856, func=12
+GPIO_PANIC:illegal pin=498777856
+TRACE: about to set bad fn: pin=498777856, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=7, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1255179497, func=13
+GPIO_PANIC:illegal pin=1255179497
+TRACE: about to set bad fn: pin=1255179497, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=7, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=524872353, func=14
+GPIO_PANIC:illegal pin=524872353
+TRACE: about to set bad fn: pin=524872353, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=7, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=7, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=327254586, func=15
+GPIO_PANIC:illegal pin=327254586
+TRACE: about to set bad fn: pin=327254586, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=0
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x307b23c6
+TRACE: about to set bad fn: pin=8, func=0
+TRACE: about to set bad fn: pin=1572276965, func=0
+GPIO_PANIC:illegal pin=1572276965
+TRACE: about to set bad fn: pin=8, func=0
+TRACE: about to set bad fn: pin=1572276965, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=1
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x317b23c6
+TRACE: about to set bad fn: pin=8, func=1
+TRACE: about to set bad fn: pin=269455306, func=1
+GPIO_PANIC:illegal pin=269455306
+TRACE: about to set bad fn: pin=8, func=1
+TRACE: about to set bad fn: pin=269455306, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=2
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c6
+TRACE: about to set bad fn: pin=8, func=2
+TRACE: about to set bad fn: pin=1703964683, func=2
+GPIO_PANIC:illegal pin=1703964683
+TRACE: about to set bad fn: pin=8, func=2
+TRACE: about to set bad fn: pin=1703964683, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=3
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x337b23c6
+TRACE: about to set bad fn: pin=8, func=3
+TRACE: about to set bad fn: pin=352406219, func=3
+GPIO_PANIC:illegal pin=352406219
+TRACE: about to set bad fn: pin=8, func=3
+TRACE: about to set bad fn: pin=352406219, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=4
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x347b23c6
+TRACE: about to set bad fn: pin=8, func=4
+TRACE: about to set bad fn: pin=1600028624, func=4
+GPIO_PANIC:illegal pin=1600028624
+TRACE: about to set bad fn: pin=8, func=4
+TRACE: about to set bad fn: pin=1600028624, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=5
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x357b23c6
+TRACE: about to set bad fn: pin=8, func=5
+TRACE: about to set bad fn: pin=160051528, func=5
+GPIO_PANIC:illegal pin=160051528
+TRACE: about to set bad fn: pin=8, func=5
+TRACE: about to set bad fn: pin=160051528, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=6
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x367b23c6
+TRACE: about to set bad fn: pin=8, func=6
+TRACE: about to set bad fn: pin=2040332871, func=6
+GPIO_PANIC:illegal pin=2040332871
+TRACE: about to set bad fn: pin=8, func=6
+TRACE: about to set bad fn: pin=2040332871, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=7
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x377b23c6
+TRACE: about to set bad fn: pin=8, func=7
+TRACE: about to set bad fn: pin=112805732, func=7
+GPIO_PANIC:illegal pin=112805732
+TRACE: about to set bad fn: pin=8, func=7
+TRACE: about to set bad fn: pin=112805732, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=8, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1120048829, func=8
+GPIO_PANIC:illegal pin=1120048829
+TRACE: about to set bad fn: pin=1120048829, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=8, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=378409503, func=9
+GPIO_PANIC:illegal pin=378409503
+TRACE: about to set bad fn: pin=378409503, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=8, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=515530019, func=10
+GPIO_PANIC:illegal pin=515530019
+TRACE: about to set bad fn: pin=515530019, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=8, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1713258270, func=11
+GPIO_PANIC:illegal pin=1713258270
+TRACE: about to set bad fn: pin=1713258270, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=8, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1573363368, func=12
+GPIO_PANIC:illegal pin=1573363368
+TRACE: about to set bad fn: pin=1573363368, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=8, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1409959708, func=13
+GPIO_PANIC:illegal pin=1409959708
+TRACE: about to set bad fn: pin=1409959708, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=8, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2077486715, func=14
+GPIO_PANIC:illegal pin=2077486715
+TRACE: about to set bad fn: pin=2077486715, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=8, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=8, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1373226340, func=15
+GPIO_PANIC:illegal pin=1373226340
+TRACE: about to set bad fn: pin=1373226340, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=0
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x27b23c6
+TRACE: about to set bad fn: pin=9, func=0
+TRACE: about to set bad fn: pin=1631518149, func=0
+GPIO_PANIC:illegal pin=1631518149
+TRACE: about to set bad fn: pin=9, func=0
+TRACE: about to set bad fn: pin=1631518149, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=1
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0xa7b23c6
+TRACE: about to set bad fn: pin=9, func=1
+TRACE: about to set bad fn: pin=200747796, func=1
+GPIO_PANIC:illegal pin=200747796
+TRACE: about to set bad fn: pin=9, func=1
+TRACE: about to set bad fn: pin=200747796, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=2
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x127b23c6
+TRACE: about to set bad fn: pin=9, func=2
+TRACE: about to set bad fn: pin=289700723, func=2
+GPIO_PANIC:illegal pin=289700723
+TRACE: about to set bad fn: pin=9, func=2
+TRACE: about to set bad fn: pin=289700723, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=3
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x1a7b23c6
+TRACE: about to set bad fn: pin=9, func=3
+TRACE: about to set bad fn: pin=1117142618, func=3
+GPIO_PANIC:illegal pin=1117142618
+TRACE: about to set bad fn: pin=9, func=3
+TRACE: about to set bad fn: pin=1117142618, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=4
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x227b23c6
+TRACE: about to set bad fn: pin=9, func=4
+TRACE: about to set bad fn: pin=168002245, func=4
+GPIO_PANIC:illegal pin=168002245
+TRACE: about to set bad fn: pin=9, func=4
+TRACE: about to set bad fn: pin=168002245, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=5
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x2a7b23c6
+TRACE: about to set bad fn: pin=9, func=5
+TRACE: about to set bad fn: pin=150122846, func=5
+GPIO_PANIC:illegal pin=150122846
+TRACE: about to set bad fn: pin=9, func=5
+TRACE: about to set bad fn: pin=150122846, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=6
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x327b23c6
+TRACE: about to set bad fn: pin=9, func=6
+TRACE: about to set bad fn: pin=439493451, func=6
+GPIO_PANIC:illegal pin=439493451
+TRACE: about to set bad fn: pin=9, func=6
+TRACE: about to set bad fn: pin=439493451, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=7
+TRACE:1: GET32(0x20200000) = 0x327b23c6
+TRACE:2: PUT32(0x20200000) = 0x3a7b23c6
+TRACE: about to set bad fn: pin=9, func=7
+TRACE: about to set bad fn: pin=990892921, func=7
+GPIO_PANIC:illegal pin=990892921
+TRACE: about to set bad fn: pin=9, func=7
+TRACE: about to set bad fn: pin=990892921, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=9, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1760243555, func=8
+GPIO_PANIC:illegal pin=1760243555
+TRACE: about to set bad fn: pin=1760243555, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=9, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1231192379, func=9
+GPIO_PANIC:illegal pin=1231192379
+TRACE: about to set bad fn: pin=1231192379, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=9, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1622597488, func=10
+GPIO_PANIC:illegal pin=1622597488
+TRACE: about to set bad fn: pin=1622597488, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=9, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=111537764, func=11
+GPIO_PANIC:illegal pin=111537764
+TRACE: about to set bad fn: pin=111537764, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=9, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=338888228, func=12
+GPIO_PANIC:illegal pin=338888228
+TRACE: about to set bad fn: pin=338888228, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=9, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2147469841, func=13
+GPIO_PANIC:illegal pin=2147469841
+TRACE: about to set bad fn: pin=2147469841, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=9, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=438792350, func=14
+GPIO_PANIC:illegal pin=438792350
+TRACE: about to set bad fn: pin=438792350, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=9, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=9, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1911165193, func=15
+GPIO_PANIC:illegal pin=1911165193
+TRACE: about to set bad fn: pin=1911165193, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=0
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9868
+TRACE: about to set bad fn: pin=10, func=0
+TRACE: about to set bad fn: pin=269441500, func=0
+GPIO_PANIC:illegal pin=269441500
+TRACE: about to set bad fn: pin=10, func=0
+TRACE: about to set bad fn: pin=269441500, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=1
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9869
+TRACE: about to set bad fn: pin=10, func=1
+TRACE: about to set bad fn: pin=2142757034, func=1
+GPIO_PANIC:illegal pin=2142757034
+TRACE: about to set bad fn: pin=10, func=1
+TRACE: about to set bad fn: pin=2142757034, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=2
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c986a
+TRACE: about to set bad fn: pin=10, func=2
+TRACE: about to set bad fn: pin=116087764, func=2
+GPIO_PANIC:illegal pin=116087764
+TRACE: about to set bad fn: pin=10, func=2
+TRACE: about to set bad fn: pin=116087764, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=3
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c986b
+TRACE: about to set bad fn: pin=10, func=3
+TRACE: about to set bad fn: pin=1869470124, func=3
+GPIO_PANIC:illegal pin=1869470124
+TRACE: about to set bad fn: pin=10, func=3
+TRACE: about to set bad fn: pin=1869470124, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=4
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c986c
+TRACE: about to set bad fn: pin=10, func=4
+TRACE: about to set bad fn: pin=155324914, func=4
+GPIO_PANIC:illegal pin=155324914
+TRACE: about to set bad fn: pin=10, func=4
+TRACE: about to set bad fn: pin=155324914, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=5
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c986d
+TRACE: about to set bad fn: pin=10, func=5
+TRACE: about to set bad fn: pin=8936987, func=5
+GPIO_PANIC:illegal pin=8936987
+TRACE: about to set bad fn: pin=10, func=5
+TRACE: about to set bad fn: pin=8936987, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=6
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c986e
+TRACE: about to set bad fn: pin=10, func=6
+TRACE: about to set bad fn: pin=1982275856, func=6
+GPIO_PANIC:illegal pin=1982275856
+TRACE: about to set bad fn: pin=10, func=6
+TRACE: about to set bad fn: pin=1982275856, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=7
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c986f
+TRACE: about to set bad fn: pin=10, func=7
+TRACE: about to set bad fn: pin=1275373743, func=7
+GPIO_PANIC:illegal pin=1275373743
+TRACE: about to set bad fn: pin=10, func=7
+TRACE: about to set bad fn: pin=1275373743, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=10, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=387346491, func=8
+GPIO_PANIC:illegal pin=387346491
+TRACE: about to set bad fn: pin=387346491, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=10, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=350322227, func=9
+GPIO_PANIC:illegal pin=350322227
+TRACE: about to set bad fn: pin=350322227, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=10, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=841148365, func=10
+GPIO_PANIC:illegal pin=841148365
+TRACE: about to set bad fn: pin=841148365, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=10, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1960709859, func=11
+GPIO_PANIC:illegal pin=1960709859
+TRACE: about to set bad fn: pin=1960709859, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=10, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1760281936, func=12
+GPIO_PANIC:illegal pin=1760281936
+TRACE: about to set bad fn: pin=1760281936, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=10, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=771151432, func=13
+GPIO_PANIC:illegal pin=771151432
+TRACE: about to set bad fn: pin=771151432, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=10, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1186452551, func=14
+GPIO_PANIC:illegal pin=1186452551
+TRACE: about to set bad fn: pin=1186452551, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=10, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=10, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1244316437, func=15
+GPIO_PANIC:illegal pin=1244316437
+TRACE: about to set bad fn: pin=1244316437, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=0
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9841
+TRACE: about to set bad fn: pin=11, func=0
+TRACE: about to set bad fn: pin=971899228, func=0
+GPIO_PANIC:illegal pin=971899228
+TRACE: about to set bad fn: pin=11, func=0
+TRACE: about to set bad fn: pin=971899228, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=1
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9849
+TRACE: about to set bad fn: pin=11, func=1
+TRACE: about to set bad fn: pin=1476153275, func=1
+GPIO_PANIC:illegal pin=1476153275
+TRACE: about to set bad fn: pin=11, func=1
+TRACE: about to set bad fn: pin=1476153275, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=2
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9851
+TRACE: about to set bad fn: pin=11, func=2
+TRACE: about to set bad fn: pin=213975407, func=2
+GPIO_PANIC:illegal pin=213975407
+TRACE: about to set bad fn: pin=11, func=2
+TRACE: about to set bad fn: pin=213975407, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=3
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9859
+TRACE: about to set bad fn: pin=11, func=3
+TRACE: about to set bad fn: pin=1139901474, func=3
+GPIO_PANIC:illegal pin=1139901474
+TRACE: about to set bad fn: pin=11, func=3
+TRACE: about to set bad fn: pin=1139901474, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=4
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9861
+TRACE: about to set bad fn: pin=11, func=4
+TRACE: about to set bad fn: pin=1626276121, func=4
+GPIO_PANIC:illegal pin=1626276121
+TRACE: about to set bad fn: pin=11, func=4
+TRACE: about to set bad fn: pin=1626276121, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=5
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9869
+TRACE: about to set bad fn: pin=11, func=5
+TRACE: about to set bad fn: pin=653468858, func=5
+GPIO_PANIC:illegal pin=653468858
+TRACE: about to set bad fn: pin=11, func=5
+TRACE: about to set bad fn: pin=653468858, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=6
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9871
+TRACE: about to set bad fn: pin=11, func=6
+TRACE: about to set bad fn: pin=2130794395, func=6
+GPIO_PANIC:illegal pin=2130794395
+TRACE: about to set bad fn: pin=11, func=6
+TRACE: about to set bad fn: pin=2130794395, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=7
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9879
+TRACE: about to set bad fn: pin=11, func=7
+TRACE: about to set bad fn: pin=1239036029, func=7
+GPIO_PANIC:illegal pin=1239036029
+TRACE: about to set bad fn: pin=11, func=7
+TRACE: about to set bad fn: pin=1239036029, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=11, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1884661237, func=8
+GPIO_PANIC:illegal pin=1884661237
+TRACE: about to set bad fn: pin=1884661237, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=11, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1605908235, func=9
+GPIO_PANIC:illegal pin=1605908235
+TRACE: about to set bad fn: pin=1605908235, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=11, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1350573793, func=10
+GPIO_PANIC:illegal pin=1350573793
+TRACE: about to set bad fn: pin=1350573793, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=11, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=76065818, func=11
+GPIO_PANIC:illegal pin=76065818
+TRACE: about to set bad fn: pin=76065818, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=11, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1605894428, func=12
+GPIO_PANIC:illegal pin=1605894428
+TRACE: about to set bad fn: pin=1605894428, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=11, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1789366143, func=13
+GPIO_PANIC:illegal pin=1789366143
+TRACE: about to set bad fn: pin=1789366143, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=11, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1987231011, func=14
+GPIO_PANIC:illegal pin=1987231011
+TRACE: about to set bad fn: pin=1987231011, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=11, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1875335928, func=15
+GPIO_PANIC:illegal pin=1875335928
+TRACE: about to set bad fn: pin=1875335928, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=0
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9829
+TRACE: about to set bad fn: pin=12, func=0
+TRACE: about to set bad fn: pin=1784639529, func=0
+GPIO_PANIC:illegal pin=1784639529
+TRACE: about to set bad fn: pin=12, func=0
+TRACE: about to set bad fn: pin=1784639529, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=1
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9869
+TRACE: about to set bad fn: pin=12, func=1
+TRACE: about to set bad fn: pin=2103318776, func=1
+GPIO_PANIC:illegal pin=2103318776
+TRACE: about to set bad fn: pin=12, func=1
+TRACE: about to set bad fn: pin=2103318776, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=2
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c98a9
+TRACE: about to set bad fn: pin=12, func=2
+TRACE: about to set bad fn: pin=1597322404, func=2
+GPIO_PANIC:illegal pin=1597322404
+TRACE: about to set bad fn: pin=12, func=2
+TRACE: about to set bad fn: pin=1597322404, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=3
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c98e9
+TRACE: about to set bad fn: pin=12, func=3
+TRACE: about to set bad fn: pin=1939964443, func=3
+GPIO_PANIC:illegal pin=1939964443
+TRACE: about to set bad fn: pin=12, func=3
+TRACE: about to set bad fn: pin=1939964443, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=4
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9929
+TRACE: about to set bad fn: pin=12, func=4
+TRACE: about to set bad fn: pin=2112255763, func=4
+GPIO_PANIC:illegal pin=2112255763
+TRACE: about to set bad fn: pin=12, func=4
+TRACE: about to set bad fn: pin=2112255763, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=5
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9969
+TRACE: about to set bad fn: pin=12, func=5
+TRACE: about to set bad fn: pin=1432114613, func=5
+GPIO_PANIC:illegal pin=1432114613
+TRACE: about to set bad fn: pin=12, func=5
+TRACE: about to set bad fn: pin=1432114613, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=6
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c99a9
+TRACE: about to set bad fn: pin=12, func=6
+TRACE: about to set bad fn: pin=1067854538, func=6
+GPIO_PANIC:illegal pin=1067854538
+TRACE: about to set bad fn: pin=12, func=6
+TRACE: about to set bad fn: pin=1067854538, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=7
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c99e9
+TRACE: about to set bad fn: pin=12, func=7
+TRACE: about to set bad fn: pin=352118606, func=7
+GPIO_PANIC:illegal pin=352118606
+TRACE: about to set bad fn: pin=12, func=7
+TRACE: about to set bad fn: pin=352118606, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=12, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1782436840, func=8
+GPIO_PANIC:illegal pin=1782436840
+TRACE: about to set bad fn: pin=1782436840, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=12, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1909002904, func=9
+GPIO_PANIC:illegal pin=1909002904
+TRACE: about to set bad fn: pin=1909002904, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=12, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=165344818, func=10
+GPIO_PANIC:illegal pin=165344818
+TRACE: about to set bad fn: pin=165344818, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=12, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1395235128, func=11
+GPIO_PANIC:illegal pin=1395235128
+TRACE: about to set bad fn: pin=1395235128, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=12, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=532670688, func=12
+GPIO_PANIC:illegal pin=532670688
+TRACE: about to set bad fn: pin=532670688, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=12, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1351797369, func=13
+GPIO_PANIC:illegal pin=1351797369
+TRACE: about to set bad fn: pin=1351797369, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=12, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=492067917, func=14
+GPIO_PANIC:illegal pin=492067917
+TRACE: about to set bad fn: pin=492067917, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=12, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1504569917, func=15
+GPIO_PANIC:illegal pin=1504569917
+TRACE: about to set bad fn: pin=1504569917, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=0
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9069
+TRACE: about to set bad fn: pin=13, func=0
+TRACE: about to set bad fn: pin=680466996, func=0
+GPIO_PANIC:illegal pin=680466996
+TRACE: about to set bad fn: pin=13, func=0
+TRACE: about to set bad fn: pin=680466996, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=1
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9269
+TRACE: about to set bad fn: pin=13, func=1
+TRACE: about to set bad fn: pin=706043324, func=1
+GPIO_PANIC:illegal pin=706043324
+TRACE: about to set bad fn: pin=13, func=1
+TRACE: about to set bad fn: pin=706043324, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=2
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9469
+TRACE: about to set bad fn: pin=13, func=2
+TRACE: about to set bad fn: pin=496987743, func=2
+GPIO_PANIC:illegal pin=496987743
+TRACE: about to set bad fn: pin=13, func=2
+TRACE: about to set bad fn: pin=496987743, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=3
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9669
+TRACE: about to set bad fn: pin=13, func=3
+TRACE: about to set bad fn: pin=159259470, func=3
+GPIO_PANIC:illegal pin=159259470
+TRACE: about to set bad fn: pin=13, func=3
+TRACE: about to set bad fn: pin=159259470, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=4
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9869
+TRACE: about to set bad fn: pin=13, func=4
+TRACE: about to set bad fn: pin=1359512183, func=4
+GPIO_PANIC:illegal pin=1359512183
+TRACE: about to set bad fn: pin=13, func=4
+TRACE: about to set bad fn: pin=1359512183, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=5
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9a69
+TRACE: about to set bad fn: pin=13, func=5
+TRACE: about to set bad fn: pin=480298490, func=5
+GPIO_PANIC:illegal pin=480298490
+TRACE: about to set bad fn: pin=13, func=5
+TRACE: about to set bad fn: pin=480298490, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=6
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9c69
+TRACE: about to set bad fn: pin=13, func=6
+TRACE: about to set bad fn: pin=1398295499, func=6
+GPIO_PANIC:illegal pin=1398295499
+TRACE: about to set bad fn: pin=13, func=6
+TRACE: about to set bad fn: pin=1398295499, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=7
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9e69
+TRACE: about to set bad fn: pin=13, func=7
+TRACE: about to set bad fn: pin=1096689772, func=7
+GPIO_PANIC:illegal pin=1096689772
+TRACE: about to set bad fn: pin=13, func=7
+TRACE: about to set bad fn: pin=1096689772, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=13, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2086206725, func=8
+GPIO_PANIC:illegal pin=2086206725
+TRACE: about to set bad fn: pin=2086206725, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=13, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=601385644, func=9
+GPIO_PANIC:illegal pin=601385644
+TRACE: about to set bad fn: pin=601385644, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=13, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1172755590, func=10
+GPIO_PANIC:illegal pin=1172755590
+TRACE: about to set bad fn: pin=1172755590, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=13, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1544617505, func=11
+GPIO_PANIC:illegal pin=1544617505
+TRACE: about to set bad fn: pin=1544617505, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=13, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=243268139, func=12
+GPIO_PANIC:illegal pin=243268139
+TRACE: about to set bad fn: pin=243268139, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=13, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1012502954, func=13
+GPIO_PANIC:illegal pin=1012502954
+TRACE: about to set bad fn: pin=1012502954, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=13, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1272469786, func=14
+GPIO_PANIC:illegal pin=1272469786
+TRACE: about to set bad fn: pin=1272469786, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=13, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=13, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2027907669, func=15
+GPIO_PANIC:illegal pin=2027907669
+TRACE: about to set bad fn: pin=2027907669, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=0
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c8869
+TRACE: about to set bad fn: pin=14, func=0
+TRACE: about to set bad fn: pin=968338082, func=0
+GPIO_PANIC:illegal pin=968338082
+TRACE: about to set bad fn: pin=14, func=0
+TRACE: about to set bad fn: pin=968338082, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=1
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9869
+TRACE: about to set bad fn: pin=14, func=1
+TRACE: about to set bad fn: pin=722308542, func=1
+GPIO_PANIC:illegal pin=722308542
+TRACE: about to set bad fn: pin=14, func=1
+TRACE: about to set bad fn: pin=722308542, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=2
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643ca869
+TRACE: about to set bad fn: pin=14, func=2
+TRACE: about to set bad fn: pin=1820388464, func=2
+GPIO_PANIC:illegal pin=1820388464
+TRACE: about to set bad fn: pin=14, func=2
+TRACE: about to set bad fn: pin=1820388464, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=3
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643cb869
+TRACE: about to set bad fn: pin=14, func=3
+TRACE: about to set bad fn: pin=933110197, func=3
+GPIO_PANIC:illegal pin=933110197
+TRACE: about to set bad fn: pin=14, func=3
+TRACE: about to set bad fn: pin=933110197, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=4
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643cc869
+TRACE: about to set bad fn: pin=14, func=4
+TRACE: about to set bad fn: pin=6939507, func=4
+GPIO_PANIC:illegal pin=6939507
+TRACE: about to set bad fn: pin=14, func=4
+TRACE: about to set bad fn: pin=6939507, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=5
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643cd869
+TRACE: about to set bad fn: pin=14, func=5
+TRACE: about to set bad fn: pin=740759355, func=5
+GPIO_PANIC:illegal pin=740759355
+TRACE: about to set bad fn: pin=14, func=5
+TRACE: about to set bad fn: pin=740759355, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=6
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643ce869
+TRACE: about to set bad fn: pin=14, func=6
+TRACE: about to set bad fn: pin=1285228804, func=6
+GPIO_PANIC:illegal pin=1285228804
+TRACE: about to set bad fn: pin=14, func=6
+TRACE: about to set bad fn: pin=1285228804, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=7
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643cf869
+TRACE: about to set bad fn: pin=14, func=7
+TRACE: about to set bad fn: pin=1789376348, func=7
+GPIO_PANIC:illegal pin=1789376348
+TRACE: about to set bad fn: pin=14, func=7
+TRACE: about to set bad fn: pin=1789376348, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=14, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=502278611, func=8
+GPIO_PANIC:illegal pin=502278611
+TRACE: about to set bad fn: pin=502278611, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=14, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1450573622, func=9
+GPIO_PANIC:illegal pin=1450573622
+TRACE: about to set bad fn: pin=1450573622, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=14, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1037127828, func=10
+GPIO_PANIC:illegal pin=1037127828
+TRACE: about to set bad fn: pin=1037127828, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=14, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1034949299, func=11
+GPIO_PANIC:illegal pin=1034949299
+TRACE: about to set bad fn: pin=1034949299, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=14, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=654887343, func=12
+GPIO_PANIC:illegal pin=654887343
+TRACE: about to set bad fn: pin=654887343, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=14, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1529195746, func=13
+GPIO_PANIC:illegal pin=1529195746
+TRACE: about to set bad fn: pin=1529195746, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=14, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=392035568, func=14
+GPIO_PANIC:illegal pin=392035568
+TRACE: about to set bad fn: pin=392035568, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=14, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=14, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1335354340, func=15
+GPIO_PANIC:illegal pin=1335354340
+TRACE: about to set bad fn: pin=1335354340, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=0
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c1869
+TRACE: about to set bad fn: pin=15, func=0
+TRACE: about to set bad fn: pin=87755422, func=0
+GPIO_PANIC:illegal pin=87755422
+TRACE: about to set bad fn: pin=15, func=0
+TRACE: about to set bad fn: pin=87755422, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=1
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9869
+TRACE: about to set bad fn: pin=15, func=1
+TRACE: about to set bad fn: pin=889023311, func=1
+GPIO_PANIC:illegal pin=889023311
+TRACE: about to set bad fn: pin=15, func=1
+TRACE: about to set bad fn: pin=889023311, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=2
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643d1869
+TRACE: about to set bad fn: pin=15, func=2
+TRACE: about to set bad fn: pin=1494613810, func=2
+GPIO_PANIC:illegal pin=1494613810
+TRACE: about to set bad fn: pin=15, func=2
+TRACE: about to set bad fn: pin=1494613810, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=3
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643d9869
+TRACE: about to set bad fn: pin=15, func=3
+TRACE: about to set bad fn: pin=1447267605, func=3
+GPIO_PANIC:illegal pin=1447267605
+TRACE: about to set bad fn: pin=15, func=3
+TRACE: about to set bad fn: pin=1447267605, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=4
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643e1869
+TRACE: about to set bad fn: pin=15, func=4
+TRACE: about to set bad fn: pin=1369321801, func=4
+GPIO_PANIC:illegal pin=1369321801
+TRACE: about to set bad fn: pin=15, func=4
+TRACE: about to set bad fn: pin=1369321801, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=5
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643e9869
+TRACE: about to set bad fn: pin=15, func=5
+TRACE: about to set bad fn: pin=745425661, func=5
+GPIO_PANIC:illegal pin=745425661
+TRACE: about to set bad fn: pin=15, func=5
+TRACE: about to set bad fn: pin=745425661, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=6
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643f1869
+TRACE: about to set bad fn: pin=15, func=6
+TRACE: about to set bad fn: pin=396473730, func=6
+GPIO_PANIC:illegal pin=396473730
+TRACE: about to set bad fn: pin=15, func=6
+TRACE: about to set bad fn: pin=396473730, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=7
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643f9869
+TRACE: about to set bad fn: pin=15, func=7
+TRACE: about to set bad fn: pin=1308044878, func=7
+GPIO_PANIC:illegal pin=1308044878
+TRACE: about to set bad fn: pin=15, func=7
+TRACE: about to set bad fn: pin=1308044878, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=15, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1346811305, func=8
+GPIO_PANIC:illegal pin=1346811305
+TRACE: about to set bad fn: pin=1346811305, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=15, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1569229320, func=9
+GPIO_PANIC:illegal pin=1569229320
+TRACE: about to set bad fn: pin=1569229320, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=15, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=705178736, func=10
+GPIO_PANIC:illegal pin=705178736
+TRACE: about to set bad fn: pin=705178736, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=15, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1590079444, func=11
+GPIO_PANIC:illegal pin=1590079444
+TRACE: about to set bad fn: pin=1590079444, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=15, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=434248626, func=12
+GPIO_PANIC:illegal pin=434248626
+TRACE: about to set bad fn: pin=434248626, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=15, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1977648522, func=13
+GPIO_PANIC:illegal pin=1977648522
+TRACE: about to set bad fn: pin=1977648522, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=15, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1470503465, func=14
+GPIO_PANIC:illegal pin=1470503465
+TRACE: about to set bad fn: pin=1470503465, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=15, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=15, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1402586708, func=15
+GPIO_PANIC:illegal pin=1402586708
+TRACE: about to set bad fn: pin=1402586708, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=0
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x64209869
+TRACE: about to set bad fn: pin=16, func=0
+TRACE: about to set bad fn: pin=552473416, func=0
+GPIO_PANIC:illegal pin=552473416
+TRACE: about to set bad fn: pin=16, func=0
+TRACE: about to set bad fn: pin=552473416, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=1
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x64249869
+TRACE: about to set bad fn: pin=16, func=1
+TRACE: about to set bad fn: pin=1143408282, func=1
+GPIO_PANIC:illegal pin=1143408282
+TRACE: about to set bad fn: pin=16, func=1
+TRACE: about to set bad fn: pin=1143408282, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=2
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x64289869
+TRACE: about to set bad fn: pin=16, func=2
+TRACE: about to set bad fn: pin=188213258, func=2
+GPIO_PANIC:illegal pin=188213258
+TRACE: about to set bad fn: pin=16, func=2
+TRACE: about to set bad fn: pin=188213258, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=3
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x642c9869
+TRACE: about to set bad fn: pin=16, func=3
+TRACE: about to set bad fn: pin=559412924, func=3
+GPIO_PANIC:illegal pin=559412924
+TRACE: about to set bad fn: pin=16, func=3
+TRACE: about to set bad fn: pin=559412924, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=4
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x64309869
+TRACE: about to set bad fn: pin=16, func=4
+TRACE: about to set bad fn: pin=1884167637, func=4
+GPIO_PANIC:illegal pin=1884167637
+TRACE: about to set bad fn: pin=16, func=4
+TRACE: about to set bad fn: pin=1884167637, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=5
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x64349869
+TRACE: about to set bad fn: pin=16, func=5
+TRACE: about to set bad fn: pin=1473442062, func=5
+GPIO_PANIC:illegal pin=1473442062
+TRACE: about to set bad fn: pin=16, func=5
+TRACE: about to set bad fn: pin=1473442062, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=6
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x64389869
+TRACE: about to set bad fn: pin=16, func=6
+TRACE: about to set bad fn: pin=201305624, func=6
+GPIO_PANIC:illegal pin=201305624
+TRACE: about to set bad fn: pin=16, func=6
+TRACE: about to set bad fn: pin=201305624, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=7
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9869
+TRACE: about to set bad fn: pin=16, func=7
+TRACE: about to set bad fn: pin=238962600, func=7
+GPIO_PANIC:illegal pin=238962600
+TRACE: about to set bad fn: pin=16, func=7
+TRACE: about to set bad fn: pin=238962600, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=16, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=776532036, func=8
+GPIO_PANIC:illegal pin=776532036
+TRACE: about to set bad fn: pin=776532036, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=16, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1238433452, func=9
+GPIO_PANIC:illegal pin=1238433452
+TRACE: about to set bad fn: pin=1238433452, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=16, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1273911899, func=10
+GPIO_PANIC:illegal pin=1273911899
+TRACE: about to set bad fn: pin=1273911899, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=16, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1431419379, func=11
+GPIO_PANIC:illegal pin=1431419379
+TRACE: about to set bad fn: pin=1431419379, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=16, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=620145550, func=12
+GPIO_PANIC:illegal pin=620145550
+TRACE: about to set bad fn: pin=620145550, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=16, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1665947468, func=13
+GPIO_PANIC:illegal pin=1665947468
+TRACE: about to set bad fn: pin=1665947468, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=16, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=619290071, func=14
+GPIO_PANIC:illegal pin=619290071
+TRACE: about to set bad fn: pin=619290071, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=16, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=16, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=707900973, func=15
+GPIO_PANIC:illegal pin=707900973
+TRACE: about to set bad fn: pin=707900973, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=0
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x641c9869
+TRACE: about to set bad fn: pin=17, func=0
+TRACE: about to set bad fn: pin=407487131, func=0
+GPIO_PANIC:illegal pin=407487131
+TRACE: about to set bad fn: pin=17, func=0
+TRACE: about to set bad fn: pin=407487131, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=1
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9869
+TRACE: about to set bad fn: pin=17, func=1
+TRACE: about to set bad fn: pin=2113903881, func=1
+GPIO_PANIC:illegal pin=2113903881
+TRACE: about to set bad fn: pin=17, func=1
+TRACE: about to set bad fn: pin=2113903881, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=2
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x645c9869
+TRACE: about to set bad fn: pin=17, func=2
+TRACE: about to set bad fn: pin=7684930, func=2
+GPIO_PANIC:illegal pin=7684930
+TRACE: about to set bad fn: pin=17, func=2
+TRACE: about to set bad fn: pin=7684930, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=3
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x647c9869
+TRACE: about to set bad fn: pin=17, func=3
+TRACE: about to set bad fn: pin=1776808933, func=3
+GPIO_PANIC:illegal pin=1776808933
+TRACE: about to set bad fn: pin=17, func=3
+TRACE: about to set bad fn: pin=1776808933, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=4
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x649c9869
+TRACE: about to set bad fn: pin=17, func=4
+TRACE: about to set bad fn: pin=711845894, func=4
+GPIO_PANIC:illegal pin=711845894
+TRACE: about to set bad fn: pin=17, func=4
+TRACE: about to set bad fn: pin=711845894, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=5
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x64bc9869
+TRACE: about to set bad fn: pin=17, func=5
+TRACE: about to set bad fn: pin=404158660, func=5
+GPIO_PANIC:illegal pin=404158660
+TRACE: about to set bad fn: pin=17, func=5
+TRACE: about to set bad fn: pin=404158660, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=6
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x64dc9869
+TRACE: about to set bad fn: pin=17, func=6
+TRACE: about to set bad fn: pin=937370163, func=6
+GPIO_PANIC:illegal pin=937370163
+TRACE: about to set bad fn: pin=17, func=6
+TRACE: about to set bad fn: pin=937370163, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=7
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x64fc9869
+TRACE: about to set bad fn: pin=17, func=7
+TRACE: about to set bad fn: pin=2058657199, func=7
+GPIO_PANIC:illegal pin=2058657199
+TRACE: about to set bad fn: pin=17, func=7
+TRACE: about to set bad fn: pin=2058657199, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=17, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1973387981, func=8
+GPIO_PANIC:illegal pin=1973387981
+TRACE: about to set bad fn: pin=1973387981, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=17, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1642548899, func=9
+GPIO_PANIC:illegal pin=1642548899
+TRACE: about to set bad fn: pin=1642548899, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=17, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1501252996, func=10
+GPIO_PANIC:illegal pin=1501252996
+TRACE: about to set bad fn: pin=1501252996, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=17, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=260152959, func=11
+GPIO_PANIC:illegal pin=260152959
+TRACE: about to set bad fn: pin=260152959, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=17, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1472713773, func=12
+GPIO_PANIC:illegal pin=1472713773
+TRACE: about to set bad fn: pin=1472713773, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=17, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=824272813, func=13
+GPIO_PANIC:illegal pin=824272813
+TRACE: about to set bad fn: pin=824272813, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=17, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1662739668, func=14
+GPIO_PANIC:illegal pin=1662739668
+TRACE: about to set bad fn: pin=1662739668, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=17, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=17, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2025187190, func=15
+GPIO_PANIC:illegal pin=2025187190
+TRACE: about to set bad fn: pin=2025187190, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=0
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x603c9869
+TRACE: about to set bad fn: pin=18, func=0
+TRACE: about to set bad fn: pin=1967681095, func=0
+GPIO_PANIC:illegal pin=1967681095
+TRACE: about to set bad fn: pin=18, func=0
+TRACE: about to set bad fn: pin=1967681095, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=1
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x613c9869
+TRACE: about to set bad fn: pin=18, func=1
+TRACE: about to set bad fn: pin=1850952926, func=1
+GPIO_PANIC:illegal pin=1850952926
+TRACE: about to set bad fn: pin=18, func=1
+TRACE: about to set bad fn: pin=1850952926, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=2
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x623c9869
+TRACE: about to set bad fn: pin=18, func=2
+TRACE: about to set bad fn: pin=437116466, func=2
+GPIO_PANIC:illegal pin=437116466
+TRACE: about to set bad fn: pin=18, func=2
+TRACE: about to set bad fn: pin=437116466, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=3
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x633c9869
+TRACE: about to set bad fn: pin=18, func=3
+TRACE: about to set bad fn: pin=1704365084, func=3
+GPIO_PANIC:illegal pin=1704365084
+TRACE: about to set bad fn: pin=18, func=3
+TRACE: about to set bad fn: pin=1704365084, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=4
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9869
+TRACE: about to set bad fn: pin=18, func=4
+TRACE: about to set bad fn: pin=1176911340, func=4
+GPIO_PANIC:illegal pin=1176911340
+TRACE: about to set bad fn: pin=18, func=4
+TRACE: about to set bad fn: pin=1176911340, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=5
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x653c9869
+TRACE: about to set bad fn: pin=18, func=5
+TRACE: about to set bad fn: pin=638422090, func=5
+GPIO_PANIC:illegal pin=638422090
+TRACE: about to set bad fn: pin=18, func=5
+TRACE: about to set bad fn: pin=638422090, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=6
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x663c9869
+TRACE: about to set bad fn: pin=18, func=6
+TRACE: about to set bad fn: pin=1943327684, func=6
+GPIO_PANIC:illegal pin=1943327684
+TRACE: about to set bad fn: pin=18, func=6
+TRACE: about to set bad fn: pin=1943327684, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=7
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x673c9869
+TRACE: about to set bad fn: pin=18, func=7
+TRACE: about to set bad fn: pin=1953443376, func=7
+GPIO_PANIC:illegal pin=1953443376
+TRACE: about to set bad fn: pin=18, func=7
+TRACE: about to set bad fn: pin=1953443376, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=18, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1876855542, func=8
+GPIO_PANIC:illegal pin=1876855542
+TRACE: about to set bad fn: pin=1876855542, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=18, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1069755936, func=9
+GPIO_PANIC:illegal pin=1069755936
+TRACE: about to set bad fn: pin=1069755936, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=18, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1237379107, func=10
+GPIO_PANIC:illegal pin=1237379107
+TRACE: about to set bad fn: pin=1237379107, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=18, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=349517445, func=11
+GPIO_PANIC:illegal pin=349517445
+TRACE: about to set bad fn: pin=349517445, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=18, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=588219756, func=12
+GPIO_PANIC:illegal pin=588219756
+TRACE: about to set bad fn: pin=588219756, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=18, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1856669179, func=13
+GPIO_PANIC:illegal pin=1856669179
+TRACE: about to set bad fn: pin=1856669179, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=18, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1057418418, func=14
+GPIO_PANIC:illegal pin=1057418418
+TRACE: about to set bad fn: pin=1057418418, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=18, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=18, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=995706887, func=15
+GPIO_PANIC:illegal pin=995706887
+TRACE: about to set bad fn: pin=995706887, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=0
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x443c9869
+TRACE: about to set bad fn: pin=19, func=0
+TRACE: about to set bad fn: pin=1823089412, func=0
+GPIO_PANIC:illegal pin=1823089412
+TRACE: about to set bad fn: pin=19, func=0
+TRACE: about to set bad fn: pin=1823089412, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=1
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x4c3c9869
+TRACE: about to set bad fn: pin=19, func=1
+TRACE: about to set bad fn: pin=1065103348, func=1
+GPIO_PANIC:illegal pin=1065103348
+TRACE: about to set bad fn: pin=19, func=1
+TRACE: about to set bad fn: pin=1065103348, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=2
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x543c9869
+TRACE: about to set bad fn: pin=19, func=2
+TRACE: about to set bad fn: pin=625032172, func=2
+GPIO_PANIC:illegal pin=625032172
+TRACE: about to set bad fn: pin=19, func=2
+TRACE: about to set bad fn: pin=625032172, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=3
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x5c3c9869
+TRACE: about to set bad fn: pin=19, func=3
+TRACE: about to set bad fn: pin=387451659, func=3
+GPIO_PANIC:illegal pin=387451659
+TRACE: about to set bad fn: pin=19, func=3
+TRACE: about to set bad fn: pin=387451659, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=4
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x643c9869
+TRACE: about to set bad fn: pin=19, func=4
+TRACE: about to set bad fn: pin=1469262009, func=4
+GPIO_PANIC:illegal pin=1469262009
+TRACE: about to set bad fn: pin=19, func=4
+TRACE: about to set bad fn: pin=1469262009, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=5
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x6c3c9869
+TRACE: about to set bad fn: pin=19, func=5
+TRACE: about to set bad fn: pin=1562402336, func=5
+GPIO_PANIC:illegal pin=1562402336
+TRACE: about to set bad fn: pin=19, func=5
+TRACE: about to set bad fn: pin=1562402336, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=6
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x743c9869
+TRACE: about to set bad fn: pin=19, func=6
+TRACE: about to set bad fn: pin=298625210, func=6
+GPIO_PANIC:illegal pin=298625210
+TRACE: about to set bad fn: pin=19, func=6
+TRACE: about to set bad fn: pin=298625210, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=7
+TRACE:1: GET32(0x20200004) = 0x643c9869
+TRACE:2: PUT32(0x20200004) = 0x7c3c9869
+TRACE: about to set bad fn: pin=19, func=7
+TRACE: about to set bad fn: pin=1295166342, func=7
+GPIO_PANIC:illegal pin=1295166342
+TRACE: about to set bad fn: pin=19, func=7
+TRACE: about to set bad fn: pin=1295166342, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=19, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1057467587, func=8
+GPIO_PANIC:illegal pin=1057467587
+TRACE: about to set bad fn: pin=1057467587, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=19, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1799878206, func=9
+GPIO_PANIC:illegal pin=1799878206
+TRACE: about to set bad fn: pin=1799878206, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=19, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1555319301, func=10
+GPIO_PANIC:illegal pin=1555319301
+TRACE: about to set bad fn: pin=1555319301, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=19, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=382697713, func=11
+GPIO_PANIC:illegal pin=382697713
+TRACE: about to set bad fn: pin=382697713, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=19, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=476667372, func=12
+GPIO_PANIC:illegal pin=476667372
+TRACE: about to set bad fn: pin=476667372, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=19, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1070575321, func=13
+GPIO_PANIC:illegal pin=1070575321
+TRACE: about to set bad fn: pin=1070575321, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=19, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=260401255, func=14
+GPIO_PANIC:illegal pin=260401255
+TRACE: about to set bad fn: pin=260401255, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=19, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=19, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=296864819, func=15
+GPIO_PANIC:illegal pin=296864819
+TRACE: about to set bad fn: pin=296864819, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=0
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334870
+TRACE: about to set bad fn: pin=20, func=0
+TRACE: about to set bad fn: pin=774044599, func=0
+GPIO_PANIC:illegal pin=774044599
+TRACE: about to set bad fn: pin=20, func=0
+TRACE: about to set bad fn: pin=774044599, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=1
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334871
+TRACE: about to set bad fn: pin=20, func=1
+TRACE: about to set bad fn: pin=697517721, func=1
+GPIO_PANIC:illegal pin=697517721
+TRACE: about to set bad fn: pin=20, func=1
+TRACE: about to set bad fn: pin=697517721, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=2
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334872
+TRACE: about to set bad fn: pin=20, func=2
+TRACE: about to set bad fn: pin=2001229904, func=2
+GPIO_PANIC:illegal pin=2001229904
+TRACE: about to set bad fn: pin=20, func=2
+TRACE: about to set bad fn: pin=2001229904, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=3
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334873
+TRACE: about to set bad fn: pin=20, func=3
+TRACE: about to set bad fn: pin=1950955939, func=3
+GPIO_PANIC:illegal pin=1950955939
+TRACE: about to set bad fn: pin=20, func=3
+TRACE: about to set bad fn: pin=1950955939, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=4
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334874
+TRACE: about to set bad fn: pin=20, func=4
+TRACE: about to set bad fn: pin=1335939811, func=4
+GPIO_PANIC:illegal pin=1335939811
+TRACE: about to set bad fn: pin=20, func=4
+TRACE: about to set bad fn: pin=1335939811, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=5
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334875
+TRACE: about to set bad fn: pin=20, func=5
+TRACE: about to set bad fn: pin=1797073940, func=5
+GPIO_PANIC:illegal pin=1797073940
+TRACE: about to set bad fn: pin=20, func=5
+TRACE: about to set bad fn: pin=1797073940, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=6
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334876
+TRACE: about to set bad fn: pin=20, func=6
+TRACE: about to set bad fn: pin=1756915667, func=6
+GPIO_PANIC:illegal pin=1756915667
+TRACE: about to set bad fn: pin=20, func=6
+TRACE: about to set bad fn: pin=1756915667, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=7
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334877
+TRACE: about to set bad fn: pin=20, func=7
+TRACE: about to set bad fn: pin=1065311705, func=7
+GPIO_PANIC:illegal pin=1065311705
+TRACE: about to set bad fn: pin=20, func=7
+TRACE: about to set bad fn: pin=1065311705, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=20, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=719346228, func=8
+GPIO_PANIC:illegal pin=719346228
+TRACE: about to set bad fn: pin=719346228, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=20, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=846811127, func=9
+GPIO_PANIC:illegal pin=846811127
+TRACE: about to set bad fn: pin=846811127, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=20, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1414829150, func=10
+GPIO_PANIC:illegal pin=1414829150
+TRACE: about to set bad fn: pin=1414829150, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=20, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1307565984, func=11
+GPIO_PANIC:illegal pin=1307565984
+TRACE: about to set bad fn: pin=1307565984, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=20, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=555996658, func=12
+GPIO_PANIC:illegal pin=555996658
+TRACE: about to set bad fn: pin=555996658, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=20, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=324763920, func=13
+GPIO_PANIC:illegal pin=324763920
+TRACE: about to set bad fn: pin=324763920, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=20, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=155789224, func=14
+GPIO_PANIC:illegal pin=155789224
+TRACE: about to set bad fn: pin=155789224, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=20, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=20, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=231602422, func=15
+GPIO_PANIC:illegal pin=231602422
+TRACE: about to set bad fn: pin=231602422, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=0
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334843
+TRACE: about to set bad fn: pin=21, func=0
+TRACE: about to set bad fn: pin=1389867269, func=0
+GPIO_PANIC:illegal pin=1389867269
+TRACE: about to set bad fn: pin=21, func=0
+TRACE: about to set bad fn: pin=1389867269, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=1
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x6633484b
+TRACE: about to set bad fn: pin=21, func=1
+TRACE: about to set bad fn: pin=780821396, func=1
+GPIO_PANIC:illegal pin=780821396
+TRACE: about to set bad fn: pin=21, func=1
+TRACE: about to set bad fn: pin=780821396, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=2
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334853
+TRACE: about to set bad fn: pin=21, func=2
+TRACE: about to set bad fn: pin=619054081, func=2
+GPIO_PANIC:illegal pin=619054081
+TRACE: about to set bad fn: pin=21, func=2
+TRACE: about to set bad fn: pin=619054081, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=3
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x6633485b
+TRACE: about to set bad fn: pin=21, func=3
+TRACE: about to set bad fn: pin=711645630, func=3
+GPIO_PANIC:illegal pin=711645630
+TRACE: about to set bad fn: pin=21, func=3
+TRACE: about to set bad fn: pin=711645630, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=4
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334863
+TRACE: about to set bad fn: pin=21, func=4
+TRACE: about to set bad fn: pin=195740084, func=4
+GPIO_PANIC:illegal pin=195740084
+TRACE: about to set bad fn: pin=21, func=4
+TRACE: about to set bad fn: pin=195740084, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=5
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x6633486b
+TRACE: about to set bad fn: pin=21, func=5
+TRACE: about to set bad fn: pin=917679292, func=5
+GPIO_PANIC:illegal pin=917679292
+TRACE: about to set bad fn: pin=21, func=5
+TRACE: about to set bad fn: pin=917679292, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=6
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334873
+TRACE: about to set bad fn: pin=21, func=6
+TRACE: about to set bad fn: pin=2006811972, func=6
+GPIO_PANIC:illegal pin=2006811972
+TRACE: about to set bad fn: pin=21, func=6
+TRACE: about to set bad fn: pin=2006811972, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=7
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x6633487b
+TRACE: about to set bad fn: pin=21, func=7
+TRACE: about to set bad fn: pin=1253207672, func=7
+GPIO_PANIC:illegal pin=1253207672
+TRACE: about to set bad fn: pin=21, func=7
+TRACE: about to set bad fn: pin=1253207672, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=21, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=570073850, func=8
+GPIO_PANIC:illegal pin=570073850
+TRACE: about to set bad fn: pin=570073850, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=21, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1414647625, func=9
+GPIO_PANIC:illegal pin=1414647625
+TRACE: about to set bad fn: pin=1414647625, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=21, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1635905385, func=10
+GPIO_PANIC:illegal pin=1635905385
+TRACE: about to set bad fn: pin=1635905385, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=21, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1046741222, func=11
+GPIO_PANIC:illegal pin=1046741222
+TRACE: about to set bad fn: pin=1046741222, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=21, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=337739299, func=12
+GPIO_PANIC:illegal pin=337739299
+TRACE: about to set bad fn: pin=337739299, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=21, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1896306640, func=13
+GPIO_PANIC:illegal pin=1896306640
+TRACE: about to set bad fn: pin=1896306640, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=21, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1343606042, func=14
+GPIO_PANIC:illegal pin=1343606042
+TRACE: about to set bad fn: pin=1343606042, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=21, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=21, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1111783898, func=15
+GPIO_PANIC:illegal pin=1111783898
+TRACE: about to set bad fn: pin=1111783898, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=0
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334833
+TRACE: about to set bad fn: pin=22, func=0
+TRACE: about to set bad fn: pin=446340713, func=0
+GPIO_PANIC:illegal pin=446340713
+TRACE: about to set bad fn: pin=22, func=0
+TRACE: about to set bad fn: pin=446340713, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=1
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334873
+TRACE: about to set bad fn: pin=22, func=1
+TRACE: about to set bad fn: pin=1197352298, func=1
+GPIO_PANIC:illegal pin=1197352298
+TRACE: about to set bad fn: pin=22, func=1
+TRACE: about to set bad fn: pin=1197352298, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=2
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x663348b3
+TRACE: about to set bad fn: pin=22, func=2
+TRACE: about to set bad fn: pin=915256190, func=2
+GPIO_PANIC:illegal pin=915256190
+TRACE: about to set bad fn: pin=22, func=2
+TRACE: about to set bad fn: pin=915256190, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=3
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x663348f3
+TRACE: about to set bad fn: pin=22, func=3
+TRACE: about to set bad fn: pin=1782280524, func=3
+GPIO_PANIC:illegal pin=1782280524
+TRACE: about to set bad fn: pin=22, func=3
+TRACE: about to set bad fn: pin=1782280524, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=4
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334933
+TRACE: about to set bad fn: pin=22, func=4
+TRACE: about to set bad fn: pin=846942590, func=4
+GPIO_PANIC:illegal pin=846942590
+TRACE: about to set bad fn: pin=22, func=4
+TRACE: about to set bad fn: pin=846942590, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=5
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334973
+TRACE: about to set bad fn: pin=22, func=5
+TRACE: about to set bad fn: pin=524688209, func=5
+GPIO_PANIC:illegal pin=524688209
+TRACE: about to set bad fn: pin=22, func=5
+TRACE: about to set bad fn: pin=524688209, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=6
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x663349b3
+TRACE: about to set bad fn: pin=22, func=6
+TRACE: about to set bad fn: pin=700108581, func=6
+GPIO_PANIC:illegal pin=700108581
+TRACE: about to set bad fn: pin=22, func=6
+TRACE: about to set bad fn: pin=700108581, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=7
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x663349f3
+TRACE: about to set bad fn: pin=22, func=7
+TRACE: about to set bad fn: pin=1566288819, func=7
+GPIO_PANIC:illegal pin=1566288819
+TRACE: about to set bad fn: pin=22, func=7
+TRACE: about to set bad fn: pin=1566288819, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=22, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1371499336, func=8
+GPIO_PANIC:illegal pin=1371499336
+TRACE: about to set bad fn: pin=1371499336, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=22, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2114937732, func=9
+GPIO_PANIC:illegal pin=2114937732
+TRACE: about to set bad fn: pin=2114937732, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=22, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=726371155, func=10
+GPIO_PANIC:illegal pin=726371155
+TRACE: about to set bad fn: pin=726371155, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=22, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1927495994, func=11
+GPIO_PANIC:illegal pin=1927495994
+TRACE: about to set bad fn: pin=1927495994, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=22, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=292218004, func=12
+GPIO_PANIC:illegal pin=292218004
+TRACE: about to set bad fn: pin=292218004, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=22, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=882160379, func=13
+GPIO_PANIC:illegal pin=882160379
+TRACE: about to set bad fn: pin=882160379, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=22, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=11614769, func=14
+GPIO_PANIC:illegal pin=11614769
+TRACE: about to set bad fn: pin=11614769, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=22, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=22, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1682085273, func=15
+GPIO_PANIC:illegal pin=1682085273
+TRACE: about to set bad fn: pin=1682085273, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=0
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334073
+TRACE: about to set bad fn: pin=23, func=0
+TRACE: about to set bad fn: pin=1662981776, func=0
+GPIO_PANIC:illegal pin=1662981776
+TRACE: about to set bad fn: pin=23, func=0
+TRACE: about to set bad fn: pin=1662981776, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=1
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334273
+TRACE: about to set bad fn: pin=23, func=1
+TRACE: about to set bad fn: pin=630668850, func=1
+GPIO_PANIC:illegal pin=630668850
+TRACE: about to set bad fn: pin=23, func=1
+TRACE: about to set bad fn: pin=630668850, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=2
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334473
+TRACE: about to set bad fn: pin=23, func=2
+TRACE: about to set bad fn: pin=246247255, func=2
+GPIO_PANIC:illegal pin=246247255
+TRACE: about to set bad fn: pin=23, func=2
+TRACE: about to set bad fn: pin=246247255, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=3
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334673
+TRACE: about to set bad fn: pin=23, func=3
+TRACE: about to set bad fn: pin=1858721860, func=3
+GPIO_PANIC:illegal pin=1858721860
+TRACE: about to set bad fn: pin=23, func=3
+TRACE: about to set bad fn: pin=1858721860, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=4
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334873
+TRACE: about to set bad fn: pin=23, func=4
+TRACE: about to set bad fn: pin=1548348142, func=4
+GPIO_PANIC:illegal pin=1548348142
+TRACE: about to set bad fn: pin=23, func=4
+TRACE: about to set bad fn: pin=1548348142, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=5
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334a73
+TRACE: about to set bad fn: pin=23, func=5
+TRACE: about to set bad fn: pin=105575579, func=5
+GPIO_PANIC:illegal pin=105575579
+TRACE: about to set bad fn: pin=23, func=5
+TRACE: about to set bad fn: pin=105575579, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=6
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334c73
+TRACE: about to set bad fn: pin=23, func=6
+TRACE: about to set bad fn: pin=964445884, func=6
+GPIO_PANIC:illegal pin=964445884
+TRACE: about to set bad fn: pin=23, func=6
+TRACE: about to set bad fn: pin=964445884, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=7
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334e73
+TRACE: about to set bad fn: pin=23, func=7
+TRACE: about to set bad fn: pin=2118421993, func=7
+GPIO_PANIC:illegal pin=2118421993
+TRACE: about to set bad fn: pin=23, func=7
+TRACE: about to set bad fn: pin=2118421993, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=23, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1520223205, func=8
+GPIO_PANIC:illegal pin=1520223205
+TRACE: about to set bad fn: pin=1520223205, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=23, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=452867621, func=9
+GPIO_PANIC:illegal pin=452867621
+TRACE: about to set bad fn: pin=452867621, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=23, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1017679567, func=10
+GPIO_PANIC:illegal pin=1017679567
+TRACE: about to set bad fn: pin=1017679567, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=23, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1857962504, func=11
+GPIO_PANIC:illegal pin=1857962504
+TRACE: about to set bad fn: pin=1857962504, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=23, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=201690613, func=12
+GPIO_PANIC:illegal pin=201690613
+TRACE: about to set bad fn: pin=201690613, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=23, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=213801961, func=13
+GPIO_PANIC:illegal pin=213801961
+TRACE: about to set bad fn: pin=213801961, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=23, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=822262754, func=14
+GPIO_PANIC:illegal pin=822262754
+TRACE: about to set bad fn: pin=822262754, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=23, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=23, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=648031326, func=15
+GPIO_PANIC:illegal pin=648031326
+TRACE: about to set bad fn: pin=648031326, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=0
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66330873
+TRACE: about to set bad fn: pin=24, func=0
+TRACE: about to set bad fn: pin=1411154259, func=0
+GPIO_PANIC:illegal pin=1411154259
+TRACE: about to set bad fn: pin=24, func=0
+TRACE: about to set bad fn: pin=1411154259, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=1
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66331873
+TRACE: about to set bad fn: pin=24, func=1
+TRACE: about to set bad fn: pin=1737518944, func=1
+GPIO_PANIC:illegal pin=1737518944
+TRACE: about to set bad fn: pin=24, func=1
+TRACE: about to set bad fn: pin=1737518944, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=2
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66332873
+TRACE: about to set bad fn: pin=24, func=2
+TRACE: about to set bad fn: pin=282828202, func=2
+GPIO_PANIC:illegal pin=282828202
+TRACE: about to set bad fn: pin=24, func=2
+TRACE: about to set bad fn: pin=282828202, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=3
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66333873
+TRACE: about to set bad fn: pin=24, func=3
+TRACE: about to set bad fn: pin=110613202, func=3
+GPIO_PANIC:illegal pin=110613202
+TRACE: about to set bad fn: pin=24, func=3
+TRACE: about to set bad fn: pin=110613202, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=4
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334873
+TRACE: about to set bad fn: pin=24, func=4
+TRACE: about to set bad fn: pin=114723506, func=4
+GPIO_PANIC:illegal pin=114723506
+TRACE: about to set bad fn: pin=24, func=4
+TRACE: about to set bad fn: pin=114723506, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=5
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66335873
+TRACE: about to set bad fn: pin=24, func=5
+TRACE: about to set bad fn: pin=982936784, func=5
+GPIO_PANIC:illegal pin=982936784
+TRACE: about to set bad fn: pin=24, func=5
+TRACE: about to set bad fn: pin=982936784, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=6
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66336873
+TRACE: about to set bad fn: pin=24, func=6
+TRACE: about to set bad fn: pin=1676902021, func=6
+GPIO_PANIC:illegal pin=1676902021
+TRACE: about to set bad fn: pin=24, func=6
+TRACE: about to set bad fn: pin=1676902021, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=7
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66337873
+TRACE: about to set bad fn: pin=24, func=7
+TRACE: about to set bad fn: pin=1486222842, func=7
+GPIO_PANIC:illegal pin=1486222842
+TRACE: about to set bad fn: pin=24, func=7
+TRACE: about to set bad fn: pin=1486222842, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=24, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=950390868, func=8
+GPIO_PANIC:illegal pin=950390868
+TRACE: about to set bad fn: pin=950390868, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=24, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=255789528, func=9
+GPIO_PANIC:illegal pin=255789528
+TRACE: about to set bad fn: pin=255789528, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=24, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1266235189, func=10
+GPIO_PANIC:illegal pin=1266235189
+TRACE: about to set bad fn: pin=1266235189, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=24, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1242608872, func=11
+GPIO_PANIC:illegal pin=1242608872
+TRACE: about to set bad fn: pin=1242608872, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=24, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1137949908, func=12
+GPIO_PANIC:illegal pin=1137949908
+TRACE: about to set bad fn: pin=1137949908, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=24, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1277849958, func=13
+GPIO_PANIC:illegal pin=1277849958
+TRACE: about to set bad fn: pin=1277849958, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=24, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=777210498, func=14
+GPIO_PANIC:illegal pin=777210498
+TRACE: about to set bad fn: pin=777210498, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=24, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=24, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=653448036, func=15
+GPIO_PANIC:illegal pin=653448036
+TRACE: about to set bad fn: pin=653448036, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=0
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66304873
+TRACE: about to set bad fn: pin=25, func=0
+TRACE: about to set bad fn: pin=1908518808, func=0
+GPIO_PANIC:illegal pin=1908518808
+TRACE: about to set bad fn: pin=25, func=0
+TRACE: about to set bad fn: pin=1908518808, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=1
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x6630c873
+TRACE: about to set bad fn: pin=25, func=1
+TRACE: about to set bad fn: pin=1023457753, func=1
+GPIO_PANIC:illegal pin=1023457753
+TRACE: about to set bad fn: pin=25, func=1
+TRACE: about to set bad fn: pin=1023457753, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=2
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66314873
+TRACE: about to set bad fn: pin=25, func=2
+TRACE: about to set bad fn: pin=364686248, func=2
+GPIO_PANIC:illegal pin=364686248
+TRACE: about to set bad fn: pin=25, func=2
+TRACE: about to set bad fn: pin=364686248, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=3
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x6631c873
+TRACE: about to set bad fn: pin=25, func=3
+TRACE: about to set bad fn: pin=1309383303, func=3
+GPIO_PANIC:illegal pin=1309383303
+TRACE: about to set bad fn: pin=25, func=3
+TRACE: about to set bad fn: pin=1309383303, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=4
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66324873
+TRACE: about to set bad fn: pin=25, func=4
+TRACE: about to set bad fn: pin=1129033333, func=4
+GPIO_PANIC:illegal pin=1129033333
+TRACE: about to set bad fn: pin=25, func=4
+TRACE: about to set bad fn: pin=1129033333, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=5
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x6632c873
+TRACE: about to set bad fn: pin=25, func=5
+TRACE: about to set bad fn: pin=1329132133, func=5
+GPIO_PANIC:illegal pin=1329132133
+TRACE: about to set bad fn: pin=25, func=5
+TRACE: about to set bad fn: pin=1329132133, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=6
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334873
+TRACE: about to set bad fn: pin=25, func=6
+TRACE: about to set bad fn: pin=1280321648, func=6
+GPIO_PANIC:illegal pin=1280321648
+TRACE: about to set bad fn: pin=25, func=6
+TRACE: about to set bad fn: pin=1280321648, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=7
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x6633c873
+TRACE: about to set bad fn: pin=25, func=7
+TRACE: about to set bad fn: pin=501772890, func=7
+GPIO_PANIC:illegal pin=501772890
+TRACE: about to set bad fn: pin=25, func=7
+TRACE: about to set bad fn: pin=501772890, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=25, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1781999754, func=8
+GPIO_PANIC:illegal pin=1781999754
+TRACE: about to set bad fn: pin=1781999754, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=25, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=150517567, func=9
+GPIO_PANIC:illegal pin=150517567
+TRACE: about to set bad fn: pin=150517567, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=25, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=212251746, func=10
+GPIO_PANIC:illegal pin=212251746
+TRACE: about to set bad fn: pin=212251746, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=25, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1983690368, func=11
+GPIO_PANIC:illegal pin=1983690368
+TRACE: about to set bad fn: pin=1983690368, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=25, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=364319529, func=12
+GPIO_PANIC:illegal pin=364319529
+TRACE: about to set bad fn: pin=364319529, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=25, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1034514500, func=13
+GPIO_PANIC:illegal pin=1034514500
+TRACE: about to set bad fn: pin=1034514500, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=25, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=484238046, func=14
+GPIO_PANIC:illegal pin=484238046
+TRACE: about to set bad fn: pin=484238046, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=25, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=25, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1775473788, func=15
+GPIO_PANIC:illegal pin=1775473788
+TRACE: about to set bad fn: pin=1775473788, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=0
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66234873
+TRACE: about to set bad fn: pin=26, func=0
+TRACE: about to set bad fn: pin=624549797, func=0
+GPIO_PANIC:illegal pin=624549797
+TRACE: about to set bad fn: pin=26, func=0
+TRACE: about to set bad fn: pin=624549797, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=1
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66274873
+TRACE: about to set bad fn: pin=26, func=1
+TRACE: about to set bad fn: pin=767066249, func=1
+GPIO_PANIC:illegal pin=767066249
+TRACE: about to set bad fn: pin=26, func=1
+TRACE: about to set bad fn: pin=767066249, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=2
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x662b4873
+TRACE: about to set bad fn: pin=26, func=2
+TRACE: about to set bad fn: pin=1886086990, func=2
+GPIO_PANIC:illegal pin=1886086990
+TRACE: about to set bad fn: pin=26, func=2
+TRACE: about to set bad fn: pin=1886086990, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=3
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x662f4873
+TRACE: about to set bad fn: pin=26, func=3
+TRACE: about to set bad fn: pin=739273303, func=3
+GPIO_PANIC:illegal pin=739273303
+TRACE: about to set bad fn: pin=26, func=3
+TRACE: about to set bad fn: pin=739273303, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=4
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334873
+TRACE: about to set bad fn: pin=26, func=4
+TRACE: about to set bad fn: pin=1750003033, func=4
+GPIO_PANIC:illegal pin=1750003033
+TRACE: about to set bad fn: pin=26, func=4
+TRACE: about to set bad fn: pin=1750003033, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=5
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66374873
+TRACE: about to set bad fn: pin=26, func=5
+TRACE: about to set bad fn: pin=1415505363, func=5
+GPIO_PANIC:illegal pin=1415505363
+TRACE: about to set bad fn: pin=26, func=5
+TRACE: about to set bad fn: pin=1415505363, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=6
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x663b4873
+TRACE: about to set bad fn: pin=26, func=6
+TRACE: about to set bad fn: pin=78012497, func=6
+GPIO_PANIC:illegal pin=78012497
+TRACE: about to set bad fn: pin=26, func=6
+TRACE: about to set bad fn: pin=78012497, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=7
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x663f4873
+TRACE: about to set bad fn: pin=26, func=7
+TRACE: about to set bad fn: pin=552910253, func=7
+GPIO_PANIC:illegal pin=552910253
+TRACE: about to set bad fn: pin=26, func=7
+TRACE: about to set bad fn: pin=552910253, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=26, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1671294892, func=8
+GPIO_PANIC:illegal pin=1671294892
+TRACE: about to set bad fn: pin=1671294892, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=26, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1344247686, func=9
+GPIO_PANIC:illegal pin=1344247686
+TRACE: about to set bad fn: pin=1344247686, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=26, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1795519125, func=10
+GPIO_PANIC:illegal pin=1795519125
+TRACE: about to set bad fn: pin=1795519125, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=26, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=661761152, func=11
+GPIO_PANIC:illegal pin=661761152
+TRACE: about to set bad fn: pin=661761152, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=26, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=474613996, func=12
+GPIO_PANIC:illegal pin=474613996
+TRACE: about to set bad fn: pin=474613996, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=26, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=425245975, func=13
+GPIO_PANIC:illegal pin=425245975
+TRACE: about to set bad fn: pin=425245975, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=26, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1315209188, func=14
+GPIO_PANIC:illegal pin=1315209188
+TRACE: about to set bad fn: pin=1315209188, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=26, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=26, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=235649157, func=15
+GPIO_PANIC:illegal pin=235649157
+TRACE: about to set bad fn: pin=235649157, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=0
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66134873
+TRACE: about to set bad fn: pin=27, func=0
+TRACE: about to set bad fn: pin=1448703729, func=0
+GPIO_PANIC:illegal pin=1448703729
+TRACE: about to set bad fn: pin=27, func=0
+TRACE: about to set bad fn: pin=1448703729, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=1
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334873
+TRACE: about to set bad fn: pin=27, func=1
+TRACE: about to set bad fn: pin=1679895436, func=1
+GPIO_PANIC:illegal pin=1679895436
+TRACE: about to set bad fn: pin=27, func=1
+TRACE: about to set bad fn: pin=1679895436, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=2
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66534873
+TRACE: about to set bad fn: pin=27, func=2
+TRACE: about to set bad fn: pin=1545032460, func=2
+GPIO_PANIC:illegal pin=1545032460
+TRACE: about to set bad fn: pin=27, func=2
+TRACE: about to set bad fn: pin=1545032460, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=3
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66734873
+TRACE: about to set bad fn: pin=27, func=3
+TRACE: about to set bad fn: pin=430253414, func=3
+GPIO_PANIC:illegal pin=430253414
+TRACE: about to set bad fn: pin=27, func=3
+TRACE: about to set bad fn: pin=430253414, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=4
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66934873
+TRACE: about to set bad fn: pin=27, func=4
+TRACE: about to set bad fn: pin=861543921, func=4
+GPIO_PANIC:illegal pin=861543921
+TRACE: about to set bad fn: pin=27, func=4
+TRACE: about to set bad fn: pin=861543921, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=5
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66b34873
+TRACE: about to set bad fn: pin=27, func=5
+TRACE: about to set bad fn: pin=677870460, func=5
+GPIO_PANIC:illegal pin=677870460
+TRACE: about to set bad fn: pin=27, func=5
+TRACE: about to set bad fn: pin=677870460, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=6
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66d34873
+TRACE: about to set bad fn: pin=27, func=6
+TRACE: about to set bad fn: pin=932026304, func=6
+GPIO_PANIC:illegal pin=932026304
+TRACE: about to set bad fn: pin=27, func=6
+TRACE: about to set bad fn: pin=932026304, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=7
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66f34873
+TRACE: about to set bad fn: pin=27, func=7
+TRACE: about to set bad fn: pin=496060028, func=7
+GPIO_PANIC:illegal pin=496060028
+TRACE: about to set bad fn: pin=27, func=7
+TRACE: about to set bad fn: pin=496060028, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=27, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=828388027, func=8
+GPIO_PANIC:illegal pin=828388027
+TRACE: about to set bad fn: pin=828388027, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=27, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1144278050, func=9
+GPIO_PANIC:illegal pin=1144278050
+TRACE: about to set bad fn: pin=1144278050, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=27, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=332266748, func=10
+GPIO_PANIC:illegal pin=332266748
+TRACE: about to set bad fn: pin=332266748, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=27, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1192707556, func=11
+GPIO_PANIC:illegal pin=1192707556
+TRACE: about to set bad fn: pin=1192707556, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=27, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31308902, func=12
+GPIO_PANIC:illegal pin=31308902
+TRACE: about to set bad fn: pin=31308902, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=27, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=816504794, func=13
+GPIO_PANIC:illegal pin=816504794
+TRACE: about to set bad fn: pin=816504794, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=27, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=820697697, func=14
+GPIO_PANIC:illegal pin=820697697
+TRACE: about to set bad fn: pin=820697697, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=27, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=27, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=655858699, func=15
+GPIO_PANIC:illegal pin=655858699
+TRACE: about to set bad fn: pin=655858699, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=0
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x60334873
+TRACE: about to set bad fn: pin=28, func=0
+TRACE: about to set bad fn: pin=1583571043, func=0
+GPIO_PANIC:illegal pin=1583571043
+TRACE: about to set bad fn: pin=28, func=0
+TRACE: about to set bad fn: pin=1583571043, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=1
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x61334873
+TRACE: about to set bad fn: pin=28, func=1
+TRACE: about to set bad fn: pin=559301039, func=1
+GPIO_PANIC:illegal pin=559301039
+TRACE: about to set bad fn: pin=28, func=1
+TRACE: about to set bad fn: pin=559301039, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=2
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x62334873
+TRACE: about to set bad fn: pin=28, func=2
+TRACE: about to set bad fn: pin=1395132002, func=2
+GPIO_PANIC:illegal pin=1395132002
+TRACE: about to set bad fn: pin=28, func=2
+TRACE: about to set bad fn: pin=1395132002, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=3
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x63334873
+TRACE: about to set bad fn: pin=28, func=3
+TRACE: about to set bad fn: pin=1186090428, func=3
+GPIO_PANIC:illegal pin=1186090428
+TRACE: about to set bad fn: pin=28, func=3
+TRACE: about to set bad fn: pin=1186090428, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=4
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x64334873
+TRACE: about to set bad fn: pin=28, func=4
+TRACE: about to set bad fn: pin=1974806403, func=4
+GPIO_PANIC:illegal pin=1974806403
+TRACE: about to set bad fn: pin=28, func=4
+TRACE: about to set bad fn: pin=1974806403, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=5
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x65334873
+TRACE: about to set bad fn: pin=28, func=5
+TRACE: about to set bad fn: pin=1473144500, func=5
+GPIO_PANIC:illegal pin=1473144500
+TRACE: about to set bad fn: pin=28, func=5
+TRACE: about to set bad fn: pin=1473144500, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=6
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334873
+TRACE: about to set bad fn: pin=28, func=6
+TRACE: about to set bad fn: pin=1739000681, func=6
+GPIO_PANIC:illegal pin=1739000681
+TRACE: about to set bad fn: pin=28, func=6
+TRACE: about to set bad fn: pin=1739000681, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=7
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x67334873
+TRACE: about to set bad fn: pin=28, func=7
+TRACE: about to set bad fn: pin=1498617647, func=7
+GPIO_PANIC:illegal pin=1498617647
+TRACE: about to set bad fn: pin=28, func=7
+TRACE: about to set bad fn: pin=1498617647, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=28, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=669908538, func=8
+GPIO_PANIC:illegal pin=669908538
+TRACE: about to set bad fn: pin=669908538, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=28, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1387036159, func=9
+GPIO_PANIC:illegal pin=1387036159
+TRACE: about to set bad fn: pin=1387036159, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=28, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12895151, func=10
+GPIO_PANIC:illegal pin=12895151
+TRACE: about to set bad fn: pin=12895151, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=28, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1144522535, func=11
+GPIO_PANIC:illegal pin=1144522535
+TRACE: about to set bad fn: pin=1144522535, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=28, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1812282134, func=12
+GPIO_PANIC:illegal pin=1812282134
+TRACE: about to set bad fn: pin=1812282134, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=28, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1328104339, func=13
+GPIO_PANIC:illegal pin=1328104339
+TRACE: about to set bad fn: pin=1328104339, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=28, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1380171692, func=14
+GPIO_PANIC:illegal pin=1380171692
+TRACE: about to set bad fn: pin=1380171692, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=28, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=28, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1113502215, func=15
+GPIO_PANIC:illegal pin=1113502215
+TRACE: about to set bad fn: pin=1113502215, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=0
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x46334873
+TRACE: about to set bad fn: pin=29, func=0
+TRACE: about to set bad fn: pin=860516127, func=0
+GPIO_PANIC:illegal pin=860516127
+TRACE: about to set bad fn: pin=29, func=0
+TRACE: about to set bad fn: pin=860516127, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=1
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x4e334873
+TRACE: about to set bad fn: pin=29, func=1
+TRACE: about to set bad fn: pin=777720504, func=1
+GPIO_PANIC:illegal pin=777720504
+TRACE: about to set bad fn: pin=29, func=1
+TRACE: about to set bad fn: pin=777720504, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=2
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x56334873
+TRACE: about to set bad fn: pin=29, func=2
+TRACE: about to set bad fn: pin=1543755629, func=2
+GPIO_PANIC:illegal pin=1543755629
+TRACE: about to set bad fn: pin=29, func=2
+TRACE: about to set bad fn: pin=1543755629, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=3
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x5e334873
+TRACE: about to set bad fn: pin=29, func=3
+TRACE: about to set bad fn: pin=1722060049, func=3
+GPIO_PANIC:illegal pin=1722060049
+TRACE: about to set bad fn: pin=29, func=3
+TRACE: about to set bad fn: pin=1722060049, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=4
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334873
+TRACE: about to set bad fn: pin=29, func=4
+TRACE: about to set bad fn: pin=1455590964, func=4
+GPIO_PANIC:illegal pin=1455590964
+TRACE: about to set bad fn: pin=29, func=4
+TRACE: about to set bad fn: pin=1455590964, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=5
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x6e334873
+TRACE: about to set bad fn: pin=29, func=5
+TRACE: about to set bad fn: pin=328298285, func=5
+GPIO_PANIC:illegal pin=328298285
+TRACE: about to set bad fn: pin=29, func=5
+TRACE: about to set bad fn: pin=328298285, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=6
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x76334873
+TRACE: about to set bad fn: pin=29, func=6
+TRACE: about to set bad fn: pin=70636429, func=6
+GPIO_PANIC:illegal pin=70636429
+TRACE: about to set bad fn: pin=29, func=6
+TRACE: about to set bad fn: pin=70636429, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=7
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x7e334873
+TRACE: about to set bad fn: pin=29, func=7
+TRACE: about to set bad fn: pin=136495343, func=7
+GPIO_PANIC:illegal pin=136495343
+TRACE: about to set bad fn: pin=29, func=7
+TRACE: about to set bad fn: pin=136495343, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=29, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1472576335, func=8
+GPIO_PANIC:illegal pin=1472576335
+TRACE: about to set bad fn: pin=1472576335, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=29, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=402903177, func=9
+GPIO_PANIC:illegal pin=402903177
+TRACE: about to set bad fn: pin=402903177, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=29, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1329202900, func=10
+GPIO_PANIC:illegal pin=1329202900
+TRACE: about to set bad fn: pin=1329202900, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=29, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1503885238, func=11
+GPIO_PANIC:illegal pin=1503885238
+TRACE: about to set bad fn: pin=1503885238, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=29, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1219407971, func=12
+GPIO_PANIC:illegal pin=1219407971
+TRACE: about to set bad fn: pin=1219407971, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=29, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2416949, func=13
+GPIO_PANIC:illegal pin=2416949
+TRACE: about to set bad fn: pin=2416949, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=29, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=12260289, func=14
+GPIO_PANIC:illegal pin=12260289
+TRACE: about to set bad fn: pin=12260289, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=29, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=29, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=655495367, func=15
+GPIO_PANIC:illegal pin=655495367
+TRACE: about to set bad fn: pin=655495367, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=0
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc50
+TRACE: about to set bad fn: pin=30, func=0
+TRACE: about to set bad fn: pin=561717988, func=0
+GPIO_PANIC:illegal pin=561717988
+TRACE: about to set bad fn: pin=30, func=0
+TRACE: about to set bad fn: pin=561717988, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=1
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc51
+TRACE: about to set bad fn: pin=30, func=1
+TRACE: about to set bad fn: pin=1407392292, func=1
+GPIO_PANIC:illegal pin=1407392292
+TRACE: about to set bad fn: pin=30, func=1
+TRACE: about to set bad fn: pin=1407392292, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=2
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc52
+TRACE: about to set bad fn: pin=30, func=2
+TRACE: about to set bad fn: pin=1841585795, func=2
+GPIO_PANIC:illegal pin=1841585795
+TRACE: about to set bad fn: pin=30, func=2
+TRACE: about to set bad fn: pin=1841585795, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=3
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc53
+TRACE: about to set bad fn: pin=30, func=3
+TRACE: about to set bad fn: pin=389040743, func=3
+GPIO_PANIC:illegal pin=389040743
+TRACE: about to set bad fn: pin=30, func=3
+TRACE: about to set bad fn: pin=389040743, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=4
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc54
+TRACE: about to set bad fn: pin=30, func=4
+TRACE: about to set bad fn: pin=733053144, func=4
+GPIO_PANIC:illegal pin=733053144
+TRACE: about to set bad fn: pin=30, func=4
+TRACE: about to set bad fn: pin=733053144, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=5
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc55
+TRACE: about to set bad fn: pin=30, func=5
+TRACE: about to set bad fn: pin=1433102829, func=5
+GPIO_PANIC:illegal pin=1433102829
+TRACE: about to set bad fn: pin=30, func=5
+TRACE: about to set bad fn: pin=1433102829, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=6
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc56
+TRACE: about to set bad fn: pin=30, func=6
+TRACE: about to set bad fn: pin=1887658390, func=6
+GPIO_PANIC:illegal pin=1887658390
+TRACE: about to set bad fn: pin=30, func=6
+TRACE: about to set bad fn: pin=1887658390, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=7
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc57
+TRACE: about to set bad fn: pin=30, func=7
+TRACE: about to set bad fn: pin=1402961682, func=7
+GPIO_PANIC:illegal pin=1402961682
+TRACE: about to set bad fn: pin=30, func=7
+TRACE: about to set bad fn: pin=1402961682, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=30, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=672655340, func=8
+GPIO_PANIC:illegal pin=672655340
+TRACE: about to set bad fn: pin=672655340, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=30, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1900553541, func=9
+GPIO_PANIC:illegal pin=1900553541
+TRACE: about to set bad fn: pin=1900553541, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=30, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=400000569, func=10
+GPIO_PANIC:illegal pin=400000569
+TRACE: about to set bad fn: pin=400000569, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=30, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=337453826, func=11
+GPIO_PANIC:illegal pin=337453826
+TRACE: about to set bad fn: pin=337453826, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=30, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1081174232, func=12
+GPIO_PANIC:illegal pin=1081174232
+TRACE: about to set bad fn: pin=1081174232, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=30, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1780172261, func=13
+GPIO_PANIC:illegal pin=1780172261
+TRACE: about to set bad fn: pin=1780172261, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=30, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1450956042, func=14
+GPIO_PANIC:illegal pin=1450956042
+TRACE: about to set bad fn: pin=1450956042, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=30, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=30, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1941690360, func=15
+GPIO_PANIC:illegal pin=1941690360
+TRACE: about to set bad fn: pin=1941690360, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=0
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc41
+TRACE: about to set bad fn: pin=31, func=0
+TRACE: about to set bad fn: pin=410409117, func=0
+GPIO_PANIC:illegal pin=410409117
+TRACE: about to set bad fn: pin=31, func=0
+TRACE: about to set bad fn: pin=410409117, func=0
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=1
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc49
+TRACE: about to set bad fn: pin=31, func=1
+TRACE: about to set bad fn: pin=847228023, func=1
+GPIO_PANIC:illegal pin=847228023
+TRACE: about to set bad fn: pin=31, func=1
+TRACE: about to set bad fn: pin=847228023, func=1
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=2
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc51
+TRACE: about to set bad fn: pin=31, func=2
+TRACE: about to set bad fn: pin=1516266761, func=2
+GPIO_PANIC:illegal pin=1516266761
+TRACE: about to set bad fn: pin=31, func=2
+TRACE: about to set bad fn: pin=1516266761, func=2
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=3
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc59
+TRACE: about to set bad fn: pin=31, func=3
+TRACE: about to set bad fn: pin=1866000081, func=3
+GPIO_PANIC:illegal pin=1866000081
+TRACE: about to set bad fn: pin=31, func=3
+TRACE: about to set bad fn: pin=1866000081, func=3
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=4
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc61
+TRACE: about to set bad fn: pin=31, func=4
+TRACE: about to set bad fn: pin=1175526309, func=4
+GPIO_PANIC:illegal pin=1175526309
+TRACE: about to set bad fn: pin=31, func=4
+TRACE: about to set bad fn: pin=1175526309, func=4
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=5
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc69
+TRACE: about to set bad fn: pin=31, func=5
+TRACE: about to set bad fn: pin=1586903190, func=5
+GPIO_PANIC:illegal pin=1586903190
+TRACE: about to set bad fn: pin=31, func=5
+TRACE: about to set bad fn: pin=1586903190, func=5
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=6
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc71
+TRACE: about to set bad fn: pin=31, func=6
+TRACE: about to set bad fn: pin=2002495425, func=6
+GPIO_PANIC:illegal pin=2002495425
+TRACE: about to set bad fn: pin=31, func=6
+TRACE: about to set bad fn: pin=2002495425, func=6
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=7
+TRACE:1: GET32(0x2020000c) = 0x74b0dc51
+TRACE:2: PUT32(0x2020000c) = 0x74b0dc79
+TRACE: about to set bad fn: pin=31, func=7
+TRACE: about to set bad fn: pin=500618996, func=7
+GPIO_PANIC:illegal pin=500618996
+TRACE: about to set bad fn: pin=31, func=7
+TRACE: about to set bad fn: pin=500618996, func=7
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=8
+GPIO_PANIC:illegal function=8
+TRACE: about to set bad fn: pin=31, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1989806367, func=8
+GPIO_PANIC:illegal pin=1989806367
+TRACE: about to set bad fn: pin=1989806367, func=8
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=9
+GPIO_PANIC:illegal function=9
+TRACE: about to set bad fn: pin=31, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1184214677, func=9
+GPIO_PANIC:illegal pin=1184214677
+TRACE: about to set bad fn: pin=1184214677, func=9
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=10
+GPIO_PANIC:illegal function=10
+TRACE: about to set bad fn: pin=31, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2004504234, func=10
+GPIO_PANIC:illegal pin=2004504234
+TRACE: about to set bad fn: pin=2004504234, func=10
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=11
+GPIO_PANIC:illegal function=11
+TRACE: about to set bad fn: pin=31, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1061730690, func=11
+GPIO_PANIC:illegal pin=1061730690
+TRACE: about to set bad fn: pin=1061730690, func=11
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=12
+GPIO_PANIC:illegal function=12
+TRACE: about to set bad fn: pin=31, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1186631626, func=12
+GPIO_PANIC:illegal pin=1186631626
+TRACE: about to set bad fn: pin=1186631626, func=12
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=13
+GPIO_PANIC:illegal function=13
+TRACE: about to set bad fn: pin=31, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=2016764524, func=13
+GPIO_PANIC:illegal pin=2016764524
+TRACE: about to set bad fn: pin=2016764524, func=13
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=14
+GPIO_PANIC:illegal function=14
+TRACE: about to set bad fn: pin=31, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1717226057, func=14
+GPIO_PANIC:illegal pin=1717226057
+TRACE: about to set bad fn: pin=1717226057, func=14
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=31, func=15
+GPIO_PANIC:illegal function=15
+TRACE: about to set bad fn: pin=31, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: about to set bad fn: pin=1748349614, func=15
+GPIO_PANIC:illegal pin=1748349614
+TRACE: about to set bad fn: pin=1748349614, func=15
+TRACE: TEST crashed: exit value=1
+TRACE: pi exited cleanly: 519 calls to random
