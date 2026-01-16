@@ -245,6 +245,7 @@ make sure it compiles:
 % cd 1-fake-pi
 % cp ../../2-gpio/code/gpio.c .
 % make
+```
 
 **Step 2: Run a single test**
 
