@@ -138,6 +138,28 @@ cksum ./prog-hardware-loopback.bin.out
 ```
 
  - You must add additional addresses to `fake-pi.c` (CLR1, SET1 and FSEL4).  If you grep in
+Errata:
+  - We pushed the 5 tests.  You'll need to add them to your 
+    `1-fake-pi/tests/Makefile`
+        
+```
+        TEST_SRC += $(wildcard ./[2]-*.c)
+        TEST_SRC += $(wildcard ./[5]-*.c)    # <--- add this
+        TEST_SRC += $(wildcard ./act-*.c)
+        TEST_SRC += $(wildcard ./prog-*.c)
+
+        # add the 5 to check checkoff source
+        # Checkoff uses all tests
+        CHKOFF_SRC := $(wildcard ./[0125]-*.c) $(wildcard ./prog-*.c) $(wildcard ./act-*.c)
+```
+
+
+NOTE: 
+ - If you get a crash while running on your laptop: the most common reason
+   is that you are dereferencing device pointers directly and not calling
+   GET32/PUT32.
+
+ - You must add additional addresses to `fake-pi.c`.  If you grep in
    your `test/*.out` and see:
 ```
   act-set-output.out:fake-pi.c:GET32:204:PANIC:read of illegal address: 20200010
