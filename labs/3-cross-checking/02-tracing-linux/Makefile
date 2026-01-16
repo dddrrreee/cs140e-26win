@@ -1,27 +1,39 @@
-# trivial makefile for compiling NAME  and wrapping up foo.
-#  - useful improvement: given a list of routines, generate all
-#    the wrap arguments to ld.
-NAME = trace-foo
-SRC = trace-foo.o foo.o
-HDRS =  foo.h
+# Makefile for 02-tracing-linux: demonstrates `--wrap` on Linux
+#
+# This is the same mechanism as 01-tracing-pi but runs as a regular
+# Linux program. Useful for testing wrapping logic with fast cycles.
 
-# tell ld to wrap foo
-# this is passed to ld
+# The program to build
+NAME = trace-foo
+
+# Source files (compiled to .o and linked)
+SRC = trace-foo.o foo.o
+
+# Header files (dependencies)
+HDRS = foo.h
+
+# Tell `ld` to wrap `foo`
+# `-Wl,` passes flags to the linker (ld) through gcc
+# EDIT: Added angle brackets for consistency
 WRAP_FLAGS = -Wl,--wrap=foo
 
+# Compiler flags
 CFLAGS = -O -Wall -Wno-unused-function -Wno-unused-variable $(WRAP_FLAGS)
 
-all: $(NAME)  run
+# Default target: build and run
+all: $(NAME) run
 
+# Link the program
 $(NAME): $(SRC) $(HDRS)
-	$(CC) $(CFLAGS) $(SRC) -o $(NAME) 
+	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
 
-run: 
+# Run the program and show expected output
+run:
 	@echo "if --wrap worked: should see calls to both 'wrap_foo' and 'real_foo'";
 	./$(NAME)
-	
 
+# Clean up generated files
 clean:
-	rm -rf $(NAME) *~ *.o Makefile.bak  
+	rm -rf $(NAME) *~ *.o Makefile.bak
 
-.PHONY: all clean  run
+.PHONY: all clean run
