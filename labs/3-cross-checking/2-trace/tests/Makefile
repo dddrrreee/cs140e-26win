@@ -36,11 +36,11 @@ TEST_PROGS := $(foreach src, ./$(TESTS), $(notdir $(src)))
 # note: if tests have the same name, you'll get a collision.
 VPATH := $(sort $(dir $(TESTS)))
 
-ifndef CS140E_2025_PATH
-$(error CS140E_2025_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
+ifndef CS140E_2026_PATH
+$(error CS140E_2026_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
 endif
 
-include $(CS140E_2025_PATH)/libpi/defs.mk
+include $(CS140E_2026_PATH)/libpi/defs.mk
 CFLAGS += -Wno-unused-function -Wno-unused-variable  -I..
 
 # add all the .h's as dependencies, libpi and the makefile.
