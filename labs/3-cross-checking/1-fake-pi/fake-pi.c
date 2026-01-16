@@ -54,6 +54,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+
+void notmain(void);
 
 #include "fake-pi.h"
 
@@ -76,6 +82,18 @@
 // panic and die with an error message.
 #define panic(msg, args...) \
     do { debug("PANIC:" msg, ##args); exit(1); } while(0)
+
+
+
+// annoying that we need to handle varargs.  smh.
+void gpio_panic(const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+       printf("GPIO_PANIC:");
+       vprintf(fmt, args);
+    va_end(args);
+    exit(1);
+}
 
 
 // emit a trace statement -- these are the outputs that you compare
@@ -134,7 +152,7 @@ static unsigned
         gpio_fsel1_v,
         gpio_fsel2_v,
         gpio_fsel3_v,
-        // do a hack to set initial value: don't use random.
+        // do a hack to set initial value.
         gpio_fsel4_v = ~0,      
         gpio_set0_v,
         gpio_clr0_v,
@@ -161,11 +179,6 @@ void PUT32(uint32_t addr, uint32_t v) {
 // same as PUT32 but takes a pointer.
 void put32(volatile void *addr, uint32_t v) {
     PUT32((uint32_t)(uint64_t)addr, v);
-}
-
-uint32_t DEV_VAL32(uint32_t x) {
-    trace("DEV_VAL32=0x%x\n", x);
-    return x;
 }
 
 // same but takes <addr> as a uint32_t
@@ -235,10 +248,44 @@ void uart_flush_tx(void) {
     fflush(stdout);
 }
 
+int exit_code(int pid) {
+    int status;
+    if(waitpid(pid, &status, 0) < 0)
+        panic("waitpid failed\n");
+    if(!WIFEXITED(status))
+        return 1;
+    return WEXITSTATUS(status);
+}
+
+// we run the test in a sub-process in case it crashes:
+// we can detect and flag it.
+//  - returns 0 if crashed.
+int test_jail(void) {
+    int pid = fork();
+    if(pid < 0)
+        panic("cannot fork??\n");
+
+    // child
+    if(!pid) {
+        trace("calling pi code\n");
+        notmain();
+        fflush(stdout);
+        fake_pi_exit();
+   } else {
+        int ret = exit_code(pid);
+        // we just detect and return: you could panic.
+        if(ret != 0) {
+            output("TEST crashed: exit value=%d\n", ret);
+            fflush(stdout);
+            return 0;
+        }
+        fflush(stdout);
+    }
+    return 1;
+}
 
 // initialize "device memory" and then call the pi program
 int main(int argc, char *argv[]) {
-    void notmain(void);
 
     if(argc == 1)  {
         fake_random_init();
@@ -268,8 +315,13 @@ int main(int argc, char *argv[]) {
 
     // extension: run in a subprocess to isolate
     // errors.
+#if 1
+    test_jail();
+#else
+    // if you want a simpler method: just call it.
     trace("calling pi code\n");
     notmain();
     fake_pi_exit();
+#endif
     return 0;
 }

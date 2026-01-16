@@ -1,133 +1,185 @@
-### A quick and dirty guide to making a r/pi simulator.
+### Testing your gpio.c using fake-pi
 
-The file `fake-pi.c` implements a trivial fake r/pi system that will
-allow you to debug your `gpio.c` code on your laptop.  You can compile it
-along with `gpio.c` and whatever driver you want to produce an executable
-that you can run on your laptop.   (Note: there are some additional files
-for implementing our own pseudo-random number generator so everyone will
-have a consistent source of randomness.)
+This directory contains a fake r/pi system that lets you debug your
+`gpio.c` code on your laptop. You compile it along with `gpio.c` and test
+programs to produce executables that run on your laptop and print all
+`PUT32`/`GET32` calls.
 
-Before class:
-   1. Run the code (see below) and see what it does.  You might get
-      different results because your `gpio.c` has differences from ours.
+**Background:** See `../BACKGROUND.md` for the conceptual explanation of how
+this works and why it's useful.
 
-   2. Look through `fake-pi.c` to understand how it works.  You should
-      see how to extend it to other addresses as well as better interfaces
-      to fake memory that makes it easier for fake devices to take over
-      parts of the address space.
+---
 
-#### Compile and run the code
+### Quick start
 
-You can then run the programs on your laptop.  They will print a sequence of
-`PUT` and `GET` calls:
+1. **Copy your `gpio.c` into this directory:**
+   ```bash
+   % cp ../../2-gpio/code/gpio.c .
+   ```
 
-        % ./1-blink
-        calling pi code
-        ... initialization ...
-        TRACE:1: GET32(0x20200008) = 0x66334873
-        TRACE:2: PUT32(0x20200008) = 0x66334871
-        TRACE:3: PUT32(0x2020001c) = 0x100000
-        ... bunch of PUT32/GET32's ...
-        TRACE:21: PUT32(0x2020001c) = 0x100000
-        TRACE:22: PUT32(0x20200028) = 0x100000
-        TRACE: pi exited cleanly: 7 calls to random
+2. **Build the library:**
+   ```bash
+   % make
+   ```
 
+3. **Run tests:**
+   ```bash
+   % cd tests
+   % make run      # Run all tests
+   % make cksum    # Compute checksums to compare with others
+   ```
 
-#### Testing
+---
 
-The directory `tests` has some simple tests, roughly broken up by difficulty. 
-   - The tests with a `1-*.c` tests are the simplest and call a given
-     routine a single time.  E.g., `1-gpio-set-input.c` calls
-     `gpio_set_input` once.  These should be the easiest tests to ensure
-     equivalence.
+### What you get
 
-   - The `2-*.c` tests do multiple calls, possibly with illegal inputs.
-   - Higher number tests are more complicated.
+**Benefits of running on Unix:**
+1. You can run the "pi" program using a **debugger** (gdb, lldb)
+2. You have **memory protection** --- null pointer writes get detected
+3. You can run with **tools** (e.g., valgrind) to look for other errors
+4. **Fast compile/test cycles** --- no bootloader delays
 
+**Equivalence checking:**
+By comparing the actual `PUT32`/`GET32` values you can check your code
+against other people. If your sequence is identical to theirs, that
+proves your code is equivalent (on that run) to theirs, despite the two
+implementations looking very different.
 
-To run a given set of tests:
-   0. Modify the `TEST_SRC`  variable in `tests/Makefile` to list out the
-     tests.  E.g., to run all the `1-` tests:
+---
 
-            TEST_SRC := $(wildcard ./[1]-*.c)
+### How it works
 
-     To run all the tests:
+The file `fake-pi.c` implements fake `PUT32` and `GET32` functions that:
+- Track all GPIO register addresses using enums and global variables
+- Print every `PUT32`, `GET32` call.
+- Treat most GPIO memory as "regular" memory (read returns last write)
+- Special case: `gpio_lev0` returns pseudo-random values (simulates external input)
 
-            TEST_SRC := $(wildcard ./*.c)
+Most of your code is straight C, which runs the same on your laptop and
+the r/pi. The only pi-specific parts are:
+- Assembly code in `start.S` (which we replace with C versions)
+- GPIO register access (which we intercept via fake `PUT32`/`GET32`)
 
-   1. `make run` will simply run the tests indicated by `TEST_SRC`.
-   2. `make cksum` will run (just like 1) and compute a checksum (hash)
-      on the output using the standard `cksum` Unix utility.  This makes it
-      easier to compare your output to other people.
-   3. `make emit` will execute like (1) but emit the results to output files 
-      (program `foo` will generate `foo.out`).   You can then inspect more easily
-      and (see below) check subsequent runs behave identically.
-   4. `make check` will re-run and check against a previously emitted `out` file.
-      This is very useful for checking that modifications that should not change
-      functionality should not.
+See `fake-pi.c` for implementation details.
 
-Workflow:
-  1. make sure things compile and run by doing `make run`.
-  2. start working through the first set of tests, making sure you get equivalant
-    results with other people.
-  3. `make emit` to save these results.
-  4. Go to the next batch of tests  and repeat (2).  
-  5. Then check that the older tests give you the same results.
-  6. when you run all the test, compute a `cksum` of all the output files 
-     to get a single number:
+---
 
-            % cksum *.out | cksum
+### Testing workflow
 
-#### Discussion
+The `tests/` directory has tests organized by difficulty:
+- `0-*.c`: Easiest tests (single simple operations)
+- `1-*.c`: Multiple calls, possibly with illegal inputs
+- `2-*.c` and higher: More complicated scenarios
+- `act-*.c`: Requires adding addresses to `fake-pi.c`
+- `prog-*.c`: Full programs from 2-gpio.
 
-Some nice things:
+#### Select which tests to run
 
-    1. You can run the "pi" program using a debugger;
-    2. You have memory protection, so null pointer writes get detected.
-    3. You can run with tools (e.g., valgrind) to look for other errors.
-    4. Finally: By comparing the actual put/get values can check your
-       code against other people (today's lab).  If your sequence of is 
-       identical to theirs, that proves your code is equivalant (on that run)
-       to theirs, despite the two implementations looking very different.
+Edit `tests/Makefile` and modify the `TEST_SRC` variable:
 
-While `fake-pi.c` is laughably simple and ignores more than it handles,
-it can still get enough accuracy (fidelity) with how the code behaves
-on the r/pi to be useful.  How:
+```makefile
+# Run a single test (start here):
+TEST_SRC := 0-gpio-write-17.c
 
-   1. Most of your code is just straight C code, which runs the same on
-      your laptop and the r/pi.
-   2. While there is some ARM assembly (in `start.S`), which we cannot run
-      it's small/simple enough we can replace it with C versions.
-      If you look in `fake-pi.c` you'll see implementations of `PUT32`,
-      `GET32` as well as the code that runs before `notmain`.
-   3. The main pi specific thing we need to handle is what exactly
-      happens when you read/write GPIO addresses.   Given how simple
-      these are, we can get away with just treating them as memory, where
-      the next read returns the value of the last write.  For fancier
-      hardware, or for a complete set of possible GPIO behaviors we
-      might have to do something more elaborate.  But for our GPIO usage,
-      this is enough.
+# Run all 0-* tests (easy):
+TEST_SRC := $(wildcard ./[0]-*.c)
 
-      NOTE: this problem of how to model devices accurately is a big
-      challenge both for virtual machines and machine simulators.
+# Run all 1-* tests (harder):
+TEST_SRC := $(wildcard ./[1]-*.c)
 
-It's good to understand what is going on here.  both why it works,
-and when you can use this kind of trick in other places.
+# Run everything:
+TEST_SRC := $(wildcard ./*.c)
+```
 
-   - If you step back and think, one intersting thing leaps out
-     immediately: we can transparently take code that you wrote explicitly
-     to run bare-metal on the pi ARM cpu, and interact with the weird
-     broadcom chip and run it on your laptop, which has neither, *without
-     making any change!*
+#### Test commands
 
-   - Another interesting hack: if you keep everything the same, but
-     replace the `PUT32` and `GET32` with code that sends `PUT32` and
-     `GET32` messages over to the pi using the UART, you can have a tiny
-     driver on the pi wait for these and then act on them.  This lets you
-     control the pi hardware "for real" just as you would when running
-     on the pi, while still having all your code run on your laptop,
-     with its nice environment.  
+From `tests/` directory:
 
-     We will do a hack like this in an upcoming lab.  It's especially cool
-     when you do this over a network, and broadcast the messages to many
-     pi's that operate in unison.  (E.g., for large light installations.)
+```bash
+# Simply run all selected tests
+% make run
+
+# Run and compute checksums (for comparing with others)
+% make cksum
+
+# Generate .out files for later comparison
+% make emit
+
+# Re-run and check against previously generated .out files
+% make check
+```
+
+#### Recommended workflow
+
+1. **Start simple:** Run a single easy test (e.g., `0-gpio-write-17.c`)
+2. **Compare with others:** For detailed checking look at the associated
+   `.out` file (e.g. `0-gpio-write-17.out`).  For quick high level
+    checking use `make cksum` and post results to compare 
+3. **Save results:** `make emit` to save the outputs
+4. **Progress to harder tests:** Move through `0-*.c`, `1-*.c`, `2-*.c`, etc.
+5. **Check for regressions:** After making changes, `make check` verifies old
+   tests still pass
+6. **Final checkoff:** Compute checksum of all outputs:
+   ```bash
+   % make checkoff
+   ```
+
+---
+
+### Example: Running a single test
+
+```bash
+% cd tests
+% make
+% ./0-gpio-write-17.fake
+calling pi code
+... initialization ...
+TRACE:1: GET32(0x20200008) = 0x66334873
+TRACE:2: PUT32(0x20200008) = 0x66334871
+TRACE:3: PUT32(0x2020001c) = 0x100000
+...
+TRACE: pi exited cleanly: 7 calls to random
+```
+
+Each `TRACE` line shows exactly what your code did. If you and your partner
+get identical traces, your implementations are equivalent.
+
+To compare:
+```bash
+% ./0-gpio-write-17.fake > 0-gpio-write-17.out
+% cksum 0-gpio-write-17.out
+1234567890 123 0-gpio-write-17.out   # Compare this number with others
+```
+
+---
+
+### Extending fake-pi.c
+
+You may need to add addresses to `fake-pi.c` for some tests (especially
+`act-*.c` tests). Look for the `enum` of tracked addresses and the
+corresponding variables, then add cases to the switch statements in
+`PUT32` and `GET32`.
+
+---
+
+### Files in this directory
+
+- **`fake-pi.c`**: The fake implementation (enum/switch for GPIO addresses)
+- **`fake-random.c`**, **`pi-random.c`**: Pseudo-random number generator
+  (ensures everyone gets same "random" values)
+- **`gpio.c`**: Your implementation (copy from lab 2)
+- **`Makefile`**: Builds `libpi-fake.a`
+- **`tests/`**: Directory with test programs
+- **`tests/Makefile`**: Test automation
+- **`tests/Makefile.test`**: Test infrastructure (called by tests/Makefile)
+
+---
+
+### Tips
+
+- If tests crash with segfault: **Good!** Your code has a bug that memory
+  protection caught. Use gdb to find it.
+- If your checksum differs from others: At least one person has a bug.
+  Compare the TRACE output line-by-line to find where they diverge.
+- If you're stuck: Start with the simplest tests and work up. The `0-*.c` tests
+  call each function once with simple inputs.
