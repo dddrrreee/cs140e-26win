@@ -12,6 +12,7 @@
  *    it only infinite loops since we don't have <printk>
  */
 #include "rpi.h"
+#include "../../libpi/include/gpio.h"
 
 // See broadcomm documents for magic addresses and magic values.
 //
@@ -102,7 +103,7 @@ void gpio_set_input(unsigned pin) {
         gpio_panic("illegal pin=%d\n", pin);
 
     // Implement.
-    volatile unsigned* gpio_addr = (unsigned*) gpio_set0 + (pin / 10);
+    volatile unsigned* gpio_addr = (unsigned*) GPIO_BASE + (pin / 10);
     volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
     volatile unsigned value = get32(gpio_addr);
 
@@ -164,4 +165,36 @@ void gpio_set_pulldown(unsigned pin) {
 
     put32((unsigned*)gpio_pud, 0);
     put32(pud_ck_addr, 0);
+}
+
+//
+// Part 3: implement gpio_set_function
+//
+
+
+// void gpio_set_function(unsigned pin, gpio_func_t function) {
+    
+//     unsigned masked_value = (unsigned)function << (3 * (pin % 20));
+
+//     volatile unsigned* gpio_addr = (unsigned*)gpio_set0 + pin / 20;
+
+//     unsigned mask = 0b111 << (3 * (pin % 20));
+
+//     unsigned value = get32(gpio_addr);
+//     put32(gpio_addr, (value & mask) | masked_value);
+// }
+
+void gpio_set_function(unsigned pin, gpio_func_t function) {
+    if(pin > GPIO_MAX_PIN)
+        gpio_panic("illegal pin=%d\n", pin);
+
+  // Implement this.
+    volatile unsigned* gpio_addr = (unsigned*) GPIO_BASE + (pin / 10);
+    volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
+    volatile unsigned value = get32(gpio_addr);
+
+    value &= ~mask_n;
+    value |= (unsigned)function << (3 * (pin % 10));
+
+    put32(gpio_addr, value);
 }

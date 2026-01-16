@@ -62,7 +62,6 @@
 void notmain(void);
 
 #include "fake-pi.h"
-#include "../../libpi/include/gpio.h"
 
 /***********************************************************************
  * some macros to make error reporting easier.
@@ -144,7 +143,8 @@ enum {
     gpio_clr0  = (GPIO_BASE + 0x28),
     gpio_set1  = gpio_set0 + 4,
     gpio_clr1  = gpio_clr0 + 4,
-    gpio_lev0  = (GPIO_BASE + 0x34)
+    gpio_lev0  = (GPIO_BASE + 0x34),
+    gpio_lev1  = gpio_lev0 + 4,
 };
 
 // the value for each location.
@@ -171,9 +171,13 @@ void PUT32(uint32_t addr, uint32_t v) {
     case gpio_fsel1: gpio_fsel1_v = v;  break;
     case gpio_fsel2: gpio_fsel2_v = v;  break;
     case gpio_fsel3: gpio_fsel3_v = v;  break;
+    case gpio_fsel4: gpio_fsel4_v = v; break;
     case gpio_set0:  gpio_set0_v  = v;  break;
+    case gpio_set1:  gpio_set1_v  = v;  break;
     case gpio_clr0:  gpio_clr0_v  = v;  break;
+    case gpio_clr1:  gpio_clr1_v  = v;  break;
     case gpio_lev0:  panic("illegal write to gpio_lev0!\n");
+    case gpio_lev1:  panic("illegal write to gpio_lev1!\n");
     default: panic("write to illegal address: %x\n", addr);
     }
 }
@@ -190,6 +194,7 @@ uint32_t GET32(uint32_t addr) {
     case gpio_fsel1: v = gpio_fsel1_v; break;
     case gpio_fsel2: v = gpio_fsel2_v; break;
     case gpio_fsel3: v = gpio_fsel3_v; break;
+    case gpio_fsel4: v = gpio_fsel4_v; break;
     // we don't allow reading these.
     // case gpio_set0:  v = gpio_set0_v;  break;
     // case gpio_clr0:  v = gpio_clr0_v;  break;
@@ -202,6 +207,7 @@ uint32_t GET32(uint32_t addr) {
     // the raw hardware, correlating with other pins or 
     // time or ...
     case gpio_lev0:  v = fake_random();  break;
+    case gpio_lev1:  v = fake_random();  break;
     default: panic("read of illegal address: %x\n", addr);
     }
     trace("GET32(0x%x) = 0x%x\n", addr,v);
@@ -284,42 +290,6 @@ int test_jail(void) {
     }
     return 1;
 }
-
-void gpio_set_function(unsigned pin, gpio_func_t function) {
-    
-    unsigned masked_value = (unsigned)function << (3 * (pin % 20));
-
-    volatile unsigned* gpio_addr = (unsigned*)gpio_fsel0 + pin / 20;
-
-    // unsigned reg_offset = gpio_fsel0 + pin / 20;
-    unsigned mask = 0b111 << (3 * (pin % 20));
-
-    unsigned value = get32(gpio_addr);
-    put32(gpio_addr, (value & mask) | masked_value);
-}
-
-        // gpio_fsel0_v,
-        // gpio_fsel1_v,
-        // gpio_fsel2_v,
-        // gpio_fsel3_v,
-        // // do a hack to set initial value.
-        // gpio_fsel4_v = ~0,      
-        // gpio_set0_v,
-        // gpio_clr0_v,
-        // gpio_set1_v,
-        // gpio_clr1_v;
-
-
-// typedef enum {
-//     GPIO_FUNC_INPUT   = 0,
-//     GPIO_FUNC_OUTPUT  = 1,
-//     GPIO_FUNC_ALT0    = 4,
-//     GPIO_FUNC_ALT1    = 5,
-//     GPIO_FUNC_ALT2    = 6,
-//     GPIO_FUNC_ALT3    = 7,
-//     GPIO_FUNC_ALT4    = 3,
-//     GPIO_FUNC_ALT5    = 2,
-// } gpio_func_t;
 
 // initialize "device memory" and then call the pi program
 int main(int argc, char *argv[]) {

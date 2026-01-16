@@ -16,12 +16,12 @@
 #   4. act-*.c tests (need to add addresses to fake-pi.c)
 
 # Select which tests to run (last writer wins)
-TEST_SRC += 0-gpio-write-17.c
-# TEST_SRC := $(wildcard ./[0]-*.c)
-# TEST_SRC += $(wildcard ./[1]-*.c)
-# TEST_SRC += $(wildcard ./[2]-*.c) 
-# TEST_SRC += $(wildcard ./act-*.c)
-# TEST_SRC += $(wildcard ./prog-*.c) 
+# TEST_SRC += 0-gpio-write-17.c
+TEST_SRC := $(wildcard ./[0]-*.c)
+TEST_SRC += $(wildcard ./[1]-*.c)
+TEST_SRC += $(wildcard ./[2]-*.c) 
+TEST_SRC += $(wildcard ./act-*.c)
+TEST_SRC += $(wildcard ./prog-*.c) 
 
 TEST_SRC += $(wildcard ./[5]-*.c)
 TEST_SRC += $(wildcard ./act-*.c)

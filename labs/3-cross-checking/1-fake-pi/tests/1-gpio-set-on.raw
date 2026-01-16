@@ -1,0 +1,9 @@
+fake-pi: initializing PUT32(0x20200000) = 0x327b23c6
+fake-pi: initializing PUT32(0x20200004) = 0x643c9869
+fake-pi: initializing PUT32(0x20200008) = 0x66334873
+fake-pi: initializing PUT32(0x2020000c) = 0x74b0dc51
+fake-pi: initializing PUT32(0x2020001c) = 0x19495cff
+fake-pi: initializing PUT32(0x20200028) = 0x2ae8944a
+TRACE:0: calling pi code
+TRACE:1: PUT32(0x2020001c) = 0x100000
+TRACE: pi exited cleanly: 7 calls to random

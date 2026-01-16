@@ -1,0 +1,3 @@
+TRACE:0: calling pi code
+TRACE:1: GET32(0x20200034) = 0x625558ec
+TRACE: pi exited cleanly: 8 calls to random
