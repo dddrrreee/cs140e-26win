@@ -82,6 +82,34 @@ Total files: 29
 
 ### Clarifications
 
+ - Part 2 checksums:
+
+```
+cksum ./0-gpio-read.bin.out
+4294967295 0 ./0-gpio-read.bin.out
+cksum ./0-gpio-set-input.bin.out
+3159539606 56 ./0-gpio-set-input.bin.out
+cksum ./0-gpio-set-output.bin.out
+3179942673 56 ./0-gpio-set-output.bin.out
+cksum ./0-gpio-write.bin.out
+610433833 33 ./0-gpio-write.bin.out
+cksum ./1-set-n-input.bin.out
+3754849163 392 ./1-set-n-input.bin.out
+cksum ./1-set-n-output.bin.out
+2100720877 414 ./1-set-n-output.bin.out
+cksum ./2-set-stuff.bin.out
+2073573149 928 ./2-set-stuff.bin.out
+cksum ./prog-1-blink.bin.out
+3731391281 716 ./prog-1-blink.bin.out
+cksum ./prog-2-blink.bin.out
+486978757 1432 ./prog-2-blink.bin.out
+cksum ./prog-hardware-loopback.bin.out
+548164671 770 ./prog-hardware-loopback.bin.out
+
+
+
+```
+
  - You must add additional addresses to `fake-pi.c` (CLR1, SET1 and FSEL4).  If you grep in
    your `test/*.out` and see:
 ```
