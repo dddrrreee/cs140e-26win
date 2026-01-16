@@ -75,8 +75,8 @@ DEPS   := $(LIBPI_FAKE)
 DEPS := $(filter-out %.d, $(MAKEFILE_LIST))
 
 INC =  -I../  -I.
-INC +=  -I$(CS140E_2025_PATH)/libpi/include
-INC +=  -I$(CS140E_2025_PATH)/libpi/libc
+INC +=  -I$(CS140E_2026_PATH)/libpi/include
+INC +=  -I$(CS140E_2026_PATH)/libpi/libc
 CFLAGS = $(INC) -O -Wall -Wno-unused-function -Wno-unused-variable
 
 ### configure checking
@@ -84,7 +84,7 @@ CFLAGS = $(INC) -O -Wall -Wno-unused-function -Wno-unused-variable
 #export PROLOGUE
 #BIN_SUFFIX=.fake
 #PROLOGUE = 0
-# MK_CHK := $(CS140E_2025_PATH)/libunix/mk/Makefile.check-v3
+# MK_CHK := $(CS140E_2026_PATH)/libunix/mk/Makefile.check-v3
 
 
 MK_CHK := ./Makefile.test

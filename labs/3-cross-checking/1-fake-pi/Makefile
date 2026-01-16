@@ -1,7 +1,7 @@
 LIBNAME = libpi-fake.a
 BUILD_DIR = ./objs
 
-LPP = $(CS140E_2025_PATH)libpi
+LPP = $(CS140E_2026_PATH)libpi
 
 # all the .c files used to generate fake programs on Unix.
 # 1. get all the the routines from current directory.
@@ -21,7 +21,7 @@ INC +=  -I$(LPP)/libc
 # INC +=  -I$(LPP)/staff-src
 INC +=  -I.
 
-include $(CS140E_2025_PATH)/libunix/mk/Makefile.lib.template
+include $(CS140E_2026_PATH)/libunix/mk/Makefile.lib.template
 # include ./Makefile.lib.simple
 
 

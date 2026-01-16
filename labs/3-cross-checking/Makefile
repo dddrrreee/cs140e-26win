@@ -1,6 +1,4 @@
-$(error "We are still modifying the code.  Only make changes on a copy if you want to modify.")
-
-SUBDIRS= 01-tracing-pi  03-fake-pi	 1-fake-pi 2-trace check-hello check-libpi
+SUBDIRS= 01-tracing-pi  03-fake-pi	 1-fake-pi 2-trace 00-hello 
 
 # this only works on linux
 SUBDIRS += 02-tracing-linux  

@@ -6,8 +6,6 @@ but the prose will (hopefull) be clearer***
 ----------------------------------------------------------
 ***Errata***:
 ***Errata***:
-***Errata***:
-***Errata***:
 
   - `2-trace`: this `Makefile` has issues, so you may need
     to run `make` in `2-trace` and then inside `2-trace/test`
@@ -21,24 +19,14 @@ but the prose will (hopefull) be clearer***
     a pretty common issue when writing low level monitor
     code. soln: don't trace when you've called `printk`.
 
-  - don't check for 47 in `gpio_read` do:
-
-            int gpio_read(unsigned pin) {
-                if(pin >= 32)
-                    return -1;
-                ...
-                return DEV_VAL32(x);
-            }
-
   - Please make sure your class path definition ends with
     a `/`.  For example:
 
-        setenv CS140E_2025_PATH /home/engler/class/cs140e-25win/
+        setenv CS140E_2026_PATH /home/engler/class/cs140e-26win/
 
     Versus
 
-        setenv CS140E_2025_PATH /home/engler/class/cs140e-25win
-
+        setenv CS140E_2026_PATH /home/engler/class/cs140e-26win
 
 ----------------------------------------------------------
 
@@ -67,7 +55,6 @@ The basic intuition: it's very hard to check if two different Turing
 machines are equivalant by comparing their logic.  On the other hand
 it's trivial compare their tapes after they run: same end tape = same
 computed result.
-
 
 You'll do two things:
   1. Run your code in a simple fake simulator that you'll modify
