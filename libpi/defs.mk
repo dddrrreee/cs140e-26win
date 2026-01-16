@@ -1,8 +1,8 @@
 # setup useful variables that can be used by make.
 
 # this must be defined in your shell's startup file.
-ifndef CS140E_2025_PATH
-$(error CS140E_2025_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
+ifndef CS140E_2026_PATH
+$(error CS140E_2026_PATH is not set: this should contain the absolute path to where this directory is.  Define it in your shell's initialiation.  For example, .tcshrc for tcsh or .bashrc for bash)
 endif
 
 # OPT_LEVEL = -O3
@@ -13,10 +13,10 @@ AS  = $(ARM)-as
 AR = $(ARM)-ar
 OD  = $(ARM)-objdump
 OCP = $(ARM)-objcopy
-CS140E_2025_LIBPI_PATH = $(CS140E_2025_PATH)/libpi
-LPP = $(CS140E_2025_LIBPI_PATH)
+CS140E_2026_LIBPI_PATH = $(CS140E_2026_PATH)/libpi
+LPP = $(CS140E_2026_LIBPI_PATH)
 LPI ?= $(LPP)/libpi.a
-LGCC ?= $(CS140E_2025_PATH)/lib/libgcc.a
+LGCC ?= $(CS140E_2026_PATH)/lib/libgcc.a
 
 # let the client override these.
 START ?= $(LPP)/staff-start.o
