@@ -10,6 +10,13 @@ resistant hash), compare.
 it's equivalent to someone else's. If even one person is correct and
 your code matches theirs then you're correct too.
 
+**Required reading**:
+- [PRELAB.md](PRELAB.md) before starting
+- [BACKGROUND.md](BACKGROUND.md) background on lying with simulation.
+- [01-tracing-pi](01-tracing-pi) to see how to use the linker to trace calls.
+- [03-fake-pi](03-fake-pi) to see how to build a quick and dirty fake pi simulator.
+
+
 **What you'll build:**
 
 1. Run your `gpio.c` in a fake-pi simulator on Unix (no hardware needed)
