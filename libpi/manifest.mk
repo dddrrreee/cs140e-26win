@@ -45,7 +45,7 @@ all:: ./staff-start.o
 staff-start.o: $(BUILD_DIR)/staff-start.o
 	cp $(BUILD_DIR)/staff-start.o .
 
-include $(CS140E_2025_PATH)/libpi/mk/Makefile.template-fixed
+include $(CS140E_2026_PATH)/libpi/mk/Makefile.template-fixed
 
 clean::
 	rm -f staff-start.o
