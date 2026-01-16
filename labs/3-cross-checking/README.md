@@ -1,4 +1,10 @@
 
+### If you're annoyed with clarity problems: use 2025's writeup.
+
+It probably makes more sense [to use the 2025 writeup](https://github.com/dddrrreee/cs140e-25win/tree/main/labs/3-cross-checking): I tried to 
+"improve" this one, and went significantly backwards in the writeup.
+Frustrating and you had to deal with my nonsense.  Apologies!
+
 ### Errata Part 1
 
 
