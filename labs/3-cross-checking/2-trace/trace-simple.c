@@ -18,6 +18,8 @@
 //  
 #include "rpi.h"
 #include "trace.h"
+#include <stdint.h>
+
 
 // gross that these are not auto-consistent with GET32 in rpi.h
 unsigned __wrap_GET32(unsigned addr);
@@ -25,13 +27,25 @@ unsigned __real_GET32(unsigned addr);
 void __wrap_PUT32(unsigned addr, unsigned val);
 void __real_PUT32(unsigned addr, unsigned val);
 
+unsigned __wrap_get32(unsigned* addr);
+unsigned __real_get32(unsigned* addr);
+void __wrap_put32(unsigned* addr, unsigned val);
+void __real_put32(unsigned* addr, unsigned val);
+
 // simple state machine to track what set of options we're called with.
 enum {
     TRACE_OFF = 0,
     TRACE_ON,
-    TRACE_SKIP   // if running w/o buffering, stop printing trace
+    TRACE_SKIP,   // if running w/o buffering, stop printing trace
+    GET_CALL,
+    PUT_CALL
 };
 static int state = TRACE_OFF;
+
+static int buffer_length = 0;
+static uint32_t addr_buffer[50]; // stored bits, 0 for put, 
+static uint32_t val_buffer[50]; 
+static int call_buffer[50]; 
 
 // start tracing : 
 //   <buffer_p> = 0: tells the code to immediately print the 
@@ -63,17 +77,29 @@ static void emit_get32(uint32_t addr, uint32_t val) {
 // NOTE: you will also have to implement wrappers for get32 and
 // put32.
 
+unsigned __wrap_get32(unsigned* addr) {
+    return __wrap_GET32((unsigned)addr);
+}
+
+void __wrap_put32(unsigned* addr, unsigned val) {
+    __wrap_PUT32((unsigned)addr, val);
+}
+
 // the linker will change all calls to GET32 to call __wrap_GET32
 void __wrap_PUT32(unsigned addr, unsigned val) {
 
-    if (state == TRACE_OFF) {
-        trace_start(1);
-        emit_put32(addr, val);
+    if (state == TRACE_ON) {
         trace_stop();
+        emit_put32(addr, val);
+        trace_start(1);
     }
-    else {
-        __real_PUT32(addr, val);
-    }
+
+    // if (state == TRACE_OFF) {
+    //     trace_start(1);
+    //     emit_put32(addr, val);
+    //     trace_stop();
+    // }
+    __real_PUT32(addr, val);
 
 }
 
@@ -81,13 +107,17 @@ void __wrap_PUT32(unsigned addr, unsigned val) {
 unsigned __wrap_GET32(unsigned addr) {
     unsigned v = 0;
 
+    
+    v = __real_GET32(addr);
+    if (state == TRACE_ON) {
+        trace_stop();
+        emit_get32(addr, v);
+        trace_start(1);
+    }
     // if (state == TRACE_OFF) {
     //     trace_start(1);
-    //     emit_get32(addr);
+    //     emit_get32(addr, v);
     //     trace_stop();
-    // }
-    // else {
-    //     __real_GET32(addr);
     // }
 
     return v;

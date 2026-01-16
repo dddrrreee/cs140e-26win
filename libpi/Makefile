@@ -4,9 +4,9 @@
 # to add your gpio.c:
 #   1. copy gpio.c to libpi/src/gpio.c
 #   2. comment out:
-STAFF_OBJS  +=  ./staff-objs/gpio.o
+# STAFF_OBJS  +=  ./staff-objs/gpio.o
 #   3. uncomment:
-# SRC += src/gpio.c
+SRC += src/gpio.c
 
 # if you want to use your own pullup-puldown
 # 1. put it in src/gpio-pud.c)

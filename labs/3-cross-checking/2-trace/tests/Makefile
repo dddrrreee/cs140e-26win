@@ -15,13 +15,13 @@
 TEST_SRC = 0-gpio-read.c
 
 # if you want to run all of the ones that don't need hardware
-# TEST_SRC := $(wildcard ./[0123]-*.c) $(wildcard ./prog-*.c) 
+TEST_SRC := $(wildcard ./[0123]-*.c) $(wildcard ./prog-*.c) 
 
 # to run all the simple tests
-TEST_SRC := $(wildcard ./0-*.c)
+# TEST_SRC := $(wildcard ./0-*.c)
 
 # the trace flags --- if you override notmain, would need to add it.
-WRAP = --wrap=PUT32 --wrap=GET32
+WRAP = --wrap=PUT32 --wrap=GET32 --wrap=put32 --wrap=get32
 
 # shut up make
 MAKEFLAGS += --no-print-directory
