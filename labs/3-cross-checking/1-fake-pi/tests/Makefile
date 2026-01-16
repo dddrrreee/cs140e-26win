@@ -17,11 +17,11 @@
 
 # Select which tests to run (last writer wins)
 TEST_SRC += 0-gpio-write-17.c
-TEST_SRC := $(wildcard ./[0]-*.c)
-TEST_SRC += $(wildcard ./[1]-*.c)
-TEST_SRC += $(wildcard ./[2]-*.c) 
-TEST_SRC += $(wildcard ./act-*.c)
-TEST_SRC += $(wildcard ./prog-*.c) 
+# TEST_SRC := $(wildcard ./[0]-*.c)
+# TEST_SRC += $(wildcard ./[1]-*.c)
+# TEST_SRC += $(wildcard ./[2]-*.c) 
+# TEST_SRC += $(wildcard ./act-*.c)
+# TEST_SRC += $(wildcard ./prog-*.c) 
 
 # Checkoff uses all tests
 CHKOFF_SRC := $(wildcard ./[012]-*.c) $(wildcard ./prog-*.c) $(wildcard ./act-*.c)

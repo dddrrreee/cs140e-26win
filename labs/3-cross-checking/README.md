@@ -402,19 +402,9 @@ For testing:
 
 Now that you're done, for checkoff:
 
-  1. As described at the start of the README,
-     in `1-fake-pi/tests/Makefile`  uncomment the line:
-
-
-            # 6. then do everything.
-            TEST_SRC := $(wildcard ./[0-5]-*.c) ... [more] ...
-
-     So we do all the tests.
-
-  2. run `make  checkoff` which will compute a checksum of all
-     the checksums.  You should get a total of 29 files, and the
-     checksum should be `525118589`.
-
+  - run `make  checkoff` which will compute a checksum of all
+     the checksums.  You should get a total of XX  files, and the
+     checksum should be `XXX`.  (***WE WILL UPDATE THIS.***)
 
 ---------------------------------------------------------------
 #### Part 2: Do similar tracing on the pi (`2-trace/`)
