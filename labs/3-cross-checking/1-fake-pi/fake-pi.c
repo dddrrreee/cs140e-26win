@@ -62,6 +62,7 @@
 void notmain(void);
 
 #include "fake-pi.h"
+#include "../../libpi/include/gpio.h"
 
 /***********************************************************************
  * some macros to make error reporting easier.
@@ -283,6 +284,42 @@ int test_jail(void) {
     }
     return 1;
 }
+
+void gpio_set_function(unsigned pin, gpio_func_t function) {
+    
+    unsigned masked_value = (unsigned)function << (3 * (pin % 20));
+
+    volatile unsigned* gpio_addr = (unsigned*)gpio_fsel0 + pin / 20;
+
+    // unsigned reg_offset = gpio_fsel0 + pin / 20;
+    unsigned mask = 0b111 << (3 * (pin % 20));
+
+    unsigned value = get32(gpio_addr);
+    put32(gpio_addr, (value & mask) | masked_value);
+}
+
+        // gpio_fsel0_v,
+        // gpio_fsel1_v,
+        // gpio_fsel2_v,
+        // gpio_fsel3_v,
+        // // do a hack to set initial value.
+        // gpio_fsel4_v = ~0,      
+        // gpio_set0_v,
+        // gpio_clr0_v,
+        // gpio_set1_v,
+        // gpio_clr1_v;
+
+
+// typedef enum {
+//     GPIO_FUNC_INPUT   = 0,
+//     GPIO_FUNC_OUTPUT  = 1,
+//     GPIO_FUNC_ALT0    = 4,
+//     GPIO_FUNC_ALT1    = 5,
+//     GPIO_FUNC_ALT2    = 6,
+//     GPIO_FUNC_ALT3    = 7,
+//     GPIO_FUNC_ALT4    = 3,
+//     GPIO_FUNC_ALT5    = 2,
+// } gpio_func_t;
 
 // initialize "device memory" and then call the pi program
 int main(int argc, char *argv[]) {
