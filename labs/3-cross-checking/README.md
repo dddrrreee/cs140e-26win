@@ -15,7 +15,7 @@ Before doing anything:
             gpio_panic("illegal pin=%d\n", pin);
         if((func & 0b111) != func)
             gpio_panic("illegal func=%x\n", func);
-    ```
+```
 
  2.  You'll need to make TWO changes to add them to your `1-fake-pi/tests/Makefile`:
 
@@ -39,6 +39,7 @@ Before doing anything:
 
 
 ```
+
 1180314136 109 ./0-gpio-read-17.out
 2641069390 135 ./0-gpio-read-20.out
 2088150141 135 ./0-gpio-read-21.out
@@ -73,6 +74,7 @@ Total files: 29
 
 === USE THIS VALUE FOR CHECKOFF ===
 1969050300 1050
+
 ```
 
 ### Clarifications
