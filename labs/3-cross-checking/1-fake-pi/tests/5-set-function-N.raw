@@ -81,7 +81,7 @@ TRACE: about to set bad fn: pin=0, func=7
 TRACE: about to set bad fn: pin=2044897763, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=0, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=0, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1967513926, func=8
@@ -89,7 +89,7 @@ GPIO_PANIC:illegal pin=1967513926
 TRACE: about to set bad fn: pin=1967513926, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=0, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=0, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1365180540, func=9
@@ -97,7 +97,7 @@ GPIO_PANIC:illegal pin=1365180540
 TRACE: about to set bad fn: pin=1365180540, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=0, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=0, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1540383426, func=10
@@ -105,7 +105,7 @@ GPIO_PANIC:illegal pin=1540383426
 TRACE: about to set bad fn: pin=1540383426, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=0, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=0, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=304089172, func=11
@@ -113,7 +113,7 @@ GPIO_PANIC:illegal pin=304089172
 TRACE: about to set bad fn: pin=304089172, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=0, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=0, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1303455736, func=12
@@ -121,7 +121,7 @@ GPIO_PANIC:illegal pin=1303455736
 TRACE: about to set bad fn: pin=1303455736, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=0, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=0, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=35005211, func=13
@@ -129,7 +129,7 @@ GPIO_PANIC:illegal pin=35005211
 TRACE: about to set bad fn: pin=35005211, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=0, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=0, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=521595368, func=14
@@ -137,7 +137,7 @@ GPIO_PANIC:illegal pin=521595368
 TRACE: about to set bad fn: pin=521595368, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=0, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=0, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=294702567, func=15
@@ -217,7 +217,7 @@ TRACE: about to set bad fn: pin=1, func=7
 TRACE: about to set bad fn: pin=1101513929, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=1, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1801979802, func=8
@@ -225,7 +225,7 @@ GPIO_PANIC:illegal pin=1801979802
 TRACE: about to set bad fn: pin=1801979802, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=1, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1315634022, func=9
@@ -233,7 +233,7 @@ GPIO_PANIC:illegal pin=1315634022
 TRACE: about to set bad fn: pin=1315634022, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=1, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=635723058, func=10
@@ -241,7 +241,7 @@ GPIO_PANIC:illegal pin=635723058
 TRACE: about to set bad fn: pin=635723058, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=1, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1369133069, func=11
@@ -249,7 +249,7 @@ GPIO_PANIC:illegal pin=1369133069
 TRACE: about to set bad fn: pin=1369133069, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=1, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1125898167, func=12
@@ -257,7 +257,7 @@ GPIO_PANIC:illegal pin=1125898167
 TRACE: about to set bad fn: pin=1125898167, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=1, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1059961393, func=13
@@ -265,7 +265,7 @@ GPIO_PANIC:illegal pin=1059961393
 TRACE: about to set bad fn: pin=1059961393, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=1, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2089018456, func=14
@@ -273,7 +273,7 @@ GPIO_PANIC:illegal pin=2089018456
 TRACE: about to set bad fn: pin=2089018456, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=1, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=628175011, func=15
@@ -353,7 +353,7 @@ TRACE: about to set bad fn: pin=2, func=7
 TRACE: about to set bad fn: pin=1734575198, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=2, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1973594324, func=8
@@ -361,7 +361,7 @@ GPIO_PANIC:illegal pin=1973594324
 TRACE: about to set bad fn: pin=1973594324, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=2, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=149798315, func=9
@@ -369,7 +369,7 @@ GPIO_PANIC:illegal pin=149798315
 TRACE: about to set bad fn: pin=149798315, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=2, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2038664370, func=10
@@ -377,7 +377,7 @@ GPIO_PANIC:illegal pin=2038664370
 TRACE: about to set bad fn: pin=2038664370, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=2, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1129566413, func=11
@@ -385,7 +385,7 @@ GPIO_PANIC:illegal pin=1129566413
 TRACE: about to set bad fn: pin=1129566413, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=2, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=184803526, func=12
@@ -393,7 +393,7 @@ GPIO_PANIC:illegal pin=184803526
 TRACE: about to set bad fn: pin=184803526, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=2, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=412776091, func=13
@@ -401,7 +401,7 @@ GPIO_PANIC:illegal pin=412776091
 TRACE: about to set bad fn: pin=412776091, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=2, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1424268980, func=14
@@ -409,7 +409,7 @@ GPIO_PANIC:illegal pin=1424268980
 TRACE: about to set bad fn: pin=1424268980, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=2, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1911759956, func=15
@@ -489,7 +489,7 @@ TRACE: about to set bad fn: pin=3, func=7
 TRACE: about to set bad fn: pin=1937477084, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=3, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=3, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1827336327, func=8
@@ -497,7 +497,7 @@ GPIO_PANIC:illegal pin=1827336327
 TRACE: about to set bad fn: pin=1827336327, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=3, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=3, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=572660336, func=9
@@ -505,7 +505,7 @@ GPIO_PANIC:illegal pin=572660336
 TRACE: about to set bad fn: pin=572660336, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=3, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=3, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1159126505, func=10
@@ -513,7 +513,7 @@ GPIO_PANIC:illegal pin=1159126505
 TRACE: about to set bad fn: pin=1159126505, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=3, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=3, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=805750846, func=11
@@ -521,7 +521,7 @@ GPIO_PANIC:illegal pin=805750846
 TRACE: about to set bad fn: pin=805750846, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=3, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=3, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1632621729, func=12
@@ -529,7 +529,7 @@ GPIO_PANIC:illegal pin=1632621729
 TRACE: about to set bad fn: pin=1632621729, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=3, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=3, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1100661313, func=13
@@ -537,7 +537,7 @@ GPIO_PANIC:illegal pin=1100661313
 TRACE: about to set bad fn: pin=1100661313, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=3, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=3, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1433925857, func=14
@@ -545,7 +545,7 @@ GPIO_PANIC:illegal pin=1433925857
 TRACE: about to set bad fn: pin=1433925857, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=3, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=3, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1141616124, func=15
@@ -625,7 +625,7 @@ TRACE: about to set bad fn: pin=4, func=7
 TRACE: about to set bad fn: pin=1374344043, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=4, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=4, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=760313750, func=8
@@ -633,7 +633,7 @@ GPIO_PANIC:illegal pin=760313750
 TRACE: about to set bad fn: pin=760313750, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=4, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=4, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1477171087, func=9
@@ -641,7 +641,7 @@ GPIO_PANIC:illegal pin=1477171087
 TRACE: about to set bad fn: pin=1477171087, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=4, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=4, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=356426808, func=10
@@ -649,7 +649,7 @@ GPIO_PANIC:illegal pin=356426808
 TRACE: about to set bad fn: pin=356426808, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=4, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=4, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=945117276, func=11
@@ -657,7 +657,7 @@ GPIO_PANIC:illegal pin=945117276
 TRACE: about to set bad fn: pin=945117276, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=4, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=4, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1889947178, func=12
@@ -665,7 +665,7 @@ GPIO_PANIC:illegal pin=1889947178
 TRACE: about to set bad fn: pin=1889947178, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=4, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=4, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1780695788, func=13
@@ -673,7 +673,7 @@ GPIO_PANIC:illegal pin=1780695788
 TRACE: about to set bad fn: pin=1780695788, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=4, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=4, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=709393584, func=14
@@ -681,7 +681,7 @@ GPIO_PANIC:illegal pin=709393584
 TRACE: about to set bad fn: pin=709393584, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=4, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=4, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=491705403, func=15
@@ -761,7 +761,7 @@ TRACE: about to set bad fn: pin=5, func=7
 TRACE: about to set bad fn: pin=943947739, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=5, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=5, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1984210012, func=8
@@ -769,7 +769,7 @@ GPIO_PANIC:illegal pin=1984210012
 TRACE: about to set bad fn: pin=1984210012, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=5, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=5, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=855636226, func=9
@@ -777,7 +777,7 @@ GPIO_PANIC:illegal pin=855636226
 TRACE: about to set bad fn: pin=855636226, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=5, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=5, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1749698586, func=10
@@ -785,7 +785,7 @@ GPIO_PANIC:illegal pin=1749698586
 TRACE: about to set bad fn: pin=1749698586, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=5, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=5, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1469348094, func=11
@@ -793,7 +793,7 @@ GPIO_PANIC:illegal pin=1469348094
 TRACE: about to set bad fn: pin=1469348094, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=5, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=5, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1956297539, func=12
@@ -801,7 +801,7 @@ GPIO_PANIC:illegal pin=1956297539
 TRACE: about to set bad fn: pin=1956297539, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=5, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=5, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1036140795, func=13
@@ -809,7 +809,7 @@ GPIO_PANIC:illegal pin=1036140795
 TRACE: about to set bad fn: pin=1036140795, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=5, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=5, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=463480570, func=14
@@ -817,7 +817,7 @@ GPIO_PANIC:illegal pin=463480570
 TRACE: about to set bad fn: pin=463480570, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=5, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=5, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2040651434, func=15
@@ -897,7 +897,7 @@ TRACE: about to set bad fn: pin=6, func=7
 TRACE: about to set bad fn: pin=1687926652, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=6, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=6, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=660260756, func=8
@@ -905,7 +905,7 @@ GPIO_PANIC:illegal pin=660260756
 TRACE: about to set bad fn: pin=660260756, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=6, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=6, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=959997301, func=9
@@ -913,7 +913,7 @@ GPIO_PANIC:illegal pin=959997301
 TRACE: about to set bad fn: pin=959997301, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=6, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=6, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=485560280, func=10
@@ -921,7 +921,7 @@ GPIO_PANIC:illegal pin=485560280
 TRACE: about to set bad fn: pin=485560280, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=6, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=6, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=402724286, func=11
@@ -929,7 +929,7 @@ GPIO_PANIC:illegal pin=402724286
 TRACE: about to set bad fn: pin=402724286, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=6, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=6, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=593209441, func=12
@@ -937,7 +937,7 @@ GPIO_PANIC:illegal pin=593209441
 TRACE: about to set bad fn: pin=593209441, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=6, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=6, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1194953865, func=13
@@ -945,7 +945,7 @@ GPIO_PANIC:illegal pin=1194953865
 TRACE: about to set bad fn: pin=1194953865, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=6, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=6, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=894429689, func=14
@@ -953,7 +953,7 @@ GPIO_PANIC:illegal pin=894429689
 TRACE: about to set bad fn: pin=894429689, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=6, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=6, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=364228444, func=15
@@ -1033,7 +1033,7 @@ TRACE: about to set bad fn: pin=7, func=7
 TRACE: about to set bad fn: pin=1469834481, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=7, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=7, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=822890675, func=8
@@ -1041,7 +1041,7 @@ GPIO_PANIC:illegal pin=822890675
 TRACE: about to set bad fn: pin=822890675, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=7, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=7, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1610120709, func=9
@@ -1049,7 +1049,7 @@ GPIO_PANIC:illegal pin=1610120709
 TRACE: about to set bad fn: pin=1610120709, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=7, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=7, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=791698927, func=10
@@ -1057,7 +1057,7 @@ GPIO_PANIC:illegal pin=791698927
 TRACE: about to set bad fn: pin=791698927, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=7, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=7, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=631704567, func=11
@@ -1065,7 +1065,7 @@ GPIO_PANIC:illegal pin=631704567
 TRACE: about to set bad fn: pin=631704567, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=7, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=7, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=498777856, func=12
@@ -1073,7 +1073,7 @@ GPIO_PANIC:illegal pin=498777856
 TRACE: about to set bad fn: pin=498777856, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=7, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=7, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1255179497, func=13
@@ -1081,7 +1081,7 @@ GPIO_PANIC:illegal pin=1255179497
 TRACE: about to set bad fn: pin=1255179497, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=7, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=7, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=524872353, func=14
@@ -1089,7 +1089,7 @@ GPIO_PANIC:illegal pin=524872353
 TRACE: about to set bad fn: pin=524872353, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=7, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=7, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=327254586, func=15
@@ -1169,7 +1169,7 @@ TRACE: about to set bad fn: pin=8, func=7
 TRACE: about to set bad fn: pin=112805732, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=8, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=8, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1120048829, func=8
@@ -1177,7 +1177,7 @@ GPIO_PANIC:illegal pin=1120048829
 TRACE: about to set bad fn: pin=1120048829, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=8, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=8, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=378409503, func=9
@@ -1185,7 +1185,7 @@ GPIO_PANIC:illegal pin=378409503
 TRACE: about to set bad fn: pin=378409503, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=8, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=8, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=515530019, func=10
@@ -1193,7 +1193,7 @@ GPIO_PANIC:illegal pin=515530019
 TRACE: about to set bad fn: pin=515530019, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=8, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=8, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1713258270, func=11
@@ -1201,7 +1201,7 @@ GPIO_PANIC:illegal pin=1713258270
 TRACE: about to set bad fn: pin=1713258270, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=8, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=8, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1573363368, func=12
@@ -1209,7 +1209,7 @@ GPIO_PANIC:illegal pin=1573363368
 TRACE: about to set bad fn: pin=1573363368, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=8, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=8, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1409959708, func=13
@@ -1217,7 +1217,7 @@ GPIO_PANIC:illegal pin=1409959708
 TRACE: about to set bad fn: pin=1409959708, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=8, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=8, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2077486715, func=14
@@ -1225,7 +1225,7 @@ GPIO_PANIC:illegal pin=2077486715
 TRACE: about to set bad fn: pin=2077486715, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=8, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=8, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1373226340, func=15
@@ -1305,7 +1305,7 @@ TRACE: about to set bad fn: pin=9, func=7
 TRACE: about to set bad fn: pin=990892921, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=9, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=9, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1760243555, func=8
@@ -1313,7 +1313,7 @@ GPIO_PANIC:illegal pin=1760243555
 TRACE: about to set bad fn: pin=1760243555, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=9, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=9, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1231192379, func=9
@@ -1321,7 +1321,7 @@ GPIO_PANIC:illegal pin=1231192379
 TRACE: about to set bad fn: pin=1231192379, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=9, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=9, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1622597488, func=10
@@ -1329,7 +1329,7 @@ GPIO_PANIC:illegal pin=1622597488
 TRACE: about to set bad fn: pin=1622597488, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=9, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=9, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=111537764, func=11
@@ -1337,7 +1337,7 @@ GPIO_PANIC:illegal pin=111537764
 TRACE: about to set bad fn: pin=111537764, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=9, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=9, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=338888228, func=12
@@ -1345,7 +1345,7 @@ GPIO_PANIC:illegal pin=338888228
 TRACE: about to set bad fn: pin=338888228, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=9, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=9, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2147469841, func=13
@@ -1353,7 +1353,7 @@ GPIO_PANIC:illegal pin=2147469841
 TRACE: about to set bad fn: pin=2147469841, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=9, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=9, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=438792350, func=14
@@ -1361,7 +1361,7 @@ GPIO_PANIC:illegal pin=438792350
 TRACE: about to set bad fn: pin=438792350, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=9, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=9, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1911165193, func=15
@@ -1441,7 +1441,7 @@ TRACE: about to set bad fn: pin=10, func=7
 TRACE: about to set bad fn: pin=1275373743, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=10, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=10, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=387346491, func=8
@@ -1449,7 +1449,7 @@ GPIO_PANIC:illegal pin=387346491
 TRACE: about to set bad fn: pin=387346491, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=10, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=10, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=350322227, func=9
@@ -1457,7 +1457,7 @@ GPIO_PANIC:illegal pin=350322227
 TRACE: about to set bad fn: pin=350322227, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=10, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=10, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=841148365, func=10
@@ -1465,7 +1465,7 @@ GPIO_PANIC:illegal pin=841148365
 TRACE: about to set bad fn: pin=841148365, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=10, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=10, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1960709859, func=11
@@ -1473,7 +1473,7 @@ GPIO_PANIC:illegal pin=1960709859
 TRACE: about to set bad fn: pin=1960709859, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=10, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=10, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1760281936, func=12
@@ -1481,7 +1481,7 @@ GPIO_PANIC:illegal pin=1760281936
 TRACE: about to set bad fn: pin=1760281936, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=10, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=10, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=771151432, func=13
@@ -1489,7 +1489,7 @@ GPIO_PANIC:illegal pin=771151432
 TRACE: about to set bad fn: pin=771151432, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=10, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=10, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1186452551, func=14
@@ -1497,7 +1497,7 @@ GPIO_PANIC:illegal pin=1186452551
 TRACE: about to set bad fn: pin=1186452551, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=10, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=10, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1244316437, func=15
@@ -1577,7 +1577,7 @@ TRACE: about to set bad fn: pin=11, func=7
 TRACE: about to set bad fn: pin=1239036029, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=11, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=11, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1884661237, func=8
@@ -1585,7 +1585,7 @@ GPIO_PANIC:illegal pin=1884661237
 TRACE: about to set bad fn: pin=1884661237, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=11, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=11, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1605908235, func=9
@@ -1593,7 +1593,7 @@ GPIO_PANIC:illegal pin=1605908235
 TRACE: about to set bad fn: pin=1605908235, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=11, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=11, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1350573793, func=10
@@ -1601,7 +1601,7 @@ GPIO_PANIC:illegal pin=1350573793
 TRACE: about to set bad fn: pin=1350573793, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=11, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=11, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=76065818, func=11
@@ -1609,7 +1609,7 @@ GPIO_PANIC:illegal pin=76065818
 TRACE: about to set bad fn: pin=76065818, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=11, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=11, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1605894428, func=12
@@ -1617,7 +1617,7 @@ GPIO_PANIC:illegal pin=1605894428
 TRACE: about to set bad fn: pin=1605894428, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=11, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=11, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1789366143, func=13
@@ -1625,7 +1625,7 @@ GPIO_PANIC:illegal pin=1789366143
 TRACE: about to set bad fn: pin=1789366143, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=11, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=11, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1987231011, func=14
@@ -1633,7 +1633,7 @@ GPIO_PANIC:illegal pin=1987231011
 TRACE: about to set bad fn: pin=1987231011, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=11, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=11, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1875335928, func=15
@@ -1713,7 +1713,7 @@ TRACE: about to set bad fn: pin=12, func=7
 TRACE: about to set bad fn: pin=352118606, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=12, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=12, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1782436840, func=8
@@ -1721,7 +1721,7 @@ GPIO_PANIC:illegal pin=1782436840
 TRACE: about to set bad fn: pin=1782436840, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=12, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=12, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1909002904, func=9
@@ -1729,7 +1729,7 @@ GPIO_PANIC:illegal pin=1909002904
 TRACE: about to set bad fn: pin=1909002904, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=12, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=12, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=165344818, func=10
@@ -1737,7 +1737,7 @@ GPIO_PANIC:illegal pin=165344818
 TRACE: about to set bad fn: pin=165344818, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=12, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=12, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1395235128, func=11
@@ -1745,7 +1745,7 @@ GPIO_PANIC:illegal pin=1395235128
 TRACE: about to set bad fn: pin=1395235128, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=12, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=12, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=532670688, func=12
@@ -1753,7 +1753,7 @@ GPIO_PANIC:illegal pin=532670688
 TRACE: about to set bad fn: pin=532670688, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=12, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=12, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1351797369, func=13
@@ -1761,7 +1761,7 @@ GPIO_PANIC:illegal pin=1351797369
 TRACE: about to set bad fn: pin=1351797369, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=12, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=12, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=492067917, func=14
@@ -1769,7 +1769,7 @@ GPIO_PANIC:illegal pin=492067917
 TRACE: about to set bad fn: pin=492067917, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=12, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=12, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1504569917, func=15
@@ -1849,7 +1849,7 @@ TRACE: about to set bad fn: pin=13, func=7
 TRACE: about to set bad fn: pin=1096689772, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=13, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=13, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2086206725, func=8
@@ -1857,7 +1857,7 @@ GPIO_PANIC:illegal pin=2086206725
 TRACE: about to set bad fn: pin=2086206725, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=13, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=13, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=601385644, func=9
@@ -1865,7 +1865,7 @@ GPIO_PANIC:illegal pin=601385644
 TRACE: about to set bad fn: pin=601385644, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=13, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=13, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1172755590, func=10
@@ -1873,7 +1873,7 @@ GPIO_PANIC:illegal pin=1172755590
 TRACE: about to set bad fn: pin=1172755590, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=13, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=13, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1544617505, func=11
@@ -1881,7 +1881,7 @@ GPIO_PANIC:illegal pin=1544617505
 TRACE: about to set bad fn: pin=1544617505, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=13, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=13, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=243268139, func=12
@@ -1889,7 +1889,7 @@ GPIO_PANIC:illegal pin=243268139
 TRACE: about to set bad fn: pin=243268139, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=13, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=13, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1012502954, func=13
@@ -1897,7 +1897,7 @@ GPIO_PANIC:illegal pin=1012502954
 TRACE: about to set bad fn: pin=1012502954, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=13, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=13, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1272469786, func=14
@@ -1905,7 +1905,7 @@ GPIO_PANIC:illegal pin=1272469786
 TRACE: about to set bad fn: pin=1272469786, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=13, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=13, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2027907669, func=15
@@ -1985,7 +1985,7 @@ TRACE: about to set bad fn: pin=14, func=7
 TRACE: about to set bad fn: pin=1789376348, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=14, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=14, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=502278611, func=8
@@ -1993,7 +1993,7 @@ GPIO_PANIC:illegal pin=502278611
 TRACE: about to set bad fn: pin=502278611, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=14, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=14, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1450573622, func=9
@@ -2001,7 +2001,7 @@ GPIO_PANIC:illegal pin=1450573622
 TRACE: about to set bad fn: pin=1450573622, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=14, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=14, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1037127828, func=10
@@ -2009,7 +2009,7 @@ GPIO_PANIC:illegal pin=1037127828
 TRACE: about to set bad fn: pin=1037127828, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=14, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=14, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1034949299, func=11
@@ -2017,7 +2017,7 @@ GPIO_PANIC:illegal pin=1034949299
 TRACE: about to set bad fn: pin=1034949299, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=14, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=14, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=654887343, func=12
@@ -2025,7 +2025,7 @@ GPIO_PANIC:illegal pin=654887343
 TRACE: about to set bad fn: pin=654887343, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=14, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=14, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1529195746, func=13
@@ -2033,7 +2033,7 @@ GPIO_PANIC:illegal pin=1529195746
 TRACE: about to set bad fn: pin=1529195746, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=14, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=14, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=392035568, func=14
@@ -2041,7 +2041,7 @@ GPIO_PANIC:illegal pin=392035568
 TRACE: about to set bad fn: pin=392035568, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=14, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=14, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1335354340, func=15
@@ -2121,7 +2121,7 @@ TRACE: about to set bad fn: pin=15, func=7
 TRACE: about to set bad fn: pin=1308044878, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=15, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=15, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1346811305, func=8
@@ -2129,7 +2129,7 @@ GPIO_PANIC:illegal pin=1346811305
 TRACE: about to set bad fn: pin=1346811305, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=15, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=15, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1569229320, func=9
@@ -2137,7 +2137,7 @@ GPIO_PANIC:illegal pin=1569229320
 TRACE: about to set bad fn: pin=1569229320, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=15, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=15, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=705178736, func=10
@@ -2145,7 +2145,7 @@ GPIO_PANIC:illegal pin=705178736
 TRACE: about to set bad fn: pin=705178736, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=15, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=15, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1590079444, func=11
@@ -2153,7 +2153,7 @@ GPIO_PANIC:illegal pin=1590079444
 TRACE: about to set bad fn: pin=1590079444, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=15, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=15, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=434248626, func=12
@@ -2161,7 +2161,7 @@ GPIO_PANIC:illegal pin=434248626
 TRACE: about to set bad fn: pin=434248626, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=15, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=15, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1977648522, func=13
@@ -2169,7 +2169,7 @@ GPIO_PANIC:illegal pin=1977648522
 TRACE: about to set bad fn: pin=1977648522, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=15, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=15, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1470503465, func=14
@@ -2177,7 +2177,7 @@ GPIO_PANIC:illegal pin=1470503465
 TRACE: about to set bad fn: pin=1470503465, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=15, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=15, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1402586708, func=15
@@ -2257,7 +2257,7 @@ TRACE: about to set bad fn: pin=16, func=7
 TRACE: about to set bad fn: pin=238962600, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=16, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=16, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=776532036, func=8
@@ -2265,7 +2265,7 @@ GPIO_PANIC:illegal pin=776532036
 TRACE: about to set bad fn: pin=776532036, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=16, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=16, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1238433452, func=9
@@ -2273,7 +2273,7 @@ GPIO_PANIC:illegal pin=1238433452
 TRACE: about to set bad fn: pin=1238433452, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=16, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=16, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1273911899, func=10
@@ -2281,7 +2281,7 @@ GPIO_PANIC:illegal pin=1273911899
 TRACE: about to set bad fn: pin=1273911899, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=16, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=16, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1431419379, func=11
@@ -2289,7 +2289,7 @@ GPIO_PANIC:illegal pin=1431419379
 TRACE: about to set bad fn: pin=1431419379, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=16, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=16, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=620145550, func=12
@@ -2297,7 +2297,7 @@ GPIO_PANIC:illegal pin=620145550
 TRACE: about to set bad fn: pin=620145550, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=16, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=16, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1665947468, func=13
@@ -2305,7 +2305,7 @@ GPIO_PANIC:illegal pin=1665947468
 TRACE: about to set bad fn: pin=1665947468, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=16, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=16, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=619290071, func=14
@@ -2313,7 +2313,7 @@ GPIO_PANIC:illegal pin=619290071
 TRACE: about to set bad fn: pin=619290071, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=16, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=16, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=707900973, func=15
@@ -2393,7 +2393,7 @@ TRACE: about to set bad fn: pin=17, func=7
 TRACE: about to set bad fn: pin=2058657199, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=17, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=17, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1973387981, func=8
@@ -2401,7 +2401,7 @@ GPIO_PANIC:illegal pin=1973387981
 TRACE: about to set bad fn: pin=1973387981, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=17, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=17, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1642548899, func=9
@@ -2409,7 +2409,7 @@ GPIO_PANIC:illegal pin=1642548899
 TRACE: about to set bad fn: pin=1642548899, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=17, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=17, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1501252996, func=10
@@ -2417,7 +2417,7 @@ GPIO_PANIC:illegal pin=1501252996
 TRACE: about to set bad fn: pin=1501252996, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=17, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=17, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=260152959, func=11
@@ -2425,7 +2425,7 @@ GPIO_PANIC:illegal pin=260152959
 TRACE: about to set bad fn: pin=260152959, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=17, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=17, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1472713773, func=12
@@ -2433,7 +2433,7 @@ GPIO_PANIC:illegal pin=1472713773
 TRACE: about to set bad fn: pin=1472713773, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=17, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=17, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=824272813, func=13
@@ -2441,7 +2441,7 @@ GPIO_PANIC:illegal pin=824272813
 TRACE: about to set bad fn: pin=824272813, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=17, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=17, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1662739668, func=14
@@ -2449,7 +2449,7 @@ GPIO_PANIC:illegal pin=1662739668
 TRACE: about to set bad fn: pin=1662739668, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=17, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=17, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2025187190, func=15
@@ -2529,7 +2529,7 @@ TRACE: about to set bad fn: pin=18, func=7
 TRACE: about to set bad fn: pin=1953443376, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=18, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=18, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1876855542, func=8
@@ -2537,7 +2537,7 @@ GPIO_PANIC:illegal pin=1876855542
 TRACE: about to set bad fn: pin=1876855542, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=18, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=18, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1069755936, func=9
@@ -2545,7 +2545,7 @@ GPIO_PANIC:illegal pin=1069755936
 TRACE: about to set bad fn: pin=1069755936, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=18, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=18, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1237379107, func=10
@@ -2553,7 +2553,7 @@ GPIO_PANIC:illegal pin=1237379107
 TRACE: about to set bad fn: pin=1237379107, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=18, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=18, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=349517445, func=11
@@ -2561,7 +2561,7 @@ GPIO_PANIC:illegal pin=349517445
 TRACE: about to set bad fn: pin=349517445, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=18, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=18, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=588219756, func=12
@@ -2569,7 +2569,7 @@ GPIO_PANIC:illegal pin=588219756
 TRACE: about to set bad fn: pin=588219756, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=18, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=18, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1856669179, func=13
@@ -2577,7 +2577,7 @@ GPIO_PANIC:illegal pin=1856669179
 TRACE: about to set bad fn: pin=1856669179, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=18, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=18, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1057418418, func=14
@@ -2585,7 +2585,7 @@ GPIO_PANIC:illegal pin=1057418418
 TRACE: about to set bad fn: pin=1057418418, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=18, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=18, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=995706887, func=15
@@ -2665,7 +2665,7 @@ TRACE: about to set bad fn: pin=19, func=7
 TRACE: about to set bad fn: pin=1295166342, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=19, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=19, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1057467587, func=8
@@ -2673,7 +2673,7 @@ GPIO_PANIC:illegal pin=1057467587
 TRACE: about to set bad fn: pin=1057467587, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=19, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=19, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1799878206, func=9
@@ -2681,7 +2681,7 @@ GPIO_PANIC:illegal pin=1799878206
 TRACE: about to set bad fn: pin=1799878206, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=19, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=19, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1555319301, func=10
@@ -2689,7 +2689,7 @@ GPIO_PANIC:illegal pin=1555319301
 TRACE: about to set bad fn: pin=1555319301, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=19, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=19, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=382697713, func=11
@@ -2697,7 +2697,7 @@ GPIO_PANIC:illegal pin=382697713
 TRACE: about to set bad fn: pin=382697713, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=19, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=19, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=476667372, func=12
@@ -2705,7 +2705,7 @@ GPIO_PANIC:illegal pin=476667372
 TRACE: about to set bad fn: pin=476667372, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=19, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=19, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1070575321, func=13
@@ -2713,7 +2713,7 @@ GPIO_PANIC:illegal pin=1070575321
 TRACE: about to set bad fn: pin=1070575321, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=19, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=19, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=260401255, func=14
@@ -2721,7 +2721,7 @@ GPIO_PANIC:illegal pin=260401255
 TRACE: about to set bad fn: pin=260401255, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=19, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=19, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=296864819, func=15
@@ -2801,7 +2801,7 @@ TRACE: about to set bad fn: pin=20, func=7
 TRACE: about to set bad fn: pin=1065311705, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=20, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=20, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=719346228, func=8
@@ -2809,7 +2809,7 @@ GPIO_PANIC:illegal pin=719346228
 TRACE: about to set bad fn: pin=719346228, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=20, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=20, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=846811127, func=9
@@ -2817,7 +2817,7 @@ GPIO_PANIC:illegal pin=846811127
 TRACE: about to set bad fn: pin=846811127, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=20, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=20, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1414829150, func=10
@@ -2825,7 +2825,7 @@ GPIO_PANIC:illegal pin=1414829150
 TRACE: about to set bad fn: pin=1414829150, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=20, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=20, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1307565984, func=11
@@ -2833,7 +2833,7 @@ GPIO_PANIC:illegal pin=1307565984
 TRACE: about to set bad fn: pin=1307565984, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=20, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=20, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=555996658, func=12
@@ -2841,7 +2841,7 @@ GPIO_PANIC:illegal pin=555996658
 TRACE: about to set bad fn: pin=555996658, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=20, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=20, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=324763920, func=13
@@ -2849,7 +2849,7 @@ GPIO_PANIC:illegal pin=324763920
 TRACE: about to set bad fn: pin=324763920, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=20, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=20, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=155789224, func=14
@@ -2857,7 +2857,7 @@ GPIO_PANIC:illegal pin=155789224
 TRACE: about to set bad fn: pin=155789224, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=20, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=20, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=231602422, func=15
@@ -2937,7 +2937,7 @@ TRACE: about to set bad fn: pin=21, func=7
 TRACE: about to set bad fn: pin=1253207672, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=21, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=21, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=570073850, func=8
@@ -2945,7 +2945,7 @@ GPIO_PANIC:illegal pin=570073850
 TRACE: about to set bad fn: pin=570073850, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=21, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=21, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1414647625, func=9
@@ -2953,7 +2953,7 @@ GPIO_PANIC:illegal pin=1414647625
 TRACE: about to set bad fn: pin=1414647625, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=21, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=21, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1635905385, func=10
@@ -2961,7 +2961,7 @@ GPIO_PANIC:illegal pin=1635905385
 TRACE: about to set bad fn: pin=1635905385, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=21, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=21, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1046741222, func=11
@@ -2969,7 +2969,7 @@ GPIO_PANIC:illegal pin=1046741222
 TRACE: about to set bad fn: pin=1046741222, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=21, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=21, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=337739299, func=12
@@ -2977,7 +2977,7 @@ GPIO_PANIC:illegal pin=337739299
 TRACE: about to set bad fn: pin=337739299, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=21, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=21, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1896306640, func=13
@@ -2985,7 +2985,7 @@ GPIO_PANIC:illegal pin=1896306640
 TRACE: about to set bad fn: pin=1896306640, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=21, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=21, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1343606042, func=14
@@ -2993,7 +2993,7 @@ GPIO_PANIC:illegal pin=1343606042
 TRACE: about to set bad fn: pin=1343606042, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=21, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=21, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1111783898, func=15
@@ -3073,7 +3073,7 @@ TRACE: about to set bad fn: pin=22, func=7
 TRACE: about to set bad fn: pin=1566288819, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=22, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=22, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1371499336, func=8
@@ -3081,7 +3081,7 @@ GPIO_PANIC:illegal pin=1371499336
 TRACE: about to set bad fn: pin=1371499336, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=22, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=22, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2114937732, func=9
@@ -3089,7 +3089,7 @@ GPIO_PANIC:illegal pin=2114937732
 TRACE: about to set bad fn: pin=2114937732, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=22, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=22, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=726371155, func=10
@@ -3097,7 +3097,7 @@ GPIO_PANIC:illegal pin=726371155
 TRACE: about to set bad fn: pin=726371155, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=22, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=22, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1927495994, func=11
@@ -3105,7 +3105,7 @@ GPIO_PANIC:illegal pin=1927495994
 TRACE: about to set bad fn: pin=1927495994, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=22, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=22, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=292218004, func=12
@@ -3113,7 +3113,7 @@ GPIO_PANIC:illegal pin=292218004
 TRACE: about to set bad fn: pin=292218004, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=22, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=22, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=882160379, func=13
@@ -3121,7 +3121,7 @@ GPIO_PANIC:illegal pin=882160379
 TRACE: about to set bad fn: pin=882160379, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=22, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=22, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=11614769, func=14
@@ -3129,7 +3129,7 @@ GPIO_PANIC:illegal pin=11614769
 TRACE: about to set bad fn: pin=11614769, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=22, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=22, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1682085273, func=15
@@ -3209,7 +3209,7 @@ TRACE: about to set bad fn: pin=23, func=7
 TRACE: about to set bad fn: pin=2118421993, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=23, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=23, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1520223205, func=8
@@ -3217,7 +3217,7 @@ GPIO_PANIC:illegal pin=1520223205
 TRACE: about to set bad fn: pin=1520223205, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=23, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=23, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=452867621, func=9
@@ -3225,7 +3225,7 @@ GPIO_PANIC:illegal pin=452867621
 TRACE: about to set bad fn: pin=452867621, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=23, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=23, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1017679567, func=10
@@ -3233,7 +3233,7 @@ GPIO_PANIC:illegal pin=1017679567
 TRACE: about to set bad fn: pin=1017679567, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=23, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=23, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1857962504, func=11
@@ -3241,7 +3241,7 @@ GPIO_PANIC:illegal pin=1857962504
 TRACE: about to set bad fn: pin=1857962504, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=23, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=23, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=201690613, func=12
@@ -3249,7 +3249,7 @@ GPIO_PANIC:illegal pin=201690613
 TRACE: about to set bad fn: pin=201690613, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=23, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=23, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=213801961, func=13
@@ -3257,7 +3257,7 @@ GPIO_PANIC:illegal pin=213801961
 TRACE: about to set bad fn: pin=213801961, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=23, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=23, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=822262754, func=14
@@ -3265,7 +3265,7 @@ GPIO_PANIC:illegal pin=822262754
 TRACE: about to set bad fn: pin=822262754, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=23, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=23, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=648031326, func=15
@@ -3345,7 +3345,7 @@ TRACE: about to set bad fn: pin=24, func=7
 TRACE: about to set bad fn: pin=1486222842, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=24, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=24, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=950390868, func=8
@@ -3353,7 +3353,7 @@ GPIO_PANIC:illegal pin=950390868
 TRACE: about to set bad fn: pin=950390868, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=24, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=24, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=255789528, func=9
@@ -3361,7 +3361,7 @@ GPIO_PANIC:illegal pin=255789528
 TRACE: about to set bad fn: pin=255789528, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=24, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=24, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1266235189, func=10
@@ -3369,7 +3369,7 @@ GPIO_PANIC:illegal pin=1266235189
 TRACE: about to set bad fn: pin=1266235189, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=24, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=24, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1242608872, func=11
@@ -3377,7 +3377,7 @@ GPIO_PANIC:illegal pin=1242608872
 TRACE: about to set bad fn: pin=1242608872, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=24, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=24, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1137949908, func=12
@@ -3385,7 +3385,7 @@ GPIO_PANIC:illegal pin=1137949908
 TRACE: about to set bad fn: pin=1137949908, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=24, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=24, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1277849958, func=13
@@ -3393,7 +3393,7 @@ GPIO_PANIC:illegal pin=1277849958
 TRACE: about to set bad fn: pin=1277849958, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=24, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=24, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=777210498, func=14
@@ -3401,7 +3401,7 @@ GPIO_PANIC:illegal pin=777210498
 TRACE: about to set bad fn: pin=777210498, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=24, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=24, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=653448036, func=15
@@ -3481,7 +3481,7 @@ TRACE: about to set bad fn: pin=25, func=7
 TRACE: about to set bad fn: pin=501772890, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=25, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=25, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1781999754, func=8
@@ -3489,7 +3489,7 @@ GPIO_PANIC:illegal pin=1781999754
 TRACE: about to set bad fn: pin=1781999754, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=25, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=25, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=150517567, func=9
@@ -3497,7 +3497,7 @@ GPIO_PANIC:illegal pin=150517567
 TRACE: about to set bad fn: pin=150517567, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=25, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=25, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=212251746, func=10
@@ -3505,7 +3505,7 @@ GPIO_PANIC:illegal pin=212251746
 TRACE: about to set bad fn: pin=212251746, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=25, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=25, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1983690368, func=11
@@ -3513,7 +3513,7 @@ GPIO_PANIC:illegal pin=1983690368
 TRACE: about to set bad fn: pin=1983690368, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=25, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=25, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=364319529, func=12
@@ -3521,7 +3521,7 @@ GPIO_PANIC:illegal pin=364319529
 TRACE: about to set bad fn: pin=364319529, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=25, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=25, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1034514500, func=13
@@ -3529,7 +3529,7 @@ GPIO_PANIC:illegal pin=1034514500
 TRACE: about to set bad fn: pin=1034514500, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=25, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=25, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=484238046, func=14
@@ -3537,7 +3537,7 @@ GPIO_PANIC:illegal pin=484238046
 TRACE: about to set bad fn: pin=484238046, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=25, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=25, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1775473788, func=15
@@ -3617,7 +3617,7 @@ TRACE: about to set bad fn: pin=26, func=7
 TRACE: about to set bad fn: pin=552910253, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=26, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=26, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1671294892, func=8
@@ -3625,7 +3625,7 @@ GPIO_PANIC:illegal pin=1671294892
 TRACE: about to set bad fn: pin=1671294892, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=26, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=26, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1344247686, func=9
@@ -3633,7 +3633,7 @@ GPIO_PANIC:illegal pin=1344247686
 TRACE: about to set bad fn: pin=1344247686, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=26, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=26, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1795519125, func=10
@@ -3641,7 +3641,7 @@ GPIO_PANIC:illegal pin=1795519125
 TRACE: about to set bad fn: pin=1795519125, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=26, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=26, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=661761152, func=11
@@ -3649,7 +3649,7 @@ GPIO_PANIC:illegal pin=661761152
 TRACE: about to set bad fn: pin=661761152, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=26, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=26, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=474613996, func=12
@@ -3657,7 +3657,7 @@ GPIO_PANIC:illegal pin=474613996
 TRACE: about to set bad fn: pin=474613996, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=26, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=26, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=425245975, func=13
@@ -3665,7 +3665,7 @@ GPIO_PANIC:illegal pin=425245975
 TRACE: about to set bad fn: pin=425245975, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=26, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=26, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1315209188, func=14
@@ -3673,7 +3673,7 @@ GPIO_PANIC:illegal pin=1315209188
 TRACE: about to set bad fn: pin=1315209188, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=26, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=26, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=235649157, func=15
@@ -3753,7 +3753,7 @@ TRACE: about to set bad fn: pin=27, func=7
 TRACE: about to set bad fn: pin=496060028, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=27, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=27, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=828388027, func=8
@@ -3761,7 +3761,7 @@ GPIO_PANIC:illegal pin=828388027
 TRACE: about to set bad fn: pin=828388027, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=27, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=27, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1144278050, func=9
@@ -3769,7 +3769,7 @@ GPIO_PANIC:illegal pin=1144278050
 TRACE: about to set bad fn: pin=1144278050, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=27, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=27, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=332266748, func=10
@@ -3777,7 +3777,7 @@ GPIO_PANIC:illegal pin=332266748
 TRACE: about to set bad fn: pin=332266748, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=27, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=27, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1192707556, func=11
@@ -3785,7 +3785,7 @@ GPIO_PANIC:illegal pin=1192707556
 TRACE: about to set bad fn: pin=1192707556, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=27, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=27, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=31308902, func=12
@@ -3793,7 +3793,7 @@ GPIO_PANIC:illegal pin=31308902
 TRACE: about to set bad fn: pin=31308902, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=27, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=27, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=816504794, func=13
@@ -3801,7 +3801,7 @@ GPIO_PANIC:illegal pin=816504794
 TRACE: about to set bad fn: pin=816504794, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=27, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=27, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=820697697, func=14
@@ -3809,7 +3809,7 @@ GPIO_PANIC:illegal pin=820697697
 TRACE: about to set bad fn: pin=820697697, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=27, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=27, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=655858699, func=15
@@ -3889,7 +3889,7 @@ TRACE: about to set bad fn: pin=28, func=7
 TRACE: about to set bad fn: pin=1498617647, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=28, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=28, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=669908538, func=8
@@ -3897,7 +3897,7 @@ GPIO_PANIC:illegal pin=669908538
 TRACE: about to set bad fn: pin=669908538, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=28, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=28, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1387036159, func=9
@@ -3905,7 +3905,7 @@ GPIO_PANIC:illegal pin=1387036159
 TRACE: about to set bad fn: pin=1387036159, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=28, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=28, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=12895151, func=10
@@ -3913,7 +3913,7 @@ GPIO_PANIC:illegal pin=12895151
 TRACE: about to set bad fn: pin=12895151, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=28, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=28, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1144522535, func=11
@@ -3921,7 +3921,7 @@ GPIO_PANIC:illegal pin=1144522535
 TRACE: about to set bad fn: pin=1144522535, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=28, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=28, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1812282134, func=12
@@ -3929,7 +3929,7 @@ GPIO_PANIC:illegal pin=1812282134
 TRACE: about to set bad fn: pin=1812282134, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=28, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=28, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1328104339, func=13
@@ -3937,7 +3937,7 @@ GPIO_PANIC:illegal pin=1328104339
 TRACE: about to set bad fn: pin=1328104339, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=28, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=28, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1380171692, func=14
@@ -3945,7 +3945,7 @@ GPIO_PANIC:illegal pin=1380171692
 TRACE: about to set bad fn: pin=1380171692, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=28, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=28, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1113502215, func=15
@@ -4025,7 +4025,7 @@ TRACE: about to set bad fn: pin=29, func=7
 TRACE: about to set bad fn: pin=136495343, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=29, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=29, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1472576335, func=8
@@ -4033,7 +4033,7 @@ GPIO_PANIC:illegal pin=1472576335
 TRACE: about to set bad fn: pin=1472576335, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=29, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=29, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=402903177, func=9
@@ -4041,7 +4041,7 @@ GPIO_PANIC:illegal pin=402903177
 TRACE: about to set bad fn: pin=402903177, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=29, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=29, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1329202900, func=10
@@ -4049,7 +4049,7 @@ GPIO_PANIC:illegal pin=1329202900
 TRACE: about to set bad fn: pin=1329202900, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=29, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=29, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1503885238, func=11
@@ -4057,7 +4057,7 @@ GPIO_PANIC:illegal pin=1503885238
 TRACE: about to set bad fn: pin=1503885238, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=29, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=29, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1219407971, func=12
@@ -4065,7 +4065,7 @@ GPIO_PANIC:illegal pin=1219407971
 TRACE: about to set bad fn: pin=1219407971, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=29, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=29, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2416949, func=13
@@ -4073,7 +4073,7 @@ GPIO_PANIC:illegal pin=2416949
 TRACE: about to set bad fn: pin=2416949, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=29, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=29, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=12260289, func=14
@@ -4081,7 +4081,7 @@ GPIO_PANIC:illegal pin=12260289
 TRACE: about to set bad fn: pin=12260289, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=29, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=29, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=655495367, func=15
@@ -4161,7 +4161,7 @@ TRACE: about to set bad fn: pin=30, func=7
 TRACE: about to set bad fn: pin=1402961682, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=30, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=30, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=672655340, func=8
@@ -4169,7 +4169,7 @@ GPIO_PANIC:illegal pin=672655340
 TRACE: about to set bad fn: pin=672655340, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=30, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=30, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1900553541, func=9
@@ -4177,7 +4177,7 @@ GPIO_PANIC:illegal pin=1900553541
 TRACE: about to set bad fn: pin=1900553541, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=30, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=30, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=400000569, func=10
@@ -4185,7 +4185,7 @@ GPIO_PANIC:illegal pin=400000569
 TRACE: about to set bad fn: pin=400000569, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=30, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=30, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=337453826, func=11
@@ -4193,7 +4193,7 @@ GPIO_PANIC:illegal pin=337453826
 TRACE: about to set bad fn: pin=337453826, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=30, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=30, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1081174232, func=12
@@ -4201,7 +4201,7 @@ GPIO_PANIC:illegal pin=1081174232
 TRACE: about to set bad fn: pin=1081174232, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=30, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=30, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1780172261, func=13
@@ -4209,7 +4209,7 @@ GPIO_PANIC:illegal pin=1780172261
 TRACE: about to set bad fn: pin=1780172261, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=30, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=30, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1450956042, func=14
@@ -4217,7 +4217,7 @@ GPIO_PANIC:illegal pin=1450956042
 TRACE: about to set bad fn: pin=1450956042, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=30, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=30, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1941690360, func=15
@@ -4297,7 +4297,7 @@ TRACE: about to set bad fn: pin=31, func=7
 TRACE: about to set bad fn: pin=500618996, func=7
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=31, func=8
-GPIO_PANIC:illegal function=8
+GPIO_PANIC:illegal func=8
 TRACE: about to set bad fn: pin=31, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1989806367, func=8
@@ -4305,7 +4305,7 @@ GPIO_PANIC:illegal pin=1989806367
 TRACE: about to set bad fn: pin=1989806367, func=8
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=31, func=9
-GPIO_PANIC:illegal function=9
+GPIO_PANIC:illegal func=9
 TRACE: about to set bad fn: pin=31, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1184214677, func=9
@@ -4313,7 +4313,7 @@ GPIO_PANIC:illegal pin=1184214677
 TRACE: about to set bad fn: pin=1184214677, func=9
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=31, func=10
-GPIO_PANIC:illegal function=10
+GPIO_PANIC:illegal func=a
 TRACE: about to set bad fn: pin=31, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2004504234, func=10
@@ -4321,7 +4321,7 @@ GPIO_PANIC:illegal pin=2004504234
 TRACE: about to set bad fn: pin=2004504234, func=10
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=31, func=11
-GPIO_PANIC:illegal function=11
+GPIO_PANIC:illegal func=b
 TRACE: about to set bad fn: pin=31, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1061730690, func=11
@@ -4329,7 +4329,7 @@ GPIO_PANIC:illegal pin=1061730690
 TRACE: about to set bad fn: pin=1061730690, func=11
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=31, func=12
-GPIO_PANIC:illegal function=12
+GPIO_PANIC:illegal func=c
 TRACE: about to set bad fn: pin=31, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1186631626, func=12
@@ -4337,7 +4337,7 @@ GPIO_PANIC:illegal pin=1186631626
 TRACE: about to set bad fn: pin=1186631626, func=12
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=31, func=13
-GPIO_PANIC:illegal function=13
+GPIO_PANIC:illegal func=d
 TRACE: about to set bad fn: pin=31, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=2016764524, func=13
@@ -4345,7 +4345,7 @@ GPIO_PANIC:illegal pin=2016764524
 TRACE: about to set bad fn: pin=2016764524, func=13
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=31, func=14
-GPIO_PANIC:illegal function=14
+GPIO_PANIC:illegal func=e
 TRACE: about to set bad fn: pin=31, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1717226057, func=14
@@ -4353,7 +4353,7 @@ GPIO_PANIC:illegal pin=1717226057
 TRACE: about to set bad fn: pin=1717226057, func=14
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=31, func=15
-GPIO_PANIC:illegal function=15
+GPIO_PANIC:illegal func=f
 TRACE: about to set bad fn: pin=31, func=15
 TRACE: TEST crashed: exit value=1
 TRACE: about to set bad fn: pin=1748349614, func=15

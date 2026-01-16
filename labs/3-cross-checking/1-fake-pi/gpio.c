@@ -46,18 +46,19 @@ enum {
 // NOTE: fsel0, fsel1, fsel2 are contiguous in memory, so you
 // can (and should) use ptr calculations versus if-statements!
 void gpio_set_output(unsigned pin) {
-    if(pin > GPIO_MAX_PIN)
-        gpio_panic("illegal pin=%d\n", pin);
+//     if(pin > GPIO_MAX_PIN)
+//         gpio_panic("illegal pin=%d\n", pin);
 
-  // Implement this.
-    volatile unsigned* gpio_addr = (unsigned*) GPIO_BASE + (pin / 10);
-    volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
-    volatile unsigned value = get32(gpio_addr);
+//   // Implement this.
+//     volatile unsigned* gpio_addr = (unsigned*) GPIO_BASE + (pin / 10);
+//     volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
+//     volatile unsigned value = get32(gpio_addr);
 
-    value &= ~mask_n;
-    value |= 0b001 << (3 * (pin % 10));
+//     value &= ~mask_n;
+//     value |= 0b001 << (3 * (pin % 10));
 
-    put32(gpio_addr, value);
+//     put32(gpio_addr, value);
+    gpio_set_function(pin, GPIO_FUNC_OUTPUT);
 }
 
 // Set GPIO <pin> = on.
@@ -100,18 +101,20 @@ void gpio_write(unsigned pin, unsigned v) {
 
 // set <pin> = input.
 void gpio_set_input(unsigned pin) {
-    if(pin > GPIO_MAX_PIN)
-        gpio_panic("illegal pin=%d\n", pin);
+    // if(pin > GPIO_MAX_PIN)
+    //     gpio_panic("illegal pin=%d\n", pin);
 
-    // Implement.
-    volatile unsigned* gpio_addr = (unsigned*) GPIO_BASE + (pin / 10);
-    volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
-    volatile unsigned value = get32(gpio_addr);
+    // // Implement.
+    // volatile unsigned* gpio_addr = (unsigned*) GPIO_BASE + (pin / 10);
+    // volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
+    // volatile unsigned value = get32(gpio_addr);
 
-    value &= ~mask_n;
-    // value |= 0b000 << (3 * (pin % 10)); don't need to set them for input
+    // value &= ~mask_n;
+    // // value |= 0b000 << (3 * (pin % 10)); don't need to set them for input
 
-    put32(gpio_addr, value);
+    // put32(gpio_addr, value);
+
+    gpio_set_function(pin, GPIO_FUNC_INPUT);
 }
 
 // Return 1 if <pin> is on, 0 if not.
@@ -189,16 +192,16 @@ void gpio_set_function(unsigned pin, gpio_func_t function) {
     if(pin > GPIO_MAX_PIN)
         gpio_panic("illegal pin=%d\n", pin);
 
-    if(function > GPIO_MAX_FUNCTION)
-        gpio_panic("illegal function=%d\n", function);
+    if((function & 0b111) != function)
+        gpio_panic("illegal func=%x\n", function);
 
   // Implement this.
-    volatile unsigned* gpio_addr = (unsigned*) GPIO_BASE + (pin / 10);
-    volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
-    volatile unsigned value = get32(gpio_addr);
+    volatile unsigned int gpio_addr = (unsigned) GPIO_BASE + 4 * (pin / 10);
+    volatile unsigned int mask_n = 0b111 << (3 * (pin % 10));
+    volatile unsigned int value = GET32(gpio_addr);
 
     value &= ~mask_n;
-    value |= (unsigned)function << (3 * (pin % 10));
+    value |= function << (3 * (pin % 10));
 
-    put32(gpio_addr, value);
+    PUT32(gpio_addr, value);
 }
