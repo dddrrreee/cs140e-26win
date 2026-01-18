@@ -85,7 +85,7 @@ DEPS += $(MEMMAP) ./Makefile $(LPP)/mk/Makefile.lib.template $(DEFS)
 # if we are building libpi.a don't add it as a dependency!
 ifneq ($(LIB),libpi.a)
 ifneq ($(LIB),libpi-fp.a)
-LINK_DEPS += $(LPI)
+DEPS += $(LPI)
 # put lib first so we take symbols from there.
 # had a very weird error where a foo.o was appearing in libpi.  wth.
 LIBS += $(LIB) $(LPI) 
