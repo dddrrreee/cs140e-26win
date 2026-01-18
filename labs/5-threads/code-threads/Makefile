@@ -58,7 +58,7 @@ ifeq ($(MAKECMDGOALS),checkoff)
     USE_STAFF = 0
 endif
 
-include $(CS140E_2025_PATH)/libpi/mk/Makefile.robust-v2
+include $(CS140E_2026_PATH)/libpi/mk/Makefile.robust-v2
 
 
 # GREP_STR := 'TRACE:\|ERROR:\|PANIC:'
