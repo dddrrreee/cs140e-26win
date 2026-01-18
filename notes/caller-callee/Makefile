@@ -16,7 +16,7 @@ FORCE:
 clean:
 	rm -rf *~ tags *.o *.list Makefile.bak  *.d 
 
-.PHONY: clean 
+.PHONY: clean  FORCE
 
 # stop make from deleting these suffix'd files.
 # .PRECIOUS: %.list %.elf %.o
