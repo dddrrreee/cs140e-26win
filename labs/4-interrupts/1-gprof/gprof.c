@@ -28,7 +28,7 @@
  */
 
 static unsigned hist_n, pc_min, pc_max;
-static volatile unsigned *hist;
+static volatile unsigned *hist = 0;
 
 // - compute <pc_min>, <pc_max> using the 
 //   <libpi/memmap> symbols: 
@@ -36,7 +36,7 @@ static volatile unsigned *hist;
 // - allocate <hist> with <kmalloc> using <pc_min> and
 //   <pc_max> to compute code size.
 static unsigned gprof_init(void) {
-    unimplemented();
+    todo("allocate <hist> using <kmalloc>.  initialize etc\n");
     return hist_n;
 }
 
@@ -44,6 +44,7 @@ static unsigned gprof_init(void) {
 //    few lines of code
 static void gprof_inc(unsigned pc) {
     assert(pc >= pc_min && pc <= pc_max);
+    todo("make sure you bounds check\n");
     unimplemented();
 }
 
@@ -57,7 +58,7 @@ static void gprof_inc(unsigned pc) {
 //  - we expect pc's to be in GET32, PUT32, different
 //    uart routines, or rpi_wait.  (why?)
 static void gprof_dump(unsigned min_val) {
-    unimplemented();
+    todo("make sure you don't trace this routine!\n");
 }
 
 /**************************************************************
