@@ -69,6 +69,17 @@ interrupt_asm:
                         @ 2. moves <lr> into the <pc> of that
                         @    mode.
 
+.data
+format: .asciz "r0: %x, r1: %x, r2: %x, lr: %x\n"
+
+printallregs: 
+    mov r4, r3         
+    mov r3, r2          
+    mov r2, r1
+    mov r1, r0         
+    ldr r0, =format     @ Load address of format string
+    bl printk           @ Call printf
+    bx	lr
 
 @ change this to call your system call handler.
 software_interrupt_asm:
@@ -87,7 +98,29 @@ software_interrupt_asm:
     @   6 restore regs: must be identical to what got pushed 
     @     at step (1)
     @   - return from the exception (look at interrupt_asm)
-    asm_not_implemented()
+    
+    @ asm_not_implemented()
+    @ lr at 8318, want to return to 4 after
+
+    @ Same as <interrupt_asm>
+    @ mov sp, #INT_STACK_ADDR  @ Want to push old registers to the interrupt stack
+    sub   lr, lr, #4         @ Holding return address after interrupt is called                          
+
+    push  {r0-r12,lr}                                   @ Step 1, does in fact increment sp by 56
+    @                                                   @ Step 2 ??? what to do
+    mov r1, r0                                          @ Step 3 
+    mov r0, lr                                          @ Step 4
+    bl    syscall_vector                                @ Step 5
+
+    pop  {r0-r12,lr}                                   @ Step 6
+
+    @ @ mov r0, lr
+    @ @ mov r1, lr
+    @ @ bl    syscall_vector   
+    @ add    lr, lr, #4
+    @ mov r1, r0                                          @ Step 3 
+    @ mov lr, #33                                          @ Step 4
+    @ bl    syscall_vector                                @ Step 5
     movs pc, lr
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
