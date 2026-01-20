@@ -7,81 +7,109 @@
 #include "rpi.h"
 #include "cycle-count.h" // libpi/include/cycle-count.h
 
-void measure(void);
-void measure_weird(void);
+void measure(const char *msg);
 
 void notmain(void) {
     printk("\nmeasuring cost of different operations (pi A+ = 700 cyc / usec)\n");
     cycle_cnt_init();
 
-    printk("without caching:\n");
-    measure();
+    measure("cache off");
 
     caches_enable();
-    printk("with icache on first run\n");
-    measure();
-    printk("with icache on second run\n");
-    measure();
+    measure("with icache on first run");
+    // Q: if you run this?
+    // measure("with icache on second run");
 }
+
+uint32_t measure_put32(volatile uint32_t *ptr) ;
+uint32_t measure_get32(volatile uint32_t *ptr) ;
+uint32_t measure_ptr_write(volatile uint32_t *ptr);
+uint32_t measure_ptr_read(volatile uint32_t *ptr);
     
+void measure(const char *msg) {
 
-void measure(void) {
-    // simple example to measure PUT32
+    printk("------------------------------------------------------       \n");
+    printk("measuring: <%s>\n", msg);
+    
+    uint32_t x;
+
+    // Q: try switching --- does this pattern make a difference for
+    //    any measurement?
+#if 0
+    let t0 = measure_put32(&x);
+    let t1 = measure_put32(&x);
+    printk("\tcall to PUT32  =\t%d cycles\n", t0);
+    printk("\tcall to PUT32  =\t%d cycles\n", t1);
+#else
+
+    printk("\tcall to PUT32  =\t%d cycles\n", measure_put32(&x));
+    printk("\tcall to PUT32  =\t%d cycles\n", measure_put32(&x));
+#endif
+
+    enum { BASE = 0x20200000 };
+    // periph write to try with a set0 (safe)
+    let set0 = (void*)(BASE + 0x1C);
+    // periph read from level (safe)
+    let level0 = (void*)(BASE + 0x34);
+
+    // Q: why not much difference if you double?   what if you
+    // defer the printk?
+    printk("\tcall to GET32  =\t%d cycles\n", measure_get32(&x));
+    printk("\tptr write      =\t%d cycles\n", measure_ptr_write(&x));
+    printk("\tptr read       =\t%d cycles\n", measure_ptr_read(&x));
+    printk("\tperiph write   =\t%d cycles\n", measure_ptr_write(set0));
+    printk("\tperiph read    =\t%d cycles\n", measure_ptr_read(level0));
+    printk("\tnull ptr write =\t%d cycles\n", measure_ptr_write(0));
+    printk("\tnull ptr read  =\t%d cycles\n", measure_ptr_read(0));
+
+    printk("                ----------------------------       \n");
+    asm volatile(".align 5");
     let s = cycle_cnt_read();
-    PUT32(0,0);
+    *(volatile uint32_t *)0 = 4;
     let e = cycle_cnt_read();
-    printk("\tcall to PUT32=%d cycles\n", e-s);
-
-    // simple example to measure GET32
-    s = cycle_cnt_read();
-    GET32(0);
-    e = cycle_cnt_read();
-    printk("\tcall to GET=%d cycles\n", e-s);
-
-    // a bit weird :)
-    s = cycle_cnt_read();
-    *(volatile uint32_t *)0 = 4;
-    e = cycle_cnt_read();
-    printk("\tnull pointer write =%d cycles\n", e-s);
-
-    asm volatile(".align 4");
-    s = cycle_cnt_read();
-    *(volatile uint32_t *)0 = 4;
-    e = cycle_cnt_read();
     printk("\taligned null pointer write =%d cycles\n", e-s);
 
     // use macro <TIME_CYC_PRINT> to clean up a bit.
     //  see: libpi/include/cycle-count.h
     TIME_CYC_PRINT("\tread/write barrier", dev_barrier());
-    TIME_CYC_PRINT("\tread barrier", dmb());
-    TIME_CYC_PRINT("\tsafe timer", timer_get_usec());
-    TIME_CYC_PRINT("\tunsafe timer", timer_get_usec_raw());
+    TIME_CYC_PRINT("\tread barrier      ", dmb());
+    TIME_CYC_PRINT("\tsafe timer        ", timer_get_usec());
+    TIME_CYC_PRINT("\tunsafe timer      ", timer_get_usec_raw());
     // macro expansion messes up the printk
     printk("\t<cycle_cnt_read()>: %d\n", TIME_CYC(cycle_cnt_read()));
-
-    // seperate out so it's easier to see.
-    measure_weird();
-    printk("-----------------------------------------\n");
-
+    printk("------------------------------------------------------       \n");
 }
 
-// measure a weirdness with alignment.
-void measure_weird(void) {
-    printk("\n\nmeasuring a weird feature:\n");
-
-    // 8 cycles
-    asm volatile(".align 4");
+// pull these out so we can see the machine code
+uint32_t measure_put32(volatile uint32_t *ptr) {
+    asm volatile(".align 5");
     let s = cycle_cnt_read();
+        put32(ptr,0);
     let e = cycle_cnt_read();
-    printk("\tempty cycle count = measurement: %d cycles\n", e-s);
+    return e-s;
+}
+uint32_t measure_get32(volatile uint32_t *ptr) {
+    asm volatile(".align 5");
+    // simple example to measure GET32
+    let s = cycle_cnt_read();
+        get32(ptr);
+    let e = cycle_cnt_read();
+    return e-s;
+}
 
-    asm volatile(".align 4");
-    asm volatile("mov r0,r0");  // nop
-    asm volatile("mov r0,r0");
-    asm volatile("mov r0,r0");
+uint32_t measure_ptr_write(volatile uint32_t *ptr) {
+    asm volatile(".align 5");
+    // a bit weird :)
+    let s = cycle_cnt_read();
+        *ptr = 4;
+    let e = cycle_cnt_read();
+    return e-s;
+}
 
-    // about 41: "why??"
-    s = cycle_cnt_read();
-    e = cycle_cnt_read();
-    printk("\tempty cycle count = measurement: %d cycles\n", e-s);
+uint32_t measure_ptr_read(volatile uint32_t *ptr) {
+    asm volatile(".align 5");
+    let s = cycle_cnt_read();
+        uint32_t x = *ptr;
+    let e = cycle_cnt_read();
+    return e-s;
 }

@@ -1,5 +1,9 @@
 # need the makefile to give an error if this doesn't exist
-PROGS := measure.c cycles-per-sec.c mode.c
+PROGS := cycles-per-sec.c 
+PROGS += mode.c
+PROGS += weird-result.c
+PROGS += measure.c 
+
 COMMON_SRC :=
 
 # uncomment if you want it to automatically run.
