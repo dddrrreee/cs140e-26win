@@ -270,7 +270,7 @@ void notmain() {
 
     // Q: what happens if you enable cache?  Why are some parts
     // the same, some change?
-    caches_enable();
+    // caches_enable();
     unsigned iter = 0, sum = 0;
 #   define N 20
     while(cnt < N) {

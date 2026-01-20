@@ -27,6 +27,8 @@
 enable_interrupts:
     mrs r0,cpsr         @ move cpsr to r0
     bic r0,r0,#(1<<7)	@ clear 7th bit.
+    @ orr r0,r0,#(1<<4)	@ set 4th bit
+    @ bic r0,r0,#(15)	@ clear 0-3 bit.
     msr cpsr_c,r0		@ move r0 back to PSR
     bx lr		        @ return.
 
@@ -90,6 +92,9 @@ interrupt_asm:
   push  {r0-r12,lr}         @ XXX: pushing too many 
                             @ registers: only need caller
                             @ saved.
+@   push  {r0-r4,lr}         @ XXX: pushing too many 
+@                             @ registers: only need caller
+@                             @ saved.
 
   mov   r0, lr              @ Pass old pc as arg 0
   bl    interrupt_vector    @ C function: expects C 
@@ -98,11 +103,15 @@ interrupt_asm:
   pop   {r0-r12,lr} 	    @ pop integer registers
                             @ this MUST MATCH the push.
                             @ very common mistake.
+@   pop  {r0-r4,lr}         @ pop integer registers             doesn't crash, but bad reg values if different push and pop
+@                             @ this MUST MATCH the push.
+@                             @ very common mistake.
 
   @ return from interrupt handler: will re-enable general ints.
   @ Q: what happens if you do "mov" instead?
   @ Q: what other instructions could we use?
-  movs    pc, lr        @ 1: moves <spsr> into <cpsr> 
+  movs    pc, lr        @ 1: moves <spsr> into <cpsr>           THIS HALTS if mov instead, or if pc is not changed
+@   orr lr, pc, #0        @ 1: moves <spsr> into <cpsr>           THIS CRASHES if mov instead
                         @ 2. moves <lr> into the <pc> of that
                         @    mode.
 
