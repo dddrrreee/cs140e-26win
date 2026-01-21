@@ -9,4 +9,4 @@ COMMON_SRC := syscall-asm.S  interrupts-asm.S
 TTYUSB = 
 BOOTLOADER = pi-install
 
-include $(CS140E_2025_PATH)/libpi/mk/Makefile.robust-v2
+include $(CS140E_2026_PATH)/libpi/mk/Makefile.robust-v2

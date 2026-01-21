@@ -1,10 +1,15 @@
-/* Assembly code for interrupt handling.  */
+/* 
+ * Assembly code for interrupt handling.  
+ *  Good exercise: find 10 places where if you delete,
+ *  you get non-deterministic failures.
+ */
+
 #include "rpi-asm.h"
 
 /*
  * Enable/disable interrupts.
  *
- * CPSR = current program status register
+ * CPSR [A2-11] = current program status register
  *        upper bits are different carry flags.
  *        lower 8:
  *           7 6 5 4 3 2 1 0
@@ -50,9 +55,9 @@ disable_interrupts:
 _interrupt_table:
   @ Q: why can we copy these ldr jumps and have
   @ them work the same?
-  ldr pc, _reset_asm
-  ldr pc, _undefined_instruction_asm
-  ldr pc, _software_interrupt_asm
+  ldr pc, _reset_asm                    @ 0x0: Q: why this order?[A2-16]
+  ldr pc, _undefined_instruction_asm    @ 0x4
+  ldr pc, _software_interrupt_asm       @ 0x8
   ldr pc, _prefetch_abort_asm
   ldr pc, _data_abort_asm
   ldr pc, _reset_asm
@@ -84,9 +89,10 @@ interrupt_asm:
   @  - <INT_STACK_ADDR> is a physical address we reserve 
   @   for exception stacks today.  we don't do recursive
   @   exception/interupts so one stack is enough.
-  mov sp, #INT_STACK_ADDR   
+  mov sp, #INT_STACK_ADDR   @ Q: what if you delete?
   sub   lr, lr, #4
 
+  @ push regs: beter match a pop
   push  {r0-r12,lr}         @ XXX: pushing too many 
                             @ registers: only need caller
                             @ saved.
@@ -95,6 +101,7 @@ interrupt_asm:
   bl    interrupt_vector    @ C function: expects C 
                             @ calling conventions.
 
+  @ pop regs: better match push (what happens if not?)
   pop   {r0-r12,lr} 	    @ pop integer registers
                             @ this MUST MATCH the push.
                             @ very common mistake.
@@ -119,17 +126,17 @@ reset_asm:
 
 @ note: we compile this <.S> file with gcc 
 @ so that we can use C macro's to clean up.
-@ note the use of semi-colons!
+@ note the use of semi-colons!   Q: delete and what happens?
 #define unexpected(fn, offset)      \
     mov sp, #INT_STACK_ADDR;        \
     sub   r0, lr, #(offset);        \
     bl    fn
 
 @ Q: what are the right offsets for the following?
-undefined_instruction_asm:
-    unexpected(undefined_instruction_vector,4)
-software_interrupt_asm:
-    unexpected(syscall_vector,4)
+undefined_instruction_asm:                      @ A2-19
+    unexpected(undefined_instruction_vector,4)  
+software_interrupt_asm:                         @ A2-20
+    unexpected(syscall_vector,4) 
 prefetch_abort_asm:
     unexpected(prefetch_abort_vector,4)
 data_abort_asm:
@@ -139,10 +146,10 @@ data_abort_asm:
 @ simple demonstration of how to switch modes to get the
 @ banked lr.
 @
-@ note from the documents that SYSTEM has the same 
-@ registers as USER.  but, unlike user you can switch
+@ note from the documents that <SYSTEM> has the same 
+@ registers as <USER>.  but, unlike user you can switch
 @ back from it.
-#define SUPER_MODE      0b10011
+#define SUPER_MODE      0b10011     // A2-3
 get_super_lr:
 .globl get_super_lr
     mrs r1, cpsr
