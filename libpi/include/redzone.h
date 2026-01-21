@@ -8,7 +8,7 @@
 // 2. check that its still 0 when called.
 // 
 // if this ever fails you are probably writing to null.
-enum { RZ_NBYTES = 4096 };
+enum { RZ_NBYTES = 4096, RZ_SENTINAL = 0xfe };
 
 static inline int redzone_check(const char *msg) {
     volatile uint32_t *rz = (void*)0;
@@ -18,10 +18,9 @@ static inline int redzone_check(const char *msg) {
 
     unsigned nfail = 0;
     for(unsigned i = 0; i < RZ_NBYTES/4; i++) {
-        if(rz[i] != 0) {
+        if(rz[i] != RZ_SENTINAL) {
             nfail++;
-            output("non-zero redzone: off=%x, val=%x fail=%d\n", i*4,rz[i], nfail);
-        }
+            output("non-zero redzone: off=%x, val=%x fail=%d\n", i*4,rz[i], nfail); }
     }
     if(nfail)
         panic("redzone: total failures =%d\n", nfail);
@@ -30,7 +29,12 @@ static inline int redzone_check(const char *msg) {
 }
 
 static inline void redzone_init(void) {
-    memset(0, 0, RZ_NBYTES);
+    volatile uint8_t *ptr =(void*)0;
+
+    for(int i = 0; i < RZ_NBYTES; i++)
+        ptr[i] = RZ_SENTINAL;
+
+    // make sure it passes
     assert(redzone_check(0));
 }
 #endif

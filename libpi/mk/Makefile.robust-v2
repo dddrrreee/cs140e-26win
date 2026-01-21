@@ -387,7 +387,7 @@ check: $(DEPS) $(all_bins)
 # stuff.
 #
 # if you don't want to tag libpi, just comment out:
-libpi_src  +=  $(sort $(wildcard $(LPP)/*.[cS] $(LPP)/*/*.[cS]))
+libpi_src  +=  $(sort $(wildcard $(LPP)/*.[cS] $(LPP)/*/*.[cS] $(LPP)/include/*.h))
 
 # find all the .c .S and .h files we depend on.
 
@@ -462,7 +462,7 @@ print:
 	@echo "elf_objs    =<$(elf_objs)>"
 	@echo "all_bins    =<$(all_bins)>"
 	@echo "all_elf    =<$(all_elf)>"
-	@#echo "all_tags    =<$(all_tags)>"
+	@echo "all_tags    =<$(all_tags)>"
 	@echo "----------------- aux vars -----------------";
 	@echo "DEPS         =<$(DEPS)>"
 	@echo "LINK_DEPS    =<$(LINK_DEPS)>"
