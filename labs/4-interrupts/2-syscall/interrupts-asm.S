@@ -70,10 +70,10 @@ interrupt_asm:
                         @    mode.
 
 .data
-format: .asciz "r0: %x, r1: %x, r2: %x, lr: %x\n"
+format: .asciz "lr: %x, r0: %x, r1: %x\n"
 
-printallregs: 
-    mov r4, r3         
+@ Call with args of lr, r0, r1
+printallregs:         
     mov r3, r2          
     mov r2, r1
     mov r1, r0         
@@ -104,23 +104,28 @@ software_interrupt_asm:
 
     @ Same as <interrupt_asm>
     @ mov sp, #INT_STACK_ADDR  @ Want to push old registers to the interrupt stack
-    sub   lr, lr, #4         @ Holding return address after interrupt is called                          
+    ; sub   lr, lr, #4         @ Holding return address after interrupt is called   
 
-    push  {r0-r12,lr}                                   @ Step 1, does in fact increment sp by 56
-    @                                                   @ Step 2 ??? what to do
+    @ mov r2, r1
+    @ mov r1, r0
+    @ mov r0, r12
+    @ bl printallregs  
+
+
+    push  {r1-r11,lr}                                   @ Step 1, does in fact increment sp by 56
+                                                        @ Step 2 ??? what to do
     mov r1, r0                                          @ Step 3 
     mov r0, lr                                          @ Step 4
     bl    syscall_vector                                @ Step 5
+    mov r12, r0
+    pop  {r1-r11,lr}                                   @ Step 6
 
-    pop  {r0-r12,lr}                                   @ Step 6
+    @ mov r2, r1
+    @ mov r1, r0
+    @ mov r0, r12
+    @ bl printallregs  
 
-    @ @ mov r0, lr
-    @ @ mov r1, lr
-    @ @ bl    syscall_vector   
-    @ add    lr, lr, #4
-    @ mov r1, r0                                          @ Step 3 
-    @ mov lr, #33                                          @ Step 4
-    @ bl    syscall_vector                                @ Step 5
+    ; add lr, lr, #4
     movs pc, lr
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
