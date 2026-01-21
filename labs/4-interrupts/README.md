@@ -236,7 +236,7 @@ Look in `0-syscall.c` and write the needed code in:
      from the actual `swi` instruction (pointed to by `pc`).  You want
      to act on system call 1 and reject all other calls with a `-1`.
 
-     You should look in the list file to see how it's encoded and make
+     You should look in the `.list` file to see how it's encoded and make
      sure the `pc` address matches.  
 
 This doesn't take much code, but you will have to think carefully about
@@ -270,7 +270,7 @@ This is a real system call called from `USER` level.  You'll need to:
      where the `Rd` register is just a scratch register set to 0.)
 
      For hints: look at `notes/mode-bugs/bug4-asm.S` for how to roughly
-     do what you want at a different level.   You
+     do what you want at a different level.  
 
   3. Finish implementing `1-syscall.c:syscall_vector`.  This is
      mainly just checking that you are at the right level.

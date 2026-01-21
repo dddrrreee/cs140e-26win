@@ -8,23 +8,23 @@
 #include "rpi.h"
 #include "rpi-interrupts.h"
 
-
 // in syscall-asm.S
 void run_user_code_asm(void (*fn)(void), void *stack);
 
 // run <fn> at user level: <stack> must be 8 byte
 // aligned
-void run_user_code(void (*fn)(void), void *stack) {
+void run_user_code(void (*user_fn)(void), void *stack) {
     assert(stack);
     demand((unsigned)stack % 8 == 0, stack must be 8 byte aligned);
 
     // you have to implement <syscall-asm.S:run_user_code_asm>
-    // will call <user_fn> with stack pointer <sp>
-    run_user_code_asm(fn, stack);
+    // will call <user_fn> with stack pointer <stack>
+    todo("make sure to finish the code in run_user_code_asm>");
+    run_user_code_asm(user_fn, stack);
     not_reached();
 }
 
-// example of using inline assembly to get the cpsr
+// example of using inline assembly to get the <cpsr>
 // you can also use assembly routines.
 static inline uint32_t cpsr_get(void) {
     uint32_t cpsr;
@@ -44,23 +44,21 @@ static uint64_t stack[N];
 void user_fn(void) {
     uint64_t var;
 
+    // local variables should be within the start and end of the
+    // <stack> we wanted to use.
     trace("checking that stack got switched\n");
     assert(&var >= &stack[0]);
     assert(&var < &stack[N]);
-
 
     // use <cpsr_get()> above to get the current mode and check that its
     // at user level.
     unsigned mode = 0;
     todo("check that the current mode is USER_LEVEL");
 
-
     if(mode != USER_MODE)
         panic("mode = %b: expected %b\n", mode, USER_MODE);
     else
         trace("cpsr is at user level\n");
-
-
 
     void syscall_hello(void);
     trace("about to call hello\n");
@@ -72,7 +70,6 @@ void user_fn(void) {
 
     not_reached();
 }
-
 
 // pc should point to the system call instruction.
 //      can see the encoding on a3-29:  lower 24 bits hold the encoding.
