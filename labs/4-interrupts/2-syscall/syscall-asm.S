@@ -31,4 +31,15 @@ MK_FN(syscall_illegal)
 @
 @ does not return
 MK_FN(run_user_code_asm)
-    asm_not_implemented()
+
+    @ Switch to user mode
+    mrs r3,cpsr	
+    mov r4,  #USER_MODE
+    bic r3,r3, #31	@ clear first 5 bits.
+    orr r3,r3, r4
+    @ and r3,r3, #31	@ set 7th bit
+    msr cpsr_c,r3
+
+    mov sp, r1
+
+    bx r0

@@ -23,7 +23,7 @@ void interrupt_vector(unsigned pc) {
 int syscall_vector(unsigned pc, uint32_t r0) {
     uint32_t inst=0, sys_num=0;
 
-    trace("debug: <%x, %x>\n", pc, r0); 
+    // trace("debug: <%x, %x>\n", pc, r0); 
 
     // figure out the instruction and the system call number.
     // unimplemented();

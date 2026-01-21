@@ -1,6 +1,10 @@
 /* Assembly code for interrupt handling.  */
 #include "rpi-asm.h"
 
+@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@               START of normal table
+@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 @ the interrupt table that we copy to 0x0.
 @   - start = <_interrupt_table>
 @   - end = <_interrupt_table_end>
@@ -36,6 +40,54 @@ _prefetch_abort_asm:          .word prefetch_abort_asm
 _data_abort_asm:              .word data_abort_asm
 _interrupt_asm:               .word interrupt_asm
 _interrupt_table_end:   @ end of the table.
+
+@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@               END of normal table
+@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@               START of my table
+@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+@ the interrupt table that we copy to 0x0.
+@   - start = <_interrupt_table>
+@   - end = <_interrupt_table_end>
+@   - look at the disassembly
+@
+@ note: *it must be position independent since
+@ we copy it!*
+@ .globl _int_table_user
+@ .globl _int_table_user_end
+@ _int_table_user:
+@   @ Q: why can we copy these ldr jumps and have
+@   @ them work the same?
+@   ldr pc, _reset_asm
+@   ldr pc, _undefined_instruction_asm
+@   ldr pc, _software_interrupt_asm
+@   ldr pc, _prefetch_abort_asm
+@   ldr pc, _data_abort_asm
+@   ldr pc, _reset_asm
+@   ldr pc, _interrupt_asm
+@ fast_interrupt_asm:
+@   sub   lr, lr, #4 @First instr of FIQ handler
+@   push  {lr}
+@   push  {r0-r12}
+@   mov   r0, lr              @ Pass old pc
+@   bl    fast_interrupt_vector    @ C function
+@   pop   {r0-r12}
+@   ldm   sp!, {pc}^
+
+@ _reset_asm:                   .word reset_asm
+@ _undefined_instruction_asm:   .word undefined_instruction_asm
+@ _software_interrupt_asm:      .word software_interrupt_asm
+@ _prefetch_abort_asm:          .word prefetch_abort_asm
+@ _data_abort_asm:              .word data_abort_asm
+@ _interrupt_asm:               .word interrupt_asm
+@ _int_table_user_end:   @ end of the table.
+
+@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@               END of my table
+@ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 @ only handler that should run since we 
 @ only enable general interrupts
