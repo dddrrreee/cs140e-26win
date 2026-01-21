@@ -36,7 +36,7 @@ static volatile unsigned *hist = 0;
 // - allocate <hist> with <kmalloc> using <pc_min> and
 //   <pc_max> to compute code size.
 static unsigned gprof_init(void) {
-    todo("allocate <hist> using <kmalloc>.  initialize etc\n");
+    // todo("allocate <hist> using <kmalloc>.  initialize etc\n");
 
     // TODO: not sure which one is at the end
     pc_min = (unsigned)__code_start__;
@@ -51,7 +51,7 @@ static unsigned gprof_init(void) {
 //    few lines of code
 static void gprof_inc(unsigned pc) {
     assert(pc >= pc_min && pc <= pc_max);
-    todo("make sure you bounds check\n");
+    // todo("make sure you bounds check\n");
 
     // TODO: check
     unsigned index = (pc - pc_min) / 4; // don't have to make this volatile because it can be optimized I think
@@ -68,12 +68,12 @@ static void gprof_inc(unsigned pc) {
 //  - we expect pc's to be in GET32, PUT32, different
 //    uart routines, or rpi_wait.  (why?)
 static void gprof_dump(unsigned min_val) {
-    todo("make sure you don't trace this routine!\n");
+    // todo("make sure you don't trace this routine!\n");
     
     // TODO: verify that this works with incrementing
     for (volatile unsigned* ptr = hist; ptr < hist + hist_n; ptr++)
         if (*ptr > min_val)
-            printk("%d\n", ptr);
+            printk("%x: %d\n", ptr - hist + (unsigned*)pc_min, *ptr);
     
 }
 
@@ -120,7 +120,7 @@ void notmain() {
     printk("gonna enable ints globally!\n");
     enable_interrupts();
 
-    // caches_enable(); 	// Q: what happens if you enable cache?
+    caches_enable(); 	// Q: what happens if you enable cache?
     unsigned iter = 0;
     while(cnt<200) {
         printk("iter=%d: cnt = %d, period = %dusec, %x\n",
