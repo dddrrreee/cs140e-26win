@@ -279,6 +279,54 @@ If `make check` passes, congratulations!  You have a working user-level
 system call.  This small amount of code is really all there is to it.
 
 -----------------------------------------------------------------------------
+### Extension: speed up interrupt handler `3-speed`
+
+You should be able to get at least 10x, maybe 100x out of it.
+
+Speed is fun.   And you will learn a ton.  However, the the problem
+with testing a sped-up interrupt handler is that it's surprisingly
+easy to trash a register and have the simple test we did "just pass."
+For example, if the corruption doesn't change a `printk` output, then
+you might never see it.
+
+Our simple hack to change this: just compute a sha-256 over and over 
+again with interrupts on.  
+  1. It is so compute intensive that `gcc` uses the maximal number
+     of registers --- so there is a decent chance any corruption will
+     hit one.
+  2. It avalanches all the results into a single output so well that
+     if you find two inputs that have the same sha you can enjoy
+     a viral moment.  Thus, if you corrupt any register, it is highly
+     likely to produce a different sha result.
+
+As a result, it's very hard to make even a single bit error in any
+register and not have it show up.
+
+You can make a copy of 0-timer and change it as follows: 
+  1. Record the sha for some values at the start before interrupts
+  2. Turn interrupt on.
+  3. Recompute the sha(s) 1000x and check that the values are the same.
+  4. Print the time.
+
+The faster you make your interrupt handler, the lower this time will be.
+(Also: make the timer fire as often as possible!).   When you do this:
+see if there is any register you can even add 1 to and not have it
+show up as a mismatch. 
+
+```c
+    let s = timer_get_usec();
+    output("about to do sha test\n");
+    // iterate long enough.
+    for(int i = 0; i < 100000; i++) {
+        let sha_1 = sha256_one_block(input);
+        if(!sha256_cmp(ref_1, sha_1,0))
+            panic("sha mismatch: iter = %d\n", i);
+    }
+    let e = timer_get_usec();
+    output("done sha test: %d usec\n", e-s
+```
+
+-----------------------------------------------------------------------------
 ### lab extensions:
 
 There's lots of other things to do:
