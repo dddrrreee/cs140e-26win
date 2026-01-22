@@ -271,4 +271,8 @@ void * custom_c_runtime_init(void);
 // make a symbol weak.
 #define WEAK(fn) __attribute__((weak)) fn
 
+// where the final end of the [data+code+extra] is.
+void *program_end(void);
+
+
 #endif

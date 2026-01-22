@@ -34,4 +34,12 @@ SECTIONS
         __prog_end__ = .;
         __heap_start__ = .;
     }
+    /* 
+       hack for heap: default heap is 1MB so everything fits on first
+       1MB of physical address.
+     */
+    __heap_end__ = 0x100000;  /* 1MB - absolute address, takes no space */ 
+                                   
+  ASSERT(__heap_start__ <= __heap_end__, 
+             "ERROR: Program exceeds 1MB - no room  for heap!")                                                                   
 }

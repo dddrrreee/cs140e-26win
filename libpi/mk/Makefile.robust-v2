@@ -372,6 +372,9 @@ gen-binaries: $(all_bins)
 ifneq ($(CAN_EMIT), 0)
 emit: $(DEPS) $(all_bins) FORCE
 	@make -e -f $(MK_CHK) emit "TESTS=$(all_bins)"
+else
+emit: FORCE
+	$(error "CAN_EMIT=0: cannot emit!")
 endif
 
 check: $(DEPS) $(all_bins)
