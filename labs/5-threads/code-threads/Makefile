@@ -14,32 +14,33 @@
 # - "make checkoff" should give the same checksum as in the README.md
 
 
-# set this to 1 if you want the programs to run automatically.
-RUN=0
+# set this to 0 if you want the programs to NOT run automatically.
+RUN=1
+
+S := $(CS140E_2026_PATH)/libpi/staff-objs/
+STAFF_OBJS += $(S)/staff-kmalloc.o
 
 # switch these when implemented.
 # COMMON_SRC += rpi-thread-asm.S 
-STAFF_OBJS += staff-rpi-thread-asm.o
+STAFF_OBJS += $(S)/staff-rpi-thread-asm.o
 
 # switch these when implemented.
 # COMMON_SRC += rpi-thread.c
-STAFF_OBJS += staff-rpi-thread.o
-
-STAFF_OBJS += staff-kmalloc.o
-
-# checkoff skips 1 since behavior changes
+STAFF_OBJS += $(S)/staff-rpi-thread.o
 
 # all the tests.  
 
 # the different tests: start with 1, then 2, then..
-PROGS = $(wildcard [234567]-test*.c)
-PROGS = $(wildcard 7-test*.c)
-PROGS = $(wildcard 5-test*.c)
-PROGS = $(wildcard 4-test*.c)
-PROGS = $(wildcard 3-test*.c)
-PROGS = $(wildcard 2-test*.c)
+PROGS := $(wildcard [1234567]-test*.c)
+PROGS := $(wildcard 7-test*.c)
+PROGS := $(wildcard 5-test*.c)
+PROGS := $(wildcard 4-test*.c)
+PROGS := $(wildcard 3-test*.c)
+PROGS := $(wildcard 2-test*.c)
 PROGS := $(wildcard 1-test*.c)
 
+# sanity check that redzones detect errors: use this!
+PROGS := $(wildcard 0-test*.c)
 
 ######################################################################
 # should not have to modify below.
@@ -53,6 +54,7 @@ ALLPROG := $(wildcard [34567]-test*.c)
 TTYUSB = 
 BOOTLOADER = pi-install
 
+# checkoff skips 1 since behavior changes
 ifeq ($(MAKECMDGOALS),checkoff)
     PROGS = $(wildcard [234567]-test*.c)
     USE_STAFF = 0
