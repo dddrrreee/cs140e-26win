@@ -60,8 +60,8 @@ void check_cswitch_ignore_regs(void) {
 // put all the regs you *do* save during context switching
 // here [callee saved] 
 //
-// NOTE: we know we have to save r13,r14,r15 so ignore
-// them.
+// NOTE: we know we have to save r13, r14 (why?) so 
+// ignore them.
 void check_cswitch_save_regs(void) {
     todo("add all your saved registers here");
     trace("saved regs passed\n");

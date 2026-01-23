@@ -1,6 +1,6 @@
 // Write assembly code to answer: 
-//   does push change its address register before writing 
-//   to it or after?
+//   does the <push> instruction change its address register 
+//   before writing to it or after?
 // You need this for context switching.
 //
 // NOTE: to save time we give you all the code below (maybe we
@@ -32,7 +32,7 @@ void notmain() {
     uint32_t *res = push_one(&v[2], val1);
     assert(res == &v[1]);
 
-    // note this also shows you the order of writes.
+    // NOTE: this also shows you the order of writes.
     if(v[2] == val1) {
         // make sure nothing else got changed.
         assert(v[3] == 4);

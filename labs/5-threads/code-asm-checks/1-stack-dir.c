@@ -6,6 +6,9 @@
 //     original.
 //   - make sure you check the machine code make sure the
 //     compiler didn't optimize the calls away!
+//
+//   - bonus: also use inline assembly or a gcc intrinsic to get the
+//     stack pointer and compare.
 #include "rpi.h"
 
 int stack_grows_down(void) {
