@@ -1,4 +1,10 @@
+## Clarification:
+
+**NOTE**:
+  - if `make checkoff` doesn't pass with staff code: just do a pull
+
 ## Writing a non-preemptive threads package
+
 
 
 Big picture:  by the end of this lab you will have a very simple
