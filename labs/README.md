@@ -44,7 +44,6 @@ the pi and Unix side will be written by you:
     Broadcom document GPIO description.  You will use this to implement
     your own blink and a simple network between your r/pi's.
 
-====>
   - [3-cross-check](3-cross-check): you will use read-write logging
     of all loads and stores to device memory to verify that your GPIO
     code is equivalent to everyone else's.  If one person got the code
@@ -55,7 +54,6 @@ the pi and Unix side will be written by you:
     approach is that there is no magic.  A bad thing is that a single
     mistake can make a miserable quarter.  Thus, we show you modern
     (or new) tricks for checking code correctness.
-
 
 ---------------------------------------------------------------------
 ### 2. Execution: threads, interrupts, exceptions (part I)
@@ -71,13 +69,13 @@ that work well at finding bugs in novel ways.
 After four runs at the architecture manual, you will have a new
 comfort with using it.
 
-  - 4-interupts: you will walk through a simple, self-contained
-    implementation of pi interrupts (for timer-interrupts), kicking each
-    line until you understand what, how, why.  You will use these to
-    then implement a simple system call and a version of `gprof` (Unix
-    statistical profiler) in about 30 lines.  Finally, you'll write a
-    user-level system call implementation (both the code two switch from
-    privileged to user mode and the code to handle system calls).
+  - [4-interrupts](4-interrupts/): you will walk through a simple,
+    self-contained implementation of pi interrupts (for timer-interrupts),
+    kicking each line until you understand what, how, why.  You will use
+    these to then implement a simple system call and a version of `gprof`
+    (Unix statistical profiler) in about 30 lines.  Finally, you'll write
+    a user-level system call implementation (both the code two switch
+    from privileged to user mode and the code to handle system calls).
 
     Perhaps the thing I love most about this course is that because we
     write all the code ourselves, we aren't constantly fighting some
@@ -88,12 +86,15 @@ comfort with using it.
     have a result that is much much much slower and, worse, in terms
     of insight.
 
-  - 5-threads:  we build a simple, but functional
+====>
+
+  - [5-threads](5-threads):  we build a simple, but functional
     threads package.  You will write the code for non-preemptive context
     switching:  Most people don't understand such things so, once again,
     you'll leave lab knowing something many do not.   This will give you
     a second view of execution (and some depth perception of the topic)
     as well as a more fluent handle on assembly code.
+
 ---------------------------------------------------------------------
 ### 3. Going down to metal (Part II)
 

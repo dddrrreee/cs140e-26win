@@ -574,6 +574,7 @@ Basic idea (you can do any interface you want):
 
         // switch from co-routine <old> to <new>
         void co_switch(co_th_t *old, const co_th_t *new);
+
 ```
 
 Key bits:
@@ -585,6 +586,9 @@ Key bits:
   3. Co-routine switch looks similar to thread
      switching: saves registers into `old`, and loads the registers from
      `new`.
+  4. Note: you still do the weird trampoline hack that we did in 
+     threads to handle thread exit.
+  5. You can imagine providing other routines too.
 
 This interface --- or whatever one you want to design that is better! ---
 gives you the primitives to switch between independent execution contexts
