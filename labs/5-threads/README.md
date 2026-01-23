@@ -581,11 +581,12 @@ Basic idea (you can do any interface you want):
      saves registers into `old`, and loads the registers
      into `new`:
 ```c
-            void co_switch(co_th_t old, co_th_t new);
+            void co_switch(co_th_t *old, const co_th_t *new);
 ```
 
-This interface gives you the primitives to switch between independent
-execution contexts but, importantly:
+This interface --- or whatever one you want to design that is better! ---
+gives you the primitives to switch between independent execution contexts
+but, importantly:
   - There is no queue;
   - No thread scheduling;
   - Nothing else to get in the way.  Very simple.    
