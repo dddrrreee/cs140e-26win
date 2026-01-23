@@ -14,6 +14,5 @@ extern uint32_t  __bss_end__[];
 extern uint32_t  __prog_end__[];
 
 extern uint32_t  __heap_start__[];
-extern uint32_t  __heap_end__[];
 
 #endif
