@@ -488,8 +488,7 @@ The problem: if you're not careful, the natural way to do sonar is with
 blind waits where you spin in a delay loop, not doing anything else ---
 the result is that your on/off gets inaccurate and the LED looks trash.
 
-Three not very clear ways to do this:
-
+Three ways to do it:
   1. Interrupts: have the sonar in non-interrupt code, doing whatever
      logic it needs.  Then setup a timer interrupt and do the LED on/off
      in the interrupt handler.  Pretty simple to make work but gives
@@ -512,6 +511,19 @@ Three not very clear ways to do this:
 In all of these, being clean and clever with the checks that you never
 miss a deadline can turn up the complexity.
 
+Another way to go is to use a device to absorb the job of the LED on/off
+so your code can focus on the sonar.  Many different options, 
+all you will learn stuff:
+
+  1. The PWM device (see bcm2835 datasheet).
+  2. DMA (same)
+  3. Using an SPI dataline (same).
+  4. Using the SMI interface (if you can find the "unreleased
+     datasheet!).
+  5. Other methods?   I'm curious in all the different ways to 
+     blink LEDs --- let us know if you think of a cute hack.
+
+Very fun challenge.
 
 <p align="center">
   <img src="../lab-memes/threads-fr.jpg" width="400" />
