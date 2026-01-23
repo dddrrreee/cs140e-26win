@@ -35,3 +35,17 @@ Once we've received your public key, we'll generate a remote repository for you 
 ```shell
 git remote add gradecope ssh://<YOUR SUNET>@cs140e.gradecope.eeschal.net/~/gradecope-repo/.git
 ```
+
+### Checking if the autograder recognizes you
+
+Run the following
+```shell
+ssh <sunet>@cs140e.gradecope.eeschal.net gradecope-ctl hi
+```
+You should see
+```shell
+Hello, <sunet>!
+```
+
+If you see that, you're ready to go. If not, we may have not imported you yet (it's a manual process).
+
