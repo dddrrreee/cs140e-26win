@@ -555,6 +555,34 @@ in many other domains):
 
 Very fun challenge. 
 
+----------------------------------------------------------------------
+### Extensions: Co-routines
+
+What we should have done: made simple co-routines, then wrapped
+that into cooperative threads.  Basic idea: 
+  1. Keep the registers in a simple 17 entry array.  (Probably
+     worth wrapping in a structure, but we ignore that below.)
+  2. Creating a new co-routine is initializing the 17-entry
+     similar to threads (stack pointer, program counter,  and 
+     arguments)
+  2. Co-routine switch just takes the old and new arrays:
+      
+        void co_switch(uint32_t old[17], uint32_t new[17]);
+
+     Where you just pass in the arrays and switch from one
+     to the other.
+
+There is no queue, no thread scheduling, nothing.  Very simple.    As a
+result you can do very (very) fast switching from one co-routine to
+the next and have complete control over the scheduling, which lets
+you do all sorts of crazy stuff and, importantly, removes all queue
+manipulation overhead.
+
+I would strongly urge you to do something like this as an extension and
+use it to do the fast loopback discussed above.  We should probably add
+it as a homework, tbh.
+
+  1. Made co-routines that take 
 <p align="center">
   <img src="../lab-memes/threads-fr.jpg" width="400" />
 </p>
