@@ -1,45 +1,5 @@
 ## Writing a non-preemptive threads package
 
---------------------------------------------------------------------------
---------------------------------------------------------------------------
---------------------------------------------------------------------------
---------------------------------------------------------------------------
---------------------------------------------------------------------------
-***Errata***:
-
-  - In general, whenever you switch threads, set
-    `rpi-thread.c:cur_thread` to the thread you're 
-     switching to.
-
-  - When an `assert`, `demand` or `panic` happens, it will give
-    the file and line number that the problem happened.
-
-  - IF YOU GET A REDZONE ERROR: this means you are corrupting
-    one or more bytes in the first 4096 bytes of the pi memory (presumably
-    writing to a null pointer).  So fix this.  You can add more redzone
-    checks to narrow down.
-
-  - Part 1: the `1-tests-run-*.c` tests 
-    will differ in a single line in the `.out` 
-    files (since
-    you haven't implemented `rpi_exit()`).  This is
-    ok.  Just make sure they run.
-
-  - `code-asm-checks`: there are no .out files: you have to figure
-    out if the answer is right.
-  - the `code-asm-checks/Makefile`: the test is `2-where-push-one.c`
-    not `2--where-push.c`
-  - `2--where-push.c`: `push` implicitly uses the stack pointer 
-    `sp`.  so you'll have to (1) save the `sp` to a caller 
-    reg, (2) move the pointer argument to the `sp`, (3) 
-    do the `push`, (4) undo everything.
-
---------------------------------------------------------------------------
---------------------------------------------------------------------------
---------------------------------------------------------------------------
---------------------------------------------------------------------------
-
-
 ***MAKE SURE YOU***:
   - Read the [PRELAB](PRELAB.md).
   - Read the [THREAD](THREAD.md) writeup.
@@ -61,12 +21,9 @@ package has to provide an assembly routine to "context switch" from one
 thread to another.  Context switching works by:
 
    1. Saving all callee-registers from the first thread onto its stack
-      and storing
-      this new stack pointer in the thread control block.
-
+      and storing this new stack pointer in the thread control block.
    2. Loading all callee registers for the second from where they
       were saved.
-
    3. Changing the program counter value to resume the new thread.
 
 The main magic you'll do today is writing this context-switching code and
@@ -81,12 +38,22 @@ several smaller pieces.
 While today is exciting, a major sad is that a single bug can lead to
 your code jumping off into hyperspace.  As you learned in the interrupt
 lab, such bugs are hard to debug.  So before you write a bunch of code:
-
-  1. Try to make it into small, simple, testable pieces.
-  2. Add `assert` checks for your thread operations.
-     Print all sorts of stuff so you can sanity check!  Especially the
-     value of the stack pointer, the value of the register you just
-     loaded.  Don't be afraid to call C code from assembly to do so.
+  - Try to make it into small, simple, testable pieces.
+  - Add `assert` checks for your thread operations.
+    Print all sorts of stuff so you can sanity check!  Especially the
+    value of the stack pointer, the value of the register you just
+    loaded.  Don't be afraid to call C code from assembly to do so.
+  - When an `assert`, `demand` or `panic` happens, it will give
+    the file and line number that the problem happened: look at it!
+  - Use redzones to catch some memory corruption, especially a write
+    to a null pointer.  See: `code-threads/0-test-redzone.c` and 
+    `libpi/include/redzone.h`.
+  - Make sure you look at the source for each test!  It doesn't
+    make sense to blindly debug without understanding what a test does.
+  - Don't treat the tests as inert objects: if one is failing,
+    feel free to add print statements, asserts, check values.
+    None of these will change the TRACE statements (which don't use
+    line numbers).
 
 #### Before you start: make sure everything works.
 
@@ -99,8 +66,15 @@ Run `make checkoff` in the `code-threads/` directory: it should pass.
     ours.  
 4. When you switch to use your code the tests should fail initially.
 
+#### Checkoff:
 
-#### After you start: when someting does not work.
+   - You pass `make checkoff` in the `code-threads/` directory.
+   - Various extensions are in: [EXTENSIONS](./EXTENSIONS.md)
+
+-------------------------------------------------------------------------
+## Cheat sheet for common confusions:
+
+#### What to do when a test fails.
 
 Recall from past labs (and for future labs):
 
@@ -116,22 +90,29 @@ Recall from past labs (and for future labs):
     to `0-test.out`.  If it fails, you should look at the differences
     to see why.
 
+#### Clarifications
+
 In general:
-  - Make sure you look at the source for each test!  It doesn't
-    make sense to blindly debug without understanding what a test does.
 
-  - Don't treat the tests as inert objects: if one is failing,
-    feel free to add print statements, asserts, check values.  None of
-    these will change the TRACE statements (which don't use line 
-    numbers).
+  - Whenever you switch threads, set `rpi-thread.c:cur_thread`
+    to the thread you're switching to.
 
-#### Checkoff:
+  - IF YOU GET A REDZONE ERROR: this means you are corrupting
+    one or more bytes in the first 4096 bytes of the pi memory (presumably
+    writing to a null pointer).  So fix this.  You can add more redzone
+    checks to narrow down.  See `0-test-redzone.c` for an example.   This is
+    one of many different low level hacks for tring to find memory corruption.
 
-   - You pass `make checkoff` in the `code-threads/` directory.
-   - Various extensions are in: [EXTENSIONS](./EXTENSIONS.md)
 
 ----------------------------------------------------------------------
 ### Part 0: writing code to check machine understanding: `code-asm-checks`
+
+
+NOTE: 
+  - `code-asm-checks`: there are no .out files: you have to figure
+     out if the answer is right.  You'd have to figure all of these
+     out to write your threads package, so it's good to do it in 
+     isolation.
 
 This lab depends on correctly figuring out low-level machine facts.
 Does the stack grow up or down?  Does a `push` instruction modify
@@ -185,7 +166,7 @@ give you answers to the following questions you need for your threads:
      Write the code in `1-stack-dir.c` to determine direction by 
      running it.
 
-  - `2-where-push-one.c`: Your context-switching code will (probably)
+  - `2-where-push.c`: Your context-switching code will (probably)
     save registers using the `push` instruction, which pushes a list
     of general-purpose registers onto the stack.
 
@@ -193,7 +174,11 @@ give you answers to the following questions you need for your threads:
     changing the stack pointer?  If you can't answer this question, you
     won't know the exact first address to initialize the stack pointer
     to.  A mistake will lead to hard-to-debug memory corruption bugs.
-  
+
+    NOTE: `push` implicitly uses the stack pointer `sp`.  so you'll have
+    to (1) save the `sp` to a caller reg, (2) move the pointer argument
+    to the `sp`, (3) do the `push`, (4) undo everything.
+
   - `3-push-order.c`: When you `push` multiple registers, what is the
     order they are written out? (Or, equivalently: where is each one
     placed?)
@@ -210,7 +195,7 @@ give you answers to the following questions you need for your threads:
     Note: for `push` and `pop` don't include the stack pointer in the
     list of registers to `push` or `pop`!
 
-  - `4-callee-regs.c`: Finish the code so that when it runs
+  - `4-callee.c`: Finish the code so that when it runs
     it validates that the given registers are callee or callee saved.
     Search for `todo` --- you don't have to write much code, but the
     cool this will be when it runs that you will know *for sure* if
@@ -252,12 +237,16 @@ Before starting:
   - run `make checkoff` in `code-threads`.  It should pass.
   - Then change the `Makefile` to use your code:
 
-        COMMON_SRC += rpi-thread-asm.S 
-        # STAFF_OBJS += staff-rpi-thread-asm.o
 
-        COMMON_SRC += rpi-thread.c
-        # STAFF_OBJS += staff-rpi-thread.o
+```
+        # switch these when implemented.
+        # COMMON_SRC += rpi-thread-asm.S 
+        STAFF_OBJS += $(S)/staff-rpi-thread-asm.o
 
+        # switch these when implemented.
+        # COMMON_SRC += rpi-thread.c
+        STAFF_OBJS += $(S)/staff-rpi-thread.o
+```
 
 For the rest of the lab you'll only be modifying:
   - `rpi-thread.c`: the main thread code.
@@ -278,9 +267,9 @@ execute to completion without blocking.
 RTC threads are an important special case that cover a surprising number
 of cases.  Since they don't block, you can run them as deferred function
 calls.   They should be significantly faster than normal threads since:
-  1. you don't need to context switch into them.
-  2. you don't need to context switch out of them.
-  3. you won't have to fight bugs from assembly coding.
+  1. You don't need to context switch into them.
+  2. You don't need to context switch out of them.
+  3. You won't have to fight bugs from assembly coding.
 Most interrupt handlers will fall into this category.
 
 What to do:
@@ -313,9 +302,9 @@ Tests: `code-threads/1-*`
   - `1-test-run-N.c`: run N threads to completion.
 
 Note:
-  - If a test fails, you can look at the associated reference 
-    files `.raw` (full output) and `.out` (reduced output) and 
-    compare them to the `.test` file generated by your code.
+  - If a test fails, you can look at the associated reference
+    files `.raw` (full output) and `.out` (reduced output) and compare
+    them to the `.test` file generated by your code.
 
     For example, if `1-test-thread.bin` fails, `1-test-thread.test`
     contains the output from your code, and `1-test-thread.raw` the
@@ -325,7 +314,7 @@ Note:
 ----------------------------------------------------------------------
 ### Part 2: building `rpi_fork` and `rpi_start_thread`
 
-Checkoff:
+Test:
   - `2-test-one-fork.c`: There is a trivial program that
     forks a single thread, runs it, and then reboots.  I.e., you do not
     need to have `rpi_exit` working.  This makes it easier to debug if
@@ -335,9 +324,8 @@ Given your have done state saving both in the interrupt labs and in Part 1
 above you should be able to implement `rpi_cswitch` without too much fuss:
 
   - Put your `cswitch` code into `rpi_cswitch` in `rpi-thread-asm.S`
-    This will be based on your code 
-    `code-asm-checks/asm-checks.S:write_regs_to_stack` 
-    (from part 1),
+    This will be based on your code
+    `code-asm-checks/asm-checks.S:write_regs_to_stack` (from part 1),
     except that you will add the code to restore the registers as well.
     For today: only save the callee saved registers.  Since we are doing
     non-pre-emptive threads, the compiler will have saved any live caller
@@ -365,7 +353,9 @@ First, write `rpi_fork` :
      `rpi_init_trampoline` to the `lr` offset in the newly
       created thread's stack (make sure you understand why!)  and the
       `code` and `arg` to some other register offsets (e.g., `r4` and
-      `r5`) --- the exact offsets don't matter.
+      `r5`) --- the exact offsets don't matter, it just matters
+      that you know what registers the values will be loaded into
+      later.
 
   2. Implement `rpi_init_trampoline` in `rpi-thread-asm.S` so that
      it loads arg` from the stack (from Step 1) into `r0`, 
@@ -416,6 +406,14 @@ Tests:
     `rpi_exit`. 
   - `3-test-restart.c`: restarts the threads package over and over.
 
+NOTE:
+  - One confusing thing: if you run the `1-tests-run-*.c` tests now
+    they will in a single line in the `.out` files:
+
+        TRACE:rpi_exit:done running threads, back to scheduler
+
+    Since you will have `rpi_exit` implemented.  This is ok.  Just make
+    sure that's the only difference.
 
 ----------------------------------------------------------------------
 ### Part 4: implement `rpi_yield`
