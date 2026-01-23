@@ -7,12 +7,8 @@
 #   - <rpi-thread-asm.S>
 #   - <rpi-thread.c>
 #
-# then set 
-#    PROGS = $(wildcard [234567]-test*.c)
-#
 # - "make check" should pass.
 # - "make checkoff" should give the same checksum as in the README.md
-
 
 # set this to 0 if you want the programs to NOT run automatically.
 RUN=1
@@ -42,12 +38,14 @@ PROGS := $(wildcard 1-test*.c)
 # sanity check that redzones detect errors: use this!
 PROGS := $(wildcard 0-test*.c)
 
+# PROGS := $(wildcard [01234567]-test*.c)
+
 ######################################################################
 # should not have to modify below.
 #
 
 CAN_EMIT=0
-ALLPROG := $(wildcard [34567]-test*.c)
+ALLPROG := $(wildcard [01234567]-test*.c)
 
 
 # define this if you need to give the device for your pi
@@ -78,5 +76,8 @@ checkoff: check
 cksum:
 	ls $(ALLPROG:.c=.out) | wc -l
 	cksum $(ALLPROG:.c=.out) | sort -n | cksum
+
+cleanall:
+	make -C ./ "PROGS=$(ALLPROG)" clean
 
 .PHONEY: checkoff

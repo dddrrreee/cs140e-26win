@@ -29,5 +29,6 @@ void notmain() {
 	rpi_thread_start();
     assert(x == 2);
 
+    test_done();
     trace("SUCCESS!\n");
 }

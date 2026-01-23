@@ -19,5 +19,6 @@ void notmain(void) {
     output("running one thread, yielding with an empty queue\n");
     rpi_fork(trivial, 0);
     rpi_thread_start();
+    test_done();
     trace("SUCCESS\n");
 }

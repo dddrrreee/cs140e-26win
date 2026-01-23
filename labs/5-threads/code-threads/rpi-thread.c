@@ -139,7 +139,7 @@ rpi_thread_t *rpi_fork(void (*code)(void *arg), void *arg) {
 void rpi_exit(int exitcode) {
     RZ_CHECK();
 
-    // if you switch back to the scheduler thread:
+    // if you switch back to the scheduler thread put this in:
     //      th_trace("done running threads, back to scheduler\n");
     todo("implement rpi_exit");
 

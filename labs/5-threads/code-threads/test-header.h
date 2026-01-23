@@ -13,4 +13,8 @@ static void inline test_init(void) {
     // this first one should pass.
     redzone_check("initialized redzone");
 }
+
+static void inline test_done(void) {
+    redzone_check("done with test");
+}
 #endif

@@ -48,4 +48,5 @@ void notmain(void) {
     rpi_thread_start();
     trace("iter = %d, n=%d\n", iter,n);
     assert(iter == n+1);
+    test_done();
 }

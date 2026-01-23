@@ -16,5 +16,6 @@ void notmain(void) {
     for(int i = 0; i < n; i++)
         rpi_fork(trivial, (void*)i);
     rpi_thread_start();
+    test_done();
     trace("SUCCESS\n");
 }

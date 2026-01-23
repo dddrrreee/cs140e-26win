@@ -33,4 +33,5 @@ void notmain() {
 	    rpi_fork(thread_code, &x);
 	    rpi_thread_start();
     }
+    test_done();
 }

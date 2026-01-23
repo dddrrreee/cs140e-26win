@@ -1,0 +1,2 @@
+0-test-redzone.c:notmain:31: ERROR: non-zero redzone!: off=0x0, val=0x1
+0-test-redzone.c:notmain:31: ERROR: non-zero redzone!: off=0x8, val=0x1

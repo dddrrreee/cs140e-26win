@@ -51,5 +51,6 @@ void notmain() {
 	trace("count = %d, sum=%d\n", thread_count, thread_sum);
 	assert(thread_count == n);
 	assert(thread_sum == sum);
+    test_done();
     trace("SUCCESS!\n");
 }

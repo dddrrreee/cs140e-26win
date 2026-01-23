@@ -11,6 +11,7 @@ static void thread_code(void *arg) {
     assert(t->tid == 1 && *x == 0xdeadbeef);
 
     trace("SUCCESS: got to the first thread: rebooting\n");
+    test_done();
     clean_reboot();
 }
 

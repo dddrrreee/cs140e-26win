@@ -51,5 +51,6 @@ void notmain(void) {
     rpi_fork(blink, &t_75);
     rpi_fork(blink, &t_25);
     rpi_thread_start();
+    test_done();
     trace("DONE\n");
 }
