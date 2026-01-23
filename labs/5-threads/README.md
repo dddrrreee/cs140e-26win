@@ -563,26 +563,28 @@ that up into cooperative threads.  Now is your chance to fix our (mine)
 pedagolocal failings :)
 
 Basic idea (you can do any interface you want): 
-  1. Keep the registers in a simple 17 entry array that
-     you can wrap in a structure:
 ```c
         typedef struct {
+            // you could also just do the callees
             uint32_t regs[17];
         } co_th_t;
-```
 
-  2. Creating a new co-routine that sets up 17-entry
-     similar to threads (stack pointer, program counter,  and arguments)
-```c
+        // create new co-routine and return the initialized structure
         co_th_t co_mk(void (*fn)(uint32_t), uint32_t arg, uint32_t sp);
+
+        // switch from co-routine <old> to <new>
+        void co_switch(co_th_t *old, const co_th_t *new);
 ```
 
-  2. Co-routine switch just takes the old and new arrays,
-     saves registers into `old`, and loads the registers
-     into `new`:
-```c
-            void co_switch(co_th_t *old, const co_th_t *new);
-```
+Key bits:
+  1. Keep the registers in a simple 17-entry array (or just the
+     callee-registers) wrapped in a structure.
+  2. Creating a new co-routine just requires initializing
+     a few registers similar to threads (stack pointer, program counter,
+     and arguments)
+  3. Co-routine switch looks similar to thread
+     switching: saves registers into `old`, and loads the registers from
+     `new`.
 
 This interface --- or whatever one you want to design that is better! ---
 gives you the primitives to switch between independent execution contexts
@@ -601,7 +603,6 @@ and use it to do the fast loopback discussed above.  You will learn a
 ton of things in a small amount of code. We should probably add it as
 a homework, tbh.
 
-  1. Made co-routines that take 
 <p align="center">
   <img src="../lab-memes/threads-fr.jpg" width="400" />
 </p>
