@@ -471,13 +471,46 @@ at a level most CS people do not.
 ### Checkoff:
 Run the autograder with 'lab5' as the repo variable. Make sure your github repo is updated and the sunet you input is correct
 
-
 ----------------------------------------------------------------------
-### Extensions
+### Sonar+LED extension.
 
-***IF you see this: pull. Hopefully there's a bunch of new stuff.***
+The full extension: build three different ways of mixing independent
+threads of control  that have real-time requirements.
 
-There's a ton of useful extensions that are not written:  Ask us :)
+Simple puzzle: use sonar to *smoothly* control an LED, where the closer
+the reading, the brighter the led.  Challenge: no flickering, smooth
+changes, and highly accurate ratios of on/off to hit a given intensity.
+
+Sounds trivial, and the code is trivially small, but it makes
+some fundemental issues (and various solutions to them) very clear.
+The problem: if you're not careful, the natural way to do sonar is with
+blind waits where you spin in a delay loop, not doing anything else ---
+the result is that your on/off gets inaccurate and the LED looks trash.
+
+Three not very clear ways to do this:
+
+  1. Interrupts: have the sonar in non-interrupt code, doing whatever
+     logic it needs.  Then setup a timer interrupt and do the LED on/off
+     in the interrupt handler.  Pretty simple to make work but gives
+     a good reference.
+
+  2. Variation: two threads, one for sonar, one for LED.  Sonar thread:
+     change the sonar delay loop to call `rpi_yield()` on each iteration
+     if its just waiting, otherwise do whatever it was supposed to
+     do. LED thread: checks if enough time has passed and, if so, sets
+     the LED to on/off (whichever is more accurate for the target ratio).
+     It then yields.
+
+     NOTE: the uart driver will also have to do the same yield.
+     (The checked in code should do that.)
+
+  3. Final option: make a stackless, "run to completion" thread
+    package that uses continuations, and just have the sonar
+    call into that.  
+
+In all of these, being clean and clever with the checks that you never
+miss a deadline can turn up the complexity.
+
 
 <p align="center">
   <img src="../lab-memes/threads-fr.jpg" width="400" />
