@@ -469,6 +469,8 @@ Run the autograder with 'lab5' as the repo variable. Make sure your github repo 
 ----------------------------------------------------------------------
 ### Extensions
 
+***IF you see this: pull. Hopefully there's a bunch of new stuff.***
+
 There's a ton of useful extensions that are not written:  Ask us :)
 
 <p align="center">
