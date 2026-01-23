@@ -1,12 +1,13 @@
 ## Writing a non-preemptive threads package
 
-***MAKE SURE YOU***:
-  - Read the [PRELAB](PRELAB.md).
-  - Read the [THREAD](THREAD.md) writeup.
 
 Big picture:  by the end of this lab you will have a very simple
 round-robin threading package for "cooperative" (i.e., non-preemptive)
 threads.
+
+***MAKE SURE YOU***:
+  - Read the [PRELAB](PRELAB.md).
+  - Read the [THREAD](THREAD.md) writeup.
 
 The main operations (see `code-thread/rpi-thread.[ch]`):
   1. `rpi_fork(code, arg)`: to create a new thread, put it on the `runq`.
