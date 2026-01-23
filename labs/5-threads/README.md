@@ -469,7 +469,9 @@ at a level most CS people do not.
 
 ---------------------------------------------------------------------
 ### Checkoff:
-Run the autograder with 'lab5' as the repo variable. Make sure your github repo is updated and the sunet you input is correct
+~~Run the autograder with 'lab5' as the repo variable. Make sure your github repo is updated and the sunet you input is correct~~
+
+Do `make checkoff` and find a TA.
 
 ----------------------------------------------------------------------
 ### Extensions: how fast can you make a loopback bit-bang protocol?
