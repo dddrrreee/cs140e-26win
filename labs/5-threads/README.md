@@ -558,20 +558,33 @@ Very fun challenge.
 ----------------------------------------------------------------------
 ### Extensions: Co-routines
 
-What we should have done: made simple co-routines, then wrapped
-that into cooperative threads.  Basic idea: 
-  1. Keep the registers in a simple 17 entry array.  (Probably
-     worth wrapping in a structure, but we ignore that below.)
-  2. Creating a new co-routine is initializing the 17-entry
-     similar to threads (stack pointer, program counter,  and 
-     arguments)
+What we should have done in lab: make simple co-routines then wrap
+that up into cooperative threads.  Now is your chance to fix our (mine)
+pedagolocal failings :)
+
+Basic idea (you can do any interface you want): 
+  1. Keep the registers in a simple 17 entry array that
+     you can wrap in a structure:
+```c
+        typedef struct {
+            uint32_t regs[17];
+        } co_th_t;
+```
+
+  2. Creating a new co-routine that sets up 17-entry
+     similar to threads (stack pointer, program counter,  and arguments)
+```c
+        co_th_t co_mk(void (*fn)(uint32_t), uint32_t arg, uint32_t sp);
+```
+
   2. Co-routine switch just takes the old and new arrays,
      saves registers into `old`, and loads the registers
      into `new`:
+```c
+            void co_switch(co_th_t old, co_th_t new);
+```
 
-            void co_switch(uint32_t old[17], uint32_t new[17]);
-
-This gives you the primitives to switch between independent
+This interface gives you the primitives to switch between independent
 execution contexts but, importantly:
   - There is no queue;
   - No thread scheduling;
