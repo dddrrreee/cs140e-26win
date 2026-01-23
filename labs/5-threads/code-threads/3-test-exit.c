@@ -9,6 +9,7 @@ void trivial(void* arg) {
 }
 
 void notmain(void) {
+    test_init();
     // make this > 1 to test
     int n = 10;
     for(int i = 0; i < n; i++)
