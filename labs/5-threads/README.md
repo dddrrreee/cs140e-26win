@@ -1,7 +1,6 @@
-## Clarification:
+**Errata**:
+  - if `make checkoff` in `code-threads` doesn't pass with staff code: just do a pull
 
-**NOTE**:
-  - if `make checkoff` doesn't pass with staff code: just do a pull
 
 ## Writing a non-preemptive threads package
 
