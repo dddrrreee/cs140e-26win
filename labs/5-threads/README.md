@@ -567,7 +567,9 @@ that into cooperative threads.  Basic idea:
      arguments)
   2. Co-routine switch just takes the old and new arrays:
       
+```c
         void co_switch(uint32_t old[17], uint32_t new[17]);
+```
 
      Where you just pass in the arrays and switch from one
      to the other.
