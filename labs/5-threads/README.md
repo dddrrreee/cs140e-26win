@@ -475,11 +475,12 @@ Run the autograder with 'lab5' as the repo variable. Make sure your github repo 
 ### Sonar+LED extension.
 
 The full extension: build three different ways of mixing independent
-threads of control  that have real-time requirements.
+threads of control for time sensitive devices.
 
-Simple puzzle: use sonar to *smoothly* control an LED, where the closer
-the reading, the brighter the led.  Challenge: no flickering, smooth
-changes, and highly accurate ratios of on/off to hit a given intensity.
+Simple puzzle: use the sonar device to *smoothly* control an LED, where
+the closer the reading, the brighter the led.  Challenge: no flickering,
+smooth changes, and highly accurate ratios of on/off to hit a given
+intensity.
 
 Sounds trivial, and the code is trivially small, but it makes
 some fundemental issues (and various solutions to them) very clear.
