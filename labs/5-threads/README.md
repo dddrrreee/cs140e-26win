@@ -1,4 +1,5 @@
-**Errata**:
+### Errata
+
   - if `make checkoff` in `code-threads` doesn't pass with staff code: just do a pull
 
 
