@@ -493,8 +493,8 @@ The challenge:
 ----------------------------------------------------------------------
 ### Extensions: Sonar+LED
 
-The full extension: build three different ways of mixing independent
-threads of control for time sensitive devices.
+The full extension: build three (or 8!) different ways of mixing
+independent threads of control for time sensitive devices.
 
 Simple puzzle: use the sonar device to *smoothly* control an LED, where
 the closer the reading, the brighter the led.  Challenge: no flickering,
@@ -530,19 +530,30 @@ Three ways to do it:
 In all of these, being clean and clever with the checks that you never
 miss a deadline can turn up the complexity.
 
-Another way to go is to use a device to absorb the job of the LED on/off
-so your code can focus on the sonar.  Many different options, 
-all you will learn stuff:
+----------------------------------------------------------------------
+### Extensions: Sonar+LED+Hardware
+
+Another way to do the extension above is to use a bcm2835 hardware device
+to absorb the job of the LED on/off so your code can focus on the sonar.
+Many different options, all will have you will learn stuff (and be useful
+in many other domains):
 
   1. The PWM device (see bcm2835 datasheet).
-  2. DMA (same)
-  3. Using an SPI dataline (same).
-  4. Using the SMI interface (if you can find the "unreleased
-     datasheet!).
-  5. Other methods?   I'm curious in all the different ways to 
+  2. Using an SPI data line (same).
+  3. DMA (same) to blast it.   
+  4. Fancier DMA: exploiting the fact DMA is Turing
+     complete to make a custom instruction set emulator that runs on
+     the DMA engine and writing a program to control the LED that runs
+     on the DMA emulator.   (Max nerd-sniped many of us in 340lx with
+     Turing complete DMA tricks.)
+  5. Using the "secondary memory interface" SMI.  This is fun b/c
+     you need to find the "unreleased datasheet" (a favorite Ron
+     activty!).  Max has incredibly fast versions of SMI --- worth
+     talking to him about it for tricks.
+  6. Other methods?   I'm curious in all the different ways to 
      blink LEDs --- let us know if you think of a cute hack.
 
-Very fun challenge.
+Very fun challenge. 
 
 <p align="center">
   <img src="../lab-memes/threads-fr.jpg" width="400" />
