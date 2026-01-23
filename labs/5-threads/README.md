@@ -474,7 +474,21 @@ Run the autograder with 'lab5' as the repo variable. Make sure your github repo 
 ----------------------------------------------------------------------
 ### Extensions: how fast can you make a loopback bit-bang protocol?
 
+You can send and receive many protocols on a single pi by:
+  1. Sender in one thread sends bits by using GPIO (and probably
+     time) to bit-bang the protocol.  
+  2. Receiver in one thread receives bits by reading the 
+     GPIO pins (and probably time as well).
 
+The trick:
+  - When one thread is waiting for either a deadline or for data,
+    `rpi_yield()` to run the other thread.  
+
+The challenge:
+  - The faster your code, and and the shorter the longest non-yielding
+    delay, the more accurate you can make the code and the faster
+    your bit banged protocol can blast bits.  It's not much code,
+    but you can go for a couple of days tuning it.  
 
 ----------------------------------------------------------------------
 ### Extensions: Sonar+LED
