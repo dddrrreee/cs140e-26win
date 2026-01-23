@@ -575,6 +575,8 @@ Basic idea (you can do any interface you want):
         // switch from co-routine <old> to <new>
         void co_switch(co_th_t *old, const co_th_t *new);
 
+        // called when co-routine is done.
+        void co_done(co_th_t *);
 ```
 
 Key bits:
