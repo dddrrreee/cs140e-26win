@@ -565,22 +565,27 @@ that into cooperative threads.  Basic idea:
   2. Creating a new co-routine is initializing the 17-entry
      similar to threads (stack pointer, program counter,  and 
      arguments)
-  2. Co-routine switch just takes the old and new arrays:
-```c
-        void co_switch(uint32_t old[17], uint32_t new[17]);
-```
-     Where you just pass in the arrays and switch from one
-     to the other.
+  2. Co-routine switch just takes the old and new arrays,
+     saves registers into `old`, and loads the registers
+     into `new`:
 
-There is no queue, no thread scheduling, nothing.  Very simple.    As a
-result you can do very (very) fast switching from one co-routine to
-the next and have complete control over the scheduling, which lets
-you do all sorts of crazy stuff and, importantly, removes all queue
-manipulation overhead.
+            void co_switch(uint32_t old[17], uint32_t new[17]);
 
-I would strongly urge you to do something like this as an extension and
-use it to do the fast loopback discussed above.  We should probably add
-it as a homework, tbh.
+This gives you the primitives to switch between independent
+execution contexts but, importantly:
+  - There is no queue;
+  - No thread scheduling;
+  - Nothing else to get in the way.  Very simple.    
+
+As a result you have complete control over the scheduling, which lets
+you do all sorts of crazy stuff.  And, importantly, by nuking all queue
+manipulation overhead, you can do very (*very*) fast switching from one
+co-routine to the next.
+
+I would strongly urge you to do something like this as an extension
+and use it to do the fast loopback discussed above.  You will learn a
+ton of things in a small amount of code. We should probably add it as
+a homework, tbh.
 
   1. Made co-routines that take 
 <p align="center">
