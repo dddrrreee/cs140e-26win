@@ -472,7 +472,12 @@ at a level most CS people do not.
 Run the autograder with 'lab5' as the repo variable. Make sure your github repo is updated and the sunet you input is correct
 
 ----------------------------------------------------------------------
-### Sonar+LED extension.
+### Extensions: how fast can you make a loopback bit-bang protocol?
+
+
+
+----------------------------------------------------------------------
+### Extensions: Sonar+LED
 
 The full extension: build three different ways of mixing independent
 threads of control for time sensitive devices.
