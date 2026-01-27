@@ -40,7 +40,7 @@ static inline int is_empty(void (*fp)(void)) {
     // ** 0001 --> 1
     // ** Rm --> r14 --> D
     // So --> 0xE12FFF1E
-    printk("%x\n", instruction);
+    // printk("%x\n", instruction);
     return instruction == 0xE12FFF1E;
 
     

@@ -17,26 +17,26 @@ S := $(CS140E_2026_PATH)/libpi/staff-objs/
 STAFF_OBJS += $(S)/staff-kmalloc.o
 
 # switch these when implemented.
-# COMMON_SRC += rpi-thread-asm.S 
-STAFF_OBJS += $(S)/staff-rpi-thread-asm.o
+COMMON_SRC += rpi-thread-asm.S 
+# STAFF_OBJS += $(S)/staff-rpi-thread-asm.o
 
 # switch these when implemented.
-# COMMON_SRC += rpi-thread.c
-STAFF_OBJS += $(S)/staff-rpi-thread.o
+COMMON_SRC += rpi-thread.c
+# STAFF_OBJS += $(S)/staff-rpi-thread.o
 
 # all the tests.  
 
 # the different tests: start with 1, then 2, then..
-PROGS := $(wildcard [1234567]-test*.c)
-PROGS := $(wildcard 7-test*.c)
-PROGS := $(wildcard 5-test*.c)
-PROGS := $(wildcard 4-test*.c)
-PROGS := $(wildcard 3-test*.c)
-PROGS := $(wildcard 2-test*.c)
-PROGS := $(wildcard 1-test*.c)
+# PROGS := $(wildcard [1234567]-test*.c)
+# PROGS := $(wildcard 7-test*.c)
+# PROGS := $(wildcard 5-test*.c)
+# PROGS := $(wildcard 4-test*.c)
+# PROGS := $(wildcard 3-test*.c)
+# PROGS := $(wildcard 2-test*.c)
+PROGS := $(wildcard 1-test*one*.c)
 
 # sanity check that redzones detect errors: use this!
-PROGS := $(wildcard 0-test*.c)
+# PROGS := $(wildcard 0-test*.c)
 
 # PROGS := $(wildcard [01234567]-test*.c)
 

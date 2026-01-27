@@ -120,7 +120,9 @@ rpi_thread_t *rpi_fork(void (*code)(void *arg), void *arg) {
      * - see <code-asm-checks/5-write-regs.c> for how to 
      *   coordinate offsets b/n asm and C code.
      */
-    todo("initialize thread stack");
+    // todo("initialize thread stack");
+    
+    
 
     // should check that <t->saved_sp> points within the 
     // thread stack.
