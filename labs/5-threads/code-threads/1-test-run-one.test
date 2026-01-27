@@ -1,4 +1,0 @@
-TRACE:notmain:about to run 1 thread
-TRACE:rpi_fork:rpi_fork: tid=1, code=
-TRACE:rpi_thread_start:starting threads!
-PANIC:rpi-thread.c:rpi_thread_start:186:TODO:implement the rest of rpi_thread_start

@@ -121,6 +121,11 @@ rpi_thread_t *rpi_fork(void (*code)(void *arg), void *arg) {
      *   coordinate offsets b/n asm and C code.
      */
     // todo("initialize thread stack");
+
+    // t->saved_sp = t->stack; // Top of stack
+
+    t->fn = code;
+    t->arg = arg;
     
     
 
@@ -183,7 +188,16 @@ void rpi_thread_start(void) {
     if(!scheduler_thread)
         scheduler_thread = th_alloc();
 
-    todo("implement the rest of rpi_thread_start");
+
+    // Run all threads
+    while (!Q_empty(&runq)) {
+        rpi_thread_t* t = Q_pop(&runq);
+        cur_thread = t;
+        t->fn(t->arg);
+    }
+
+    
+    
 
 end:
     RZ_CHECK();
