@@ -26,7 +26,15 @@ MK_FN(rpi_get_sp)
 @    4. load all the callee + <lr> using the sp.
 @    5. return!
 MK_FN(rpi_cswitch)
-    asm_todo("implement this")
+
+    @ Push and save current regs into sp
+    push {r4-r11, lr}
+    mov r0, sp
+
+    @ Pull regs from new stack
+    mov sp, r1
+    pop {r4-r11, lr}
+
     bx lr
 
 @ [Make sure you can answer: why do we need this
@@ -39,5 +47,7 @@ MK_FN(rpi_cswitch)
 @	- <arg> into r0
 @ 
 MK_FN(rpi_init_trampoline)
-    asm_todo("implement this")
+    @ asm_todo("implement this")
+
+    
     bx lr

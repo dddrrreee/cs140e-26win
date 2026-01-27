@@ -32,8 +32,8 @@ COMMON_SRC += rpi-thread.c
 # PROGS := $(wildcard 5-test*.c)
 # PROGS := $(wildcard 4-test*.c)
 # PROGS := $(wildcard 3-test*.c)
-# PROGS := $(wildcard 2-test*.c)
-PROGS := $(wildcard 1-test*.c)
+PROGS := $(wildcard 2-test*.c)
+# PROGS := $(wildcard 1-test*.c)
 # PROGS := $(wildcard 1-test*one*.c)
 # sanity check that redzones detect errors: use this!
 # PROGS := $(wildcard 0-test*.c)

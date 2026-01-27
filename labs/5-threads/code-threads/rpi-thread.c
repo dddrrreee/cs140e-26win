@@ -124,8 +124,16 @@ rpi_thread_t *rpi_fork(void (*code)(void *arg), void *arg) {
 
     // t->saved_sp = t->stack; // Top of stack
 
+    // Part 1 - simple debugging
     t->fn = code;
     t->arg = arg;
+
+    // Part 2
+    t->stack[REG_LR_OFFSET] = (uint32_t)&rpi_init_trampoline;
+    t->stack[CODE_OFFSET] = (uint32_t)code;
+    t->stack[ARG_OFFSET] = (uint32_t)arg;
+    
+
     
     
 
