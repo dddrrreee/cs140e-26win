@@ -9,6 +9,11 @@
 // starter code :)
 #include "rpi.h"
 
+
+
+// ** If stack pointer points to the last VALID item on the stack, when pushed, does it push to the NEXT 4 bytes,
+// or to the one that it currently points to THEN increments?
+
 enum { val1 = 0xdeadbeef, val2 = 0xFAF0FAF0 };
 
 // you write <push_one> in <asm-check.S>
@@ -30,17 +35,19 @@ void notmain() {
     // - if <v[1]> == <val1> then we know push modifies
     //   its pointer register first, before storing.
     uint32_t *res = push_one(&v[2], val1);
-    assert(res == &v[1]);
+    assert(res == &v[1]); // ** PROVES that it actually decremente
 
     // NOTE: this also shows you the order of writes.
     if(v[2] == val1) {
         // make sure nothing else got changed.
+        // ** [should now be 1, 2, val1, 4]
         assert(v[3] == 4);
         assert(v[1] == 2);
         assert(v[0] == 1);
         trace("wrote value before modifying pointer\n");
     } else if(v[1] == val1) {
-        // make sure nothing else got changed.
+        // make sure nothing else got changed. 
+        // ** [should now be 1, val1, 3, 4] because it grows DOWNWARDS
         assert(v[3] == 4);
         assert(v[2] == 3);
         assert(v[0] == 1);

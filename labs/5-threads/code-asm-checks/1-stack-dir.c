@@ -12,7 +12,15 @@
 #include "rpi.h"
 
 int stack_grows_down(void) {
-    todo("implement this routine\n");
+    // todo("implement this routine\n");
+    // Hardware calls so no optimization
+    volatile unsigned before = get32(0); // stored in sp + 4
+    volatile unsigned after = get32(0); // stored in sp
+    dev_barrier(); 
+
+    return &before > &after;
+
+
 }
 
 void notmain(void) {

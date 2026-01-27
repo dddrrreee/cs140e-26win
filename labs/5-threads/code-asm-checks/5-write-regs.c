@@ -14,6 +14,7 @@
 // #include "rpi-thread.h"
 
 // implement in <asm-checks.S>
+// ** Address of the pointer
 void write_regs_to_stack(uint32_t **store_sp);
 
 // hack so <write_regs_to_stack> stores sp in a way that we

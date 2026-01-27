@@ -18,17 +18,21 @@ void notmain() {
     uint32_t v[4] = { 1, 2, 3, 4 };
 
     uint32_t *res = push_two(&v[2], val1, val2);
-    assert(res == &v[0]);
+    assert(res == &v[0]); // **  Makes sure it decrements twice when it pushes
 
     // note this also shows you the order of writes.
-    if(v[2] == val2 && v[1] == val1) {
+    if(v[2] == val2 && v[1] == val1) { 
         assert(v[3] == 4);
         assert(v[0] == 1);
         todo("what does this imply?\n");
     } else if(v[1] == val2 && v[0] == val1) {
+        // ** Since it modifies BEFORE pushing, it would change the first and second indices
+        // ** Ideally it should push val1 (to the 1st index)
+        // ** then it should push val2 (to the zeroth index)
+        // ** Since we get [val1, val2, 3, 4], it pushes in REVERSE order of the "PUSH {r1,r2} call"
         assert(v[3] == 4);
         assert(v[2] == 3);
-        todo("what does this imply?\n");
+        todo("\nReached here. what does this imply?\n");
     } else 
         panic("unexpected result\n");
 }

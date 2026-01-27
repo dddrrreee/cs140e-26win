@@ -28,7 +28,22 @@
 //   2. if routine is empty, <r> was a caller reg.
 //   3. if routine is not empty, <r> was a callee reg.
 static inline int is_empty(void (*fp)(void)) {
-    todo("returns 1 if routine does nothing besides return");
+    // todo("returns 1 if routine does nothing besides return");
+
+    uint32_t instruction = *(uint32_t*)fp;
+
+    // ** If it returns, the next instruction is "bx lr" 1110 00010010 111111111111 0001 1110
+    // ** Can find the encoding in the armv6.pdf A4.1.10
+    // ** Condition (No Condition, so AL) --> 1110 --> E
+    // ** then 00010010 --> 12
+    // ** 3x SBO so 1111 1111 1111 --> FFF
+    // ** 0001 --> 1
+    // ** Rm --> r14 --> D
+    // So --> 0xE12FFF1E
+    printk("%x\n", instruction);
+    return instruction == 0xE12FFF1E;
+
+    
 }
 
 // note: you can do these better with macros.
@@ -38,7 +53,39 @@ static void clobber_r0(void) {
 static void clobber_r1(void) {
     asm volatile("" : : : "r1");
 }
-// ... do the rest up to r12 ....
+static void clobber_r2(void) {
+    asm volatile("" : : : "r2");
+}
+static void clobber_r3(void) {
+    asm volatile("" : : : "r3");
+}
+static void clobber_r4(void) {
+    asm volatile("" : : : "r4");
+}
+static void clobber_r5(void) {
+    asm volatile("" : : : "r5");
+}
+static void clobber_r6(void) {
+    asm volatile("" : : : "r6");
+}
+static void clobber_r7(void) {
+    asm volatile("" : : : "r7");
+}
+static void clobber_r8(void) {
+    asm volatile("" : : : "r8");
+}
+static void clobber_r9(void) {
+    asm volatile("" : : : "r9");
+}
+static void clobber_r10(void) {
+    asm volatile("" : : : "r10");
+}
+static void clobber_r11(void) {
+    asm volatile("" : : : "r11");
+}
+static void clobber_r12(void) {
+    asm volatile("" : : : "r12");
+}
 
 
 // FILL this in with all caller-saved registers.
@@ -50,10 +97,12 @@ static void clobber_r1(void) {
 void check_cswitch_ignore_regs(void) {
     assert(is_empty(clobber_r0));
     assert(is_empty(clobber_r1));
-    todo("add all your non-saved registers here");
+    assert(is_empty(clobber_r2));
+    assert(is_empty(clobber_r3));
+    assert(is_empty(clobber_r12));
 
     // if you reach here it passed.
-    trace("ignore regs passed\n");
+    trace("CALLER regs passed\n");
 }
 
 
@@ -63,8 +112,15 @@ void check_cswitch_ignore_regs(void) {
 // NOTE: we know we have to save r13, r14 (why?) so 
 // ignore them.
 void check_cswitch_save_regs(void) {
-    todo("add all your saved registers here");
-    trace("saved regs passed\n");
+    assert(!is_empty(clobber_r4)); // should NOT be empty
+    assert(!is_empty(clobber_r5));
+    assert(!is_empty(clobber_r6));
+    assert(!is_empty(clobber_r7));
+    assert(!is_empty(clobber_r8));
+    assert(!is_empty(clobber_r9));
+    assert(!is_empty(clobber_r10));
+    assert(!is_empty(clobber_r11));
+    trace("CALLEE regs passed\n");
 }
 
 void notmain() {
