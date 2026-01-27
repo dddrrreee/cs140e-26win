@@ -156,7 +156,7 @@ software_interrupt_asm:
 
     @ Same as <interrupt_asm>
     @ mov sp, #INT_STACK_ADDR  @ Want to push old registers to the interrupt stack
-    ; sub   lr, lr, #4         @ Holding return address after interrupt is called   
+    sub   lr, lr, #4         @ Holding return address after interrupt is called   
 
     @ mov r2, r1
     @ mov r1, r0
@@ -177,7 +177,7 @@ software_interrupt_asm:
     @ mov r0, r12
     @ bl printallregs  
 
-    ; add lr, lr, #4
+    add lr, lr, #4
     movs pc, lr
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
