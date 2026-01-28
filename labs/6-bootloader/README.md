@@ -8,9 +8,9 @@
 Last's weeks labs were intense --- we take a bit of a breather
 lab: no assembly, weird bugs from register corruptions, etc.  
 
-Today you'll write the bootloader code.  Both the r/pi side code
-that asks for a binary  (the `bootloader.bin` from lab 0) and the 
-Unix side that sends it (`my-install`).  
+Today you'll write the bootloader code.  Both the r/pi side code that
+asks for a binary  (the `kernel.img` from lab 0) and the Unix side that
+sends it (`my-install`).
 
   - The bootloader protocol is defined in: [BOOTLOADER](./BOOTLOADER.md).
 
@@ -131,7 +131,6 @@ and break things back town to a working system and then build back up.)
 
 Deliverables:
   - Implement `1-unix-side/put-code.c:simple_boot`.
-  - Copy the `kernel.img` to your sd card.
   - `cd checkoff; make checkoff` should pass.
   - For testing: also run `checkoff/0-lab4-tests` and `checkoff/0-lab5-tests`.
 
@@ -162,7 +161,7 @@ Where is the code:
 
 What to do:
 
-  0. Start working on getting `my-install unix-side/hello.bin` to 
+  0. Start working on getting `my-install 1-unix-side/hello.bin` to 
      boot correctly.
   1. You can toggle tracing on and off from the command line.
      `./my-install --trace-control` will emit the bootloader 
@@ -182,7 +181,7 @@ What to do:
 ##### A common Unix-side mistake.
 
 A key feature you have that 140e offerings did not is the ability to use
-`putk` from your pi-side bootloader code.  (Described more in part 2.)
+`boot_putk` from your pi-side bootloader code.  (Described more in part 2.)
 This makes debugging wildly easier.  Without output, all bugs lead to:
 "my pi isn't responding," which is a difficult function to invert back to
 root cause.
@@ -190,7 +189,7 @@ root cause.
 However, this does lead to a common mistake on the Unix side:
   - Make sure you use the `get_op` routine for any word that could
     be a protocol opcode.  Otherwise you won't correctly handle when
-    the pi-side sends a `putk` message (see below).
+    the pi-side sends a `boot_putk` message (see below).
 
 ##### Example: `my-install --trace-control`
 
@@ -232,8 +231,9 @@ NOTE:
 ### Step 2: write the pi side bootloader (`2-pi-side`)
 
 ***COMMON MISTAKE***:
-  - You have to copy the `kernel.img` to your microSD card manually: 
-    `make install` can't do this for you.
+  - You have to copy the `kernel.img` to your microSD card manually:
+    we can't currently write from the unix side to the pi (wait for the
+    FAT32 lab!).
 
 Deliverables:
   - Implement `2-pi-side/get-code.h` (make sure your code prints
@@ -280,9 +280,9 @@ pi code take too long between UART reads (`uart_get8`), the hardware will
 fill up and then drop bytes.  Thus, whenever the pi side is expecting
 to receive data, it has to move promptly.
 
-If you forget this limitation, and (for example) print using `putk` when
-a message is arriving, you'll almost certainly lost some arriving bytes,
-and also get confused.  Ask me how I know!
+If you forget this limitation, and (for example) print using `boot_putk`
+when a message is arriving, you'll almost certainly lost some arriving
+bytes, and also get confused.  Ask me how I know!
 
 
 ### Extensions
