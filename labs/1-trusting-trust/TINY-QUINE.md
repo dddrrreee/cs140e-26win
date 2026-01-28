@@ -5,7 +5,7 @@ Tianle Yu
 
 ### Overview
 
-This project is a *tiny* self-reproducing ELF executable (a quine) for Linux **x86 (32-bit)**.
+This project is a *tiny* self-reproducing ELF executable (a quine) for Linux **x86 (32-bit)** --- 54 bytes.
 
 Our size goal forced us to stop treating the executable as “something the toolchain outputs” and instead treat it as a **binary file format problem**: what is the *minimum* an ELF loader needs in order to map bytes into memory and jump to code?
 
