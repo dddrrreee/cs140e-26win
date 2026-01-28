@@ -9,11 +9,8 @@ lot more prose on each topic.  There is a pointer to where we currently
 are: the labs after this point can still see significant revisions.
    - [Last year's summary of what we did](https://github.com/dddrrreee/cs140e-25win/blob/main/labs/what-did-we-learn.md) might be a useful breakdown of where this is all going.
 
-   - For those with high executive function, there is an initial list
-     of possible [final projects](./final-projects/README.md).
-
-   - For those with low executive function there is an initial set of
-     [lab-memes](./lab-memes) revolving around code, bugs, jobs, pizza.
+   - [Final project ideas](./final-projects/README.md).
+   - [lab-memes](./lab-memes) revolving around code, bugs, jobs, pizza.
 
 ---------------------------------------------------------------------
 ### 0: non-pi hacking
