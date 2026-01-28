@@ -20,18 +20,22 @@ As a comparison, when I run:
 
 I get:
 
-    TRACE:simple_boot: sending 3372 bytes, crc32=cf4943ae
-    BOOT:waiting for a start
-    TRACE:GET32:11112222 [GET_PROG_INFO]
-    TRACE:PUT32:33334444 [PUT_PROG_INFO]
-    TRACE:PUT32:8000 [UNKNOWN]
-    TRACE:PUT32:d2c [UNKNOWN]
-    TRACE:PUT32:cf4943ae [UNKNOWN]
-    TRACE:GET32:55556666 [GET_CODE]
-    TRACE:GET32:cf4943ae [UNKNOWN]
-    TRACE:PUT32:77778888 [PUT_CODE]
-    DEBUG:PRINT_STRING:pi sent print: <<STAFF>: success: Received the program!>
-    TRACE:GET32:9999aaaa [BOOT_SUCCESS]
-    BOOT:bootloader: Done.
-    hello world
-    DONE!!!
+```
+        TRACE:simple_boot: sending 1404 bytes, crc32=a555db78
+        BOOT:waiting for a start
+        TRACE:GET32:11112222 [GET_PROG_INFO]
+        TRACE:PUT32:33334444 [PUT_PROG_INFO]
+        TRACE:PUT32:8000 [UNKNOWN]
+        TRACE:PUT32:57c [UNKNOWN]
+        TRACE:PUT32:a555db78 [UNKNOWN]
+        TRACE:GET32:55556666 [GET_CODE]
+        TRACE:GET32:a555db78 [UNKNOWN]
+        TRACE:PUT32:77778888 [PUT_CODE]
+        PRINT_STRING:pi sent print: <verify the checksum of copied code>
+        PRINT_STRING:pi sent print: <<STAFF>: success: Received the program!>
+        TRACE:GET32:9999aaaa [BOOT_SUCCESS]
+        BOOT:bootloader: Done.
+        listening on ttyusb=</dev/ttyUSB0>
+        hello world from the pi
+        DONE!!!
+```
