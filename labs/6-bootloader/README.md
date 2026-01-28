@@ -356,6 +356,15 @@ different variants:
   4. Cluster-pi: if you can hook up two pi's --- you can hook up multiple
      and send programs between them.
 
+#### Extension: recursive bootloader
+
+We had a lot of annoyance today since we couldn't bootload the bootloader
+and so had to manually copy it to the microSD card.  This 240lx lab from
+2022 shows how to make a recursive bootloader:
+[https://github.com/dddrrreee/cs240lx-22spr/tree/main/labs/18-ptag](https://github.com/dddrrreee/cs240lx-22spr/tree/main/labs/18-ptag).  Doesn't require much
+code, will help you understand the low level much more thoroughly..
+
+
 #### Extension: replay
 
 By far the most useful will be to make sure your pi-side code is rock
