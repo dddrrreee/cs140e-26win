@@ -339,12 +339,22 @@ A fun extension for those of you who got fast pi-to-pi messaging: send
 code instead of data, so you can bootload onto another pi.  You can do
 different variants:
   1. Send the same program and run it, forwarding any prints back to the
-     laptop.
-  2. Can concatenate another program to the end of the first one and send
-     that.  And if you can do one, you can do ten :).
+     laptop.   If you make a working `boot_put8` and `boot_get8` (using
+     software-UART, using your own custom protocol, or some other
+     method) you can actually do this using your bootloader code, just hook
+     it up to the different methods.
+  2. Multiple-programs: Can concatenate another program to the end of the
+     first one and send that.  And if you can do one, you can do ten :).
   3. Dynamic process migration: send the same program with live state 
-     (context switch and send the stack), let it send the result
-     back.
+     (context switch, and send the stack and data), let it send the result
+     back.  You can also migrate the same program back and forth.  So
+     instead of doing a network ping-pong by sending an integer back
+     and forth (0,1,2,...) you send a program back and forth where each
+     step it increments a counter and then requests to be migrated.
+     With a fairly small amount of code, you can easily build some
+     conceptually high end tricks.
+  4. Cluster-pi: if you can hook up two pi's --- you can hook up multiple
+     and send programs between them.
 
 #### Extension: replay
 
