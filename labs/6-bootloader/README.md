@@ -192,10 +192,19 @@ However, this does lead to a common mistake on the Unix side:
     be a protocol opcode.  Otherwise you won't correctly handle when
     the pi-side sends a `putk` message (see below).
 
-##### Example of `my-install --trace-control`
+##### Example: `my-install --trace-control`
 
-Note: you can see the `PUT` and `GET` operations being done b/n the pi
-and Unix by using the `--trace-control` option:
+Similar to tracing `GET32` and `PUT32` to validate GPIO, we trace the
+`PUT32` and `GET32` that your laptop and pi send to each other over UART
+by using the `--trace-control` option.  This will  make debugging much
+much easier since you can see what is being sent.  And for the protocol
+itself you should have same trace as us.
+
+NOTE:
+  - With that said: the start of the protocol is non-deterministic (since
+    it depends on the exact timing of the `GET_PROG_INFO`) so if you
+    have trouble passing the tests because of the initial mismatch,
+    let us know.
 
 ```bash
         % my-install --trace-control checkoff/hello.bin
