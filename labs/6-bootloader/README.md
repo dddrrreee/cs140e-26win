@@ -1,3 +1,24 @@
+## Errata
+
+
+If you are getting weird results on back-to-back runs: change the
+value sent to `set_tty_to_8n1` to 10:
+
+Before (Bad):
+```c
+    // my-install:main:
+    double timeout_tenths = 1;
+    int fd = set_tty_to_8n1(tty, baud_rate, timeout_tenths);
+```
+
+After (good):
+```c
+    // my-install:main:
+    double timeout_tenths = 2*5;
+    int fd = set_tty_to_8n1(tty, baud_rate, timeout_tenths);
+```
+
+
 ## Today: Build a bootloader.
 
 <p align="center">
