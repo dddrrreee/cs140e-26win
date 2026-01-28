@@ -1,5 +1,16 @@
 ## Errata
 
+If you are getting issues with finding `B460800` replace
+```c
+case 460800: return B460800;
+```
+with
+```c
+#ifdef B460800
+    case 460800: return B460800;
+#endif
+```
+(like the other baudrates)
 
 If you are getting weird results on back-to-back runs: change the
 value sent to `set_tty_to_8n1` to 10:
