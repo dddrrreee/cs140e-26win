@@ -143,7 +143,7 @@ static inline uint32_t get_op(int fd) {
             panic("pi sent a suspiciously long string nybtes=%d\n", nbytes);
 
         output("pi sent print: <");
-        for(unsigned i = 0; i < nbytes; i++)
+        for(unsigned i = 0; i < nbytes-1; i++)
             output("%c", get_uint8(fd));
 
         // eat the trailing newline to make it easier to compare output.
