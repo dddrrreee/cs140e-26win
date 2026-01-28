@@ -1,4 +1,4 @@
-## Tiny Quine (32-bit ELF, 140e 2025) 
+## Tiny Quine: 54-bytes (32-bit ELF, 140e 2025) 
 
 Thomason Zhao  
 Tianle Yu
