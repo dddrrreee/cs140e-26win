@@ -333,6 +333,19 @@ several ways:
      learn alot here, especially if you set up a testing framework for it.
      If you go this way, ask Max C for how he did his!
 
+#### Extension: two pi bootloader
+
+A fun extension for those of you who got fast pi-to-pi messaging: send
+code instead of data, so you can bootload onto another pi.  You can do
+different variants:
+  1. Send the same program and run it, forwarding any prints back to the
+     laptop.
+  2. Can concatenate another program to the end of the first one and send
+     that.  And if you can do one, you can do ten :).
+  3. Dynamic process migration: send the same program with live state 
+     (context switch and send the stack), let it send the result
+     back.
+
 #### Extension: replay
 
 By far the most useful will be to make sure your pi-side code is rock
