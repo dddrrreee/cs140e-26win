@@ -10,6 +10,9 @@ are: the labs after this point can still see significant revisions.
    - [Last year's summary of what we did](https://github.com/dddrrreee/cs140e-25win/blob/main/labs/what-did-we-learn.md) might be a useful breakdown of where this is all going.
 
    - [Final project ideas](./final-projects/README.md).
+   - [CS240LX 25 Labs as extensions](https://github.com/dddrrreee/cs240lx-25spr):
+     usually you can do any 240LX lab (there are many years of them!) as
+     a "hard" extension. (Note: these go back 2024, 2023, 2022, 2021, 2020.)
    - [lab-memes](./lab-memes) revolving around code, bugs, jobs, pizza.
 
 ---------------------------------------------------------------------
