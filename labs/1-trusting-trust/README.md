@@ -126,7 +126,7 @@ Extensions:
   - A very cool one by Tianle Yu (2025): put the attack for real in the tcc 
     "tiny C compiler". 
   - [A amazingly small tiny-quine](TINY-QUINE.md) where Thomason Zhao
-    and Tianle Yu got a 43 byte(!!!) program to self-replicate by writing
+    and Tianle Yu got a 54-byte(!!!) program to self-replicate by writing
     in assembly, and jamming much of the assembly in unused fields of
     the Linux ELF header.
 
