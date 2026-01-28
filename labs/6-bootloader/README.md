@@ -4,34 +4,6 @@
   <img src="images/robot-pi.png" width="450" />
 </p>
 
-#### Clarifications and errata
-
-Note: you can see the `PUT` and `GET` operations being done b/n the pi
-and Unix by using the `--trace-control` option:
-
-        my-install --trace-control checkoff/hello.bin
-
-        TRACE:simple_boot: sending 3372 bytes, crc32=cf4943ae
-        BOOT:waiting for a start
-        TRACE:GET32:11112222 [GET_PROG_INFO]
-        TRACE:PUT32:33334444 [PUT_PROG_INFO]
-        TRACE:PUT32:8000 [UNKNOWN]
-        TRACE:PUT32:d2c [UNKNOWN]
-        TRACE:PUT32:cf4943ae [UNKNOWN]
-        TRACE:GET32:55556666 [GET_CODE]
-        TRACE:GET32:cf4943ae [UNKNOWN]
-        TRACE:PUT32:77778888 [PUT_CODE]
-        TRACE:GET32:9999aaaa [BOOT_SUCCESS]
-        BOOT:bootloader: Done.
-        listening on ttyusb=</dev/ttyUSB0>
-        hello world
-        DONE!!!
-
-Errata:
-  1. For part 2 (pi-side) you have to copy the kernel.img to
-     the sd card manually: `make install` can't do this for you.
-
-#### Intro
 
 Last's weeks labs were intense --- we take a bit of a breather
 lab: no assembly, weird bugs from register corruptions, etc.  
@@ -222,30 +194,37 @@ However, this does lead to a common mistake on the Unix side:
 
 ##### Example of `my-install --trace-control`
 
-As a comparison, when I run:
+Note: you can see the `PUT` and `GET` operations being done b/n the pi
+and Unix by using the `--trace-control` option:
 
-        % my-install --trace-control hello.bin
+```bash
+        % my-install --trace-control checkoff/hello.bin
 
-I get:
-
-    BOOT:simple_boot: sending 3372 bytes, crc32=cf4943ae
-    BOOT:waiting for a start
-    TRACE:GET32:11112222 [GET_PROG_INFO]
-    TRACE:PUT32:33334444 [PUT_PROG_INFO]
-    TRACE:PUT32:8000 [UNKNOWN]
-    TRACE:PUT32:d2c [UNKNOWN]
-    TRACE:PUT32:cf4943ae [UNKNOWN]
-    TRACE:GET32:55556666 [GET_CODE]
-    TRACE:GET32:cf4943ae [UNKNOWN]
-    TRACE:PUT32:77778888 [PUT_CODE]
-    DEBUG:PRINT_STRING:pi sent print: <<STAFF>: success: Received the program!>
-    TRACE:GET32:9999aaaa [BOOT_SUCCESS]
-    BOOT:bootloader: Done.
-    hello world
-    DONE!!!
+        TRACE:simple_boot: sending 1404 bytes, crc32=a555db78
+        BOOT:waiting for a start
+        TRACE:GET32:11112222 [GET_PROG_INFO]
+        TRACE:PUT32:33334444 [PUT_PROG_INFO]
+        TRACE:PUT32:8000 [UNKNOWN]
+        TRACE:PUT32:57c [UNKNOWN]
+        TRACE:PUT32:a555db78 [UNKNOWN]
+        TRACE:GET32:55556666 [GET_CODE]
+        TRACE:GET32:a555db78 [UNKNOWN]
+        TRACE:PUT32:77778888 [PUT_CODE]
+        PRINT_STRING:pi sent print: <verify the checksum of copied code>
+        PRINT_STRING:pi sent print: <<STAFF>: success: Received the program!>
+        TRACE:GET32:9999aaaa [BOOT_SUCCESS]
+        BOOT:bootloader: Done.
+        listening on ttyusb=</dev/ttyUSB0>
+        hello world from the pi
+        DONE!!!
+```
 
 --------------------------------------------------------------------
 ### Step 2: write the pi side bootloader (`2-pi-side`)
+
+***COMMON MISTAKE***:
+  - You have to copy the `kernel.img` to your microSD card manually: 
+    `make install` can't do this for you.
 
 Deliverables:
   - Implement `2-pi-side/get-code.h` (make sure your code prints
