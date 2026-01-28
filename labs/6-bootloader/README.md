@@ -360,10 +360,8 @@ different variants:
 
 We had a lot of annoyance today since we couldn't bootload the bootloader
 and so had to manually copy it to the microSD card.  This 240lx lab from
-2022 shows how to make a recursive bootloader:
-[https://github.com/dddrrreee/cs240lx-22spr/tree/main/labs/18-ptag](https://github.com/dddrrreee/cs240lx-22spr/tree/main/labs/18-ptag).  Doesn't require much
+2022 shows how to make a recursive bootloader: [https://github.com/dddrrreee/cs240lx-22spr/tree/main/labs/14-reloc-bootloader](https://github.com/dddrrreee/cs240lx-22spr/tree/main/labs/14-reloc-bootloader). Doesn't require much
 code, will help you understand the low level much more thoroughly..
-
 
 #### Extension: replay
 
