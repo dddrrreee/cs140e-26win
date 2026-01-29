@@ -4,7 +4,8 @@
             "name": "Mac",
             "includePath": [
                 "libpi/**",
-                "libpi/include"
+                "libpi/include",
+                "libunix/**"
             ],
             "macFrameworkPath": [
                 "/System/Library/Frameworks",

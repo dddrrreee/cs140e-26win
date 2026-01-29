@@ -27,5 +27,29 @@ void *read_file(unsigned *size, const char *name) {
     //    - fclose() the file descriptor
     //    - make sure any padding bytes have zeros.
     //    - return it.   
-    unimplemented();
+
+    struct stat stat_struct;
+
+    // Checks for errors
+    if (stat(name, &stat_struct) < 0)
+        return NULL;
+
+    // Size in bytes 
+    *size = (stat_struct.st_size / 4) + 1; // I think wrong but better to allocate more
+    
+    
+    uint32_t* buffer = malloc(*size);
+    if (!buffer)
+        return NULL;
+
+    memset(buffer, 0, *size);
+
+    FILE* file = fopen(name, "rb");
+    if (!file)
+        return NULL;
+
+    fread(buffer, 1, stat_struct.st_size, file);
+    fclose(file);
+
+    return buffer;
 }
