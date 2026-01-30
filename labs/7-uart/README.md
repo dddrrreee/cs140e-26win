@@ -4,9 +4,10 @@
   <img src="images/uart-meme.jpg" width="450" />
 </p>
 
-Make sure you've read the 
-[miniUART cheat sheet](../../notes/devices/miniUART.md).
-
+Readings:
+  - [miniUART cheat sheet](../../notes/devices/miniUART.md).
+  - the uart chapter in the bcm2835 (8-19).
+  - We now have some slides!
 
 By the end of this lab, you'll have written your own device driver for
 the pi's mini-UART hardware, which is what communicates with the TTY-USB
@@ -211,6 +212,7 @@ modern brains aren't built for out of the box.   You have two options:
 
 In either case, in the final part of the lab you'll implement bit-banged
 UART yourself.
+
   
 -----------------------------------------------------------------------
 ### Part 2. cross check your UART `2-fake-pi` 
