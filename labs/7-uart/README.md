@@ -25,6 +25,7 @@ If the fake-pi makefile gives a link error:
 
 
 Do a pull!
+ - There is now a simple test for your `uart_get8` (`4-loopback-hello.c`):
  - There was a missing definition for `hw_uart_disable()`.
  - I updated the checksums assuming the use of the `stat` register.
 
@@ -455,7 +456,7 @@ To transmit:
 
 #### New and improved: SW-to-HW UART loopback 
 
-There is now a simple test for your `uart_get8` (`4-loopback-hello.c):
+There is now a simple test for your `uart_get8` (`4-loopback-hello.c`):
   1. Hardware change: use a loopback jumper to connect the hardware UART 
     RX pin (15) and GPIO pin 19.
   2. Configure a software UART to transmit using GPIO pin 19.
