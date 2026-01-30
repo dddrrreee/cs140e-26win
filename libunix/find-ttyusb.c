@@ -12,9 +12,8 @@ static const char *ttyusb_prefixes[] = {
     "ttyUSB",	// linux
     "ttyACM",   // linux
     "cu.SLAB_USB", // mac os
-    "cu.usbserial", // mac os
+    "cu.usbserial" // mac os
     // if your system uses another name, add it.
-	0
 };
 
 static int filter(const struct dirent *d) {
@@ -27,12 +26,14 @@ static int filter(const struct dirent *d) {
 
     for (unsigned i = 0; i < n_prefixes; i++) {
         // String compare like in the first lab
+
         if ( strncmp(ttyusb_prefixes[i], name, 
                     strlen(ttyusb_prefixes[i])) == 0) {
             return 1; 
         }
+        
     }
-
+    
     return 0;
 
 
@@ -52,9 +53,21 @@ char *find_ttyusb(void) {
     struct dirent **names;
     //           path      dirent  should include?   sorting func 
     unsigned n = scandir("/dev", &names, filter, alphasort);
+    printf("B\n");
+    if (n == 0) {
+        panic("device number is 0");
+    }
 
-    if (n != 1)
+    if (n != 1) {
+        printf("More names than 1:\n");
+
+        for (int i = 0; i < n; i++) {
+            printf("- %s\n", names[i]->d_name);
+        }
+        printf("\n\n");
         panic("device number is %d, not 1", n);
+    }
+        
 
     char *name = malloc(strlen(names[0]->d_name) + 1); // for 0 termination
     if (!name)

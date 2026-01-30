@@ -35,7 +35,7 @@ void *read_file(unsigned *size, const char *name) {
         return NULL;
 
     // Size in bytes 
-    *size = (stat_struct.st_size / 4) + 1; // I think wrong but better to allocate more
+    *size = stat_struct.st_size; // I think wrong but better to allocate more
     
     
     uint32_t* buffer = malloc(*size);
