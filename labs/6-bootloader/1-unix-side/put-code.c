@@ -248,7 +248,6 @@ void simple_boot(int fd, uint32_t boot_addr, const uint8_t *buf, unsigned n) {
     op = flush_until_word(fd, GET_PROG_INFO);
 
 
-
     // ***************************************************************
     // CRUCIAL:  *FOR ALL CODE* below, if you use the PRINT_STRING
     //   functionality to print from your pi during bootloading: 
@@ -260,11 +259,11 @@ void simple_boot(int fd, uint32_t boot_addr, const uint8_t *buf, unsigned n) {
 
     // 1. reply to the GET_PROG_INFO
     // ** Written
-    put_uint32(fd, PUT_PROG_INFO);
-    put_uint32(fd, ARMBASE);
-    put_uint32(fd, n);
+    trace_put32(fd, PUT_PROG_INFO);
+    trace_put32(fd, ARMBASE);
+    trace_put32(fd, n);
     volatile uint32_t crc = crc32(buf, n);
-    put_uint32(fd, crc);
+    trace_put32(fd, crc);
 
     // 2. drain any extra GET_PROG_INFOS
     // todo("drain any extra GET_PROG_INFOS");
@@ -273,12 +272,14 @@ void simple_boot(int fd, uint32_t boot_addr, const uint8_t *buf, unsigned n) {
 
     // 3. check that we received a GET_CODE
     // todo("check that we received a GET_CODE");
+    
 
     op = flush_until_word(fd, GET_CODE);
     assert(op == GET_CODE);
 
-    op = get_uint32(fd);
-
+    // op = flush_until_word(fd, crc);
+    op = get_op(fd);
+    assert(op = crc);
     // printf("Our CRC: %x\t Received CRC: %x\n", crc, op);
 
     // 4. handle it: send a PUT_CODE + the code.
@@ -287,7 +288,7 @@ void simple_boot(int fd, uint32_t boot_addr, const uint8_t *buf, unsigned n) {
     if (crc != op)
         panic("CRC mismatch: expected %x, got <%x>\n", crc, op);
     
-    put_uint32(fd, PUT_CODE);
+    trace_put32(fd, PUT_CODE);
 
     for(unsigned i = 0; i < n; i++) {
         put_uint8(fd, buf[i]);
