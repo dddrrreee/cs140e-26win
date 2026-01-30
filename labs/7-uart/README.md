@@ -13,6 +13,7 @@ on brand for a datasheet.
 
 ## Errata
 
+
 If the fake-pi makefile gives a link error:
  - Add `gpio_panic` to `2-fake-pi/Makefile`
 ```
@@ -286,6 +287,24 @@ To check your output (I used the `stat` register):
         checksum(checksum) = 1784403158 119
 
 ```
+
+If you use the LSR register versus STAT, these checksums from 
+last year (2025) should work:
+```
+        # this uses the LSR
+        % cd 2-fake-pi/tests-uart
+        % make emit
+        % make checksum
+
+        individual checksums =
+        852325631 5396 0-uart-getc.out
+        1030750329 808 0-uart-init.out
+        1334889765 1577 1-hello.out
+        3030943895 229 0-uart-putc.out
+        checksum(checksum) =
+        2291128381 121
+```
+
 
 NOTE:
   - You might get different output if you do things differently than
