@@ -2,7 +2,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
+#include <string.h> // ** MODIFIED
 #include "libunix.h"
 
 // allocate buffer, read entire file into it, return it.   
