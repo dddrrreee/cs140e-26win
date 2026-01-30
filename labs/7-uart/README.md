@@ -5,13 +5,23 @@
 ## Errata
 
 If the fake-pi makefile gives a link error:
- - add this to `2-fake-pi/Makefile`
+ - Add `gpio_panic` to `2-fake-pi/Makefile`
 ```
     LIB_SRC  += $(LPP)/libc/putk.c
     LIB_SRC  += $(LPP)/libc/putchar.c
     # add the below so it gets gpio_panic
     LIB_SRC  += $(LPP)/libc/gpio-panic.c
 ```
+ - If you get compilation errors, it's likely b/c you don't have a 
+   slash at the end of your 140E PATH variable.  Easiest is to just
+   add one.  So:
+
+        LPP = $(CS140E_2026_PATH)libpi
+
+   Becomes
+
+        LPP = $(CS140E_2026_PATH)/libpi
+
 
 Do a pull!
  - There was a missing definition for `hw_uart_disable()`.
