@@ -183,6 +183,33 @@ boot_check(int fd, const char *msg, unsigned exp, unsigned got) {
     panic("pi-boot failed\n");
 }
 
+// Until input is a word
+static uint32_t flush_until_word(int fd, uint32_t word) {
+    uint32_t op;
+
+    while((op = get_op(fd)) != word) {
+        output("expected %x, got <%x>: discarding.\n", word, op);
+        // have to remove just one byte since if not aligned, stays not aligned
+        get_uint8(fd);
+    } 
+
+    // debug("finally got <%s>\n", boot_op_to_str(op));
+    return op;
+}
+
+// Until input is NOT a word
+static uint32_t flush_word(int fd, uint32_t word) {
+    uint32_t op;
+
+    while((op = get_op(fd)) != word) {
+        output("got <%x>: discarding.\n", op);
+        // have to remove just one byte since if not aligned, stays not aligned
+        get_uint8(fd);
+    } 
+    // debug("finally got <%s>\n", boot_op_to_str(op));
+    return op;
+}
+
 //**********************************************************************
 // The unix side bootloader code: you implement this.
 // 
@@ -205,7 +232,7 @@ void simple_boot(int fd, uint32_t boot_addr, const uint8_t *buf, unsigned n) {
     boot_output("waiting for a start\n");
 
     // NOTE: only call <get_op> to assign to the <op> var.
-    uint32_t op;
+    volatile uint32_t op;
 
     // step 0: drain the initial data.  can have garbage.  
     // 
@@ -218,11 +245,9 @@ void simple_boot(int fd, uint32_t boot_addr, const uint8_t *buf, unsigned n) {
     //
 
     // first word in each message.
-    while((op = get_op(fd)) != GET_PROG_INFO) {
-        output("expected initial GET_PROG_INFO, got <%x>: discarding.\n", op);
-        // have to remove just one byte since if not aligned, stays not aligned
-        get_uint8(fd);
-    } 
+    op = flush_until_word(fd, GET_PROG_INFO);
+
+
 
     // ***************************************************************
     // CRUCIAL:  *FOR ALL CODE* below, if you use the PRINT_STRING
@@ -234,19 +259,42 @@ void simple_boot(int fd, uint32_t boot_addr, const uint8_t *buf, unsigned n) {
     //      same value as an opcode and get hijacked.
 
     // 1. reply to the GET_PROG_INFO
-    todo("reply to GET_PROG_INFO");
+    // ** Written
+    put_uint32(fd, PUT_PROG_INFO);
+    put_uint32(fd, ARMBASE);
+    put_uint32(fd, n);
+    volatile uint32_t crc = crc32(buf, n);
+    put_uint32(fd, crc);
 
     // 2. drain any extra GET_PROG_INFOS
-    todo("drain any extra GET_PROG_INFOS");
+    // todo("drain any extra GET_PROG_INFOS");
+    // flush_until_word(fd, GET_PROG_INFO);
+    // op = get_uint32(fd);
 
     // 3. check that we received a GET_CODE
-    todo("check that we received a GET_CODE");
+    // todo("check that we received a GET_CODE");
+
+    op = flush_until_word(fd, GET_CODE);
+    assert(op == GET_CODE);
+
+    op = get_uint32(fd);
+
+    // printf("Our CRC: %x\t Received CRC: %x\n", crc, op);
 
     // 4. handle it: send a PUT_CODE + the code.
-    todo("send PUT_CODE + the code in <buf>");
+    // todo("send PUT_CODE + the code in <buf>");
+
+    if (crc != op)
+        panic("CRC mismatch: expected %x, got <%x>\n", crc, op);
+    
+    put_uint32(fd, PUT_CODE);
+
+    for(unsigned i = 0; i < n; i++) {
+        put_uint8(fd, buf[i]);
+    }
 
     // 5. Wait for BOOT_SUCCESS
-    todo("wait for BOOT_SUCCESS");
+    op = flush_until_word(fd, BOOT_SUCCESS);
 
     boot_output("bootloader: Done.\n");
 }

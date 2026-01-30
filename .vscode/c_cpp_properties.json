@@ -5,7 +5,8 @@
             "includePath": [
                 "libpi/**",
                 "libpi/include",
-                "libunix/**"
+                "libunix/**",
+                "labs/6-bootloader/2-pi-side"
             ],
             "macFrameworkPath": [
                 "/System/Library/Frameworks",

@@ -64,7 +64,9 @@ static unsigned parse_baud_or_die(const char *s) {
     case 9600: return B9600;
     case 115200: return B115200;
     case 230400: return B230400;
+#ifdef B460800
     case 460800: return B460800;
+#endif
 #ifdef B576000
     case 576000: return B576000;
 #endif
