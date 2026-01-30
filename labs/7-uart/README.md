@@ -1,11 +1,15 @@
+## Lab: write your own UART implementation.
 
+
+-------------------------------------------------------------------------
 ## Errata
 
-  - Do a `git pull` --- there is a missing definition for
-    `hw_uart_disable()`.
-  - I updated the checksums assuming the use of the `stat` register.
+Do a pull!
+ - There was a missing definition for `hw_uart_disable()`.
+ - I updated the checksums assuming the use of the `stat` register.
 
-## Lab: write your own UART implementation.
+-------------------------------------------------------------------------
+
 
 <p align="center">
   <img src="images/uart-meme.jpg" width="450" />
