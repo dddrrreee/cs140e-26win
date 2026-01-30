@@ -3,6 +3,14 @@
 
 -------------------------------------------------------------------------
 
+## Major clarification
+
+NOTE: when you set the GPIO pins, you need to answer *which* UART
+the miniUART is --- if you look on page 15, the `CTS status` field in
+`AUX_MU_MSR_REG` refers to UART1.  The fact this crucial information
+is hidden in some random part in the middle of the chapter is entirely
+on brand for a datasheet.
+
 ## Errata
 
 If the fake-pi makefile gives a link error:
