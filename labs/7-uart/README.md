@@ -2,6 +2,7 @@
 
 
 -------------------------------------------------------------------------
+
 ## Errata
 
 If the fake-pi makefile gives a link error:
@@ -451,6 +452,19 @@ To transmit:
   2. write each bit value in the given byte for T (starting at bit 0, 
      bit 1, ...).
   3. write a 1 (stop) for at-least T.
+
+#### New and improved: SW-to-HW UART loopback 
+
+There is now a simple test for your `uart_get8` (`4-loopback-hello.c):
+  1. Hardware change: use a loopback jumper to connect the hardware UART 
+    RX pin (15) and GPIO pin 19.
+  2. Configure a software UART to transmit using GPIO pin 19.
+  3. You use `sw_uart_get8` to write values (they will go from GPIO 19 to GPIO 15).
+  4. You use `uart_get8` to read values.
+  5. What you send should be the same as what you receive.
+  6. Profit!
+
+You can also scale it up to be much more aggressive to test buffering.
 
 ---------------------------------------------------------------------
 ### Extensions.
