@@ -120,23 +120,20 @@ rpi_thread_t *rpi_fork(void (*code)(void *arg), void *arg) {
      * - see <code-asm-checks/5-write-regs.c> for how to 
      *   coordinate offsets b/n asm and C code.
      */
-    // todo("initialize thread stack");
-
-    // t->saved_sp = t->stack; // Top of stack
 
     // Part 1 - simple debugging
     t->fn = code;
     t->arg = arg;
 
     // Part 2
-    t->stack[REG_LR_OFFSET] = (uint32_t)&rpi_init_trampoline;
-    t->stack[CODE_OFFSET] = (uint32_t)code;
-    t->stack[ARG_OFFSET] = (uint32_t)arg;
     
+    memset(t->stack, 0, THREAD_MAXSTACK * sizeof(uint32_t));
 
+    t->saved_sp = t->stack + THREAD_MAXSTACK - 9; // {r4-11, lr} is 9 registers
+    t->saved_sp[CODE_OFFSET] = (uint32_t)code;
+    t->saved_sp[ARG_OFFSET] = (uint32_t)arg;
+    t->saved_sp[REG_LR_OFFSET] = (uint32_t)&rpi_init_trampoline;
     
-    
-
     // should check that <t->saved_sp> points within the 
     // thread stack.
     th_trace("rpi_fork: tid=%d, code=[%p], arg=[%x], saved_sp=[%p]\n",
@@ -156,7 +153,22 @@ void rpi_exit(int exitcode) {
 
     // if you switch back to the scheduler thread put this in:
     //      th_trace("done running threads, back to scheduler\n");
-    todo("implement rpi_exit");
+    // todo("implement rpi_exit");
+
+    rpi_thread_t* old = cur_thread;
+
+    if(Q_empty(&runq)) {
+        cur_thread = scheduler_thread;
+        th_trace("done running threads, back to scheduler\n");
+        rpi_cswitch(&old->saved_sp, scheduler_thread->saved_sp);
+    }
+
+    rpi_thread_t* next = Q_pop(&runq);
+
+    cur_thread = next;
+    rpi_cswitch(&old->saved_sp, next->saved_sp);
+    
+    
 
     // should never return.
     not_reached();
@@ -174,7 +186,19 @@ void rpi_yield(void) {
     // NOTE: if you switch to another thread: print the statement:
     //     th_trace("switching from tid=%d to tid=%d\n", old->tid, t->tid);
 
-    todo("implement the rest of rpi_yield");
+    if(Q_empty(&runq)) 
+        return;
+
+    rpi_thread_t* old = cur_thread;
+    rpi_thread_t* t = Q_pop(&runq);
+    cur_thread = t;
+
+    Q_append(&runq, old);
+
+    th_trace("switching from tid=%d to tid=%d\n", old->tid, t->tid);
+
+    rpi_cswitch(&old->saved_sp, t->saved_sp);
+
 }
 
 /*
@@ -196,12 +220,15 @@ void rpi_thread_start(void) {
     if(!scheduler_thread)
         scheduler_thread = th_alloc();
 
-
-    // Run all threads
+    cur_thread = scheduler_thread;
+        
+        // Run all threads
     while (!Q_empty(&runq)) {
-        rpi_thread_t* t = Q_pop(&runq);
-        cur_thread = t;
-        t->fn(t->arg);
+        rpi_thread_t* old = cur_thread;
+        rpi_thread_t* new = Q_pop(&runq);
+
+        cur_thread = new;
+        rpi_cswitch(&old->saved_sp, new->saved_sp);
     }
 
     

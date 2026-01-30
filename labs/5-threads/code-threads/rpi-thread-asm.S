@@ -29,12 +29,12 @@ MK_FN(rpi_cswitch)
 
     @ Push and save current regs into sp
     push {r4-r11, lr}
-    mov r0, sp
+    str sp, [r0] @ save INTO the address at the reg
 
     @ Pull regs from new stack
     mov sp, r1
     pop {r4-r11, lr}
-
+    
     bx lr
 
 @ [Make sure you can answer: why do we need this
@@ -47,7 +47,9 @@ MK_FN(rpi_cswitch)
 @	- <arg> into r0
 @ 
 MK_FN(rpi_init_trampoline)
+    mov r0, r5 @ arg
+    blx r4 @ code/fn
     @ asm_todo("implement this")
 
     
-    bx lr
+    bl rpi_exit

@@ -32,8 +32,8 @@
  */
 
 // you should define these; also rename to something better.
-#define REG_SP_OFFSET 36/4
-#define REG_LR_OFFSET 40/4
+// #define REG_SP_OFFSET 36/4 // ** already saving stack pointer
+#define REG_LR_OFFSET 32/4
 #define CODE_OFFSET 0
 #define ARG_OFFSET 4/4
 
