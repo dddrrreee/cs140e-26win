@@ -60,8 +60,14 @@ int vsnprintk(char *buf, unsigned buflen, const char *fmt, va_list ap);
  * uart routines: you will implement these.
  */
 
-// initialize [XXX: we should take a baud rate?]
+// initialize to baud=115,200
 void uart_init(void);
+
+// use the formula: 
+//   baud_reg = 250,000,000/(baud*8) - 1
+// feel free to wrap it up!
+void uart_div(uint32_t baud_reg);
+
 // disable
 void uart_disable(void);
 
