@@ -25,7 +25,7 @@ COMMON_SRC += cstart.c
 RUN=1
 
 L := $(CS140E_2026_PATH)/libpi/
-STAFF_OBJS := $(L)/staff-objs/staff-sw-uart.o
+# STAFF_OBJS := $(L)/staff-objs/staff-sw-uart.o
 
 
 # if doing checkoff use both uart and cstart.

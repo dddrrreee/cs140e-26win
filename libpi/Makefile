@@ -7,6 +7,7 @@
 # STAFF_OBJS  +=  ./staff-objs/gpio.o
 #   3. uncomment:
 SRC += src/gpio.c
+SRC += src/uart.c
 
 # if you want to use your own pullup-puldown
 # 1. put it in src/gpio-pud.c)
@@ -14,7 +15,7 @@ SRC += src/gpio.c
 # 3. comment out ours below:
 STAFF_OBJS  +=  ./staff-objs/gpio-pud.o
 
-STAFF_OBJS  +=  ./staff-objs/uart.o
+# STAFF_OBJS  +=  ./staff-objs/uart.o
 STAFF_OBJS  +=  ./staff-objs/gpio-int.o 
 
 # these are all the locations that get made into
