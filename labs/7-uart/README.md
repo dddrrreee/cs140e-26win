@@ -1,3 +1,10 @@
+
+## Errata
+
+  - Do a `git pull` --- there is a missing definition for
+    `hw_uart_disable()`.
+  - I updated the checksums assuming the use of the `stat` register.
+
 ## Lab: write your own UART implementation.
 
 <p align="center">
@@ -228,19 +235,18 @@ handle UART and AUX writes.  If you look in `2-fake-pi/Makefile` you'll
 see that we link in your `libpi/src/gpio.c` and `../1-uart/uart.c`.
 There are simple tests for the UART in `2-fake-pi/tests-uart`
 
-To check your output:
+To check your output (I used the `stat` register):
 ```
         % cd 2-fake-pi/tests-uart
         % make emit
         % make checksum
 
         individual checksums = 
-        852325631 5396 0-uart-getc.out
+        53535404 1657 1-hello.out
         1030750329 808 0-uart-init.out
-        1334889765 1577 1-hello.out
-        3030943895 229 0-uart-putc.out
-        checksum(checksum) = 
-        2291128381 121
+        1854830959 227 0-uart-getc.out
+        2071394643 228 0-uart-putc.out
+        checksum(checksum) = 1784403158 119
 
 ```
 
@@ -258,7 +264,6 @@ NOTE:
 
 
 My `2-fake-pi/tests-uart/0-uart-init.out`:
-
 ```
 TRACE:0: calling pi code
 TRACE:1: dev_barrier [0]
@@ -280,6 +285,17 @@ TRACE:16: UART: PUT32(0x20215060) = 0x3 [buffered]
 TRACE:17: UART: PUT32(0x20215068) = 0x10e [buffered]
 TRACE:18: UART: turned UART on PUT32(20215060)=3
 TRACE:19: dev_barrier [3]
+```
+
+My `2-fake-pi/tests-uart/0-uart-init.out`:
+```
+    TRACE: out file for <0-uart-getc>
+    TRACE:0: calling pi code
+    TRACE:1: dev_barrier 
+    TRACE:2: GET32(0x20215064) = 0x216231b
+    TRACE:3: GET32(0x20215040) = 0x625558ec
+    TRACE:4: dev_barrier 
+    TRACE: pi exited cleanly: 21 calls to random
 ```
 
 Some notes:

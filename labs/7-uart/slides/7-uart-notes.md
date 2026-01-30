@@ -100,30 +100,31 @@ Algorithm:
 <div style="display: flex;">
 <div style="flex: 1;">
 
-How to turn UART: on/off?
- - other devices?
+How to turn UART: on/off?  (AUX:p8)
+ - enable/disable (p17)
+ - other dev? (GPIO:p102+p15)
 
 TX: on/off?
- - can send?
- - clear TX fifo?
- - how to know done? (why care?)
+ - can send? (p15)
+ - clear TX fifo? (p13)
+ - how to know done? (idle/empty:stat)
 
 RX: on/off?
- - has data?
- - how to clear RX fifo?
+ - has data? (p18)
+ - how to clear RX fifo? (p13)
 
 </div>
 <div style="flex: 1;">
 
 Hygeine:
-  - how to disable interrupts?
+  - how to disable interrupts? (p12)
 
-How to set 8n1?
+How to set 8n1?  (p19)
   - 8 bits, no parity, stop bit
 
 How to set 115,200 baud (bits/sec)
-  - what: system clock?
-  - what: baud rate reg value?
+  - what: system clock? (p11)
+  - what: baud rate reg value? (formula p11)
 
 </div>
 </div>
