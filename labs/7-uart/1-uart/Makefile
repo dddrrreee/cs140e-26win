@@ -7,8 +7,8 @@
 # so it will make your code!
 
 # do these in order.
-# PROGS += output-test-3-emit.c
-# PROGS += output-test-1-hello-disable.c  
+PROGS += output-test-3-emit.c
+PROGS += output-test-1-hello-disable.c  
 PROGS += output-test-0-hello.c  
 
 # swap these if your bootloader doesn't work.

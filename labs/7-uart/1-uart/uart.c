@@ -138,8 +138,7 @@ void uart_init() {
 
     // Enable UART
     dev_barrier();
-    val = GET32(AUX_ENABLES);
-    PUT32(AUX_ENABLES, val | 1); 
+    PUT32(AUX_ENABLES, GET32(AUX_ENABLES) | 1); 
     dev_barrier();
 
     
@@ -158,7 +157,6 @@ void uart_init() {
     PUT32(AUX_MU_BAUD, 270); 
     
     // Clear FIFO
-    val = GET32(AUX_MU_IIR) & ~0b110;
     PUT32(AUX_MU_IIR, 0b110); 
     
     // Enable RX/TX
@@ -172,44 +170,40 @@ void uart_init() {
 // 
 void uart_disable(void) {
     dev_barrier();
-   
-    volatile uint32_t val = GET32(AUX_MU_IIR) & ~0b110;  // Clear FIFO
-    PUT32(AUX_MU_IIR, 0b110); 
+
+    // Flush TX FIFO
+    uart_flush_tx();
+
+    // Disable UART RX/TX
+    PUT32(AUX_MU_CNTL, GET32(AUX_MU_CNTL) & ~0b11); 
+
+    // Disable UART Peripheral (no more access to the regs boohoo) 
+    PUT32(AUX_ENABLES, GET32(AUX_ENABLES) & ~1); 
 
     dev_barrier();
-    // TODO: implement this!
 }
 
 // returns one byte from the RX (input) hardware
 // FIFO.  if FIFO is empty, blocks until there is 
 // at least one byte.
 int uart_get8(void) {
-    dev_barrier();
     while (!uart_has_data()) {} // BLOCKS until there is data :(
     uint32_t val = GET32(AUX_MU_IO);
-    dev_barrier();
-
     return val & 0xFF;
 }
 
 // returns 1 if the hardware TX (output) FIFO has room
 // for at least one byte.  returns 0 otherwise.
 int uart_can_put8(void) {
-    dev_barrier();
     uint32_t val = GET32(AUX_MU_LSR);
-    dev_barrier();
-
     return val & 1<<5;
 }
 
 // put one byte on the TX FIFO, if necessary, waits
 // until the FIFO has space.
 int uart_put8(uint8_t c) {
-    dev_barrier();
     while (!(uart_can_put8())) {} // BLOCKS until can send data :(
     PUT32(AUX_MU_IO, c);
-    dev_barrier();
-
     return 1;
 }
 
@@ -217,9 +211,7 @@ int uart_put8(uint8_t c) {
 //  - 1 if at least one byte on the hardware RX FIFO.
 //  - 0 otherwise
 int uart_has_data(void) { // ** IMPLEMENTED
-    dev_barrier();
     uint32_t val = GET32(AUX_MU_LSR);
-    dev_barrier();
     return val & 1;
 }
 
@@ -237,9 +229,7 @@ int uart_get8_async(void) {
 //  - 0 if not empty.
 int uart_tx_is_empty(void) {
     // TODO: implement this!
-    dev_barrier();
     uint32_t val = GET32(AUX_MU_LSR);
-    dev_barrier();
     return val & 1<<6;
 }
 
