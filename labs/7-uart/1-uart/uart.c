@@ -86,27 +86,97 @@ static void emergency_printk(const char *fmt, ...)  {
 
 // END of the bit bang code.
 #endif
+//*****************************************************
+// ** REGISTERS
+//*****************************************************
 
+enum {
+    AUX_IRQ = 0x20215000,
+    AUX_ENABLES  = (AUX_IRQ + 0x04),
+    AUX_MU_IO  = (AUX_IRQ + 0x40),
+    AUX_MU_IER  = (AUX_IRQ + 0x44),
+    AUX_MU_IIR  = (AUX_IRQ + 0x48),
+    AUX_MU_LCR  = (AUX_IRQ + 0x4C),
+    AUX_MU_MCR  = (AUX_IRQ + 0x50),
+    AUX_MU_LSR  = (AUX_IRQ + 0x54),
+    AUX_MU_MSR  = (AUX_IRQ + 0x58),
+    AUX_MU_SCRATCH  = (AUX_IRQ + 0x5C),
+    AUX_MU_CNTL  = (AUX_IRQ + 0x60),
+    AUX_MU_STAT  = (AUX_IRQ + 0x64),
+    AUX_MU_BAUD  = (AUX_IRQ + 0x68),
+};
 
 //*****************************************************
 // the rest you should implement.
+
+// Returns baud according to --> baud_reg = 250,000,000/(baud*8) - 1 ?
+// int uart_div(uint8_t baud) {
+    
+//     volatile int i = 31250000 / baud  - 1;
+//     // return 250000000 / (int)baud;
+//     return 0;
+// }
+
+// void uart_init(void) {
+//     uart_init_with_baud(115200);
+// }
 
 // called first to setup uart to 8n1 115200  baud,
 // no interrupts.
 //  - you will need memory barriers, use <dev_barrier()>
 //
 //  later: should add an init that takes a baud rate.
-void uart_init(void) {
-    todo("start here\n");
+void uart_init() {
 
-    // NOTE: for cross-checking: make sure write UART 
-    // addresses in order
+    // UHH assumes that GPIO is initted
 
+    // BRUH I HAD TO INITIALZIE THIS AS ALT5
+    gpio_set_function(GPIO_TX, GPIO_FUNC_ALT5);
+    gpio_set_function(GPIO_RX, GPIO_FUNC_ALT5);
+
+    volatile uint32_t val;
+
+    // Enable UART
+    dev_barrier();
+    val = GET32(AUX_ENABLES);
+    PUT32(AUX_ENABLES, val | 1); 
+    dev_barrier();
+
+    
+    dev_barrier();
+    
+    // Disable UART RX/TX
+    PUT32(AUX_MU_CNTL, GET32(AUX_MU_CNTL) & ~0b11); 
+
+    // Disable Interrupts
+    PUT32(AUX_MU_IER, GET32(AUX_MU_IER) & ~0b11); 
+    
+    // 8N1 (already N1 by default)
+    PUT32(AUX_MU_LCR, GET32(AUX_MU_LCR) | 0b11); 
+    
+    // Set baud rate     115200 = 250MHz / (8 * (270 + 1))
+    PUT32(AUX_MU_BAUD, 270); 
+    
+    // Clear FIFO
+    val = GET32(AUX_MU_IIR) & ~0b110;
+    PUT32(AUX_MU_IIR, 0b110); 
+    
+    // Enable RX/TX
+    PUT32(AUX_MU_CNTL, GET32(AUX_MU_CNTL) | 0b11); 
+    
+    dev_barrier();
+    
 }
 
 // disable the uart: make sure all bytes have been
 // 
 void uart_disable(void) {
+    dev_barrier();
+   
+    volatile uint32_t val = GET32(AUX_MU_IIR) & ~0b110;  // Clear FIFO
+    PUT32(AUX_MU_IIR, 0b110); 
+
+    dev_barrier();
     // TODO: implement this!
 }
 
@@ -114,29 +184,43 @@ void uart_disable(void) {
 // FIFO.  if FIFO is empty, blocks until there is 
 // at least one byte.
 int uart_get8(void) {
-    todo("implement this\n");
+    dev_barrier();
+    while (!uart_has_data()) {} // BLOCKS until there is data :(
+    uint32_t val = GET32(AUX_MU_IO);
+    dev_barrier();
+
+    return val & 0xFF;
 }
 
 // returns 1 if the hardware TX (output) FIFO has room
 // for at least one byte.  returns 0 otherwise.
 int uart_can_put8(void) {
-    // TODO: implement this!
-    return 0;
+    dev_barrier();
+    uint32_t val = GET32(AUX_MU_LSR);
+    dev_barrier();
+
+    return val & 1<<5;
 }
 
 // put one byte on the TX FIFO, if necessary, waits
 // until the FIFO has space.
 int uart_put8(uint8_t c) {
-    // TODO: implement this!
+    dev_barrier();
+    while (!(uart_can_put8())) {} // BLOCKS until can send data :(
+    PUT32(AUX_MU_IO, c);
+    dev_barrier();
+
     return 1;
 }
 
 // returns:
 //  - 1 if at least one byte on the hardware RX FIFO.
 //  - 0 otherwise
-int uart_has_data(void) {
-    // TODO: implement this!
-    return 0;
+int uart_has_data(void) { // ** IMPLEMENTED
+    dev_barrier();
+    uint32_t val = GET32(AUX_MU_LSR);
+    dev_barrier();
+    return val & 1;
 }
 
 // returns:
@@ -153,7 +237,10 @@ int uart_get8_async(void) {
 //  - 0 if not empty.
 int uart_tx_is_empty(void) {
     // TODO: implement this!
-    return 0;
+    dev_barrier();
+    uint32_t val = GET32(AUX_MU_LSR);
+    dev_barrier();
+    return val & 1<<6;
 }
 
 // return only when the TX FIFO is empty AND the

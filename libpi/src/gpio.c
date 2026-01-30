@@ -12,7 +12,7 @@
  *    it only infinite loops since we don't have <printk>
  */
 #include "rpi.h"
-#include "../include/gpio.h"
+#include "gpio.h"
 
 // macro hack
 #define gpio_panic(msg...) panic(msg)

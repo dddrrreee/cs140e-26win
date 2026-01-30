@@ -7,8 +7,8 @@
 # so it will make your code!
 
 # do these in order.
-PROGS += output-test-3-emit.c
-PROGS += output-test-1-hello-disable.c  
+# PROGS += output-test-3-emit.c
+# PROGS += output-test-1-hello-disable.c  
 PROGS += output-test-0-hello.c  
 
 # swap these if your bootloader doesn't work.
@@ -16,7 +16,7 @@ BOOTLOADER = my-install
 BOOTLOADER = pi-install
 
 # uncomment to build yours
-# COMMON_SRC += uart.c
+COMMON_SRC += uart.c
 
 # we use a custom cstart
 COMMON_SRC += cstart.c 
