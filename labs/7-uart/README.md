@@ -314,7 +314,7 @@ TRACE:18: UART: turned UART on PUT32(20215060)=3
 TRACE:19: dev_barrier [3]
 ```
 
-My `2-fake-pi/tests-uart/0-uart-init.out`:
+My `2-fake-pi/tests-uart/0-uart-getc.out`:
 ```
     TRACE: out file for <0-uart-getc>
     TRACE:0: calling pi code
