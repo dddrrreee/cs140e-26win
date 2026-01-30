@@ -4,6 +4,15 @@
 -------------------------------------------------------------------------
 ## Errata
 
+If the fake-pi makefile gives a link error:
+ - add this to `2-fake-pi/Makefile`
+```
+    LIB_SRC  += $(LPP)/libc/putk.c
+    LIB_SRC  += $(LPP)/libc/putchar.c
+    # add the below so it gets gpio_panic
+    LIB_SRC  += $(LPP)/libc/gpio-panic.c
+```
+
 Do a pull!
  - There was a missing definition for `hw_uart_disable()`.
  - I updated the checksums assuming the use of the `stat` register.
