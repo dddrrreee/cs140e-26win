@@ -1,30 +1,5 @@
 ## Lab: write your own UART implementation.
 
-
-
-------------------------------------------------
-#### Clarification errata
-
-Note:
-  - the staff uses `lrc` and you are most likely using `stat`
-    so the checksums for routines other than `uart_init` 
-    likely won't match.  make sure you do match with another
-    group.
-
-    then: please post your checksum to ed so we can all agree.
-  - if your fake-pi is not terminating do a pull.  lmk if 
-    that doesn't fix it.
-  - The final part 3 sw-uart is pushed!
-  - do the GPIO pins first (top of page 10) "GPIO pins should
-    be setup first before enabling the UART".  Then do 
-    the AUX enable.  Then set the uart.
-  - figure out all registers you can ignore and set them to
-    the default values.
-  - for cross checking, set the UART registers in ascending
-    order when possible.
-------------------------------------------------
-
-
 <p align="center">
   <img src="images/uart-meme.jpg" width="450" />
 </p>
@@ -210,6 +185,17 @@ A possibly-nasty issue:
      This will repeatedly disable and enable the uart --- not a perfect
      test, but a bit more rigorous.
 
+#### Clarifications
+
+  - the staff uses `lrc` and you are most likely using `stat`
+    so the checksums for routines other than `uart_init` 
+    likely won't match.  make sure you do match with another
+    group.  then: please post your checksum to ed so we can all agree.
+  - figure out all registers you can ignore and set them to
+    the default values.
+  - for cross checking, set the UART registers in ascending
+    order when possible.
+
 #### Hack to make things easier
 
 Historically a problem with writing UART code for this class (and for
@@ -235,9 +221,8 @@ We'll use the cross-checking idea from lab 3 to compare the `PUT32` and
 `GET32` that your code against everyone else.  Our mantra: If everyone
 matches and one person was right, then everyone was right.
 
-To do this, we
-extend the `fake-pi.c` code from `3-cross-checking` to handle 
-UART and AUX writes.  If you look in `2-fake-pi/Makefile` you'll
+To do this, we extend the `fake-pi.c` code from `3-cross-checking` to
+handle UART and AUX writes.  If you look in `2-fake-pi/Makefile` you'll
 see that we link in your `libpi/src/gpio.c` and `../1-uart/uart.c`.
 There are simple tests for the UART in `2-fake-pi/tests-uart`
 
@@ -313,7 +298,6 @@ Some notes:
 <p align="center">
   <img src="images/rpi-cables.png" width="450" />
 </p>
-
 
 -----------------------------------------------------------------------
 #### Part 3: install your `uart.c`!
