@@ -8,6 +8,10 @@ Do a pull!
  - There was a missing definition for `hw_uart_disable()`.
  - I updated the checksums assuming the use of the `stat` register.
 
+For cross-checking UART registers:
+ - During `uart_init()` I wound up ignoring: IO (p11), LSR (p15), MSR
+   (p15), STAT (p18), and SCRATCH.  We give the trace below.
+
 -------------------------------------------------------------------------
 
 
