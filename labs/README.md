@@ -106,11 +106,12 @@ We break up the execution labs by building the rest of the low
 level code you've been using ---the bootloader and the UART
 driver.
 
-====>
   - [6-bootloader](6-bootloader): two of the biggest pieces of code
     we've given you have been the Unix-side and pi-side bootloader code
     (`pi-install` and `bootloader.bin` respectively).  So this lab has
     you implement your own and get rid of ours.
+
+====>
 
   - [7-uart](7-uart): the last key bit of code we've given you is for
     controlling the UART (`uart.o`); so this lab has you write your own

@@ -1,12 +1,12 @@
 # Makefile to build or clean all labs.
 # SUBDIRS += 0-pi-setup 
 SUBDIRS += 1-trusting-trust 
-# SUBDIRS += 2-gpio
-# SUBDIRS += 3-cross-checking
-# SUBDIRS += 4-interrupts
-# SUBDIRS += 5-threads
-#SUBDIRS += 7-bootloader
-#SUBDIRS += 8-uart
+SUBDIRS += 2-gpio
+SUBDIRS += 3-cross-checking
+SUBDIRS += 4-interrupts
+SUBDIRS += 5-threads
+SUBDIRS += 6-bootloader
+SUBDIRS += 7-uart
 #SUBDIRS += 9-device-int
 #SUBDIRS += 10-debug-hw
 #SUBDIRS += 11-imu-i2c
