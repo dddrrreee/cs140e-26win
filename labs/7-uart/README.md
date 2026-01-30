@@ -504,13 +504,39 @@ to buffer the `PUT32` and `GET32` so that you can dump them later,
 otherwise you'll be trying to print when UART is being initialized,
 which won't work.
 
-#### Change the baud
+#### Hyper-speed bootloader.
 
 As we make more complicated programs, the bootloading overhead will add
 up (you've seen this in past checkoffs).  So an interesting puzzle is
 how fast you can make the baud rate for your bootloader.  Note you'll
-have to change the Unix side too and, at some point, the unix won't
-be able to keep up.
+have to change the Unix side too and, at some point, one side won't be
+able to keep up with the other.  (If you're super fancy, you could also
+try compressing it.)
+
+
+#### UART Receive interrupts
+
+While interrupts can be a great way to break a simple system, they can 
+actually reduce receiving bugs (for UART, for networking):
+  1. UART, like many receiving devices has a FIFO to absorb
+     incoming messages. But like everything good, there isn't an 
+     infinite amount.  For our case the FIFO is just 8 bytes deep.
+  2. What that means in practical terms is that even at our low speeds
+     if you don't check every couple of microseconds input gets dropped.  
+  3. The result: you can easily have a system that
+     "works fine" under light loads (such as during testing) but then
+     non-deterministically drops stuff under heavy.  It can easily drop
+     even more if you add print statements.
+  4. Receive interrupts let you handle input as soon as it arrives
+     so you can buffer it as needed.
+
+For this: you want a lock-free circular buffer, where the interrupt
+handler is the single writer and the non-interrupt code is the single
+reader.  An easy way to test at high baud without having to change the
+laptop is to use the loopback approach we did and use the software-UART
+to send at high speeds.  This is great b/c it makes testing simple: 
+you know the bytes sent, so can easily flag if you didn't receive them.
+Making this as fast as possible is worth a puzzle.
 
 #### Add input: `sw_uart_get8`
 
