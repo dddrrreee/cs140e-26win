@@ -25,7 +25,20 @@ void sw_uart_put8(sw_uart_t *uart, uint8_t b) {
              u = n,
              s = cycle_cnt_read();
 
-    todo("implement this code\n");
+    // Send start bit
+    write_cyc_until(tx, 0, cycle_cnt_read(), n);
+
+    // Send bits of the byte
+    for (volatile int8_t i = 0; i < 8; i++) {
+        if ( (b >> i) & 0x1 ) // checks i-th bit
+            write_cyc_until(tx, 1, cycle_cnt_read(), n);
+        else
+            write_cyc_until(tx, 0, cycle_cnt_read(), n);
+    }
+
+    // Send stop bit
+
+    write_cyc_until(tx, 1, cycle_cnt_read(), n);
 }
 
 // optional: do receive.
@@ -61,7 +74,13 @@ sw_uart_t sw_uart_init_helper(unsigned tx, unsigned rx,
             cyc_per_bit, cyc_per_bit * baud);
 
     // make sure you set TX to its correct default!
-    todo("setup rx,tx and initial state of tx pin.");
+    // todo("setup rx,tx and initial state of tx pin.");
+
+    // ** MODIFIED
+    gpio_set_function(tx, GPIO_FUNC_OUTPUT);
+    gpio_set_function(rx, GPIO_FUNC_INPUT);
+    gpio_set_on(tx);
+    delay_cycles(10);
 
     return (sw_uart_t) { 
             .tx = tx, 

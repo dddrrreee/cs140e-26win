@@ -1,11 +1,11 @@
 ###############################################################
 # easist to start with.
-PROGS= 1-hello-putk.c
-PROGS= 2-hello-n.c
+# PROGS= 1-hello-putk.c
+# PROGS= 2-hello-n.c
 PROGS= $(wildcard [01234]-*.c)
 
 # honestly, once this works, the rest probably do as well.
-PROGS= 0-hello.c
+# PROGS= 0-hello.c
 
 # swap these if your bootloader doesn't work.
 BOOTLOADER = my-install
