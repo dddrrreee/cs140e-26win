@@ -12,9 +12,9 @@ If the fake-pi makefile gives a link error:
     # add the below so it gets gpio_panic
     LIB_SRC  += $(LPP)/libc/gpio-panic.c
 ```
- - If you get compilation errors, it's likely b/c you don't have a 
-   slash at the end of your 140E PATH variable.  Easiest is to just
-   add one.  So:
+ - If you get compilation errors, it's likely b/c you don't have a
+   slash at the end of your `CS140E_2026_PATH` PATH variable.  Easiest is
+   to just add one.  So:
 
         LPP = $(CS140E_2026_PATH)libpi
 
