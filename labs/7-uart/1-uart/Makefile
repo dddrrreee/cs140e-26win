@@ -1,20 +1,28 @@
 ###############################################################
-# uncomment this to build yours
-# COMMON_SRC += uart.c
+# MAKE SURE TO UNCOMMENT the line:
+# MAKE SURE TO UNCOMMENT the line:
+# MAKE SURE TO UNCOMMENT the line:
+# MAKE SURE TO UNCOMMENT the line:
+#     COMMON_SRC += uart.c
+# so it will make your code!
 
-PROGS =  output-test-0-hello.c  
-PROGS += output-test-1-hello-disable.c  
+# do these in order.
 PROGS += output-test-3-emit.c
+PROGS += output-test-1-hello-disable.c  
+PROGS += output-test-0-hello.c  
 
 # swap these if your bootloader doesn't work.
 BOOTLOADER = my-install
 BOOTLOADER = pi-install
 
-# set to 1 if you want to run.
-RUN=0
+# uncomment to build yours
+# COMMON_SRC += uart.c
 
 # we use a custom cstart
 COMMON_SRC += cstart.c 
+
+# set to 0 if you don't want to run.
+RUN=1
 
 L := $(CS140E_2026_PATH)/libpi/
 STAFF_OBJS := $(L)/staff-objs/staff-sw-uart.o

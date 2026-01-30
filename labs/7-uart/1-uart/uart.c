@@ -45,10 +45,6 @@
 #include "sw-uart.h"
 static sw_uart_t sw_uart;
 
-// if we've ever called emergency_printk better
-// die before returning.
-static int called_sw_uart_p = 0;
-
 // a sw-uart putc implementation.
 static int sw_uart_putc(int chr) {
     sw_uart_put8(&sw_uart,chr);
@@ -59,14 +55,11 @@ static int sw_uart_putc(int chr) {
 //
 // note the function pointer hack: after you call it 
 // once can call the regular printk etc.
-static void emergency_printk(const char *fmt, ...) {
-    // track if we ever called it.
-    called_sw_uart_p = 1;
-
-
-    // we forcibly initialize each time it got called
-    // in case the GPIO got reset.
-    // setup gpio 14,15 for sw-uart.
+__attribute__((noreturn)) 
+static void emergency_printk(const char *fmt, ...)  {
+    // we forcibly initialize in case the 
+    // GPIO got reset. this will setup 
+    // gpio 14,15 for sw-uart.
     sw_uart = sw_uart_default();
 
     // all libpi output is via a <putc>
@@ -74,21 +67,21 @@ static void emergency_printk(const char *fmt, ...) {
     // instead of the default
     rpi_putchar_set(sw_uart_putc);
 
-    printk("NOTE: HW UART GPIO is in a bad state now\n");
-
     // do print
     va_list args;
     va_start(args, fmt);
     vprintk(fmt, args);
     va_end(args);
 
+    // at this point UART is all messed up b/c we took it over
+    // so just reboot.   we've set the putchar so this will work
+    clean_reboot();
 }
 
 #undef todo
-#define todo(msg) do {                      \
-    emergency_printk("%s:%d:%s\nDONE!!!\n",      \
-            __FUNCTION__,__LINE__,msg);   \
-    rpi_reboot();                           \
+#define todo(msg) do {                          \
+    emergency_printk("%s:%d:%s\nDONE!!!\n",     \
+            __FUNCTION__,__LINE__,msg);         \
 } while(0)
 
 // END of the bit bang code.
@@ -104,46 +97,37 @@ static void emergency_printk(const char *fmt, ...) {
 //
 //  later: should add an init that takes a baud rate.
 void uart_init(void) {
-    // NOTE: make sure you delete all print calls when
-    // done!
-    emergency_printk("start here\n");
+    todo("start here\n");
 
-    // perhaps confusingly: at this point normal printk works
-    // since we overrode the system putc routine.
-    printk("write UART addresses in order\n");
+    // NOTE: for cross-checking: make sure write UART 
+    // addresses in order
 
-    todo("must implement\n");
-
-    // delete everything to do w/ sw-uart when done since
-    // it trashes your hardware state and the system
-    // <putc>.
-    demand(!called_sw_uart_p, 
-        delete all sw-uart uses or hw UART in bad state);
 }
 
 // disable the uart: make sure all bytes have been
 // 
 void uart_disable(void) {
-    todo("must implement\n");
+    // TODO: implement this!
 }
 
 // returns one byte from the RX (input) hardware
 // FIFO.  if FIFO is empty, blocks until there is 
 // at least one byte.
 int uart_get8(void) {
-    todo("must implement\n");
+    todo("implement this\n");
 }
 
 // returns 1 if the hardware TX (output) FIFO has room
 // for at least one byte.  returns 0 otherwise.
 int uart_can_put8(void) {
-    todo("must implement\n");
+    // TODO: implement this!
+    return 0;
 }
 
 // put one byte on the TX FIFO, if necessary, waits
 // until the FIFO has space.
 int uart_put8(uint8_t c) {
-    todo("must implement\n");
+    // TODO: implement this!
     return 1;
 }
 
@@ -151,7 +135,8 @@ int uart_put8(uint8_t c) {
 //  - 1 if at least one byte on the hardware RX FIFO.
 //  - 0 otherwise
 int uart_has_data(void) {
-    todo("must implement\n");
+    // TODO: implement this!
+    return 0;
 }
 
 // returns:
@@ -167,7 +152,8 @@ int uart_get8_async(void) {
 //  - 1 if TX FIFO empty AND idle.
 //  - 0 if not empty.
 int uart_tx_is_empty(void) {
-    todo("must implement\n");
+    // TODO: implement this!
+    return 0;
 }
 
 // return only when the TX FIFO is empty AND the
