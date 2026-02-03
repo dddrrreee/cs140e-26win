@@ -142,8 +142,8 @@ has_data_timeout(unsigned timeout) { // ** Implemented
 //      received packet)
 static void wait_for_data(unsigned usec_timeout) { // ** Implemented
     
-    boot_put32(GET_PROG_INFO);
-    has_data_timeout(usec_timeout);
+    while (!has_data_timeout(usec_timeout))
+        boot_put32(GET_PROG_INFO);
 }
 
 // IMPLEMENT this routine.
