@@ -210,6 +210,17 @@ static uint32_t flush_word(int fd, uint32_t word) {
     return op;
 }
 
+// Until input is a word
+static uint32_t inspect_word(int fd) {
+    uint32_t op;
+
+    op = get_op(fd);
+    output("DEBUG: Got <%x>: \n", op);
+
+    return op;
+
+}
+
 //**********************************************************************
 // The unix side bootloader code: you implement this.
 // 
@@ -275,12 +286,13 @@ void simple_boot(int fd, uint32_t boot_addr, const uint8_t *buf, unsigned n) {
     
 
     op = flush_until_word(fd, GET_CODE);
-    assert(op == GET_CODE);
+    // inspect_word(fd);
+    // inspect_word(fd);
+    // inspect_word(fd);
+    // inspect_word(fd);
 
-    // op = flush_until_word(fd, crc);
-    op = get_op(fd);
-    assert(op = crc);
-    // printf("Our CRC: %x\t Received CRC: %x\n", crc, op);
+    op = trace_get32(fd); // CRC
+    
 
     // 4. handle it: send a PUT_CODE + the code.
     // todo("send PUT_CODE + the code in <buf>");
@@ -293,6 +305,10 @@ void simple_boot(int fd, uint32_t boot_addr, const uint8_t *buf, unsigned n) {
     for(unsigned i = 0; i < n; i++) {
         put_uint8(fd, buf[i]);
     }
+
+    // while (op != crc || op != BOOT_SUCCESS) {
+    //     op = trace_get32(fd);
+    // }
 
     // 5. Wait for BOOT_SUCCESS
     op = flush_until_word(fd, BOOT_SUCCESS);

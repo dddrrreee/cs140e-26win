@@ -1,0 +1,1 @@
+./my-install --trace-control hello.bin 

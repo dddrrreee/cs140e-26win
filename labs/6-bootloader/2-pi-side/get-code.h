@@ -117,8 +117,13 @@ boot_err(uint32_t error_opcode, const char *msg) {
 //     wait for <n> microseconds given that the hardware
 //     counter can overflow.
 static unsigned 
-has_data_timeout(unsigned timeout) {
-    boot_todo("has_data_timeout: implement this routine");
+has_data_timeout(unsigned timeout) { // ** Implemented
+    
+    volatile uint32_t start = timer_get_usec();
+    
+    while (timer_get_usec() - start < timeout)
+        if (uart_has_data())
+            return 1;
     return 0;
 }
 
@@ -135,8 +140,10 @@ has_data_timeout(unsigned timeout) {
 //   2. rember the green light that blinks on your ttyl device?
 //      Its from this loop (since the LED goes on for each 
 //      received packet)
-static void wait_for_data(unsigned usec_timeout) {
-    boot_todo("wait_for_data: implement this routine");
+static void wait_for_data(unsigned usec_timeout) { // ** Implemented
+    
+    boot_put32(GET_PROG_INFO);
+    has_data_timeout(usec_timeout);
 }
 
 // IMPLEMENT this routine.
@@ -150,11 +157,24 @@ uint32_t get_code(void) {
     /****************************************************************
      * Add your code below: 2,3,4,5,6
      */
-    uint32_t addr = 0;
+    uint32_t addr = 0, nbytes, checksum = 0, new_cksum, op;
 
     // 2. expect: [PUT_PROG_INFO, addr, nbytes, cksum] 
     //    we echo cksum back in step 4 to help debugging.
-    boot_todo("wait for laptop/server response: echo checksum back");
+    // boot_todo("wait for laptop/server response: echo checksum back");
+
+    op = boot_get32();
+    if (op != PUT_PROG_INFO) {
+        boot_err(BOOT_ERROR,"DID NOT RECEIVE PROG INFO");
+        rpi_reboot();
+    }
+    // while(0)
+        // op+= PUT_PROG_INFO;
+    addr = boot_get32();
+    // assert(addr == ARMBASE);
+    
+    nbytes = boot_get32();
+    checksum = boot_get32();
 
     // 3. If the binary will collide with us, abort with a BOOT_ERROR. 
     // 
@@ -169,28 +189,54 @@ uint32_t get_code(void) {
     //       - libpi/include/memmap.h
     //       - libpi/memmap 
     //    for definitions.
-    boot_todo("check that binary will not hit the bootloader code");
+    #include "memmap.h"
+
+    // boot_put32((uint32_t)__data_start__);
+
+    if (addr + nbytes > (uint32_t)__data_start__) {
+        boot_err(BAD_CODE_ADDR, "Yeah");
+        rpi_reboot();
+    }
 
     // 4. send [GET_CODE, cksum] back.
-    boot_todo("send [GET_CODE, cksum] back\n");
+    // boot_todo("send [GET_CODE, cksum] back\n");
+    boot_put32(GET_CODE);
+    boot_put32(checksum);
 
     // 5. we expect: [PUT_CODE, <code>]
     //  read each sent byte and write it starting at 
     //  <addr> using PUT8
-    //
+    
     // common mistake: computing the offset incorrectly.
-    boot_todo("boot_get8() each code byte and use PUT8() to write it to memory");
+    // boot_todo("boot_get8() each code byte and use PUT8() to write it to memory");
+    op = boot_get32();
+    if (op != PUT_CODE) {
+        boot_putk("DID NOT RECEIVE PUT_CODE");
+        rpi_reboot();
+    }
 
+    for (uint32_t i = addr; i < addr + nbytes; i++) {
+        PUT8(i, boot_get8());
+    }
+
+    
     // 6. verify the cksum of the copied code using:
     //         boot-crc32.h:crc32.
     //    if fails, abort with a BOOT_ERROR.
-    boot_todo("verify the checksum of copied code");
+    // boot_todo("verify the checksum of copied code");
+    new_cksum = crc32((uint32_t*)addr, nbytes);
+    
+    if (new_cksum != checksum) {
+        // for (uint32_t i = addr; i < addr + nbytes; i += 4) {
+        //     boot_put32((*(uint32_t*)i));
+        // }
+        // rpi_reboot();
+        boot_put32(BAD_CODE_CKSUM);
+        rpi_reboot();
+    }
 
     // 7. send back a BOOT_SUCCESS!
-    boot_putk("<PUT YOUR NAME HERE>: success: Received the program!");
-    boot_todo("fill in your name above");
-
-    // woo!
+    boot_putk("COLIN: success: Received the program!");
     boot_put32(BOOT_SUCCESS);
 
     // We used to have these delays to stop the unix side from getting 

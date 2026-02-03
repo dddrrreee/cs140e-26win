@@ -24,7 +24,7 @@ enum {
 
     PRINT_STRING    = 0xDDDDEEEE,       // pi sends to print a string.
 
-#if 0
+#if 1
     // if you want to be fancy, you could uncomment this and return
     // more precise errors.
 
@@ -45,6 +45,8 @@ static inline const char *boot_op_to_str(unsigned op) {
     case BOOT_SUCCESS:   return "BOOT_SUCCESS";
     case PRINT_STRING:   return "PRINT_STRING";
     case BOOT_ERROR:     return "BOOT_ERROR";
+    case BAD_CODE_ADDR:  return "BAD_CODE_ADDR";
+    case BAD_CODE_CKSUM: return "BAD_CODE_CKSUM";
     default:             return "UNKNOWN";
     }
 }
