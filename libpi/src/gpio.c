@@ -32,8 +32,13 @@ enum {
     gpio_set0  = (GPIO_BASE + 0x1C),
     gpio_clr0  = (GPIO_BASE + 0x28),
     gpio_lev0  = (GPIO_BASE + 0x34),
+    gpio_eds0 = (GPIO_BASE + 0x40),
+    gpio_ren0 = (GPIO_BASE + 0x4C),
+    gpio_fen0 = (GPIO_BASE + 0x58),
+    gpio_hen0 = (GPIO_BASE + 0x64),
+    gpio_len0 = (GPIO_BASE + 0x70),
     gpio_pud  = (GPIO_BASE + 0x94),
-    gpio_pudclk0  = (GPIO_BASE + 0x98)
+    gpio_pudclk0  = (GPIO_BASE + 0x98),
 
     // <you will need other values from BCM2835!>
 };
@@ -49,18 +54,6 @@ enum {
 // NOTE: fsel0, fsel1, fsel2 are contiguous in memory, so you
 // can (and should) use ptr calculations versus if-statements!
 void gpio_set_output(unsigned pin) {
-//     if(pin > GPIO_MAX_PIN)
-//         gpio_panic("illegal pin=%d\n", pin);
-
-//   // Implement this.
-//     volatile unsigned* gpio_addr = (unsigned*) GPIO_BASE + (pin / 10);
-//     volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
-//     volatile unsigned value = get32(gpio_addr);
-
-//     value &= ~mask_n;
-//     value |= 0b001 << (3 * (pin % 10));
-
-//     put32(gpio_addr, value);
     gpio_set_function(pin, GPIO_FUNC_OUTPUT);
 }
 
@@ -104,19 +97,6 @@ void gpio_write(unsigned pin, unsigned v) {
 
 // set <pin> = input.
 void gpio_set_input(unsigned pin) {
-    // if(pin > GPIO_MAX_PIN)
-    //     gpio_panic("illegal pin=%d\n", pin);
-
-    // // Implement.
-    // volatile unsigned* gpio_addr = (unsigned*) GPIO_BASE + (pin / 10);
-    // volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
-    // volatile unsigned value = get32(gpio_addr);
-
-    // value &= ~mask_n;
-    // // value |= 0b000 << (3 * (pin % 10)); don't need to set them for input
-
-    // put32(gpio_addr, value);
-
     gpio_set_function(pin, GPIO_FUNC_INPUT);
 }
 
@@ -179,18 +159,6 @@ void gpio_set_pulldown(unsigned pin) {
 //
 
 
-// void gpio_set_function(unsigned pin, gpio_func_t function) {
-    
-//     unsigned masked_value = (unsigned)function << (3 * (pin % 20));
-
-//     volatile unsigned* gpio_addr = (unsigned*)gpio_set0 + pin / 20;
-
-//     unsigned mask = 0b111 << (3 * (pin % 20));
-
-//     unsigned value = get32(gpio_addr);
-//     put32(gpio_addr, (value & mask) | masked_value);
-// }
-
 void gpio_set_function(unsigned pin, gpio_func_t function) {
     if(pin > GPIO_MAX_PIN)
         gpio_panic("illegal pin=%d\n", pin);
@@ -199,12 +167,70 @@ void gpio_set_function(unsigned pin, gpio_func_t function) {
         gpio_panic("illegal func=%x\n", function);
 
   // Implement this.
-    volatile unsigned int gpio_addr = (unsigned) GPIO_BASE + 4 * (pin / 10);
-    volatile unsigned int mask_n = 0b111 << (3 * (pin % 10));
-    volatile unsigned int value = GET32(gpio_addr);
+    volatile unsigned gpio_addr = (unsigned) GPIO_BASE + 4 * (pin / 10);
+    volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
+    volatile unsigned value = GET32(gpio_addr);
 
     value &= ~mask_n;
     value |= function << (3 * (pin % 10));
 
     PUT32(gpio_addr, value);
+}
+
+//
+// DEV_INTERRUPTS LAB implement 
+//
+
+void gpio_int_rising_edge(unsigned pin) {
+    volatile unsigned addr = (unsigned) gpio_ren0 + 4 * (pin / 32);
+    volatile unsigned value = GET32(addr);
+    
+    PUT32(addr, value |= 1 << (pin % 32));
+}
+
+
+void gpio_int_falling_edge(unsigned pin) {
+    volatile unsigned addr = (unsigned) gpio_fen0 + 4 * (pin / 32);
+    volatile unsigned value = GET32(addr);
+
+    PUT32(addr, value |= 1 << (pin % 32));
+}
+
+// p98: detect when input pin=1.  must clear the source of the 
+// interrupt before clearing the event or it will just retrigger.
+void gpio_enable_hi_int(unsigned pin) {
+    volatile unsigned addr = (unsigned) gpio_hen0 + 4 * (pin / 32);
+    volatile unsigned value = GET32(addr);
+
+    PUT32(addr, value |= 1 << (pin % 32));
+}
+
+void gpio_int_low(unsigned pin) {
+    volatile unsigned addr = (unsigned) gpio_len0 + 4 * (pin / 32);
+    volatile unsigned value = GET32(addr);
+
+    PUT32(addr, value |= 1 << (pin % 32));
+}
+
+
+// p96: a 1<<pin is set in EVENT_DETECT if <pin> triggered an interrupt.
+// if you configure multiple events to lead to interrupts, you will have to 
+// read the pin to determine which caused it.
+int gpio_event_detected(unsigned pin) {
+    volatile unsigned addr = (unsigned) gpio_eds0 + 4 * (pin / 32);
+    volatile unsigned value = GET32(addr);
+    volatile unsigned pin_value = gpio_read(pin);\
+    volatile unsigned event_detected = (value >> (pin % 32)) & 1;
+
+    // Clear pin value and interrupt
+    if (event_detected) {
+        gpio_write(pin, !pin_value);
+        gpio_event_clear(pin);
+    }
+    return event_detected;
+}
+
+// p96: have to write a 1 to the pin to clear the event.
+void gpio_event_clear(unsigned pin) {
+    gpio_set_on(pin);
 }
