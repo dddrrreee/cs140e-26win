@@ -80,7 +80,7 @@ sw_uart_t sw_uart_init_helper(unsigned tx, unsigned rx,
     gpio_set_function(tx, GPIO_FUNC_OUTPUT);
     gpio_set_function(rx, GPIO_FUNC_INPUT);
     gpio_set_on(tx);
-    delay_cycles(10);
+    delay_cycles(100);
 
     return (sw_uart_t) { 
             .tx = tx, 

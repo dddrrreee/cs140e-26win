@@ -12,7 +12,7 @@ PROGS += output-test-1-hello-disable.c
 PROGS += output-test-0-hello.c  
 
 # swap these if your bootloader doesn't work.
-BOOTLOADER = my-install
+# BOOTLOADER = my-install
 BOOTLOADER = pi-install
 
 # uncomment to build yours
