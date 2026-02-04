@@ -40,6 +40,8 @@ enum {
     gpio_pud  = (GPIO_BASE + 0x94),
     gpio_pudclk0  = (GPIO_BASE + 0x98),
 
+    INT_EN_2 = 0x2000B214 // Has gpio_int[0:3]
+
     // <you will need other values from BCM2835!>
 };
 
@@ -166,7 +168,6 @@ void gpio_set_function(unsigned pin, gpio_func_t function) {
     if((function & 0b111) != function)
         gpio_panic("illegal func=%x\n", function);
 
-  // Implement this.
     volatile unsigned gpio_addr = (unsigned) GPIO_BASE + 4 * (pin / 10);
     volatile unsigned mask_n = 0b111 << (3 * (pin % 10));
     volatile unsigned value = GET32(gpio_addr);
@@ -182,18 +183,38 @@ void gpio_set_function(unsigned pin, gpio_func_t function) {
 //
 
 void gpio_int_rising_edge(unsigned pin) {
+    if(pin >= 32)
+        gpio_panic("illegal pin=%d\n", pin);
+
+    dev_barrier();
+
+    // Enable interrupt
+    volatile unsigned value = GET32(INT_EN_2);
+    PUT32(INT_EN_2, value |= 1 << (49 % pin));
+
+    
     volatile unsigned addr = (unsigned) gpio_ren0 + 4 * (pin / 32);
     volatile unsigned value = GET32(addr);
-    
     PUT32(addr, value |= 1 << (pin % 32));
+    dev_barrier();
 }
 
 
 void gpio_int_falling_edge(unsigned pin) {
+    if(pin >= 32)
+        gpio_panic("illegal pin=%d\n", pin);
+
+    dev_barrier();
+
+    // Enable interrupt
+    volatile unsigned value = GET32(INT_EN_2);
+    PUT32(INT_EN_2, value |= 1 << (49 % pin));
+
     volatile unsigned addr = (unsigned) gpio_fen0 + 4 * (pin / 32);
     volatile unsigned value = GET32(addr);
 
     PUT32(addr, value |= 1 << (pin % 32));
+    dev_barrier();
 }
 
 // p98: detect when input pin=1.  must clear the source of the 
@@ -217,20 +238,26 @@ void gpio_int_low(unsigned pin) {
 // if you configure multiple events to lead to interrupts, you will have to 
 // read the pin to determine which caused it.
 int gpio_event_detected(unsigned pin) {
+    if(pin >= 32)
+        gpio_panic("illegal pin=%d\n", pin);
+
+    dev_barrier();
+
     volatile unsigned addr = (unsigned) gpio_eds0 + 4 * (pin / 32);
     volatile unsigned value = GET32(addr);
-    volatile unsigned pin_value = gpio_read(pin);\
-    volatile unsigned event_detected = (value >> (pin % 32)) & 1;
 
-    // Clear pin value and interrupt
-    if (event_detected) {
-        gpio_write(pin, !pin_value);
-        gpio_event_clear(pin);
-    }
-    return event_detected;
+    dev_barrier();
+
+    return (value >> (pin % 32)) & 1;
 }
 
 // p96: have to write a 1 to the pin to clear the event.
 void gpio_event_clear(unsigned pin) {
-    gpio_set_on(pin);
+    if(pin >= 32)
+        gpio_panic("illegal pin=%d\n", pin);
+
+    dev_barrier();
+    volatile unsigned addr = (unsigned) gpio_eds0 + 4 * (pin / 32);
+    PUT32(addr, 1 << (pin % 32));
+    dev_barrier();
 }

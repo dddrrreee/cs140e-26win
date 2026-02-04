@@ -109,18 +109,6 @@ enum {
 //*****************************************************
 // the rest you should implement.
 
-// Returns baud according to --> baud_reg = 250,000,000/(baud*8) - 1 ?
-// int uart_div(uint8_t baud) {
-    
-//     volatile int i = 31250000 / baud  - 1;
-//     // return 250000000 / (int)baud;
-//     return 0;
-// }
-
-// void uart_init(void) {
-//     uart_init_with_baud(115200);
-// }
-
 // called first to setup uart to 8n1 115200  baud,
 // no interrupts.
 //  - you will need memory barriers, use <dev_barrier()>
@@ -129,6 +117,7 @@ enum {
 void uart_init() {
 
     // UHH assumes that GPIO is initted
+    dev_barrier();
 
     // BRUH I HAD TO INITIALZIE THIS AS ALT5
     gpio_set_function(GPIO_TX, GPIO_FUNC_ALT5);
@@ -140,27 +129,27 @@ void uart_init() {
     dev_barrier();
     PUT32(AUX_ENABLES, GET32(AUX_ENABLES) | 1); 
     dev_barrier();
-
-    
-    dev_barrier();
     
     // Disable UART RX/TX
-    PUT32(AUX_MU_CNTL, GET32(AUX_MU_CNTL) & ~0b11); 
+    PUT32(AUX_MU_CNTL, 0); 
 
     // Disable Interrupts
-    PUT32(AUX_MU_IER, GET32(AUX_MU_IER) & ~0b11); 
+    PUT32(AUX_MU_IER, 0); 
     
     // 8N1 (already N1 by default)
-    PUT32(AUX_MU_LCR, GET32(AUX_MU_LCR) | 0b11); 
+    PUT32(AUX_MU_LCR, 0b11); 
     
     // Set baud rate     115200 = 250MHz / (8 * (270 + 1))
     PUT32(AUX_MU_BAUD, 270); 
     
     // Clear FIFO
     PUT32(AUX_MU_IIR, 0b110); 
-    
+
+    // Smashing AUX_MU_MCR reg
+    PUT32(AUX_MU_MCR, 0);
+
     // Enable RX/TX
-    PUT32(AUX_MU_CNTL, GET32(AUX_MU_CNTL) | 0b11); 
+    PUT32(AUX_MU_CNTL, 0b11); 
     
     dev_barrier();
     
@@ -177,6 +166,8 @@ void uart_disable(void) {
     // Disable UART RX/TX
     PUT32(AUX_MU_CNTL, GET32(AUX_MU_CNTL) & ~0b11); 
 
+    dev_barrier();
+
     // Disable UART Peripheral (no more access to the regs boohoo) 
     PUT32(AUX_ENABLES, GET32(AUX_ENABLES) & ~1); 
 
@@ -187,8 +178,10 @@ void uart_disable(void) {
 // FIFO.  if FIFO is empty, blocks until there is 
 // at least one byte.
 int uart_get8(void) {
+    dev_barrier();
     while (!uart_has_data()) {} // BLOCKS until there is data :(
     uint32_t val = GET32(AUX_MU_IO);
+    dev_barrier();
     return val & 0xFF;
 }
 
@@ -202,8 +195,10 @@ int uart_can_put8(void) {
 // put one byte on the TX FIFO, if necessary, waits
 // until the FIFO has space.
 int uart_put8(uint8_t c) {
+    dev_barrier();
     while (!(uart_can_put8())) {} // BLOCKS until can send data :(
     PUT32(AUX_MU_IO, c);
+    dev_barrier();
     return 1;
 }
 
