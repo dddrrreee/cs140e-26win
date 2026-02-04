@@ -40,33 +40,48 @@ bunch that are not written, so ask if you want :).
 The [PRELAB](PRELAB.md) has more discussion, but to save time here's
 the main figures from the BCM2835 document you need.
 
-
-The GPIO interrupts are in the big table (49, p113):
+Vector base register layout --- the SBZ 0s can't be set: this is
+why we need 32-byte alignment (2^5):
 <p align="center">
-  <img src="images/bcm-interrupt-table-p113.png" width="450" />
+  <img src="images/arm1176-vector-base-p121.png" width="550" />
 </p>
-
-
-Interrupt enable 2 (where 49%32 goes, p117):
 <p align="center">
-  <img src="images/bcm-interrupt-enable2-p117.png" width="450" />
-</p>
-
-
-GPIO event detect (p96):
-<p align="center">
-  <img src="images/gpio-event-detect-p96.png" width="450" />
-</p>
-
-GPIO enable falling edge (p98):
-<p align="center">
-  <img src="images/gpio-falling-edge-int-p98.png" width="450" />
+  <img src="images/arm1176-vector-asm.png" width="550" />
 </p>
 
 
 GPIO enable rising edge (p97):
 <p align="center">
-  <img src="images/gpio-rising-edge-int-p97.png" width="450" />
+  <img src="images/gpio-rising-edge-int-p97.png" width="550" />
+</p>
+
+
+The GPIO interrupts are in the big table (49, p113):
+<p align="center">
+  <img src="images/bcm-interrupt-table-p113.png" width="550" />
+</p>
+
+
+Interrupt enable 2 (where 49%32 goes, p117):
+<p align="center">
+  <img src="images/bcm-interrupt-enable2-p117.png" width="550" />
+</p>
+
+
+GPIO event detect (p96):
+<p align="center">
+  <img src="images/gpio-event-detect-p96.png" width="550" />
+</p>
+
+GPIO enable falling edge (p98):
+<p align="center">
+  <img src="images/gpio-falling-edge-int-p98.png" width="550" />
+</p>
+
+
+GPIO enable rising edge (p97):
+<p align="center">
+  <img src="images/gpio-rising-edge-int-p97.png" width="550" />
 </p>
 
 ------------------------------------------------------------------------
