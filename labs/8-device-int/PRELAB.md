@@ -152,6 +152,37 @@ don't miss it the comments are cut-and-paste below:
     // p96: have to write a 1 to the pin to clear the event.
     void gpio_event_clear(unsigned pin);
 
+
+Key tables from the BCM2835.
+
+The GPIO interrupts are in the big table (49, p113): 
+<p align="center">
+  <img src="images/bcm-interrupt-table-p113.png" width="300" />
+</p>
+
+
+Interrupt enable 2 (where 49%32 goes, p117):
+<p align="center">
+  <img src="images/bcm-interrupt-enable2-p117.png" width="300" />
+</p>
+
+
+GPIO event detect (p96): 
+<p align="center">
+  <img src="images/gpio-event-detect-p96.png" width="300" />
+</p>
+
+GPIO enable falling edge (p98):
+<p align="center">
+  <img src="images/gpio-falling-edge-int-p98.png" width="300" />
+</p>
+
+
+GPIO enable rising edge (p97):
+<p align="center">
+  <img src="images/gpio-rising-edge-int-p97.png" width="300" />
+</p>
+
 ----------------------------------------------------------------------
 ### UART interrupt background.
 
