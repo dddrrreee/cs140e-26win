@@ -1,4 +1,28 @@
+## Eratta
+
+For Part 3 (`3-handlers-gpio-int`): The makefile has a misleading comment
+where it assigns to `COMMON_SRC :=` twice --- if you uncomment you have
+to switch to `COMMON_SRC += test-interrupts.c`.
+
+So:
+```
+# COMMON_SRC := ../2-gpio-int/gpio-int.c
+STAFF_OBJS += $(CS140E_2026_PATH)/libpi/staff-objs/gpio-int.o
+
+# swap these two to use your code 
+# COMMON_SRC := test-interrupts.c
+STAFF_OBJS += staff-test-interrupts.o
+```
+
+Becomes:
+```
+COMMON_SRC := ../2-gpio-int/gpio-int.c
+COMMON_SRC += test-interrupts.c
+```
+
 ## Lab: device interrupts 
+
+
 
 <p align="center">
   <img src="images/glowing-rpi.png" width="450" />
