@@ -27,7 +27,7 @@ static void test_N_rising(unsigned N) {
 
 void notmain() {
     trace("%d rising edge detection test.\n", N);
-    rising_int_startup();
+    rising_init();
     trace("interrupts enabled\n");
     test_N_rising(N);
     assert(n_rising == n_interrupt);

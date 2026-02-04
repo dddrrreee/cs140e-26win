@@ -14,9 +14,15 @@ static void test_one_fall_one_rise(void) {
     // the interrupt fired.  Good exercise: measure how
     // long the interrupt takes to propagate!
     n_interrupt = n_falling = n_rising = 0 ;
+
+
+    // test falling edge.
+    // 1. make sure <in_pin>=1.
     assert(gpio_read(in_pin) == 1);
 
+    // 2. cause 1->0 transition.
     gpio_write(out_pin, 0);
+    // 3. check that it occurred.
     if(!n_falling)
         panic("falling edge wrong: %d\n", n_falling);
     assert(n_falling == 1);
@@ -24,7 +30,12 @@ static void test_one_fall_one_rise(void) {
     assert(n_rising == 0);
     trace("success: got a falling edge!\n");
 
+    // test rising edge
+    // 1. make sure <in_pin>=0.
+    assert(gpio_read(in_pin) == 0);
+    // 2. cause 0->1 transition.
     gpio_write(out_pin, 1);
+    // 3. check that rising interrupt occurred.
     if(!n_rising)
         panic("rising=0: expected 1\n");
     assert(n_falling == 1);
@@ -38,7 +49,8 @@ void notmain() {
 
     // initialize interrupt stuff.  see <test-interrupts.c>
     trace("--------------------- interrupts now off ----------------\n");
-    rise_fall_int_startup();
+    rise_fall_init();
+
     trace("--------------------- interrupts now on ----------------\n");
     test_one_fall_one_rise();
     trace("SUCCESS: test passed!\n");

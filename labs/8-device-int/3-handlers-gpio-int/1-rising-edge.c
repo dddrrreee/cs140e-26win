@@ -6,7 +6,6 @@
 #include "test-interrupts.h"
 
 static void test_one_rising(void) {
-    assert(!n_rising);
     assert(!n_falling);
     assert(!n_interrupt);
     assert(gpio_read(in_pin) == 0);
@@ -16,17 +15,19 @@ static void test_one_rising(void) {
     // the interrupt fired.  Good exercise: measure how
     // long the interrupt takes to propagate!
 
+    assert(!n_rising);
     gpio_write(out_pin, 1);
     if(!n_rising)
         panic("rising edge wrong: %d\n", n_rising);
     assert(n_rising == 1);
-    assert(n_rising == n_interrupt);
+    assert(n_interrupt == 1);
     trace("test passed: got a rising edge!\n");
 }
 
 void notmain() {
     trace("test: single rising edge detection.\n");
-    rising_int_startup();
+    // see: <tests-interrupt.c>
+    rising_init();
     test_one_rising();
     trace("SUCCESS: test passed!\n");
 }

@@ -31,7 +31,7 @@ static void test_N_rise_fall(unsigned N) {
 
 void notmain() {
     trace("multiple rise/fall [without timer] test.\n", N);
-    rise_fall_int_startup();
+    rise_fall_init();
     test_N_rise_fall(N);
     trace("SUCCESS: test passed!\n");
 }

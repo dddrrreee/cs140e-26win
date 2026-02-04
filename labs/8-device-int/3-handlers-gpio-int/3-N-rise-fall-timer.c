@@ -14,6 +14,8 @@ static void test_N_all(unsigned N) {
     assert(n_interrupt > 0);
     assert(gpio_read(in_pin) == 1);
 
+    // loop <N> times checking that we can handle many rising and
+    // falling + timer interrupts.
     for(unsigned i = 1; i <= N; i++) {
         gpio_write(out_pin, 0);
         if(i != n_falling)
@@ -35,7 +37,7 @@ static void test_N_all(unsigned N) {
 
 void notmain() {
     trace("multiple rise/fall/timer test.\n", N);
-    rise_fall_timer_int_startup();
+    rise_fall_timer_init();
     test_N_all(N);
     trace("SUCCESS: test passed!\n");
 }

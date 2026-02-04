@@ -11,12 +11,16 @@ static void test_timer(void) {
     assert(!n_falling);
     assert(!n_rising);
 
+    // already running: should have some.
     assert(n_interrupt > 0);
+    
+    // clear <n_interrupt> count and wait.
     n_interrupt = 0;
     delay_ms(10);
     assert(n_interrupt > 0);
     trace("delay_ms(10) = [%d] timer interrupts\n", n_interrupt);
 
+    // there should still be no falling or rising edge counts.
     assert(n_falling == 0);
     assert(n_rising == 0);
     trace("success: timer interrupts!\n");
@@ -27,7 +31,7 @@ void notmain() {
 
     // initialize interrupt stuff.  see <test-interrupts.c>
     trace("--------------------- interrupts now off ----------------\n");
-    timer_int_startup();
+    timer_test_init();
     trace("--------------------- interrupts now on ----------------\n");
     test_timer();
     trace("SUCCESS: test passed!\n");

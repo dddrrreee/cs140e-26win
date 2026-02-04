@@ -19,6 +19,11 @@ static void test_fall_rise_timer(void) {
     assert(!n_rising);
     assert(gpio_read(in_pin) == 1);
 
+    // test that rising and falling edges get correctly
+    // handled even with timer interrupts occuring.  NOTE: this is
+    // not a very strong test since we should loop for awhile
+    // to make sure a bunch of timer interrupts occur.
+
     n_interrupt = 0;
     gpio_write(out_pin, 0);
     if(!n_falling)
@@ -42,7 +47,8 @@ void notmain() {
 
     // initialize interrupt stuff.  see <test-interrupts.c>
     trace("--------------------- interrupts now off ----------------\n");
-    rise_fall_timer_int_startup();
+    rise_fall_timer_init();
+
     trace("--------------------- interrupts now on ----------------\n");
     test_fall_rise_timer();
     trace("SUCCESS: test passed [total interrupts=%d]!\n", n_interrupt);
