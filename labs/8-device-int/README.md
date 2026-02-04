@@ -74,13 +74,14 @@ What to do:
 You should implement the code in `gpio-int.c`: this will mirror 
 your `gpio.c` code.
 
-***NOTE: you cannot use raw GPIO addresses: each has to have an enum
-and a page number / commment as to why you're doing what you're doing.***
-
-Unlike the last lab, you won't have to debug on the raw hardware first,
-there is a fake pi implementation in `2-gpio-int` along with all the
-`.out` files.  You should be able to compare yours to ours / your partners
-and see that everyone has the same thing.
+***IMPORTANT***:
+ 1. You cannot use raw GPIO addresses: each has to have an enum
+    and a page number / commment as to why you're doing what you're doing.
+ 2. Unlike the last lab, you won't have to debug on the raw hardware
+    first, there is a fake pi implementation in `2-gpio-int`. To make
+    things easy we give you all the `.out` files.  You should be able
+    to compare yours to ours (`make check`) / your partners and see that
+    everyone has the same thing.
 
 Notes:
   1. Your routines should `panic` if their input pin is >= 32 (not 53:
