@@ -1,5 +1,8 @@
 ## Eratta
 
+Part 2: If you are getting mismatches because of panic in part 2: do a
+pull, it should be handled now.
+
 For Part 3 (`3-handlers-gpio-int`): The makefile has a misleading comment
 where it assigns to `COMMON_SRC :=` twice --- if you uncomment you have
 to switch to `COMMON_SRC += test-interrupts.c`.
