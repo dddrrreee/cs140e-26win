@@ -95,6 +95,4 @@ TRACE:93: dev_barrier
 TRACE:TRACE:94: dev_barrier
 TRACE:95: GET32(0x20200040) = 0x257130a3
 TRACE:96: dev_barrier
-TRACE:event detected = 0
-TRACE:event detected = 0
 TRACE: pi exited cleanly: 39 calls to random
