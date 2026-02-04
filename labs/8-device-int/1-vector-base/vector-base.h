@@ -27,7 +27,7 @@ static inline void *vector_base_get(void) {
 // set vector base register: use inline assembly.  there's only
 // one caller so you can also get rid of this if you want.  we
 // use to illustrate a common pattern.
-static inline void *vector_base_set_raw(uint32_t v) {
+static inline void vector_base_set_raw(uint32_t v) {
     // make sure you use prefetch flush!
     todo("implement using inline assembly to set the vec base reg");
 }

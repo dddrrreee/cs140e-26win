@@ -59,13 +59,14 @@ You'll write the inline assembly to set the vector base.  See:
   - `libpi/include/cycle-count.h` for an example.
 
 What to do:
-  - You only have to modify `1-vector-base/vector-base.h` and one line of
-    `1-vector-base/interrupt-asm.S`
-  - There are two tests: `0-test-checks.c` makes sure you have some of
-    the checks and `1-test-run.c` does some timings.  You should see
-    over 30% performance improvement.
-  - When the tests pass, `mv` the `vector-base.h` file to `libpi/src` and make
-    sure `make check` still passes.
+  1. Write the code in `1-vector-base/vector-base.h`.
+  2. Change the one line in `1-vector-base/interrupt-asm.S` (search for
+     TODO) to do a relative branch to `sys_plus1_handler`.
+  3. There are two tests: `0-test-checks.c` makes sure you have some of
+     the checks and `1-test-run.c` does some timings.  You should see
+     over 30% performance improvement.
+  4. When the tests pass, `mv` your `vector-base.h` file to `libpi/src` and make
+     sure `make check` still passes.
 
 ------------------------------------------------------------------------
 ### Part 2: Implement `2-gpio-int/gpio-int.c`
