@@ -83,7 +83,7 @@
     do { printk("TRACE:%s:", __FUNCTION__); printk(args); } while(0)
 #else
 #define trace(fmt, args...) \
-    do { printk("TRACE:" fmt, __FUNCTION__, args); } while(0)
+    do { printk("TRACE:" fmt, __FUNCTION__, ##args); } while(0)
 #endif
 
 
