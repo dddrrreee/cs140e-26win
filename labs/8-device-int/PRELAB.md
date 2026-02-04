@@ -12,9 +12,7 @@ to a fixed address in high memory, but this requires using virtual memory
 (since we don't have enough physical to reach that high).  
 
 However, it turns out that the `arm1176` provides a coprocessor
-instruction to move these anywhere in memory.  I wish I had known about
-this years ago!  Among other things it would make it easy to mark the
-0 page as no-access, trapping null pointer reads and writes.  
+instruction to move these anywhere in memory.
 
 We're going to implement this approach today.   
 
@@ -26,12 +24,13 @@ Read:
     all sorts of interesting tricks you can play using the special
     instructions in it.
 
-If you can, write (in assembly):
+Write (in assembly):
    - `void arm_vector_set(void *base)`: set the exception vector
      base to `base`.
    - `void *arm_vector_get(void)`: get the exception vector base.
 
 To get you started doing inline assembly:
+  - [Easy case: cycle counter](../../libpi/include/cycle-count.h)
   - [simple introduction](http://199.104.150.52/computers/gcc_inline.html)
   - [gcc arm inline assembly cookbook](../../docs/ARM-GCC-Inline-Assembler-Cookbook.pdf)
 
@@ -107,8 +106,8 @@ The interrupt handler works by checking if an event happened, and then using the
 As with timer interrupts, you need to clear the event that generated
 the interrupt (using `gpio_event_clear`).
 
-To make your code cleaner, I'd suggest using something like the following to
-make it easier to do your `read-modify-write` of enabled pin events:
+To make your code cleaner, I'd suggest using something like the following
+to make it easier to do your `read-modify-write` of enabled pin events:
 
         static void or32(volatile void *addr, uint32_t val) {
             device_barrier();
@@ -156,8 +155,8 @@ don't miss it the comments are cut-and-paste below:
 ----------------------------------------------------------------------
 ### UART interrupt background.
 
-For the extension doing UART interrupts --- you should
-read the miniUART chapter again, looking for how to:
+For the extension doing UART interrupts --- you should read the miniUART
+chapter again, looking for how to:
   0. Enable miniUART interrupts at all: you should look at how the timer code
      from last lab set things up --- this will be similar to how you do 
      the UART.

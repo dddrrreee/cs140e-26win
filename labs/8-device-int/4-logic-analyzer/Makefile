@@ -1,10 +1,7 @@
 PROGS = logic-analyzer.c
-STAFF_OBJS += $(CS140E_2025_PATH)/libpi/staff-objs/staff-sw-uart.o
-STAFF_OBJS += $(CS140E_2025_PATH)/libpi/staff-objs/interrupts-asm.o
-STAFF_OBJS += $(CS140E_2025_PATH)/libpi/staff-objs/interrupts-vec-asm.o
-
-# if you want to use our libpi
-# LPI = ../staff-objs/libpi.a
+STAFF_OBJS += $(CS140E_2026_PATH)/libpi/staff-objs/staff-sw-uart.o
+STAFF_OBJS += $(CS140E_2026_PATH)/libpi/staff-objs/interrupts-asm.o
+STAFF_OBJS += $(CS140E_2026_PATH)/libpi/staff-objs/interrupts-vec-asm.o
 
 # automatically run the code
 RUN = 0

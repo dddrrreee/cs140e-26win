@@ -1,4 +1,4 @@
-// check that null and alignment is handled.
+// simple sanity check that null and alignment is handled.
 #include "rpi.h"
 #include "vector-base.h"
 
