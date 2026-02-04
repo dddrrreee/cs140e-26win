@@ -1,0 +1,13 @@
+TRACE:about to send <hello world!> to ourself over a pipe
+TRACE:wrote<h>, read <h>
+TRACE:wrote<e>, read <e>
+TRACE:wrote<l>, read <l>
+TRACE:wrote<l>, read <l>
+TRACE:wrote<o>, read <o>
+TRACE:wrote< >, read < >
+TRACE:wrote<w>, read <w>
+TRACE:wrote<o>, read <o>
+TRACE:wrote<r>, read <r>
+TRACE:wrote<l>, read <l>
+TRACE:wrote<d>, read <d>
+TRACE:wrote<!>, read <!>
