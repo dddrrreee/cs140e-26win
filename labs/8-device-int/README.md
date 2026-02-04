@@ -46,7 +46,7 @@ why we need 32-byte alignment (2^5):
   <img src="images/arm1176-vector-base-p121.png" width="550" />
 </p>
 <p align="center">
-  <img src="images/arm1176-vector-asm.png" width="550" />
+  <img src="images/arm1176-vector-asm-p121.png" width="550" />
 </p>
 
 
