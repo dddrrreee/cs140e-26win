@@ -58,13 +58,13 @@ GPIO enable rising edge (p97):
 
 The GPIO interrupts are in the big table (49, p113):
 <p align="center">
-  <img src="images/bcm-interrupt-table-p113.png" width="550" />
+  <img src="images/bcm-interrupt-table-p113.png?v=1" width="550" />
 </p>
 
 
 Interrupt enable 2 (where 49%32 goes, p117):
 <p align="center">
-  <img src="images/bcm-interrupt-enable2-p117.png" width="550" />
+  <img src="images/bcm-interrupt-enable2-p117.png?v=1" width="550" />
 </p>
 
 
