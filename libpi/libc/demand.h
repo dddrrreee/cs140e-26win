@@ -77,9 +77,15 @@
 #define test_passed(args...)  \
     do { printk(__FILE__ "PASS:"); output(args); clean_reboot(); } while(0)
 
+#if 0
 // used for tracing: just emit a TRACE: prefix so can grep
 #define trace(args...) \
     do { printk("TRACE:%s:", __FUNCTION__); printk(args); } while(0)
+#else
+#define trace(fmt, args...) \
+    do { printk("TRACE:" fmt, __FUNCTION__, args); } while(0)
+#endif
+
 
 #define trace_notreached() \
     trace_panic("should not reach\n")
