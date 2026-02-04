@@ -52,7 +52,7 @@ why we need 32-byte alignment (2^5):
 
 GPIO enable rising edge (p97):
 <p align="center">
-  <img src="images/gpio-rising-edge-int-p97.png" width="550" />
+  <img src="images/gpio-rising-edge-int-p97.png?v=1" width="550" />
 </p>
 
 
