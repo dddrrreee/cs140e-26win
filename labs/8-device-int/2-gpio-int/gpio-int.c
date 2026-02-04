@@ -18,6 +18,8 @@ int gpio_has_interrupt(void) {
 // it looks for "011" (low, hi, hi) to suppress noise.  i.e., its triggered only
 // *after* a 1 reading has been sampled twice, so there will be delay.
 // if you want lower latency, you should us async rising edge (p99)
+//
+// also have to enable GPIO interrupts at all in <IRQ_Enable_2>
 void gpio_int_rising_edge(unsigned pin) {
     if(pin>=32)
         return;
@@ -29,6 +31,8 @@ void gpio_int_rising_edge(unsigned pin) {
 // "100" --- i.e., is triggered after two readings of "0" and so the 
 // interrupt is delayed two clock cycles.   if you want  lower latency,
 // you should use async falling edge. (p99)
+//
+// also have to enable GPIO interrupts at all in <IRQ_Enable_2>
 void gpio_int_falling_edge(unsigned pin) {
     if(pin>=32)
         return;
