@@ -1,0 +1,18 @@
+# gpu_mem=64
+gpu_mem=16
+
+# you can bump these up more --- note if you change core_freq
+# you'll need to change uart speed, use the pl011, or bit-bang.
+arm_freq=1000
+core_freq=250
+
+kernel=kernel.img
+kernel_address=0x8000
+
+# on the pi zero w you need this line or it won't work.
+# zhouheng sun found this!
+enable_uart=1 
+
+# note: we changed these.
+start_file=start_cd.elf
+fixup_file=fixup_cd.dat
