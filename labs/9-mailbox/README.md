@@ -34,16 +34,16 @@ So we'll do a few examples so you can get a handle on it.
 
 Checkoff:
   1. Get your pi's revision, physical memory size and temperature.  -
-     We only scratched the surface of the mailbox interface: figure
-     out something interesting and do it!
   2. Increase your memory size to 496MB.  Make sure the mailbox call 
      returns this value.
-  3. Overclock your pi and measure how much faster you can
-     get it before things break down.  Ideally you'd read the temperature
-     and down-throttle when things get "too hot" (not sure what that
-     is :).
+  3. Overclock your pi to 1GHz.  Ideally: measure how much faster you can
+     get it before things break down.
 
-There are tons of possible extensions. 
+There are tons of possible extensions.  We only scratched the surface
+of the mailbox interface: figure out something interesting and do it!
+One possibly fun one:
+ 1. Read the temperature
+ 2. Down-throttle when things get "too hot" (not sure what that is :).
 
 ------------------------------------------------------------------------------
 ### mailboxes `code/mailbox.c`
@@ -182,10 +182,8 @@ hardware devices:
   - For send: we won't have infinite buffering and so need to check
     if there is space.  In our case we wait until:
 
-```c
         while(GET32(MBOX_STATUS) & MAILBOX_FULL)
             ;
-```
 
     We can then send by writing the address of the buffer to `MBOX_WRITE`
     bitwise-or'd with the channel we send on (the document states this
@@ -198,10 +196,8 @@ hardware devices:
     wait until they return before reading any response.  In our case we
     wait until `MBOX_STATUS&MAILBOX_EMPTY` is 0:
 
-```c
         while(GET32(MBOX_STATUS)&MAILBOX_EMPTY)
             ;
-```
 
     We then read the response using `GET32(MBOX_READ)`.  The value should
     have the mailbox channel (8) in the low bits.
