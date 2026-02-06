@@ -353,7 +353,7 @@ overclocking.
 
 I'm curious how fast you can make these go.
 
-[valvers]: https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface
+[valvers]: https://www.valvers.com/open-software/raspberry-pi/bare-metal-programming-in-c-part-5/#mailboxes
 [mailbox-messages]: https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface
 [140e-firmware]: https://github.com/dddrrreee/cs140e-22win/blob/main/labs/10-low-level/increase-mem/README.md
 [pi-revisions]: https://www.raspberrypi-spy.co.uk/2012/09/checking-your-raspberry-pi-board-version/
