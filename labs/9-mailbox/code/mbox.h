@@ -104,6 +104,14 @@ mbox_send(unsigned channel, volatile void *data) {
     return 0;
 }
 
+// different clocks: there are others, see the mailbox doc.
+enum {
+    MBOX_CLK_CPU = 0x3 ,    // this is ARM
+    MBOX_CLK_CORE = 0x4 ,    // gpu?
+    MBOX_CLK_SDRAM = 0x8,
+    MBOX_CLK_V3D =  0x000000005,
+};
+
 // implement these!
 uint32_t rpi_get_revision(void);
 uint32_t rpi_get_model(void);

@@ -24,8 +24,8 @@ uint64_t rpi_get_serialnum(void) {
     // make sure aligned
     assert((unsigned)msg%16 == 0);
 
-    msg[0] = 8*4;       // total size in bytes.
-    msg[1] = 0;         // sender: always 0.
+    msg[0] = 8*4;         // total size in bytes.
+    msg[1] = 0;           // sender: always 0.
     msg[2] = 0x00010004;  // serial tag
     msg[3] = 8;           // total bytes avail for reply
     msg[4] = 0;           // request code [0].
@@ -36,9 +36,12 @@ uint64_t rpi_get_serialnum(void) {
     // send and receive message
     mbox_send(MBOX_CH, msg);
 
+#if 0
+    // if you want to debug.
     output("got:\n");
     for(int i = 0; i < 8; i++)
         output("msg[%d]=%x\n", i, msg[i]);
+#endif
 
     // should have value for success: 1<<31
     if(msg[1] != 0x80000000)
@@ -50,7 +53,6 @@ uint64_t rpi_get_serialnum(void) {
     // for me the upper 32 bits were never non-zero.  
     // not sure if always true?
     assert(msg[6] == 0);
-    
     return msg[5];
 }
 

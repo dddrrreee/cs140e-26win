@@ -15,20 +15,21 @@ respite --- using the GPU mailbox interface to:
     fast as possible.  (At the extreme people use dry ice to cool and
     I've heard of people submersing it in mineral oil as a coolant.)
 
-The pi is a bit weird in that the GPU controls a lot of the action.
-As described at:
+Readings:
+  - [mailbox messages][mailbox-messages]
+  - [valvers mailbox writeup][valvers]
 
-  - [mailboxes](https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface)
-
-The pi gives a way to send messages to the GPU and receive a response.
-If you look through the interface writeup you'll see all sorts of
+The pi is a bit weird in that the VideoCore GPU controls a lot of the
+action.  The firmware (`bootcode.bin`) running on the GPU implements
+a way to send it messages and receive a response.  If you look through
+the [mailbox message writeup][mailbox-messages] you'll see all sorts of
 useful facts you can query for --- model number, serial number, ethernet
 address, etc.  So it's worth figuring out how to do it.
 
-As we expect, the mailbox interface is not super-intuitive, and the
-main writeup uses passive-declarative voice style that makes it hard
-to figure out what to do.  (One key fact: the memory used to send the
-request is re-used for replies.)
+As you no doubt expect, the mailbox interface is not super-intuitive,
+and the main writeup uses passive-declarative voice style that makes it
+hard to figure out what to do.  (One key fact: the memory used to send
+the request is re-used for replies.)
 
 So we'll do a few examples so you can get a handle on it.
 
@@ -36,31 +37,34 @@ Checkoff:
   1. Get your pi's revision, physical memory size and temperature.  -
   2. Increase your memory size to 496MB.  Make sure the mailbox call 
      returns this value.
-  3. Overclock your pi to 1GHz.  Ideally: measure how much faster you can
-     get it before things break down.
+  3. Overclock your pi, and write tests that show it goes faster.
+     You should at least have the ARM at 1GHz and the other target values
+     (check back for these --- we are rerunning experiments.)  Ideally:
+     measure how much faster you can get it before things break down.
 
-There are tons of possible extensions.  We only scratched the surface
-of the mailbox interface: figure out something interesting and do it!
-One possibly fun one:
- 1. Read the temperature
- 2. Down-throttle when things get "too hot" (not sure what that is :).
+There are tons of possible extensions.  
+  - Maximum speed?
+  - Minimum speed?
+  - One fun hack: You could see how much it heats up and down-throttle til
+    cools off.  You probably want to write some kind of fancy calculation
+    that you can check and see when it breaks down.
+  - We only scratched the surface of the mailbox interface: figure out
+    something interesting and do it!
 
 ------------------------------------------------------------------------------
-### mailboxes `code/mailbox.c`
+### 0. Background: mailboxes `code/mbox.[ch]`
 
 If you look through the (unfortunately incomplete) [mailbox
-writeup](https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface)
-you'll see all sorts of useful facts you can query for --- model number,
-serial number, ethernet address, etc.  So it's worth figuring out how
-to do it.
+writeup][valvers] you'll see all sorts of useful facts you can query for
+--- model number, serial number, ethernet address, etc.  So it's worth
+figuring out how to do it.
 
-So that's what we will do.  Some hints:
-
-  1. As always: if you want to write the code completely from scratch,
-     I think doing so is a valuable exercise.  However, in the interests
-     of time I put some starter code in `code/`.  Extend it
-     to query for physical memory size along with a couple of other
-     things that seem useful.
+So that's what we will do.  
+ - NOTE: As always: if you want to write the code completely from scratch,
+   I think doing so is a valuable exercise.  However, in the interests
+   of time I put some starter code in `code/`.  Extend it to query
+   for physical memory size along with a couple of other things that
+   seem useful.
 
 Rules:
   1. Buffer must be 16-byte aligned (because the low bits are ignored).
@@ -156,7 +160,7 @@ the ominmous statement: "The Mailbox and Doorbell registers are not for
 general usage." (page 109).  So you can either piece things together
 from linux source, or different random web pages.  We'll use the 
 valver's discussion which is pretty nice:
-  - [mailbox discussion](https://www.valvers.com/open-software/raspberry-pi/bare-metal-programming-in-c-part-5/#mailboxes)
+  - [mailbox discussion][valvers]
 
 Just search for "mailbox".
 
@@ -208,54 +212,61 @@ hardware devices:
     each mailbox operation.
 
 -------------------------------------------------------------------
-### 1. Get your serial number, temperature.
+### 1. Get your model, revision, RAM size, temperature.
 
-There's a bunch of stuff to do.  We'll start iwith two simple
-ones:
-  1. Get your pi's revision.  You can check that this value makes sense
-     from the [board revision page][pi-revisions], doesn't change from
-     run to run and isn't the same as anyone else's.
-  2. Get the board's temperature.  I had around 90 F.  Not sure if this
-     is ok or not.
+We'll start with several messages;
+  1. `rpi_get_model`: get your board's model.
+  2. `rpi_get_revision`: get your board's revision.  You can check that
+     this value makes sense from the [board revision page][pi-revisions].
+  3. `rpi_get_memsize`: get your board's memory size --- the board has
+     512MB but the GPU claims a bunch by default. (I *believe* should
+     be 128MB for us.)
+  4. `rpi_temp_get`: get your board's temperature.  (FWIW: I had around 90F.)
+
+We gave out pi's mostly from the same digikey batch, so these should
+*probably* be the same as your partner's, but they might not be.
 
 -------------------------------------------------------------------
 ### 2. Update firmware so can increase memory size (and overclock)
 
 By default our firmware only gives us 128MB of RAM out of the total 512MB
-the the pi.  We'll change the firmware so we can use the mailbox to claim
-496MB of physical memory available and leave the GPU with only 16MB.
-The more memory, the more fun during the virtual memory labs!
+the the pi.  We'll change the firmware so we can get 496MB of physical
+memory of the 512MB and leave the GPU with only 16MB.  The more memory,
+the more fun during the virtual memory labs!
 
-Initially, we got this cut-down firmware since it seemed to provide
-the CPU with the most physical memory as possible.  
-However, interestingly, the
-firmware also lets us crank overclocking much more than the other common
-firmware versions out there.  I tried 5 or 6 versions and it always let
-me go higher than the others.  (There might be a better one out there
-though --- let us know if you find one.)
+Initially, we got this cut-down firmware because it was reputed to let
+us grab the most RAM.  However, interestingly, it also lets us crank
+overclocking up much more than the other firmware versions I tested
+(5 or 6 versions).
+  - NOTE: (There might be a better one out there though --- let us
+    know if you find one.
 
 *What to do*: You can either:
   1. do the steps in the [original 140e lab][140e-firmware]
-     so you know how to find such things, or: 
+     to get the firmware so you know how to find such things, or: 
   2. just copy the firmware and `config.txt` from `firmware-increase-mem/`
      to your microSD card.  Note the GPU memory configuration in the
      `config.txt` --- you can also increase the maximum allowed bcm2835
      frequency (`core_freq`) and CPU frequency (`arm_freq`) for the
      next part.
-
-
-Then:
- - Write the mailbox calls to verify the memory size: it should be 496MB.
-
-
-[140e-firmware]: https://github.com/dddrrreee/cs140e-22win/blob/main/labs/10-low-level/increase-mem/README.md
-[pi-revisions]: https://www.raspberrypi-spy.co.uk/2012/09/checking-your-raspberry-pi-board-version/
-
+  3. Verify that you have 496MB.  The next lab and the others depend
+     on this!
 
 -------------------------------------------------------------------
 ### 3. Overclock your pi!
 
+***NOTE: DO A PULL IF YOU SEE THIS --- we are adding specific targets***
+***NOTE: DO A PULL IF YOU SEE THIS --- we are adding specific targets***
+***NOTE: DO A PULL IF YOU SEE THIS --- we are adding specific targets***
+
 Fun: how fast (or slow?) can you make your pi?
+
+Implement:
+ - `rpi_clock_curhz_get(clk)`: gets the current frequency for 
+   `clk` (e.g., sdram, core, cpu, etc).
+ - `rpi_clock_maxhz_get(clk)`: get the maximum value for `clk`.
+ - `rpi_clock_realhz_get(clk)`: get the measured value for `clk`.
+ - `rpi_clock_hz_set(clk, hz)`: set `clk` to `hz`.
 
 What to do: 
   1. For each interesting clock: Get the current clock speed.  
@@ -263,8 +274,11 @@ What to do:
   3. Set the clock to the maximum (or less).
   4. Check that the changes actually happened: there are measured clock
      mailbox calls.  
+  5. As an extension: See how low you can set the clocks.  I just 
+     realized we haven't tried this, so am curious how it goes.
 
-You should write code to measure how fast the pi goes after overclocking.
+You should also write code to measure how fast the pi goes after
+overclocking.
   1. Cycles per second: can so compute how many cycles per second by 
      using `cycle_cnt_read()` and `timer_get_usec()`.
   2. Compute how many GPIO or memory operations can be done.
@@ -290,18 +304,18 @@ You should write code to measure how fast the pi goes after overclocking.
     "best" settings and/or their values.  Let us know if you find
     something interesting!
 
-**Common error**:
+**Common error: UART garbage**:
   1. Once you change the BCM2835 frequency you'll have to either change
      your uart speed by changing the divisor (easy hack: make a new
      `uart_init_div` that takes a divisor and re-initializes the uart)
-     bitbang the uart, or write a pl011 driver (useful for LX).
+     bitbang the uart, or write a pl011 driver (useful for LX).  I'll
+     check in a pl011 driver if you want to just plug and play.
   2. You'll see this because you'll overclock and start getting garbage
      output.
 
 I'm curious how fast you can make these go.
 
-Extensions:
-  - Maximum speed?
-  - One hack: You could see how much it heats up and back off.  You probably
-    want to write some kind of fancy calculation that you can check and see
-    when it breaks down.
+[valvers]: https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface
+[mailbox-messages]: https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface
+[140e-firmware]: https://github.com/dddrrreee/cs140e-22win/blob/main/labs/10-low-level/increase-mem/README.md
+[pi-revisions]: https://www.raspberrypi-spy.co.uk/2012/09/checking-your-raspberry-pi-board-version/
