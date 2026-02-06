@@ -211,6 +211,42 @@ hardware devices:
     The simplest approach: do a device barrier at the start and end of
     each mailbox operation.
 
+
+The `code` directory has a complete version:
+```c
+uint64_t rpi_get_serialnum(void) {
+    // 16-byte aligned 32-bit array
+    volatile uint32_t msg[8] __attribute__((aligned(16)));
+
+    // make sure aligned
+    assert((unsigned)msg%16 == 0);
+
+    msg[0] = 8*4;         // total size in bytes.
+    msg[1] = 0;           // sender: always 0.
+    msg[2] = 0x00010004;  // serial tag
+    msg[3] = 8;           // total bytes avail for reply
+    msg[4] = 0;           // request code [0].
+    msg[5] = 0;           // space for 1st word of reply 
+    msg[6] = 0;           // space for 2nd word of reply 
+    msg[7] = 0;   // end tag
+
+    // send and receive message
+    mbox_send(MBOX_CH, msg);
+
+    // should have value for success: 1<<31
+    if(msg[1] != 0x80000000)
+        panic("invalid response: got %x\n", msg[1]);
+
+    // high bit should be set and reply size
+    assert(msg[4] == ((1<<31) | 8));
+
+    // for me the upper 32 bits were never non-zero.  
+    // not sure if always true?
+    assert(msg[6] == 0);
+    return msg[5];
+}
+```
+
 -------------------------------------------------------------------
 ### 1. Get your model, revision, RAM size, temperature.
 
