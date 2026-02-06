@@ -440,6 +440,34 @@ CORE overclock
     cycles/second       = 1149985640
 ```
 
+And, fwiw, here's a representative measurement routine for measuring
+the cost of GPIO reads:
+```c
+uint32_t gpio_rd_usec(unsigned n) {
+    volatile uint32_t *addr = (void*)GPIO_LEV0;
+
+    let s = timer_get_usec();
+    asm volatile(".align 5");
+    for(unsigned i = 0; i < n/8; i++) {
+        *addr;
+        *addr;
+        *addr;
+        *addr;
+
+        *addr;
+        *addr;
+        *addr;
+        *addr;
+    }
+
+    for(unsigned i = 0; i < n%8; i++)
+        *addr;
+    let tot = timer_get_usec() - s;
+
+    return tot;
+}
+```
+
 
 [valvers]: https://www.valvers.com/open-software/raspberry-pi/bare-metal-programming-in-c-part-5/#mailboxes
 [mailbox-messages]: https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface
