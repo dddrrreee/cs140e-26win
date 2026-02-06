@@ -291,9 +291,10 @@ overclocking up much more than the other firmware versions I tested
 -------------------------------------------------------------------
 ### 3. Overclock your pi!
 
-***NOTE: DO A PULL IF YOU SEE THIS --- we are adding specific targets***
-***NOTE: DO A PULL IF YOU SEE THIS --- we are adding specific targets***
-***NOTE: DO A PULL IF YOU SEE THIS --- we are adding specific targets***
+NOTE: 
+  - ***DO A PULL IF YOU SEE THIS --- we are adding specific targets***
+  - ***DO A PULL IF YOU SEE THIS --- we are adding specific targets***
+  - ***DO A PULL IF YOU SEE THIS --- we are adding specific targets***
 
 Fun: how fast (or slow?) can you make your pi?
 
