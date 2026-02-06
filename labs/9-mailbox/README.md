@@ -295,12 +295,7 @@ THEN:
 -------------------------------------------------------------------
 ### 3. Overclock your pi!
 
-NOTE: 
-  - ***DO A PULL IF YOU SEE THIS --- we are adding specific targets***
-  - ***DO A PULL IF YOU SEE THIS --- we are adding specific targets***
-  - ***DO A PULL IF YOU SEE THIS --- we are adding specific targets***
-
-Fun: how fast (or slow?) can you make your pi?
+Fun: how fast (or slow?) can you make your pi?  
 
 Implement:
  - `rpi_clock_curhz_get(clk)`: gets the current frequency for 
@@ -357,7 +352,6 @@ overclocking.
      output.
 
 I'm curious how fast you can make these go.
-
 
 ------------------------------------------------------------------
 ### POSTSCRIPT: Some staff numbers
