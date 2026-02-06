@@ -277,7 +277,9 @@ overclocking up much more than the other firmware versions I tested
   - NOTE: (There might be a better one out there though --- let us
     know if you find one.
 
-*What to do*: You can either:
+***What to do***: 
+
+You can either:
   1. do the steps in the [original 140e lab][140e-firmware]
      to get the firmware so you know how to find such things, or: 
   2. just copy the firmware and `config.txt` from `firmware-increase-mem/`
@@ -285,7 +287,9 @@ overclocking up much more than the other firmware versions I tested
      `config.txt` --- you can also increase the maximum allowed bcm2835
      frequency (`core_freq`) and CPU frequency (`arm_freq`) for the
      next part.
-  3. Verify that you have 496MB.  The next lab and the others depend
+
+THEN:
+  - Verify that you have 496MB.  The next lab and the others depend
      on this!
 
 -------------------------------------------------------------------
