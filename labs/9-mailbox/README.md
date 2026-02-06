@@ -358,6 +358,89 @@ overclocking.
 
 I'm curious how fast you can make these go.
 
+
+------------------------------------------------------------------
+### POSTSCRIPT: Some staff numbers
+
+#### My config
+
+These seemed stable --- not sure how much you can bump up.
+
+```
+########################################################################
+#  https://forums.raspberrypi.com/viewtopic.php?t=322718
+
+arm_freq=1150
+# arm_freq=1085
+
+gpu_freq=600
+# this is erratic
+# gpu_freq=650
+# gpu_freq=530
+
+core_freq=600
+# this is erratic
+# core_freq=650
+# core_freq=515
+
+sdram_freq=600
+# sdram_freq=533
+
+# over_voltage=2
+over_voltage=6
+
+# over_voltage_sdram=1
+over_voltage_sdram=4
+
+# gpu_mem=64
+gpu_mem=16
+
+kernel=kernel.img
+kernel_address=0x8000
+
+# on the pi zero w you need this line or it won't work.
+# zhouheng sun found this!
+enable_uart=1
+
+start_file=start_cd.elf
+fixup_file=fixup_cd.dat
+```
+
+#### My overclock measurements
+
+This is just with `caches_enable()` --- no virtual memory, so no
+data cache.
+
+
+
+```
+Initial (no cache)
+    mem write 10000 times  = 318 usec (31.8ns/op)
+    read mem 10000 times   = 702 usec (70.2ns / op)
+    w/r mem 10000 times    = 964 usec (96.4ns/op)
+    GPIO write 10000 times = 501 usec (50.1ns/op)
+    read GPIO 10000 times  = 926 usec (92.6ns / op)
+    cycles/second       = 699991440
+
+Initial (cache)
+    mem write 10000 times  = 229 usec (22.9ns/op)
+    read mem 10000 times   = 601 usec (60.1ns / op)
+    w/r mem 10000 times    = 876 usec (87.6ns/op)
+    GPIO write 10000 times = 341 usec (34.1ns/op)
+    read GPIO 10000 times  = 825 usec (82.5ns / op)
+    cycles/second       = 699993470
+
+======================================================
+CORE overclock
+    mem write 10000 times  = 139 usec (13.9ns/op)
+    read mem 10000 times   = 301 usec (30.1ns / op)
+    w/r mem 10000 times    = 461 usec (46.1ns/op)
+    GPIO write 10000 times = 188 usec (18.8ns/op)
+    read GPIO 10000 times  = 391 usec (39.1ns / op)
+    cycles/second       = 1149985640
+```
+
+
 [valvers]: https://www.valvers.com/open-software/raspberry-pi/bare-metal-programming-in-c-part-5/#mailboxes
 [mailbox-messages]: https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface
 [140e-firmware]: https://github.com/dddrrreee/cs140e-22win/blob/main/labs/10-low-level/increase-mem/README.md
