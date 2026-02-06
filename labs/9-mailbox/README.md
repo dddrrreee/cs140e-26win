@@ -308,8 +308,10 @@ overclocking.
   1. Once you change the BCM2835 frequency you'll have to either change
      your uart speed by changing the divisor (easy hack: make a new
      `uart_init_div` that takes a divisor and re-initializes the uart)
-     bitbang the uart, or write a pl011 driver (useful for LX).  I'll
-     check in a pl011 driver if you want to just plug and play.
+     bitbang the uart, or write a pl011 driver (useful for LX).  The
+     `code/` directory has an example for how to make output use the 
+     staff PL011 driver.  One downside: because it has a slower clock,
+     it can't support as high an overclock as the miniUART.
   2. You'll see this because you'll overclock and start getting garbage
      output.
 
