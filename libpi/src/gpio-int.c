@@ -122,20 +122,3 @@ void gpio_event_clear(unsigned pin) { // **
     PUT32(gpio_eds0, 1 << pin);
     dev_barrier();
 }
-
-
-// // p98: detect when input pin=1.  must clear the source of the 
-// // interrupt before clearing the event or it will just retrigger.
-// void gpio_enable_hi_int(unsigned pin) {
-//     volatile unsigned addr = (unsigned) gpio_hen0 + 4 * (pin / 32);
-//     volatile unsigned value = GET32(addr);
-
-//     PUT32(addr, value |= 1 << (pin % 32));
-// }
-
-// void gpio_int_low(unsigned pin) {
-//     volatile unsigned addr = (unsigned) gpio_len0 + 4 * (pin / 32);
-//     volatile unsigned value = GET32(addr);
-
-//     PUT32(addr, value |= 1 << (pin % 32));
-// }
