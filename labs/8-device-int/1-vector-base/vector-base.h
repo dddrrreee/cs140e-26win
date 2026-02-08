@@ -18,6 +18,8 @@
 #define __VECTOR_BASE_SET_H__
 #include "libc/bit-support.h"
 
+// #include "asm-helpers.h" // ** TODO
+
 // use inline assembly to get and return the vector base's 
 // current value.
 static inline void *vector_base_get(void) { // **
@@ -35,7 +37,7 @@ static inline void *vector_base_get(void) { // **
 // one caller so you can also get rid of this if you want.  we
 // use to illustrate a common pattern.
 static inline void vector_base_set_raw(uint32_t v) { // **
-    prefetch_flush(); // ** Since we change vector base, we should NOT call anything that has previously been prefetched
+    // prefetch_flush(); // ** Since we change vector base, we should NOT call anything that has previously been prefetched // ** TODO
     asm volatile("mcr p15, 0, %0, c12, c0, 0" : : "r" (v));
     // todo("implement using inline assembly to set the vec base reg");
 }
@@ -61,7 +63,11 @@ vector_base_reset(void *vec) {
     if(!vector_base_chk(vec))
         panic("illegal vector base %p\n", vec);
 
-    todo("get old vector base, set new one\n");
+    // todo("get old vector base, set new one\n");
+
+    old_vec = vector_base_get();
+
+    vector_base_set_raw((uint32_t)vec);
 
     // double check that what we set is what we have.
     // 

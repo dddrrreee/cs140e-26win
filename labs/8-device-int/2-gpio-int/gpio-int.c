@@ -87,17 +87,32 @@ void gpio_int_falling_edge(unsigned pin) { // **
 // p96: a 1<<pin is set in EVENT_DETECT if <pin> triggered an interrupt.
 // if you configure multiple events to lead to interrupts, you will have to 
 // read the pin to determine which caused it.
-int gpio_event_detected(unsigned pin) {
-    if(pin>=32)
+int gpio_event_detected(unsigned pin) { // **
+    if(pin >= 32)  {
+        // gpio_panic("illegal pin=%d\n", pin);
         return 0;
-    todo("implement: is an event detected?\n");
+    }
+
+    dev_barrier();
+
+    volatile int detected = 0;
+    if (GET32(gpio_eds0) & (1 << pin)) {
+        detected = 1;
+    }
+
+    dev_barrier();
+
+    return detected;
 }
 
 // p96: have to write a 1 to the pin to clear the event.
-void gpio_event_clear(unsigned pin) {
+void gpio_event_clear(unsigned pin) { // **
     if(pin>=32)
         return;
-    todo("implement: clear event on <pin>\n");
+    // todo("implement: clear event on <pin>\n");
+    dev_barrier();
+    PUT32(gpio_eds0, 1 << pin);
+    dev_barrier();
 }
 
 
@@ -116,35 +131,3 @@ void gpio_event_clear(unsigned pin) {
 
 //     PUT32(addr, value |= 1 << (pin % 32));
 // }
-
-
-// p96: a 1<<pin is set in EVENT_DETECT if <pin> triggered an interrupt.
-// if you configure multiple events to lead to interrupts, you will have to 
-// read the pin to determine which caused it.
-int gpio_event_detected(unsigned pin) { // **
-    if(pin >= 32)  {
-        gpio_panic("illegal pin=%d\n", pin);
-        return 0;
-    }
-
-    dev_barrier();
-
-    volatile int detected = 0;
-    if (GET32(gpio_eds0) & (1 << pin)) {
-        detected = 1;
-    }
-
-    dev_barrier();
-
-    return detected;
-}
-
-// p96: have to write a 1 to the pin to clear the event.
-void gpio_event_clear(unsigned pin) {
-    if(pin >= 32)
-        gpio_panic("illegal pin=%d\n", pin);
-
-    dev_barrier();
-    PUT32(gpio_eds0, 1 << pin);
-    dev_barrier();
-}

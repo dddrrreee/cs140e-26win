@@ -99,7 +99,7 @@ _interrupt_vector_slow:
 _interrupt_vector_fast:
   ldr pc, =unhandled_reset
   ldr pc, =unhandled_undefined_instruction
-  ldr pc, =unhandled_swi
+  ldr pc, =sys_plus1_handler
   ldr pc, =unhandled_prefetch_abort
   ldr pc, =unhandled_data_abort
   ldr pc, =unhandled_interrupt
