@@ -47,7 +47,8 @@ void notmain() {
 
     // if you mess with this value and prescaler, will change 
     // the number of interrupts.
-    timer_init(0x100, 1024);
+    // timer_init(0x100, 1024);
+    timer_init(0x100, 10); // faster yay
 
     // Q: if you do this after enabling?
     cq_init(&putQ, 1);

@@ -92,8 +92,13 @@ char *find_ttyusb_last(void) { // ** MODIFIED BUT CHECK
 
     struct dirent **names;
     int n_files = scandir("/dev", &names, filter, alphasort);
-    if (n_files <= 0)
-        panic("Bad number of files (%d)", n_files);
+    if (n_files <= 0) {
+        printf("Could not find USB-UART connection in /dev/ with any of the prefixes: \n");
+        for (unsigned i = 0; i < sizeof(ttyusb_prefixes) / sizeof(const char*); i++) {
+            printf("  - %s\n", ttyusb_prefixes[i]);
+        }
+        panic("Plug in Pi?\n");
+    }
 
     
     char *newest_name = NULL;

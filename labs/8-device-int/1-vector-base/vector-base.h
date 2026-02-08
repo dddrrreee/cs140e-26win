@@ -20,28 +20,36 @@
 
 // use inline assembly to get and return the vector base's 
 // current value.
-static inline void *vector_base_get(void) {
-    todo("implement using inline assembly to get the vec base reg");
+static inline void *vector_base_get(void) { // **
+    // Opcode_1 set to 0
+    // CRn set to c12
+    // CRm set to c0
+    // Opcode_2 set to 0.
+    
+    void* base_addr = NULL;
+    asm volatile("mrc p15, 0, %0, c12, c0, 0" : "=r" (base_addr));
+    return base_addr;
 }
 
 // set vector base register: use inline assembly.  there's only
 // one caller so you can also get rid of this if you want.  we
 // use to illustrate a common pattern.
-static inline void vector_base_set_raw(uint32_t v) {
-    // make sure you use prefetch flush!
-    todo("implement using inline assembly to set the vec base reg");
+static inline void vector_base_set_raw(uint32_t v) { // **
+    prefetch_flush(); // ** Since we change vector base, we should NOT call anything that has previously been prefetched
+    asm volatile("mcr p15, 0, %0, c12, c0, 0" : : "r" (v));
+    // todo("implement using inline assembly to set the vec base reg");
 }
 
 // check that not null and alignment is good.
-static inline int vector_base_chk(void *vector_base) {
+static inline int vector_base_chk(void *vector_base) { // ** 
     if(!vector_base)
         return 0;
 
     // IMPORTANT: most common mistake is to not check alignment
     // correctly. very easy way to get intermittent but violent
     // bugs.
-    todo("check alignment is correct: look at the instruction def!");
-    return 1;
+    // todo("check alignment is correct: look at the instruction def!");
+    return !( (unsigned)vector_base % 32 ); // Check whether it is aligned with 32 bytes require by the exception vector table
 }
 
 // set vector base to <vec> and return old value: could have
