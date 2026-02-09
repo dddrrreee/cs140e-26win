@@ -2,7 +2,7 @@
 // across the different methods using the <sys_plus1> system call in
 // this directory's <interrupts-asm.S>
 #include "rpi.h"
-#include "vector-base.h"
+#include "src/vector-base.h"
 #include "cycle-count.h"
 
 // in <interrupts-asm.S> in this directory

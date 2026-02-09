@@ -1,6 +1,6 @@
 // simple sanity check that null and alignment is handled.
 #include "rpi.h"
-#include "vector-base.h"
+#include "src/vector-base.h"
 
 // in interrupt-asm.S
 void bad_exception_asm(void);

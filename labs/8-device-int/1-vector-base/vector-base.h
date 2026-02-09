@@ -1,96 +1,96 @@
-/*
- * search for <todo> and implement: 
- *  - vector_base_set  
- *  - vector_base_get
- *  - vector_base_reset
- * 
- * these all use vector base address register:
- *   arm1176.pdf:3-121 --- lets us control where the 
- *   exception jump table is!  makes it easy to switch
- *   tables and also make exceptions faster.
- *
- * once this works, move it to: 
- *   <libpi/include/vector-base.h>
- * and make sure it still works.
- */
+// /*
+//  * search for <todo> and implement: 
+//  *  - vector_base_set  
+//  *  - vector_base_get
+//  *  - vector_base_reset
+//  * 
+//  * these all use vector base address register:
+//  *   arm1176.pdf:3-121 --- lets us control where the 
+//  *   exception jump table is!  makes it easy to switch
+//  *   tables and also make exceptions faster.
+//  *
+//  * once this works, move it to: 
+//  *   <libpi/include/vector-base.h>
+//  * and make sure it still works.
+//  */
 
-#ifndef __VECTOR_BASE_SET_H__
-#define __VECTOR_BASE_SET_H__
-#include "libc/bit-support.h"
+// #ifndef __VECTOR_BASE_SET_H__
+// #define __VECTOR_BASE_SET_H__
+// #include "libc/bit-support.h"
 
-// #include "asm-helpers.h" // ** TODO
+// // #include "asm-helpers.h" // ** TODO
 
-// use inline assembly to get and return the vector base's 
-// current value.
-static inline void *vector_base_get(void) { // **
-    // Opcode_1 set to 0
-    // CRn set to c12
-    // CRm set to c0
-    // Opcode_2 set to 0.
+// // use inline assembly to get and return the vector base's 
+// // current value.
+// static inline void *vector_base_get(void) { // **
+//     // Opcode_1 set to 0
+//     // CRn set to c12
+//     // CRm set to c0
+//     // Opcode_2 set to 0.
     
-    void* base_addr = NULL;
-    asm volatile("mrc p15, 0, %0, c12, c0, 0" : "=r" (base_addr));
-    return base_addr;
-}
+//     void* base_addr = NULL;
+//     asm volatile("mrc p15, 0, %0, c12, c0, 0" : "=r" (base_addr));
+//     return base_addr;
+// }
 
-// set vector base register: use inline assembly.  there's only
-// one caller so you can also get rid of this if you want.  we
-// use to illustrate a common pattern.
-static inline void vector_base_set_raw(uint32_t v) { // **
-    // prefetch_flush(); // ** Since we change vector base, we should NOT call anything that has previously been prefetched // ** TODO
-    asm volatile("mcr p15, 0, %0, c12, c0, 0" : : "r" (v));
-    // todo("implement using inline assembly to set the vec base reg");
-}
+// // set vector base register: use inline assembly.  there's only
+// // one caller so you can also get rid of this if you want.  we
+// // use to illustrate a common pattern.
+// static inline void vector_base_set_raw(uint32_t v) { // **
+//     // prefetch_flush(); // ** Since we change vector base, we should NOT call anything that has previously been prefetched // ** TODO
+//     asm volatile("mcr p15, 0, %0, c12, c0, 0" : : "r" (v));
+//     // todo("implement using inline assembly to set the vec base reg");
+// }
 
-// check that not null and alignment is good.
-static inline int vector_base_chk(void *vector_base) { // ** 
-    if(!vector_base)
-        return 0;
+// // check that not null and alignment is good.
+// static inline int vector_base_chk(void *vector_base) { // ** 
+//     if(!vector_base)
+//         return 0;
 
-    // IMPORTANT: most common mistake is to not check alignment
-    // correctly. very easy way to get intermittent but violent
-    // bugs.
-    // todo("check alignment is correct: look at the instruction def!");
-    return !( (unsigned)vector_base % 32 ); // Check whether it is aligned with 32 bytes require by the exception vector table
-}
+//     // IMPORTANT: most common mistake is to not check alignment
+//     // correctly. very easy way to get intermittent but violent
+//     // bugs.
+//     // todo("check alignment is correct: look at the instruction def!");
+//     return !( (unsigned)vector_base % 32 ); // Check whether it is aligned with 32 bytes require by the exception vector table
+// }
 
-// set vector base to <vec> and return old value: could have
-// been previously set (i.e., vector_base_get returns non-null).
-static inline void *
-vector_base_reset(void *vec) {
-    void *old_vec = 0;
+// // set vector base to <vec> and return old value: could have
+// // been previously set (i.e., vector_base_get returns non-null).
+// static inline void *
+// vector_base_reset(void *vec) {
+//     void *old_vec = 0;
 
-    if(!vector_base_chk(vec))
-        panic("illegal vector base %p\n", vec);
+//     if(!vector_base_chk(vec))
+//         panic("illegal vector base %p\n", vec);
 
-    // todo("get old vector base, set new one\n");
+//     // todo("get old vector base, set new one\n");
 
-    old_vec = vector_base_get();
+//     old_vec = vector_base_get();
 
-    vector_base_set_raw((uint32_t)vec);
+//     vector_base_set_raw((uint32_t)vec);
 
-    // double check that what we set is what we have.
-    // 
-    // NOTE: common safety net pattern: read back what 
-    // you wrote to make sure it is indeed what got set.
-    // catches *many* bugs in this class.  (in this case:
-    // alignment issues.)
-    assert(vector_base_get() == vec);
-    return old_vec;
-}
+//     // double check that what we set is what we have.
+//     // 
+//     // NOTE: common safety net pattern: read back what 
+//     // you wrote to make sure it is indeed what got set.
+//     // catches *many* bugs in this class.  (in this case:
+//     // alignment issues.)
+//     assert(vector_base_get() == vec);
+//     return old_vec;
+// }
 
-// set vector base: must not have been set already.
-// if you want to forcibly overwrite the previous
-// value use <vector_base_reset>
-static inline void vector_base_set(void *vec) {
-    // if already set to the same vector, just return.
-    void *v = vector_base_get();
-    if(v == vec)
-        return;
-    if(v) 
-        panic("vector base register already set=%p\n", v);
+// // set vector base: must not have been set already.
+// // if you want to forcibly overwrite the previous
+// // value use <vector_base_reset>
+// static inline void vector_base_set(void *vec) {
+//     // if already set to the same vector, just return.
+//     void *v = vector_base_get();
+//     if(v == vec)
+//         return;
+//     if(v) 
+//         panic("vector base register already set=%p\n", v);
 
-    // this is not on the critical path do just call reset.
-    vector_base_reset(vec);
-}
-#endif
+//     // this is not on the critical path do just call reset.
+//     vector_base_reset(vec);
+// }
+// #endif
