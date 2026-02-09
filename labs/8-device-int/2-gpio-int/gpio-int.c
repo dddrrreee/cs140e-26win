@@ -3,24 +3,25 @@
 
 // in libpi/include: has useful enums.
 #include "rpi-interrupts.h"
+#include "rpi-regs.h"
 
-enum {
-    GPIO_BASE = 0x20200000,
+// enum {
+    // GPIO_BASE = 0x20200000,
     // gpio_set0  = (GPIO_BASE + 0x1C),
     // gpio_clr0  = (GPIO_BASE + 0x28),
     // gpio_lev0  = (GPIO_BASE + 0x34),
-    gpio_eds0 = (GPIO_BASE + 0x40),
-    gpio_ren0 = (GPIO_BASE + 0x4C),
-    gpio_fen0 = (GPIO_BASE + 0x58),
+    // gpio_eds0 = (GPIO_BASE + 0x40),
+    // gpio_ren0 = (GPIO_BASE + 0x4C),
+    // gpio_fen0 = (GPIO_BASE + 0x58),
     // gpio_hen0 = (GPIO_BASE + 0x64),
     // gpio_len0 = (GPIO_BASE + 0x70),
     // gpio_pud  = (GPIO_BASE + 0x94),
     // gpio_pudclk0  = (GPIO_BASE + 0x98),
 
-    INT_EN_2 = 0x2000B214 // (0x2000B214) Has gpio_int[0:3] for enabling
+    // INT_EN_2 = 0x2000B214 // (0x2000B214) Has gpio_int[0:3] for enabling
 
     // <you will need other values from BCM2835!>
-};
+// };
 
 // returns 1 if there is currently a GPIO_INT0 interrupt, 
 // 0 otherwise.

@@ -13,7 +13,7 @@
  */
 #include "rpi.h"
 #include "gpio.h"
-
+#include "rpi-regs.h"
 // macro hack
 #define gpio_panic(msg...) panic(msg)
 
@@ -26,23 +26,6 @@
 enum {
     // Max gpio pin number.
     GPIO_MAX_PIN = 53,
-    GPIO_MAX_FUNCTION = 7,
-
-    GPIO_BASE = 0x20200000,
-    gpio_set0  = (GPIO_BASE + 0x1C),
-    gpio_clr0  = (GPIO_BASE + 0x28),
-    gpio_lev0  = (GPIO_BASE + 0x34),
-    gpio_eds0 = (GPIO_BASE + 0x40),
-    gpio_ren0 = (GPIO_BASE + 0x4C),
-    gpio_fen0 = (GPIO_BASE + 0x58),
-    gpio_hen0 = (GPIO_BASE + 0x64),
-    gpio_len0 = (GPIO_BASE + 0x70),
-    gpio_pud  = (GPIO_BASE + 0x94),
-    gpio_pudclk0  = (GPIO_BASE + 0x98),
-
-    INT_EN_2 = 0x2000B214 // Has gpio_int[0:3]
-
-    // <you will need other values from BCM2835!>
 };
 
 #define PULLDOWN_WAITTIME 150 // cycles
