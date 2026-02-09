@@ -32,7 +32,14 @@ void interrupt_vector(unsigned pc) {
     unsigned s = cycle_cnt_read();
 
     dev_barrier();
-    unimplemented();
+    
+    // Push cycles, then value
+    cq_push32(&uartQ, s);
+    cq_push32(&uartQ, !gpio_read(in_pin));
+
+    // Clearing event
+    gpio_event_clear(in_pin);
+
     dev_barrier();
 }
 
