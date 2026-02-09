@@ -41,7 +41,7 @@ void gpio_int_rising_edge(unsigned pin) {
     dev_barrier();
 
     // Enable rising edge
-    OR32(gpio_ren0, 1 << pin); // Only gpio_ren0 (not gpio_ren1 too) because pin is less than 32
+    OR32(GPREN0, 1 << pin); // Only GPREN0 (not GPREN0 too) because pin is less than 32
     
     dev_barrier();
     
@@ -65,7 +65,7 @@ void gpio_int_falling_edge(unsigned pin) { // **
     dev_barrier();
     
     // Enable rising edge
-    OR32(gpio_fen0, 1 << pin); // Only gpio_fen0 (not gpio_fen1 too) because pin is less than 32
+    OR32(GPFEN0, 1 << pin); // Only GPFEN0 (not GPFEN1 too) because pin is less than 32
     
     dev_barrier();
     
@@ -87,7 +87,7 @@ int gpio_event_detected(unsigned pin) { // **
     dev_barrier();
 
     volatile int detected = 0;
-    if (GET32(gpio_eds0) & (1 << pin)) {
+    if (GET32(GPEDS0) & (1 << pin)) {
         detected = 1;
     }
 
@@ -102,6 +102,6 @@ void gpio_event_clear(unsigned pin) { // **
         return;
     // todo("implement: clear event on <pin>\n");
     dev_barrier();
-    PUT32(gpio_eds0, 1 << pin);
+    PUT32(GPEDS0, 1 << pin);
     dev_barrier();
 }

@@ -51,7 +51,7 @@ void gpio_set_on(unsigned pin) {
     // NOTE: 
     //  - If you want to be slick, you can exploit the fact that 
     //    SET0/SET1 are contiguous in memory.
-    volatile unsigned* gpio_addr = (unsigned*) gpio_set0 + (pin / 32);
+    volatile unsigned* gpio_addr = (unsigned*) GPSET0 + (pin / 32);
     put32(gpio_addr, 1 << (pin % 32));
 }
 
@@ -64,7 +64,7 @@ void gpio_set_off(unsigned pin) {
     // NOTE: 
     //  - If you want to be slick, you can exploit the fact that 
     //    CLR0/CLR1 are contiguous in memory.
-    volatile unsigned* gpio_addr = (unsigned*) gpio_clr0 + (pin / 32);
+    volatile unsigned* gpio_addr = (unsigned*) GPCLR0 + (pin / 32);
     put32(gpio_addr, 1 << (pin % 32));
 }
 
@@ -90,7 +90,7 @@ int gpio_read(unsigned pin) {
     if(pin > GPIO_MAX_PIN)
         gpio_panic("illegal pin=%d\n", pin);
 
-    volatile unsigned* gpio_addr = (unsigned*) gpio_lev0 + (pin / 32);
+    volatile unsigned* gpio_addr = (unsigned*) GPLEV0 + (pin / 32);
     volatile unsigned value = get32(gpio_addr);
 
     return (value >> (pin % 32)) & 0b1;
@@ -108,16 +108,16 @@ void gpio_set_pullup(unsigned pin) {
     // Implement this.
     
     // Write to GPPUD to enable control line and wait for the control line to set-up (?) 
-    put32((unsigned*)gpio_pud, 0b10);
+    put32((unsigned*)GPPUD, 0b10);
     delay_cycles(PULLDOWN_WAITTIME);
 
     // Write to GPPUDCLK0/1 to "Assert Clock on line (n)"
-    volatile unsigned* pud_ck_addr = (unsigned*) gpio_pudclk0 + (pin / 32);
+    volatile unsigned* pud_ck_addr = (unsigned*) GPPUDCLK0 + (pin / 32);
     put32(pud_ck_addr, 1 << (pin % 32));
     delay_cycles(PULLDOWN_WAITTIME); // Iffy on whether we have to wait again (according to annotations on datasheet)
 
     // Write back to GPPUD 
-    put32((unsigned*)gpio_pud, 0);
+    put32((unsigned*)GPPUD, 0);
     put32(pud_ck_addr, 0);
 }
 
@@ -128,14 +128,14 @@ void gpio_set_pulldown(unsigned pin) {
 
     // Implement this.
     
-    put32((unsigned*)gpio_pud, 0b01);
+    put32((unsigned*)GPPUD, 0b01);
     delay_cycles(PULLDOWN_WAITTIME);
 
-    volatile unsigned* pud_ck_addr = (unsigned*) gpio_pudclk0 + (pin / 32);
+    volatile unsigned* pud_ck_addr = (unsigned*) GPPUDCLK0 + (pin / 32);
     put32(pud_ck_addr, 1 << (pin % 32));
     delay_cycles(PULLDOWN_WAITTIME); // Iffy on whether we have to wait again (according to annotations on datasheet)
 
-    put32((unsigned*)gpio_pud, 0);
+    put32((unsigned*)GPPUD, 0);
     put32(pud_ck_addr, 0);
 }
 
