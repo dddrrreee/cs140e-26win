@@ -76,7 +76,7 @@ Checkoff:
     This is a great extension lab.
 
 -----------------------------------------------------------------------
-## Prelogue: Single-step Background
+## 1. Single-step Background + Code
 
 The first part is a crash course, where you can view the code as
 an interactive text book that shows how to use single stepping.  
@@ -84,20 +84,50 @@ You will build it next lab, you will use it this lab for the
 interleave checker.
 
 Go through the two programs in `0-crash-course`:
-  1.  Start with `0-nop1-example.c` and see how it works, 
-      then `1-many-fn-exmaple.c`
-  2. Make a copy of copy of `1-many-fn-exmaple.c` and split it into
-     a library that does single step execution and a set of test programs,
-     and print the registers that change at each point as well as a running
-     hash to all registers.
-  3.  Make sure you get the same hash as other people.  
+  - Start with `0-nop1-example.c` and see how it works, 
+    then `1-many-fn-exmaple.c`
+
+### Part 0: print the registers that change
+
+  1. Make a copy of copy of `1-many-fn-exmaple.c` and split it into
+     a library that does single step execution and a set of test programs.
+  2. Print the registers that have changed since the last single step
+     exception, and compute a running hash of *all* 17 registers using 
+     `libpi/libc:fast-hash32.h:fast_hash32`.
+  3.  Make sure you get the same hash as your partner.
 
 The programs are small so you can debug easily.
 
 This is a baby form of single-step equivalance, which will save us 
 numerous times during the quarter.
 
-Then do the checker below
+### part 1:  write a simple instruction profiler
+
+Similar to your gprof (lab 4):
+  0. Make a copy of 1-many-fn-examples.c.
+  1. Allocate memory so you can compute a histogram.
+  2. Get the pc in the single step handler increment the associated
+     pc inthe historgram.
+  3. Write a simple routine with a loop (or something else!) and run
+     it in single-step mode.
+  4. At the end when the code is done, print out the top results and
+     show they make sense.  For example: loop instructions should
+     increment the size of the loop bound.
+
+### part 2: find a simple memory corruption bug.
+
+Variation:
+  1. Make a copy of the code.
+  2. Write a routine that writes to an illegal address.
+  3. In the single step handler look for when that address changes:
+     flag the pc.
+
+This is a dumb checker used to illustrate a point and get you
+thinking about single-stepping, so feel free to do wild extensions.
+
+Once you have a good grasp, do the interleave checker below.  It's easy to
+do it Daniel mode by just writing your own implementation of the interface
+(feel free to look at the reference implementation).
 
 -----------------------------------------------------------------------
 #### Interleave Checking Interface
