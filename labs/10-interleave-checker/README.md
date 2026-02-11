@@ -398,7 +398,7 @@ You can run B() as a seperate thread by:
 This test is pretty dumb, so you probably should write another one.
 
 -----------------------------------------------------------------------
-### Part 3:  make a `sys_yield()`.
+### [Extension] Part 3:  make a `sys_yield()`.
 
 For simplicity, our base checking system assumed it could call B()
 in the exception handler and it would run to completion: i.e., it
@@ -425,7 +425,7 @@ So, fix this:
      than have B() return an error.
 
 -----------------------------------------------------------------------
-### Part 4: add some interesting tests.
+### [Extension] Part 3: add some interesting tests.
 
 Easy mode: get some "lock-free" code from GPT or Claude and check it.
 Should be able to find some bugs.
