@@ -220,6 +220,13 @@ What `single_step_handler_full` does:
 -----------------------------------------------------------------------
 ### Part 0: turn off single-step when `A()` calls `A_terminated()`
 
+NOTE:
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+
 If you compile and run the code you'll notice the single-step handler
 prints a ton of instructions even though `A()` is tiny.  The reason for
 this is that when A() exits, it jumps to `A_terminated()`:
@@ -241,6 +248,13 @@ Easiest approach:
 -----------------------------------------------------------------------
 ### Part 1: do a single switch from A() to B()
 
+NOTE:
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+
 For this make sure your code handles all tests tests besides test 4.
 Test 3 and 5 are reasonable; the others are trivial.  
 
@@ -250,6 +264,14 @@ to the tests as well.
 
 -----------------------------------------------------------------------
 ### Part 2:  make a `sys_trylock()` for test 4.
+
+NOTE:
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+ - ***IF YOU SEE THIS: DO A GIT PULL***
+
 
 For this you'll add a system call that implements the try-lock needed for
 test `4-trylock-ok-test.c`.    This is an example of a common pattern
