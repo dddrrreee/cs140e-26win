@@ -1,0 +1,17 @@
+TRACE:	check the faulting pc's against <0-nop-example.list>:
+TRACE:	00008038 <nop_1>:
+TRACE:expected:	8038:   e320f000    nop {0}
+TRACE:expected:	803c:   e3a00002    mov r0, #2
+TRACE:expected:	8040:   ef000001    svc 0x00000001
+TRACE:PRE: about to single step <nop_1>
+TRACE:fault:	8038:	e320f000  @ 1
+TRACE:fault:	803c:	e3a00002  @ 2
+TRACE:fault:	8040:	ef000001  @ 3
+TRACE:nop_1: exited with syscall=2: arg0=0, pc=0x8044
+TRACE:POST: done single-stepping nop_1
+TRACE:	n_inst=3: non-zero regs= {
+TRACE:		r0 = 0x2
+TRACE:		r14 = 0x8048
+TRACE:		r15 = 0x8044
+TRACE:		cpsr=0x110
+TRACE:	}

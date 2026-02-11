@@ -1,0 +1,177 @@
+TRACE:******************<nop_1>******************************
+TRACE:	check the faulting pc's against <0-nop-example.list>:
+TRACE:	00008038 <nop_1>:
+TRACE:expected:	8038:   e320f000    nop {0}
+TRACE:expected:	803c:   e3a00002    mov r0, #2
+TRACE:expected:	8040:   ef000001    svc 0x00000001
+TRACE:PRE: about to single step <nop_1>
+TRACE:fault:	8038:	e320f000  @ 1
+TRACE:fault:	803c:	e3a00002  @ 2
+TRACE:fault:	8040:	ef000001  @ 3
+TRACE:nop_1: exited with syscall=2: arg0=0, pc=0x8044
+TRACE:POST: done single-stepping nop_1
+TRACE:	n_inst=3: non-zero regs= {
+TRACE:		r0 = 0x2
+TRACE:		r14 = 0x8048
+TRACE:		r15 = 0x8044
+TRACE:		cpsr=0x110
+TRACE:	}
+TRACE:******************<nop_10>******************************
+TRACE:PRE: about to single step <nop_10>
+TRACE:fault:	8058:	e320f000  @ 4
+TRACE:fault:	805c:	e320f000  @ 5
+TRACE:fault:	8060:	e320f000  @ 6
+TRACE:fault:	8064:	e320f000  @ 7
+TRACE:fault:	8068:	e320f000  @ 8
+TRACE:fault:	806c:	e320f000  @ 9
+TRACE:fault:	8070:	e320f000  @ 10
+TRACE:fault:	8074:	e320f000  @ 11
+TRACE:fault:	8078:	e320f000  @ 12
+TRACE:fault:	807c:	e320f000  @ 13
+TRACE:fault:	8080:	e12fff1e  @ 14
+TRACE:fault:	8048:	e1a01000  @ 15
+TRACE:fault:	804c:	e3a00002  @ 16
+TRACE:fault:	8050:	ef000001  @ 17
+TRACE:nop_10: exited with syscall=2: arg0=0, pc=0x8054
+TRACE:POST: done single-stepping nop_10
+TRACE:	n_inst=17: non-zero regs= {
+TRACE:		r0 = 0x2
+TRACE:		r14 = 0x8048
+TRACE:		r15 = 0x8054
+TRACE:		cpsr=0x110
+TRACE:	}
+TRACE:expect: pc should be 0x8054!
+TRACE:success: exit pc=0x8054!
+TRACE:******************<mov_ident>******************************
+TRACE:PRE: about to single step <mov_ident>
+TRACE:fault:	8088:	e3a00000  @ 18
+TRACE:fault:	808c:	e3a01001  @ 19
+TRACE:fault:	8090:	e3a02002  @ 20
+TRACE:fault:	8094:	e3a03003  @ 21
+TRACE:fault:	8098:	e3a04004  @ 22
+TRACE:fault:	809c:	e3a05005  @ 23
+TRACE:fault:	80a0:	e3a06006  @ 24
+TRACE:fault:	80a4:	e3a07007  @ 25
+TRACE:fault:	80a8:	e3a08008  @ 26
+TRACE:fault:	80ac:	e3a09009  @ 27
+TRACE:fault:	80b0:	e3a0a00a  @ 28
+TRACE:fault:	80b4:	e3a0b00b  @ 29
+TRACE:fault:	80b8:	e3a0c00c  @ 30
+TRACE:fault:	80bc:	e12fff1e  @ 31
+TRACE:fault:	8048:	e1a01000  @ 32
+TRACE:fault:	804c:	e3a00002  @ 33
+TRACE:fault:	8050:	ef000001  @ 34
+TRACE:mov_ident: exited with syscall=2: arg0=0, pc=0x8054
+TRACE:POST: done single-stepping mov_ident
+TRACE:	n_inst=34: non-zero regs= {
+TRACE:		r0 = 0x2
+TRACE:		r2 = 0x2
+TRACE:		r3 = 0x3
+TRACE:		r4 = 0x4
+TRACE:		r5 = 0x5
+TRACE:		r6 = 0x6
+TRACE:		r7 = 0x7
+TRACE:		r8 = 0x8
+TRACE:		r9 = 0x9
+TRACE:		r10 = 0xa
+TRACE:		r11 = 0xb
+TRACE:		r12 = 0xc
+TRACE:		r14 = 0x8048
+TRACE:		r15 = 0x8054
+TRACE:		cpsr=0x110
+TRACE:	}
+TRACE:success: exit pc=0x8054!
+TRACE:******************<hello>******************************
+TRACE:about to print hello world single-step, w/ yapping:
+TRACE:PRE: about to single step <hello_asm>
+TRACE:fault:	80c4:	e52de004  @ 1
+TRACE:fault:	80c8:	e3a00068  @ 2
+TRACE:fault:	80cc:	eb000017  @ 3
+TRACE:fault:	8130:	e1a01000  @ 4
+TRACE:fault:	8134:	e3a00003  @ 5
+TRACE:fault:	8138:	ef000001  @ 6
+hTRACE:fault:	813c:	e12fff1e  @ 7
+TRACE:fault:	80d0:	e3a00065  @ 8
+TRACE:fault:	80d4:	eb000015  @ 9
+TRACE:fault:	8130:	e1a01000  @ 10
+TRACE:fault:	8134:	e3a00003  @ 11
+TRACE:fault:	8138:	ef000001  @ 12
+eTRACE:fault:	813c:	e12fff1e  @ 13
+TRACE:fault:	80d8:	e3a0006c  @ 14
+TRACE:fault:	80dc:	eb000013  @ 15
+TRACE:fault:	8130:	e1a01000  @ 16
+TRACE:fault:	8134:	e3a00003  @ 17
+TRACE:fault:	8138:	ef000001  @ 18
+lTRACE:fault:	813c:	e12fff1e  @ 19
+TRACE:fault:	80e0:	e3a0006c  @ 20
+TRACE:fault:	80e4:	eb000011  @ 21
+TRACE:fault:	8130:	e1a01000  @ 22
+TRACE:fault:	8134:	e3a00003  @ 23
+TRACE:fault:	8138:	ef000001  @ 24
+lTRACE:fault:	813c:	e12fff1e  @ 25
+TRACE:fault:	80e8:	e3a0006f  @ 26
+TRACE:fault:	80ec:	eb00000f  @ 27
+TRACE:fault:	8130:	e1a01000  @ 28
+TRACE:fault:	8134:	e3a00003  @ 29
+TRACE:fault:	8138:	ef000001  @ 30
+oTRACE:fault:	813c:	e12fff1e  @ 31
+TRACE:fault:	80f0:	e3a00020  @ 32
+TRACE:fault:	80f4:	eb00000d  @ 33
+TRACE:fault:	8130:	e1a01000  @ 34
+TRACE:fault:	8134:	e3a00003  @ 35
+TRACE:fault:	8138:	ef000001  @ 36
+ TRACE:fault:	813c:	e12fff1e  @ 37
+TRACE:fault:	80f8:	e3a00077  @ 38
+TRACE:fault:	80fc:	eb00000b  @ 39
+TRACE:fault:	8130:	e1a01000  @ 40
+TRACE:fault:	8134:	e3a00003  @ 41
+TRACE:fault:	8138:	ef000001  @ 42
+wTRACE:fault:	813c:	e12fff1e  @ 43
+TRACE:fault:	8100:	e3a0006f  @ 44
+TRACE:fault:	8104:	eb000009  @ 45
+TRACE:fault:	8130:	e1a01000  @ 46
+TRACE:fault:	8134:	e3a00003  @ 47
+TRACE:fault:	8138:	ef000001  @ 48
+oTRACE:fault:	813c:	e12fff1e  @ 49
+TRACE:fault:	8108:	e3a00072  @ 50
+TRACE:fault:	810c:	eb000007  @ 51
+TRACE:fault:	8130:	e1a01000  @ 52
+TRACE:fault:	8134:	e3a00003  @ 53
+TRACE:fault:	8138:	ef000001  @ 54
+rTRACE:fault:	813c:	e12fff1e  @ 55
+TRACE:fault:	8110:	e3a0006c  @ 56
+TRACE:fault:	8114:	eb000005  @ 57
+TRACE:fault:	8130:	e1a01000  @ 58
+TRACE:fault:	8134:	e3a00003  @ 59
+TRACE:fault:	8138:	ef000001  @ 60
+lTRACE:fault:	813c:	e12fff1e  @ 61
+TRACE:fault:	8118:	e3a00064  @ 62
+TRACE:fault:	811c:	eb000003  @ 63
+TRACE:fault:	8130:	e1a01000  @ 64
+TRACE:fault:	8134:	e3a00003  @ 65
+TRACE:fault:	8138:	ef000001  @ 66
+dTRACE:fault:	813c:	e12fff1e  @ 67
+TRACE:fault:	8120:	e3a0000a  @ 68
+TRACE:fault:	8124:	eb000001  @ 69
+TRACE:fault:	8130:	e1a01000  @ 70
+TRACE:fault:	8134:	e3a00003  @ 71
+TRACE:fault:	8138:	ef000001  @ 72
+TRACE:fault:	813c:	e12fff1e  @ 73
+TRACE:fault:	8128:	e49de004  @ 74
+TRACE:fault:	812c:	e12fff1e  @ 75
+TRACE:fault:	8048:	e1a01000  @ 76
+TRACE:fault:	804c:	e3a00002  @ 77
+TRACE:fault:	8050:	ef000001  @ 78
+TRACE:hello_asm: exited with syscall=2: arg0=3, pc=0x8054
+TRACE:POST: done single-stepping hello_asm
+TRACE:	n_inst=78: non-zero regs= {
+TRACE:		r0 = 0x2
+TRACE:		r1 = 0x3
+TRACE:		r13 = 0x110000
+TRACE:		r14 = 0x8048
+TRACE:		r15 = 0x8054
+TRACE:		cpsr=0x110
+TRACE:	}
+TRACE:ran 78 instructions
+TRACE:******************<hello>******************************
+TRACE:about to print hello world single-step, no yapping:
