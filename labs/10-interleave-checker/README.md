@@ -336,7 +336,9 @@ If the number of instructions run is:
      (fails), then you need to retry on the next instruction, 
      otherwise you're done so disable single stepping and jump
      back to the trapping instruction.
-  3. More than: I think this is probably a bug.
+  3. More than: this will happen only if `B()` has returned 
+     0 (failed to make progress) and you have retried `A()`
+     past the initial target in `switch_on_inst_n`.
 
 For this make sure your code handles all tests tests besides test 4.
 Test 3 and 5 are reasonable; the others are trivial.  
