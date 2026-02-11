@@ -2,8 +2,8 @@
 
   - For interleave tests that have errors: `make check` may not pass
     because you might legitimately have a different number of errors
-    than we do.  While checking at the machine code level makes the tool
-    powerful, it also means you may not match our tests if the number of
+    than we do.  While checking at the machine code level makes the
+    tool powerful, it also means you may not match our tests if the
     machine code instructions your compiler emitted for a test differs
     from ours.  This is a common problem for machine-code checking.
     It's why the initial examples in `0-crash-course` were written in
