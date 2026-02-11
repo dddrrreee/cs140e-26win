@@ -126,9 +126,12 @@ uint32_t rpi_get_memsize(void);
 uint64_t rpi_get_serialnum(void);
 
 // Allocating memory
-void rpi_allocate_memory(uint32_t bytes);
+uint32_t rpi_allocate_memory(uint32_t bytes);
 
 // get the temperature.
 uint32_t rpi_temp_get(void) ;
+
+// get the voltage
+uint32_t rpi_get_voltage(uint32_t voltage_id);
 
 #endif

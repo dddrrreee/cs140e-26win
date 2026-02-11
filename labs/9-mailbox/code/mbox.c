@@ -8,33 +8,34 @@ void msg_dump(const char *msg, volatile uint32_t *u, unsigned nwords) {
         output("u[%d]=%x\n", i,u[i]);
 }
 
-void mailbox_msg(volatile uint32_t* msg, uint32_t tag, volatile uint32_t* values, uint32_t value_words, int debug) {
+static void mailbox_msg(uint32_t tag, volatile uint32_t* values, uint32_t request_words, uint32_t response_words, int debug) {
+    uint32_t words = request_words < response_words ? response_words : request_words;
+    uint32_t total_msg_words = 6 + words;
+
+    volatile uint32_t msg[total_msg_words] __attribute__((aligned(16)));
     // make sure aligned
     assert((unsigned)msg%16 == 0);
-    
-    uint32_t total_msg_bytes = (6 + value_words) * 4;
-    // memset(msg, 0, total_msg_bytes);
 
     /* Header */
-    msg[0] = total_msg_bytes;         // total size in bytes.
+    msg[0] = total_msg_words*4;         // total size in bytes.
     msg[1] = 0;           // sender: always 0.
 
     /* Tags */
     msg[2] = tag;
-    msg[3] = value_words*4; 
+    msg[3] = words*4; 
     msg[4] = 0;
 
-    for (int i = 0; i < value_words; i++) {
+    for (int i = 0; i < words; i++) {
         msg[5 + i] = values[i];
     }
 
     /* End tag */
-    msg[5 + value_words] = 0;
+    msg[5 + words] = 0;
 
     if (debug) {
         // if you want to debug.
-        output("got:\n");
-        for(int i = 0; i < 8; i++)
+        output("Before:\n");
+        for(int i = 0; i < total_msg_words; i++)
             output("msg[%d]=%x\n", i, msg[i]);
     }
 
@@ -43,8 +44,8 @@ void mailbox_msg(volatile uint32_t* msg, uint32_t tag, volatile uint32_t* values
 
     if (debug) {
         // if you want to debug.
-        output("got:\n");
-        for(int i = 0; i < 8; i++)
+        output("After:\n");
+        for(int i = 0; i < total_msg_words; i++)
             output("msg[%d]=%x\n", i, msg[i]);
     }
 
@@ -53,32 +54,12 @@ void mailbox_msg(volatile uint32_t* msg, uint32_t tag, volatile uint32_t* values
 		panic("invalid response: got %x\n", msg[1]);
 
     // high bit should be set and reply size
-    assert(msg[4] == ((1<<31) | value_words*4));
+    assert(msg[4] == ((1<<31) | response_words*4));
+
+    for (int i = 0; i < response_words; i++) {
+        values[i] = msg[5 + i];
+    }
 }
-
-#define AAA 1
-#if (AAA == 1)
-
-uint64_t rpi_get_serialnum(void) {
-    volatile uint32_t msg[8] __attribute__((aligned(16)));
-    volatile uint32_t values[2]  __attribute__((aligned(16)));
-
-    mailbox_msg(msg, 0x00010004, values, 2, 1);
-
-    assert(msg[6] == 0);
-    return msg[5];
-}
-
-// msg[0]=0x20
-// msg[1]=0x0
-// msg[2]=0x10004
-// msg[3]=0x8
-// msg[4]=0x0
-// msg[5]=0x0
-// msg[6]=0x0
-// msg[7]=0x0
-
-#endif
 
 /*
   This is given.
@@ -89,289 +70,123 @@ uint64_t rpi_get_serialnum(void) {
     Response: Length: 8
     Value: u64: board serial
 */
-# if (AAA == 0)
 uint64_t rpi_get_serialnum(void) {
-    // 16-byte aligned 32-bit array
-    volatile uint32_t msg[8] __attribute__((aligned(16)));
+    volatile uint32_t values[2]  __attribute__((aligned(16)));
+    int debug = 0;
+    mailbox_msg(0x00010004, values, 2, 2, debug);
 
-    // make sure aligned
-    assert((unsigned)msg%16 == 0);
-
-    msg[0] = 8*4;         // total size in bytes.
-    msg[1] = 0;           // sender: always 0.
-    msg[2] = 0x00010004;  // serial tag
-    msg[3] = 8;           // total bytes avail for reply
-    msg[4] = 0;           // request code [0].
-    msg[5] = 0;           // space for 1st word of reply 
-    msg[6] = 0;           // space for 2nd word of reply 
-    msg[7] = 0;   // end tag
-
-#if 1
-    // if you want to debug.
-    output("got:\n");
-    for(int i = 0; i < 8; i++)
-        output("msg[%d]=%x\n", i, msg[i]);
-
-#endif
-        
-    // send and receive message
-    mbox_send(MBOX_CH, msg);
-
-#if 1
-    // if you want to debug.
-    output("got:\n");
-    for(int i = 0; i < 8; i++)
-        output("msg[%d]=%x\n", i, msg[i]);
-
-#endif
-        
-    /*
-    msg[0]=0x20         // size again
-    msg[1]=0x80000000   // Successful
-    msg[2]=0x10004      // Tag
-    msg[3]=0x8          // Reply bytes
-    msg[4]=0x80000008   // Request code (0x8... means response, ...8 is value length in bytes)
-    msg[5]=0xa8249570   // Response
-    msg[6]=0x0
-    msg[7]=0x0
-    */
-
-    // should have value for success: 1<<31
-    if(msg[1] != 0x80000000)
-		panic("invalid response: got %x\n", msg[1]);
-
-    // high bit should be set and reply size
-    assert(msg[4] == ((1<<31) | 8));
-
-    // for me the upper 32 bits were never non-zero.  
-    // not sure if always true?
-    assert(msg[6] == 0);
-    return msg[5];
+    assert(values[1] == 0);
+    return values[0];
 }
 
-#endif
 uint32_t rpi_get_memsize(void) {
-
-    // 16-byte aligned 32-bit array
-    volatile uint32_t msg[8] __attribute__((aligned(16)));
-
-    // make sure aligned
-    assert((unsigned)msg%16 == 0);
-
-    msg[0] = 8*4;         // total size in bytes.
-    msg[1] = 0;           // sender: always 0.
-    msg[2] = 0x00010005;  // serial tag
-    msg[3] = 8;           // total bytes avail for reply
-    msg[4] = 0;           // request code [0].
-    msg[5] = 0;           // space for 1st word of reply 
-    msg[6] = 0;           // space for 2nd word of reply 
-    msg[7] = 0;   // end tag
-
-    // send and receive message
-    mbox_send(MBOX_CH, msg);
-    // todo("get the pi's physical memory size");
-
-#if 1
-    // if you want to debug.
-    output("got:\n");
-    for(int i = 0; i < 8; i++)
-        output("msg[%d]=%x\n", i, msg[i]);
-
-#endif
-
-    // should have value for success: 1<<31
-    if(msg[1] != 0x80000000)
-		panic("invalid response: got %x\n", msg[1]);
-
-    // high bit should be set and reply size
-    assert(msg[4] == ((1<<31) | 8));
-
-    // for me the upper 32 bits were never non-zero.  
-    // not sure if always true?
-    // assert(msg[6] == 0);
-    return msg[6];
-
+    volatile uint32_t values[2]  __attribute__((aligned(16)));
+    int debug = 0;
+    mailbox_msg(0x00010005, values, 0, 2, debug);
+    return values[1];
 }
-
 
 uint32_t rpi_get_model(void) {
-    // todo("get the pi's model number");
-    // 16-byte aligned 32-bit array
-    volatile uint32_t msg[7] __attribute__((aligned(16)));
-    assert((unsigned)msg%16 == 0);
-
-    msg[0] = 8*4;         // total size in bytes.
-    msg[1] = 0;           // sender: always 0.
-    msg[2] = 0x00010001;  // serial tag
-    msg[3] = 4;           // total bytes avail for reply
-    msg[4] = 0;           // request code [0].
-    msg[5] = 0;           // space for 1st word of reply (model number)
-    msg[6] = 0;   // end tag
-
-    // send and receive message
-    mbox_send(MBOX_CH, msg);
-    // todo("get the pi's physical memory size");
-
-#if 1
-    // if you want to debug.
-    output("got:\n");
-    for(int i = 0; i < 7; i++)
-        output("msg[%d]=%x\n", i, msg[i]);
-
-#endif
-
-    // should have value for success: 1<<31
-    if(msg[1] != 0x80000000)
-		panic("invalid response: got %x\n", msg[1]);
-
-    // high bit should be set and reply size
-    assert(msg[4] == ((1<<31) | 4));
-
-    // for me the upper 32 bits were never non-zero.  
-    // not sure if always true?
-    assert(msg[6] == 0);
-    return msg[5];
+    volatile uint32_t values[1]  __attribute__((aligned(16)));
+    int debug = 0;
+    mailbox_msg(0x00010001, values, 0, 1, debug);
+    return values[0];
 }
 
 // https://www.raspberrypi-spy.co.uk/2012/09/checking-your-raspberry-pi-board-version/
 uint32_t rpi_get_revision(void) {
-    // 16-byte aligned 32-bit array
-    volatile uint32_t msg[7] __attribute__((aligned(16)));
-    assert((unsigned)msg%16 == 0);
-
-    msg[0] = 8*4;         // total size in bytes.
-    msg[1] = 0;           // sender: always 0.
-    msg[2] = 0x00010002;  // serial tag
-    msg[3] = 4;           // total bytes avail for reply
-    msg[4] = 0;           // request code [0].
-    msg[5] = 0;           // space for 1st word of reply 
-    msg[6] = 0;   // end tag
-
-    // send and receive message
-    mbox_send(MBOX_CH, msg);
-    // todo("get the pi's physical memory size");
-
-#if 1
-    // if you want to debug.
-    output("got:\n");
-    for(int i = 0; i < 7; i++)
-        output("msg[%d]=%x\n", i, msg[i]);
-
-#endif
-
-    // should have value for success: 1<<31
-    if(msg[1] != 0x80000000)
-		panic("invalid response: got %x\n", msg[1]);
-
-    // high bit should be set and reply size
-    assert(msg[4] == ((1<<31) | 4));
-
-    // for me the upper 32 bits were never non-zero.  
-    // not sure if always true?
-    assert(msg[6] == 0);
-    return msg[5];
+    volatile uint32_t values[1]  __attribute__((aligned(16)));
+    int debug = 0;
+    mailbox_msg(0x00010002, values, 0, 1, debug);
+    return values[0];
 }
 
 uint32_t rpi_temp_get(void) {
-
-    // 16-byte aligned 32-bit array
-    volatile uint32_t msg[8] __attribute__((aligned(16)));
-    assert((unsigned)msg%16 == 0);
-
-    msg[0] = 8*4;         // total size in bytes.
-    msg[1] = 0;           // sender: always 0.
-    msg[2] = 0x00030006;  // serial tag
-    msg[3] = 8;           // total bytes avail for reply
-    msg[4] = 0;           // request code [0].
-    msg[5] = 0;           // space for 1st word of reply
-    msg[6] = 0;           // space for 2nd word of reply
-    msg[7] = 0;   // end tag
-
-    // send and receive message
-    mbox_send(MBOX_CH, msg);
-
-#if 1
-    // if you want to debug.
-    output("got:\n");
-    for(int i = 0; i < 8; i++)
-        output("msg[%d]=%x\n", i, msg[i]);
-
-#endif
-
-    // should have value for success: 1<<31
-    if(msg[1] != 0x80000000)
-		panic("invalid response: got %x\n", msg[1]);
-
-    // high bit should be set and reply size
-    assert(msg[4] == ((1<<31) | 8));
-
-    // for me the upper 32 bits were never non-zero.  
-    // not sure if always true?
-    // assert(msg[6] == 0);
-    return msg[6];
+    volatile uint32_t values[2]  __attribute__((aligned(16)));
+    int debug = 0;
+    mailbox_msg(0x00030006, values, 1, 2, debug);
+    return values[1];
 }
 
-void rpi_allocate_memory(uint32_t bytes) {
+uint32_t rpi_allocate_memory(uint32_t bytes) { // ** DOES THIS WORK?
+    volatile uint32_t values[3]  __attribute__((aligned(16)));
+    values[0] = bytes;
+    values[1] = 4; // Alignment
+    values[2] = 0; // Flags
 
-    // 16-byte aligned 32-bit array
-    volatile uint32_t msg[9] __attribute__((aligned(16)));
-    assert((unsigned)msg%16 == 0);
+    int debug = 0;
+    mailbox_msg(0x0003000C, values, 3, 1, debug);
 
-    msg[0] = 9*4;         // total size in bytes.
-    msg[1] = 0;           // sender: always 0.
-
-    msg[2] = 0x0003000C;  // serial tag
-    msg[3] = 12;  // Value buffer size
-    msg[4] = 0;           // request [0]
-
-    msg[5] = bytes;           // size
-    msg[6] = 4;           // alignment
-    msg[7] = 0;           // flags
-
-    msg[8] = 0;   // end tag
-
-    // send and receive message
-    mbox_send(MBOX_CH, msg);
-
-#if 1
-    // if you want to debug.
-    output("got:\n");
-    for(int i = 0; i < 9; i++)
-        output("msg[%d]=%x\n", i, msg[i]);
-
-#endif
-
-    // high bit should be set and reply size
-    assert(msg[4] == ((1<<31) | 4));
+    return values[0];
 }
+
+// uint32_t rpi_clock_curhz_get(uint32_t clock) {
+//     volatile uint32_t values[30]  __attribute__((aligned(16)));
+//     int debug = 1;
+//     mailbox_msg(0x00010007, values, 0, 30, debug);
+
+//     // First byte is clock ID then actual value
+//     return values[2*clock];
+// }
 
 uint32_t rpi_clock_curhz_get(uint32_t clock) {
+    volatile uint32_t values[2]  __attribute__((aligned(16)));
+    values[0] = clock;
+    int debug = 0;
+    mailbox_msg(0x00030002, values, 1, 2, debug);
 
-    // 16-byte aligned 32-bit array
-    volatile uint32_t msg[36] __attribute__((aligned(16)));
-    assert((unsigned)msg%16 == 0);
+    assert(values[0] == clock);
+    return values[1];
+}
 
-    msg[0] = 36*4;         // total size in bytes.
-    msg[1] = 0;           // sender: always 0.
+uint32_t rpi_clock_maxhz_get(uint32_t clock) {
+    volatile uint32_t values[2]  __attribute__((aligned(16)));
+    values[0] = clock;
+    int debug = 0;
+    mailbox_msg(0x00030004, values, 1, 2, debug);
 
-    msg[2] = 0x0010007;  // serial tag
-    msg[3] = 15*4;  // Value buffer size (15 clocks)
-    msg[4] = 0;           // request [0]
+    assert(values[0] == clock);
+    return values[1];
+}
 
-    msg[35] = 0;   // end tag
+uint32_t rpi_clock_minhz_get(uint32_t clock) {
+    volatile uint32_t values[2]  __attribute__((aligned(16)));
+    values[0] = clock;
+    int debug = 0;
+    mailbox_msg(0x00030007, values, 1, 2, debug);
 
-    // send and receive message
-    mbox_send(MBOX_CH, msg);
+    assert(values[0] == clock);
+    return values[1];
+}
 
-#if 1
-    // if you want to debug.
-    output("got:\n");
-    for(int i = 0; i < 36; i++)
-        output("msg[%d]=%x\n", i, msg[i]);
+uint32_t rpi_clock_realhz_get(uint32_t clock) {
+    volatile uint32_t values[2]  __attribute__((aligned(16)));
+    values[0] = clock;
+    int debug = 0;
+    mailbox_msg(0x00030047, values, 1, 2, debug);
 
-#endif
+    assert(values[0] == clock);
+    return values[1];
+}
 
-    // high bit should be set and reply size
-    assert(msg[4] == ((1<<31) | 60));
-    return 0;
+uint32_t rpi_clock_hz_set(uint32_t clock, uint32_t hz) {
+    volatile uint32_t values[3]  __attribute__((aligned(16)));
+    values[0] = clock;
+    values[1] = hz;
+    values[2] = 0; // weird turbo thing
+    int debug = 0;
+    mailbox_msg(0x00038002, values, 3, 2, debug);
+
+    assert(values[0] == clock);
+    return values[1];
+}
+
+uint32_t rpi_get_voltage(uint32_t voltage_id) {
+    volatile uint32_t values[2]  __attribute__((aligned(16)));
+    values[0] = voltage_id;
+    int debug = 0;
+    mailbox_msg(0x00030003, values, 1, 2, debug);
+
+    assert(values[0] == voltage_id);
+    return values[1];
 }
