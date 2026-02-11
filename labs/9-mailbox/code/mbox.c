@@ -8,6 +8,78 @@ void msg_dump(const char *msg, volatile uint32_t *u, unsigned nwords) {
         output("u[%d]=%x\n", i,u[i]);
 }
 
+void mailbox_msg(volatile uint32_t* msg, uint32_t tag, volatile uint32_t* values, uint32_t value_words, int debug) {
+    // make sure aligned
+    assert((unsigned)msg%16 == 0);
+    
+    uint32_t total_msg_bytes = (6 + value_words) * 4;
+    // memset(msg, 0, total_msg_bytes);
+
+    /* Header */
+    msg[0] = total_msg_bytes;         // total size in bytes.
+    msg[1] = 0;           // sender: always 0.
+
+    /* Tags */
+    msg[2] = tag;
+    msg[3] = value_words*4; 
+    msg[4] = 0;
+
+    for (int i = 0; i < value_words; i++) {
+        msg[5 + i] = values[i];
+    }
+
+    /* End tag */
+    msg[5 + value_words] = 0;
+
+    if (debug) {
+        // if you want to debug.
+        output("got:\n");
+        for(int i = 0; i < 8; i++)
+            output("msg[%d]=%x\n", i, msg[i]);
+    }
+
+    // send and receive message
+    mbox_send(MBOX_CH, msg);
+
+    if (debug) {
+        // if you want to debug.
+        output("got:\n");
+        for(int i = 0; i < 8; i++)
+            output("msg[%d]=%x\n", i, msg[i]);
+    }
+
+    // should have value for success: 1<<31
+    if(msg[1] != 0x80000000)
+		panic("invalid response: got %x\n", msg[1]);
+
+    // high bit should be set and reply size
+    assert(msg[4] == ((1<<31) | value_words*4));
+}
+
+#define AAA 1
+#if (AAA == 1)
+
+uint64_t rpi_get_serialnum(void) {
+    volatile uint32_t msg[8] __attribute__((aligned(16)));
+    volatile uint32_t values[2]  __attribute__((aligned(16)));
+
+    mailbox_msg(msg, 0x00010004, values, 2, 1);
+
+    assert(msg[6] == 0);
+    return msg[5];
+}
+
+// msg[0]=0x20
+// msg[1]=0x0
+// msg[2]=0x10004
+// msg[3]=0x8
+// msg[4]=0x0
+// msg[5]=0x0
+// msg[6]=0x0
+// msg[7]=0x0
+
+#endif
+
 /*
   This is given.
 
@@ -17,6 +89,7 @@ void msg_dump(const char *msg, volatile uint32_t *u, unsigned nwords) {
     Response: Length: 8
     Value: u64: board serial
 */
+# if (AAA == 0)
 uint64_t rpi_get_serialnum(void) {
     // 16-byte aligned 32-bit array
     volatile uint32_t msg[8] __attribute__((aligned(16)));
@@ -33,6 +106,14 @@ uint64_t rpi_get_serialnum(void) {
     msg[6] = 0;           // space for 2nd word of reply 
     msg[7] = 0;   // end tag
 
+#if 1
+    // if you want to debug.
+    output("got:\n");
+    for(int i = 0; i < 8; i++)
+        output("msg[%d]=%x\n", i, msg[i]);
+
+#endif
+        
     // send and receive message
     mbox_send(MBOX_CH, msg);
 
@@ -68,6 +149,7 @@ uint64_t rpi_get_serialnum(void) {
     return msg[5];
 }
 
+#endif
 uint32_t rpi_get_memsize(void) {
 
     // 16-byte aligned 32-bit array

@@ -113,6 +113,8 @@ enum {
 };
 
 // implement these!
+// void send_mailbox_msg()
+
 uint32_t rpi_get_revision(void);
 uint32_t rpi_get_model(void);
 uint32_t rpi_clock_curhz_get(uint32_t clock);
