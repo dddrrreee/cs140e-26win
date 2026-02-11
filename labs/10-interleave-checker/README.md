@@ -136,7 +136,7 @@ Go through the two programs in `0-crash-course`:
     single-step any code you can user-level, whether it was written in C,
     rust, zig, or JIT'ed at runtime.
 
-### Part 0: print the registers that change
+#### Part 0: print the registers that change
 
   1. Make a copy of copy of `1-many-fn-exmaple.c` and split it into
      a library that does single step execution and a set of test programs.
@@ -151,7 +151,7 @@ The programs are small so you can debug easily.
 This is a baby form of single-step equivalance, which will save us 
 numerous times during the quarter.
 
-### part 1:  write a simple instruction profiler
+#### part 1:  write a simple instruction profiler
 
 Similar to your gprof (lab 4):
   0. Make a copy of 1-many-fn-examples.c.
@@ -164,7 +164,7 @@ Similar to your gprof (lab 4):
      show they make sense.  For example: loop instructions should
      increment the size of the loop bound.
 
-### part 2: find a simple memory corruption bug.
+#### part 2: find a simple memory corruption bug.
 
 Variation:
   1. Make a copy of the code.
