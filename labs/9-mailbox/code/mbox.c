@@ -262,3 +262,34 @@ void rpi_allocate_memory(uint32_t bytes) {
     // high bit should be set and reply size
     assert(msg[4] == ((1<<31) | 4));
 }
+
+uint32_t rpi_clock_curhz_get(uint32_t clock) {
+
+    // 16-byte aligned 32-bit array
+    volatile uint32_t msg[36] __attribute__((aligned(16)));
+    assert((unsigned)msg%16 == 0);
+
+    msg[0] = 36*4;         // total size in bytes.
+    msg[1] = 0;           // sender: always 0.
+
+    msg[2] = 0x0010007;  // serial tag
+    msg[3] = 15*4;  // Value buffer size (15 clocks)
+    msg[4] = 0;           // request [0]
+
+    msg[35] = 0;   // end tag
+
+    // send and receive message
+    mbox_send(MBOX_CH, msg);
+
+#if 1
+    // if you want to debug.
+    output("got:\n");
+    for(int i = 0; i < 36; i++)
+        output("msg[%d]=%x\n", i, msg[i]);
+
+#endif
+
+    // high bit should be set and reply size
+    assert(msg[4] == ((1<<31) | 60));
+    return 0;
+}

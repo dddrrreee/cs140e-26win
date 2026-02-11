@@ -44,7 +44,8 @@ void notmain(void) {
         size/(1024*1024));
     // todo("implement the rest");
 
+    rpi_clock_curhz_get(1);
     todo("do overclocking!\n");
 
-    
+
 }

@@ -43,6 +43,7 @@ enum {
  */
 
 enum {
+    IRQ_PENDING_2 = 0x2000B208, // Has gpio_int[0:3]
     INT_EN_2 = 0x2000B214 // Has gpio_int[0:3]
 };
 

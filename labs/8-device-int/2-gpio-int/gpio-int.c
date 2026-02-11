@@ -32,10 +32,10 @@ int gpio_has_interrupt(void) { // **
     // todo("implement: is there a GPIO_INT0 interrupt?\n");
     dev_barrier();
 
-    // Read interrupt register Enable IRQs 2
-    volatile unsigned value = GET32(INT_EN_2);
+    // Read interrupt register IRQ PENDING 2
+    volatile unsigned value = GET32(IRQ_PENDING_2);
     dev_barrier();
-    return value & 1<<(49-32);
+    return (value >> (49-32)) & 1;
 
 }
 
