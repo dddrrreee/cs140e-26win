@@ -1,5 +1,5 @@
 PROGS := test-mbox.c
-PROGS := test-pl011.c
+# PROGS := test-pl011.c
 COMMON_SRC := mbox.c
 
 # define this if you need to give the device for your pi

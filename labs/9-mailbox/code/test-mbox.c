@@ -15,22 +15,36 @@ unsigned cyc_per_sec(void) {
 
 void notmain(void) { 
     output("mailbox serial number = %llx\n", rpi_get_serialnum());
-    todo("implement the rest");
-
+    
     output("mailbox revision number = %x\n", rpi_get_revision());
     output("mailbox model number = %x\n", rpi_get_model());
-
+    
     uint32_t size = rpi_get_memsize();
     output("mailbox physical mem: size=%d (%dMB)\n", 
-            size, 
-            size/(1024*1024));
-
+        size, 
+        size/(1024*1024));
+    
     // print as fahrenheit
     unsigned x = rpi_temp_get();
-
+    
     // convert <x> to C and F
     unsigned C = 0, F = 0;
+    C = x/1000;
+    F = (C * 9 / 5) + 32;
     output("mailbox temp = %x, C=%d F=%d\n", x, C, F); 
+        
+    
+    
+    // // Increasing memory size
+    rpi_allocate_memory(0x8000000);
+    
+    size = rpi_get_memsize();
+    output("mailbox physical mem: size=%d (%dMB)\n", 
+        size, 
+        size/(1024*1024));
+    // todo("implement the rest");
 
     todo("do overclocking!\n");
+
+    
 }

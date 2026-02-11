@@ -123,6 +123,9 @@ uint32_t rpi_clock_minhz_get(uint32_t clock);
 uint32_t rpi_get_memsize(void);
 uint64_t rpi_get_serialnum(void);
 
+// Allocating memory
+void rpi_allocate_memory(uint32_t bytes);
+
 // get the temperature.
 uint32_t rpi_temp_get(void) ;
 
