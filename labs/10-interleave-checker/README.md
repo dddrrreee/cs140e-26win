@@ -1,3 +1,39 @@
+## Clarifications
+
+  - If you add threads (extension): make sure you use `switchto`
+    rather than `cswitch` in the exception handler. If you recall
+    from past labs we've gone with the convension of having all
+    exception handlers use the same stack.   Instead you should
+    save the registers passed into the handler, and use a switchto
+    to go from one to the other.
+
+  - For tests that have errors: `make check` may not pass because
+    you might legitimately have a different number of errors than we do.
+
+    While checking at the machine code level makes the tool powerful,
+    it also means you may not match our tests if the number of machine
+    code instructions your compiler emitted for a test differs from ours.
+    Currently our stance is that you'll have to look at the tests to see
+    if they make sense (the pro argument for this is that it helps your
+    reason about what is going on).
+
+
+  - On the above note: Test 1 is not passing for a bunch of people.
+    You can skip it.
+
+  - Note: you'll have to cast-away the volatile when calling B
+    from your single-step handler.  Something like:
+
+            // call B
+            if(!c->B((void*)c)) {
+                ...
+
+    This is ugly (sorry) but is safe for what we are doing today.
+
+  - Use the tests in `code/tests` (not `code/tests-2.0`) unless you
+    do extensions.  The `code-tests-2.0` require `yield()`.
+
+
 ## Lab: using single stepping to check interleaving.
 
 The ARM chip we use, like many machines, has a way to set *breakpoints*,
