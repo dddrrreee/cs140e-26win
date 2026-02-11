@@ -111,7 +111,6 @@ driver.
     (`pi-install` and `bootloader.bin` respectively).  So this lab has
     you implement your own and get rid of ours.
 
-====>
 
   - [7-uart](7-uart): the last key bit of code we've given you is for
     controlling the UART (`uart.o`); so this lab has you write your own
@@ -123,7 +122,36 @@ driver.
     from lab 2 to verify your implementation matches everyone else's.
 
 ---------------------------------------------------------------------
-More coming!
+### 4. Execution: interrupts, exceptions, processes (part 2)
+
+  - [8-device-interrupts](8-device-int):
+    if you keep doing this kind of work the single most common fancy
+    "OS" type thing you'll likely do in the future is to setup GPIO
+    pin interrupts so that you can get notified when a hardware device
+    has data.  So, in this lab we'll setup GPIO interrupts and tune how
+    we do general interrupts.
+
+    Without interrupts, it's difficult to get networking working, since
+    our GPIO pins (and our UART options) have limited space and, thus,
+    unless our code checks them at exactly the right time, incoming
+    messages will vaporize.
+
+  - [9-mailbox](9-mailbox): we'll get more speed by using the GPU 
+    mailbox interface to overclock the pi, bcm2835 and memory.
+
+====>
+
+  - [10-interleave-checker](10-interleave-checker):
+    we'll use single-step execution to write a concurrency checker that
+    is tiny but mighty.  By the end you'll be able to race condition
+    bugs difficult to catch with any other tool I know of.
+
+  - [11-debug-hw](11-debug-hw): This lab will show how you can abuse
+    debugging hardware in a new way to catch memory corruption (such as
+    null pointer bugs) *without virtual memory*.
+
+---------------------------------------------------------------------
+
 
 <p align="center">
   <img src="lab-memes/bug.jpg" width="400" />
