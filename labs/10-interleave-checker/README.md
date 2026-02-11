@@ -310,13 +310,6 @@ What `single_step_handler_full` does:
 -----------------------------------------------------------------------
 ### Part 0: turn off single-step when `A()` calls `A_terminated()`
 
-NOTE:
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
-
 If you compile and run the code you'll notice the single-step handler
 prints a ton of instructions even though `A()` is tiny.  The reason for
 this is that when A() exits, it jumps to `A_terminated()`:
@@ -332,18 +325,18 @@ to compare the `pc` value against `A_terminated()` and if equal, turn
 single stepping off.  After doing so, the test output should do down
 dramatically.
 
-Easiest approach: 
-  - change the Makefile to only run `tests/0-epsilon-test.c`.
-
 -----------------------------------------------------------------------
 ### Part 1: do a single switch from A() to B()
 
-NOTE:
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
+For this, in your single-step handler:
+If the number of instructions run is:
+  1. Less than the target number (`switch_on_inst_n`), then just
+     continue single-stepping the original thread.
+  2. Equal to the target number, then call `B`.  If it returns 0
+     (fails), then you need to retry on the next instruction, 
+     otherwise you're done so disable single stepping and jump
+     back to the trapping instruction.
+  3. More than: I think this is probably a bug.
 
 For this make sure your code handles all tests tests besides test 4.
 Test 3 and 5 are reasonable; the others are trivial.  
@@ -354,14 +347,6 @@ to the tests as well.
 
 -----------------------------------------------------------------------
 ### Part 2:  make a `sys_trylock()` for test 4.
-
-NOTE:
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
- - ***IF YOU SEE THIS: DO A GIT PULL***
-
 
 For this you'll add a system call that implements the try-lock needed for
 test `4-trylock-ok-test.c`.    This is an example of a common pattern
@@ -392,17 +377,17 @@ is problem is to just check which mode we are at, something like:
     }
 ```
 
-This might be a good idea to just get things working.  However, all
-extensions need a more general approach of multiple threads.  So you
-should run `B()` as a second thread after the above works (or just skip
-to using second thread immediately).
+This is a reasonable idea to just get things working.  
+
+With that said, all extensions need a more general approach of multiple
+threads.  So you should run `B()` as a second thread after the above works
+(or just skip to using second thread immediately).
 
 You can run B() as a seperate thread by:
  1. Adapt the the `run_A` code to create a second thread.  Note: b/c
     of armv6 restrictions make sure you are allocating the stack to be
     8-byte aligned.  You'll need to change the code so on exit it does
     the right thing for both the A and the B thread.
-
  2. Have a thread queue that you put the threads on and dequeue (as usual).
  3. Adapt your single step handler to use a `switchto` to the next thread
     rather than calling B() directly.
@@ -415,11 +400,11 @@ This test is pretty dumb, so you probably should write another one.
 -----------------------------------------------------------------------
 ### Part 3:  make a `sys_yield()`.
 
-For simplicity, our base checking system assumed it could call B() in
-the exception handler and it would run to completion: i.e., it couldn't
-yield back to `A()`  if the shared state was not ready (e.g., in the
-case of a shared queue, if `B()` wanted to do a pop
-and `A()` hadn't done a push yet).
+For simplicity, our base checking system assumed it could call B()
+in the exception handler and it would run to completion: i.e., it
+couldn't yield back to `A()`  if the shared state was not ready (e.g.,
+in the case of a shared queue, if `B()` wanted to do a pop and `A()`
+hadn't done a push yet).
 
 Two lame consequences:
  1. Our base checker interface is a bit hacked in that it has
