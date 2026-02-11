@@ -1,22 +1,18 @@
 ## Clarifications
 
-  - If you add threads (extension): make sure you use `switchto`
-    rather than `cswitch` in the exception handler. If you recall
-    from past labs we've gone with the convension of having all
-    exception handlers use the same stack.   Instead you should
-    save the registers passed into the handler, and use a switchto
-    to go from one to the other.
+  - For interleave tests that have errors: `make check` may not pass
+    because you might legitimately have a different number of errors
+    than we do.  While checking at the machine code level makes the tool
+    powerful, it also means you may not match our tests if the number of
+    machine code instructions your compiler emitted for a test differs
+    from ours.  This is a common problem for machine-code checking.
+    It's why the initial examples in `0-crash-course` were written in
+    assembly (compiler won't mess with) and put in `single-step-start.S`
+    (linked at the start of the program at the same address for everyone).
 
-  - For tests that have errors: `make check` may not pass because
-    you might legitimately have a different number of errors than we do.
-
-    While checking at the machine code level makes the tool powerful,
-    it also means you may not match our tests if the number of machine
-    code instructions your compiler emitted for a test differs from ours.
     Currently our stance is that you'll have to look at the tests to see
     if they make sense (the pro argument for this is that it helps your
     reason about what is going on).
-
 
   - On the above note: Test 1 is not passing for a bunch of people.
     You can skip it.
@@ -33,6 +29,12 @@
   - Use the tests in `code/tests` (not `code/tests-2.0`) unless you
     do extensions.  The `code-tests-2.0` require `yield()`.
 
+  - If you add threads (extension): make sure you use `switchto`
+    rather than `cswitch` in the exception handler. If you recall
+    from past labs we've gone with the convension of having all
+    exception handlers use the same stack.   Instead you should
+    save the registers passed into the handler, and use a switchto
+    to go from one to the other.
 
 ## Lab: using single stepping to check interleaving.
 
@@ -167,6 +169,18 @@ do it Daniel mode by just writing your own implementation of the interface
 
 -----------------------------------------------------------------------
 #### Interleave Checking Interface
+
+***NOTE***:
+  - The examples in `0-crash-course` were written seperately from
+    the interleave code --- on the positive side, you'll understand
+    better since you'll see the same thing in slightly different form.
+    The bad thing is the same.   As a result, this part is a great
+    candidate for doing Daniel mode --- taking the checking interface
+    and writing your own implementation based on the `0-crash-course`
+    examples and from glancing at the interleave example.  You'll learn
+    alot, and it might actually save time.
+
+
 
 The client interface is `checker_t:checker-interlace.h`.  The client gives us
 a `checker_t` structure with four routines:
