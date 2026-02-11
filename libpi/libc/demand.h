@@ -86,6 +86,8 @@
     do { printk("TRACE:%s:" fmt, __FUNCTION__, ##args); } while(0)
 #endif
 
+#define trace_nofn(fmt, args...) \
+    do { printk("TRACE:" fmt, ##args); } while(0)
 
 #define trace_notreached() \
     trace_panic("should not reach\n")

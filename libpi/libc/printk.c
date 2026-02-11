@@ -79,6 +79,7 @@ int vprintk(const char *fmt, va_list ap) {
             case 'p': 
                 putchar('0');
                 putchar('x');
+            case 'X': // ughly: no leading 0x [not right but b/w compat]
                 emit_val(16, va_arg(ap, uint32_t));
                 break;
             // print '-' if < 0
