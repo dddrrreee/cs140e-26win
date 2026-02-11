@@ -439,6 +439,20 @@ Other possible:
  - Extend the checker to look for bugs in interrupt handlers.
 
 -----------------------------------------------------------------------
+### Part 4: add some interesting tests.
+
+Easy mode: get some "lock-free" code from GPT or Claude and check it.
+Should be able to find some bugs.
+
+More interesting: check gcc's synchonization library code.  The cool thing
+about single-step is that we work just as well on machine code. (Though
+it's harder to debug!).
+
+Other possible:
+ - Rewrite circular to use compiler memory barriers and look for bugs.
+ - Extend the checker to look for bugs in interrupt handlers.
+
+-----------------------------------------------------------------------
 ### Speed Extension (Recommended): only switch on memory operations.
 
 Obviously the number of interleavings explodes with the number of
