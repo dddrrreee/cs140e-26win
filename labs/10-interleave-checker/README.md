@@ -116,22 +116,34 @@ Checkoff:
 -----------------------------------------------------------------------
 ## 1. Single-step Background + Code
 
-The first part is a crash course, where you can view the code as
-an interactive text book that shows how to use single stepping.  
-You will build it next lab, you will use it this lab for the
-interleave checker.
+The first part is a crash course, where you can view the code as an
+interactive text book that shows how to use single stepping.  You will
+build the single-step library next lab; you will use it this lab.
 
 Go through the two programs in `0-crash-course`:
   - Start with `0-nop1-example.c` and see how it works, 
     then `1-many-fn-exmaple.c`
+  - They are a couple hundred lines of code, but it's mostly 
+    comments.  You should add prints, change things, corrupt
+    registers to see that the code actually uses them --- anything
+    that makes it less passive.
+  - In order to make your results easily comparable to other
+    people the initial routines are written assembly (so the compiler
+    won't mess with them), and put in `single-step-start.S` so they will
+    be at the same address for everyone (`single-step-start.o` is linked
+    at the start of the program at the same address for everyone).
+  - With that said: there is no limitation in the code --- you can
+    single-step any code you can user-level, whether it was written in C,
+    rust, zig, or JIT'ed at runtime.
 
 ### Part 0: print the registers that change
 
   1. Make a copy of copy of `1-many-fn-exmaple.c` and split it into
      a library that does single step execution and a set of test programs.
   2. Print the registers that have changed since the last single step
-     exception, and compute a running hash of *all* 17 registers using 
-     `libpi/libc:fast-hash32.h:fast_hash32`.
+     exception, and compute a running hash of *all* 17 registers and the
+     previous hash using `libpi/libc:fast-hash32.h:fast_hash32_inc`. 
+     (Or whatever hash you want.)
   3.  Make sure you get the same hash as your partner.
 
 The programs are small so you can debug easily.
@@ -158,10 +170,10 @@ Variation:
   1. Make a copy of the code.
   2. Write a routine that writes to an illegal address.
   3. In the single step handler look for when that address changes:
-     flag the pc.
+     panic with the pc.
 
-This is a dumb checker used to illustrate a point and get you
-thinking about single-stepping, so feel free to do wild extensions.
+This is a dumb checker used to illustrate a point and get you thinking
+about single-stepping, so feel free to do wild extensions.
 
 Once you have a good grasp, do the interleave checker below.  It's easy to
 do it Daniel mode by just writing your own implementation of the interface
@@ -179,8 +191,6 @@ do it Daniel mode by just writing your own implementation of the interface
     and writing your own implementation based on the `0-crash-course`
     examples and from glancing at the interleave example.  You'll learn
     alot, and it might actually save time.
-
-
 
 The client interface is `checker_t:checker-interlace.h`.  The client gives us
 a `checker_t` structure with four routines:
