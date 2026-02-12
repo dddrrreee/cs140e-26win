@@ -1,5 +1,10 @@
-PROGS += 0-nop1-example.c
-PROGS += 1-many-fn-example.c
+# PROGS += 0-nop1-example.c
+# PROGS += 1-many-fn-example.c
+PROGS += 2-lib.c
+# PROGS += single-step.c
+
+COMMON_SRC += single-step.c
+
 
 L := $(CS140E_2026_PATH)/libpi/
 STAFF_OBJS += $(L)/staff-objs/staff-kmalloc.o

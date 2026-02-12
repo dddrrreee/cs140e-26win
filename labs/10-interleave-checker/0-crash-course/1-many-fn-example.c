@@ -216,7 +216,7 @@ void notmain(void) {
 
     trace("******************<mov_ident>******************************\n");
     void mov_ident(void);
-    single_step_fn("mov_ident", mov_ident, 0, 0, 0);
+    r = single_step_fn("mov_ident", mov_ident, 0, 0, 0);
 
     // same as <nop_10> this routine used a trampoline: check that 
     // the final pc is correct.
