@@ -78,14 +78,14 @@ The list of the hardware debug registers is on page 13-5.
 
 A cheat-sheet of assembly instructions to access these registers (13-26):
 <p align="center">
-  <img src="images/cp14-asm.png" width="250" />
+  <img src="images/cp14-asm.png" width="450" />
 </p>
 
 When a debug fault happens, the hardware will put additional values in
 different fault registers.  A short cheat sheet of the assembly code to
 get various of the fault registers:
 <p align="center">
-  <img src="images/cheat-sheet-fault-regs.png" width="250" />
+  <img src="images/cheat-sheet-fault-regs.png" width="450" />
 </p>
 
 -----------------------------------------------------------------------------
@@ -240,24 +240,24 @@ When you are done, both tests should pass and print `SUCCESS`.
 After any modification to a co-processor 14 register, you have to do a 
 `PrefetchFLush`:
 <p align="center">
-  <img src="images/prefetch-flush.png" width="250" />
+  <img src="images/prefetch-flush.png" width="450" />
 </p>
 
 
 
 How to get the data fault status register (DFSR, page 3-64): 
 <p align="center">
-  <img src="images/dfsr-get.png" width="250" />
+  <img src="images/dfsr-get.png" width="450" />
 </p>
 
 You can use the DFSR to get the cause of the fault from bits `0:3` if `bit[10]=0`:
 <p align="center">
-  <img src="images/data-fault-field.png" width="250" />
+  <img src="images/data-fault-field.png" width="450" />
 </p>
 
 How to get the fault address register (FAR): 
 <p align="center">
-  <img src="images/far-get.png" width="250" />
+  <img src="images/far-get.png" width="450" />
 </p>
 
 -----------------------------------------------------------------------------
@@ -277,7 +277,7 @@ exception.
 
 How to get the instruction fault status register (IFSR): 
 <p align="center">
-  <img src="images/ifsr-get.png" width="250" />
+  <img src="images/ifsr-get.png" width="450" />
 </p>
 
 -----------------------------------------------------------------------------
