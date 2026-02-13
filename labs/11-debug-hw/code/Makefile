@@ -1,11 +1,11 @@
 # these are all the tests.
-PROGS :=  0-example-debug-id.c $(wildcard [012]*-*test.c)
+# PROGS :=  0-example-debug-id.c $(wildcard [012]*-*test.c)
 
+PROGS += 2-match-test.c  
+PROGS += 1-watchpt-byte-test.c  
+PROGS += 1-watchpt-test.c  
 # simplest: should run out of the box.
-PROGS = 2-match-test.c  
-PROGS = 1-watchpt-byte-test.c  
-PROGS = 1-watchpt-test.c  
-PROGS = 0-example-debug-id.c
+PROGS += 0-example-debug-id.c
 
 # same start as last lab: used so we have known routines in
 # known locations.

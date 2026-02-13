@@ -1,52 +1,16 @@
 ## Using debug hardware to catch mistakes
 
-------------------------------------------------------------------
-### Errata and clarifications.
-
-  - Part 1: you are supposed to modify `1-watchpt-test.c`.
-    The panic about `b` is just a way of indicating where
-    you should modify.
-
-  - All the `_set` and `_get` routines are just simple assembly
-    wrappers to write or read the given co-processor.  It's up
-    to the calller to pass in the right bits to write for `_set`.
-
-  - Delete the semi-colon in `mini-step.c:mismatch_off`.  
-    Original:
-
-            // disable mis-matching by just turning it off in bcr0
-            void mismatch_off(void) {
-                if(!single_step_on_p);      <---- bad semi-colon!
-                    panic("mismatch not turned on\n");
-
-
-    Fixed: 
-
-            // disable mis-matching by just turning it off in bcr0
-            void mismatch_off(void) {
-                if(!single_step_on_p)
-                    panic("mismatch not turned on\n");
-    
-  
-  - Generally the watchpoint tests have the bug that they set the
-    watchpoint address *after* they enable the watchpoint.  This is
-    obviously braindead.  Doesn't matter for our tests, but it's not a
-    sensible pattern.
-
-  - comments for disable/enable are confusing: they should just 
-    RMW and set the single enable/disable bit.
-
-  - The mismatch routines need better comments describing, sorry.
-
-------------------------------------------------------------------
 <p align="center">
   <img src="images/fetch-quest-task.png" width="450" />
 </p>
 
-Today is a "fetch-quest" style lab that has you setup simple breakpoint
-and watchpoints.  It should mostly be defining inline assembly routines
-and calling them.  Should be  fairly mechanical, straightforward but
-useful lab.
+Last lab you used single-stepping.  This lab you will build it, as 
+well as watchpoints, which are similarly useful (we do fun tricks
+with them in 240lx).
+
+While last lab was fairly conceptual, today's will mostly be a
+"fetch-quest" focused on defining inline assembly routines and calling
+them.  Should be fairly mechanical, straightforward but useful lab.
 
 Reminder:
   - Do the readings in the [PRELAB.md](./PRELAB.md) first!    
@@ -58,27 +22,25 @@ All the readings you need:
     summarizes a the page numbers and rules (don't sleep on these).
   - [Fault registers](./docs/arm1176-fault-regs.pdf).
 
-The ARM chip we use, like many machines, has a way to set both
-*breakpoints*, which cause a fault when the progam counter is set to
-a specified address, and *watchpoints* which cause a fault when a load
-or store is performed for a specified address.  These are usually used
-by debuggers to run a debugged program at full-speed until a specific
-location is read, written or executed.
+As you recall from last lab: The ARM chip we use, like many machines,
+has a way to set both *breakpoints*, which cause a fault when the progam
+counter is set to a specified address, and *watchpoints* which cause
+a fault when a load or store is performed for a specified address.
+These are usually used by debuggers to run a debugged program at
+full-speed until a specific location is read, written or executed.
 
-This lab will use watchpoints as a way to detect memory corruption
-efficiently.  As you know too-well by now, challenge of bare-metal
-programming is that we have not had protection against memory corruption.
-By this point in the quarter, I believe everyone in the class has had
-to waste a bunch of time figuring out what was causing memory corruption
-of some location in their program.  After today's lab you should be able
-to detect such corruption quickly:
-
+In addition to the single-stepping that you already saw, this lab will use
+watchpoints as a way to detect memory corruption efficiently.  As you know
+too-well by now, challenge of bare-metal programming is that we have not
+had protection against memory corruption.  By this point in the quarter,
+I believe everyone in the class has had to waste a bunch of time figuring
+out what was causing memory corruption of some location in their program.
+After today's lab you should be able to detect such corruption quickly:
    1. Simply set a watchpoint on the address of the memory getting corrupted,
    2. When a load or store to this address occurs, you'll immediately
       get an exception, at which point you can print out the program
       counter value causing the problem (or if you're fancy, a backtrace)
       along with any other information you would find useful.
-
 Yes, we can (and will) do memory protection with virtual memory, but that
 also requires a lot of machinery and can easily make real-time guarantees
 tricky.  ARM virtual memory also only provides page-level protection,
@@ -89,10 +51,9 @@ virtual memory, and if you continue to do OS or embedded stuff, will be
 very useful in the future.
 
 ### Checkoff
-   - Run lab9 on the autograder. Please make sure you have added/committed all files include libpi/src/vector-base.h
    - The tests for 1 and 2 pass.
+   - Last lab uses your code.
    - You code isn't ugly and has comments where you got the instructions from.
-   - Possibly a part 3.
    - There's a bunch of fun extensions.
 
 ----------------------------------------------------------------------
@@ -135,23 +96,47 @@ debug registers, typically after modifying a few bits within it.
 So you'll need to be clear on:
    1. How to emit inline assembly routines.
    2. How to manipulate sub-word bit-ranges 
-   3. And (optionally) how to define structures that contain bitfields
-      and check that these fields are the right size and offset.
 
-We have examples for each.
+We have examples for both.
 
-##### Inline assembly for debug co-processor
+##### Inline assembly
 
 A good way to get started is to see how to define inline assembly to 
 access the debug ID register(`DIDR`).  For this:
   - Review the end of the 
     [debug hardware cheat sheet](./../../notes/debug-hw/DEBUG-cheat-sheet.md)
     where it discusses how to emit assembly.
-  - The `armv6-debug-impl.h` where it defines the 
-    routine `cp14_debug_id_get` to access the debug register.
-    
-            coproc_mk_get(debug_id, p14, 0, c0, c0, 0)
 
+You can do this by hand.  But to make it easier,
+`libpi/include/asm-helpers.h` defines useful macros that use C proprocessor
+tricks to generate routines that use inline assembly to get and set
+co-processor registers.
+  - `cp_asm` generates both get and set methods.
+  - `cp_asm_get` generates just a get method.
+  - `cp_asm_set` generates just a get method.
+
+As an example:
+```
+  cp_asm_get(cp14_didr, p14, 0, c0, c0, 0)
+```
+Generates the routine:
+
+```
+   static inline uint32_t cp14_didr_get(void) { 
+        uint32_t ret=0; 
+        asm volatile ("mrc p14, 0, %0, c0, c0, 0" : "=r" (ret)); 
+        return ret; 
+    }
+```
+That returns the DIDR register.  
+
+Makes things easier.  
+
+If you don't like our macro, write your own cleaner
+version for an extension.  The CPP preprocessor is limited, but you can
+abuse it in various ways to do useful things albeit in an ugly way.
+The Rust (and Zig?) hackers here should be able to do some clever clean
+things.
 
 ##### Bit-operations: `libc/bit-support.h`
 
@@ -167,48 +152,33 @@ can certainly write your own bit manipulation routines, it's easy to
 make a mistake.  There's a bunch of routines in `libc/bit-support.h`
 that you can use.
 
-The example program `0-bit-ops/0-example-bitops.c` shows some calls.
+The example program `code/0-example-debug-id.c` shows some calls.
 You can modify it to test different things out.
+```
+    // 13-6: get the debug id register value
+    uint32_t didr = cp14_didr_get();
 
-##### Bit-fields.
-
-It requires more upfront work, but can make things cleaner to specify
-registers using a structure that uses bitfields (we need bitfields
-since many field sizes will not not match any C datatype).
-This method is often used for device driver registers.
-
-The program `0-example-debug-id.c` gives an example.
-
-Crucially, it's very easy to make mistakes with bitfields, so it shows how
-to check the size and offset to detect mistakes.
+    // sanity check it using the values given on 13-7.
+    uint32_t
+    wrp     = bits_get(didr, 28, 31),
+    brp     = bits_get(didr, 24, 27),
+    version = bits_get(didr, 16, 19),
+    variant = bits_get(didr, 4, 7),
+    rev     = bits_get(didr, 0, 4);
+```
 
 -----------------------------------------------------------------------------
-### Part 1:  set a simple watchpoint: `1-watchpt-test.c`
+### Part 1: build a simple watchpoint library: `watchpoint.c`
 
-***NOTE:***
-  - Add all inline assembly routines  to `armv6-debug-impl.h` along with
-    any helpers.  For each one you add, check if there is a prototype
-    there already and delete it so you don't get a "multiple definition"
-    error,
-  - You will have to modify the test `1-watchpt-test.c` where it
-    has `todo()` invocations.
-  - We provide small setup so you can register exception handlers
-    dynamically (see `staff-full-except.c`).  The calls:
+***BEFORE YOU START***:
+  - Make sure `make check` works.  It uses staff code and should
+    pass the tests.
+  - You will implement the code in `watchpoint.c`.
 
-            // install exception handlers: see <staff-full-except.c>
-            full_except_install(0);
-            full_except_set_data_abort(watchpt_fault);
-
-    Initialize the full exception system and registers `watchpt_fault`
-    as the handler to call on data aborts.
-
-  - These exception handlers take the full set of registers 
-    (the 16 general purpose registers plus the `cpsr`) in a
-    17-entry array (`reg_t`).  You can call `switchto` (from
-    `switchto.h`) to context switch to the registers.   This
-    lets you switch between different threads.  It also lets
-    you build a pre-emptive thread scheduler (next week).
-  
+Tests:
+  - `1-watchpt-test.c` --- set a single watchpoint.
+  - `1-watchpt-byte-test.c` --- set a single watchpoint and make
+     sure you trap sub-word accesses.
 
 So far this quarter we've been vulnerable to load and stores of NULL
 (address 0).  For example, if you run this code it will execute
@@ -235,7 +205,6 @@ is used.
 Note:
   - You want to look at the recipe for "how to set a simple watchpoint"
     in the debug chapter.
-
   - The test case for this part --- `1-watchpt-test.c` --- has some
     references to the different parts of the document you need.
 
@@ -243,7 +212,7 @@ With that said, we inline some of the key facts below.
 
 To initialize co-processor 14:
   - We need to install exception handlers (do not enable interrupts):
-    the code does this for you.
+    the code does this for you, using the same method as last lab.
   - You'll then need to enable any bits in the status register.
 
 To set a watchpoint you can follow the recipe on 13-47.
@@ -266,7 +235,7 @@ We do want:
    - Enabled.
    - Byte address select for all accesses (0x0, 0x1, 0x2, 0x3).
 
-When you are done, `1-watchpt-test.c` should pass and print `SUCCESS`.
+When you are done, both tests should pass and print `SUCCESS`.
 
 After any modification to a co-processor 14 register, you have to do a 
 `PrefetchFLush`:
@@ -290,25 +259,19 @@ How to get the fault address register (FAR):
 </td></tr></table>
 
 -----------------------------------------------------------------------------
-### Part 2: set a simple breakpoint: `2-brkpt-test.c`
+### Part 2: build a simple matching breakpoint library: `breakpoint.c`
 
-Test `2-brkpt-test.c` has a skeleton program to check that you can 
-detect a simple breakpoint.  It sets a breakpdoint on `foo` and repeatedly
-calls it: the exception handler disables the breakpoint and returns.
+What to do:
+  - Implement the breakpoint matching code in `breakpoint.c`.
+  - Make sure `2-match-test.c` passes.
 
-***NOTE***:
-  - When you compile the test you'll get "used but never defined errors":
-    you need to implement these routines.
-  - Add all inline assembly routines  to `armv6-debug-impl.h` along with
-    any helpers.
-  - You will have to modify the test `2-brkpt-test.c` where it
-    has `unimplemented()` invocations.
+Test `2-match-test.c` has a skeleton program to check that you can detect
+a simple breakpoint.  It sets a breakpdoint on `foo` and repeatedly calls
+it: the exception handler disables the breakpoint and returns.  It then
+does repeated calls to `GET32` and `PUT32` making sure it can trap.
 
-To modify part 2: note if we jump to `NULL` --- this will require setting
-a breakpoint instead of a watchpoint and handling the exception in the
-`prefetch_int` handler.
-
-As above, differentiate that the exception was caused by a debug exception.
+As above, differentiate that the exception was caused by a debug
+exception.
 
 How to get the instruction fault status register (IFSR): 
 <table><tr><td>
@@ -316,7 +279,23 @@ How to get the instruction fault status register (IFSR):
 </td></tr></table>
 
 -----------------------------------------------------------------------------
-### Part 3: port your watchpoint code to a simple interface
+### Part 3: extend `breakpoint.o` to handle mismatch, run last lab.
+
+You'll extend the `breakpoint.c` file to handle mismatch breakpoints.
+Then make sure last lab runs.
+
+Easiest approach:
+  1. Copy the `0-crash-course` into a directory in this lab so you don't 
+     break anything.
+  2. Drop in your breakpoint code.
+  3. Make sure the tests work the same.
+  4. Delete our `staff-breakpoint.o` from the makefile.
+  5. Celebrate.
+  6. Then do the same for `1-interleave`.
+
+
+-----------------------------------------------------------------------------
+### Extension: port your watchpoint code to a simple interface
 
 So far we've done very low level hacking to get things working --- this is
 great for a time-limited situation, since there aren't much moving pieces.
@@ -340,7 +319,7 @@ Two tests:
   - `3-mini-watch-byte-access.c` - checks that you fault on byte addresses.
 
 -----------------------------------------------------------------------------
-### Part 4: port your breakpoint code to a simple single-step
+### Extension: port your breakpoint code to a simple single-step
 
 Interface is in `mini-step.h`.  Your code should go in `mini-step.c`.
 You call it with a routine and it will run it in single-step mode.
