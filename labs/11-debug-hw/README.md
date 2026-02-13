@@ -78,7 +78,7 @@ One of the most interesting extensions (favorite from last year):
 
 This is super fun, not much code, and has some nice puzzles.  You'll
 probably go your entire career never meeting anyone else who has done
-this hack (though, perhaps for good reason :).
+this hack (though, perhaps, for good reason :).
 
 ----------------------------------------------------------------------
 ### Background
