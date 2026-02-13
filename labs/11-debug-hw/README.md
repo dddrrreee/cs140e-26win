@@ -1,10 +1,25 @@
-## Eratta
+## Eratta and Clarifications
 
+Eratta:
   - Ignore `0-bit-ops`.
-  - When setting "watchpoint value register" (WVR): the
-    datasheet states to set it to 0, set everything up and then set it
-    to your address.  I don't think the setting to 0 matters for us ---
-    but definitely make sure you set it to your address.
+  - When setting "watchpoint value register" (WVR): the datasheet states
+    to set it to 0, set everything up and then set it to your address.
+    I don't think the setting to 0 matters for us --- but definitely
+    make sure you set it to your address.
+
+Clarification:
+  - If this code is failing in `2-match-test.c`:
+
+            brkpt_match_stop();
+            if(brkpt_match_get())
+                panic("match should be disabled\n");
+
+    It's checking that once you once you disable a breakpoint using
+    `brkpt_match_stop()`,  then `brkpt_match_get()` should return 0.
+    A common mistake is to just return the content the breakpoint value
+    register even if the breakpoint control register was clear ---
+    that will cause this test to fail.
+
 
 ## Using debug hardware to catch mistakes
 
