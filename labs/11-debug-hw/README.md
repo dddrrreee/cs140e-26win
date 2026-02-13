@@ -1,3 +1,7 @@
+## Eratta
+
+Ignore `0-bit-ops`.
+
 ## Using debug hardware to catch mistakes
 
 <p align="center">
