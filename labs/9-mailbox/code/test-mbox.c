@@ -12,9 +12,28 @@ unsigned cyc_per_sec(void) {
     todo("implement this!\n");
 }
 
+
+int benchmark() {
+
+    uint32_t start = cycle_cnt_read();
+    uint32_t start_time = timer_get_usec();
+
+    for (int i = 0; i < 1000000; i++) {
+        asm volatile("nop");
+    }
+
+    output("\nExecuting 1 million 'nop' instructions took:\n");
+    output("\t- %d cycles\n", cycle_cnt_read() - start);
+    output("\t- %d usec\n", timer_get_usec() - start_time);
+    
+
+    return cycle_cnt_read() - start;
+}
+
+
 void check_clocks() {
     // UART Clock
-    uint32_t clock_id = 0x2; 
+    uint32_t clock_id = 0x3; 
     uint32_t value;
 
     // Getting current clock speed
@@ -29,20 +48,27 @@ void check_clocks() {
 
     // Setting
 
-    rpi_clock_hz_set(clock_id, rpi_clock_maxhz_get(clock_id) / 10); // WHY THIS?
+    // rpi_clock_hz_set(clock_id, rpi_clock_maxhz_get(clock_id) / 10); 
+    rpi_clock_hz_set(clock_id, rpi_clock_maxhz_get(clock_id)); // WHY THIS?
     
     // After setting
     printk("\nAfter setting clock to max:\n");
     output("Measured clock %d rate = %d Hz\n", clock_id, rpi_clock_realhz_get(clock_id));
-
-    rpi_clock_hz_set(clock_id, 50000);
-
+    benchmark();
+    
+    rpi_clock_hz_set(clock_id, 70000000);
+    
     printk("\nAfter setting clock to small:\n");
     output("Measured clock %d rate = %d Hz\n", clock_id, rpi_clock_realhz_get(clock_id));
+    benchmark();
 }
 
-
 void notmain(void) { 
+
+    // For benchmark
+    cycle_cnt_read();
+
+    // while(1);
     output("mailbox serial number = %llx\n", rpi_get_serialnum()); //  0xa8249570
     
     output("mailbox revision number = %x\n", rpi_get_revision()); //  0x9000c1
@@ -65,7 +91,6 @@ void notmain(void) {
     output("RPi core voltage = %d mV\n", rpi_get_voltage(1)); // core
 
         
-    
     
     // // Increasing memory size
     uint32_t mem_handle = rpi_allocate_memory(0x8000000);
