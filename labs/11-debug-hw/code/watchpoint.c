@@ -2,9 +2,21 @@
 // only handles a single watchpoint.
 #include "rpi.h"
 #include "watchpoint.h"
+#include "asm-helpers.h"
+#include "bit-support.h"
 
 // keep track of what we are watching.
 static uint32_t watch_addr;
+
+// Functions to make
+cp_asm_set(cp14_dscr, p14, 0, c0, c1, 0b000);
+cp_asm_get(cp14_dscr, p14, 0, c0, c1, 0b000);
+
+cp_asm_set(cp14_wvr, p14, 0, c0, c0, 0b110);
+cp_asm_get(cp14_wvr, p14, 0, c0, c0, 0b110);
+
+cp_asm_set(cp14_wcr, p14, 0, c0, c0, 0b111);
+cp_asm_get(cp14_wcr, p14, 0, c0, c0, 0b111);
 
 // was it a watchpoint fault?
 //  1. use dfsr 3-64  to make sure it was a debug event.
@@ -43,8 +55,48 @@ uint32_t watchpt_fault_addr(void) {
 // Important: 
 //  - make sure you handle subword accesses! 
 int watchpt_on(uint32_t addr) {
+
     watch_addr = addr;
-    return staff_watchpt_on(addr);
+    assert((unsigned)addr%4 == 0);
+    
+    // 0. Enable CP14
+    // cp14_dscr_set(1 << 15);
+    uint32_t dscr = cp14_dscr_get();
+    dscr |= (1 << 15);
+    cp14_dscr_set(dscr);
+    
+    // 1. Read the WCR.
+    uint32_t wcr = cp14_wcr_get();
+
+    // 2. Clear the WCR[0] enable watchpoint bit in the read word 
+    //    and write it back to the WCR. Now the watchpoint is disabled.
+    wcr &= ~1;
+    cp14_wcr_set(wcr);
+    
+    // 3. Write the DMVA to the WVR register.
+    cp14_wvr_set(watch_addr);
+    
+    
+    
+    // 4. Write to the WCR with its fields set as follows:
+    wcr = cp14_wcr_get();
+    
+    //  -  WCR[20] enable linking bit cleared, to indicate that 
+    //     this watchpoint is not to be linked
+    wcr &= ~(1 << 20);
+    wcr &= ~(0b11 << 14);       // WCR[15:14] Matches in secure and non-secure
+    wcr |= 0b1111 << 5;         // WCR[8:5] Byte address select (+1-3 offsets also trigger)
+    wcr |= 0b11 << 3;           // WCR[4:3] Load/store access (Load or store)
+    wcr |= 0b11 << 1;           // WCR[2:1] Supervisor access (either privileged or user)
+    wcr |= 0b1;                 // WCR[0] enable watchpoint bit set
+
+    // Need 0 and 4:3 set
+
+    cp14_wcr_set(wcr);
+
+    printk("%b\n", cp14_wcr_get());
+
+    return 1;
 }
 
 // turn off watchpoint:
