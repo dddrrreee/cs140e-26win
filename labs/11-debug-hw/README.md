@@ -1,6 +1,10 @@
 ## Eratta
 
-Ignore `0-bit-ops`.
+  - Ignore `0-bit-ops`.
+  - When setting "watchpoint value register" (WVR): the
+    datasheet states to set it to 0, set everything up and then set it
+    to your address.  I don't think the setting to 0 matters for us ---
+    but definitely make sure you set it to your address.
 
 ## Using debug hardware to catch mistakes
 
@@ -245,7 +249,7 @@ To initialize co-processor 14:
 
 To set a watchpoint you can follow the recipe on 13-47.
   1. Enable monitor debugging using the `DSCR` (13-7): bits 14 and 15.
-  2. Set the "watchpoint value register" (WVR) on 13-20 to 0.
+  2. Set the "watchpoint value register" (WVR) on 13-20 to your address.
   3. Set the "watchpoint control register" (WCR) on 13-21.
   4. After finishing your modifications of cp14, make sure you do a
      `prefetch_flush` (see below) to make sure the processor refetches
