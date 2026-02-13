@@ -25,7 +25,7 @@ void notmain(void) {
     void mov_ident(void);
     void hello_asm(void);
     // r = single_step_fn("nop_10", nop_10, 0, 0, 0);
-
+    // single_step_verbose(0);
     single_step_fn("nop_1", nop_1, 0, 0, 0);
     single_step_fn("nop_10", nop_10, 0, 0, 0);
     single_step_fn("mov_ident", mov_ident, 0, 0, 0);

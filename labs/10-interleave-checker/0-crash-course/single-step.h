@@ -67,6 +67,7 @@ regs_init(
         .regs[REGS_CPSR] = cpsr,
         // where to jump to if the code returns.
         .regs[REGS_LR] = (uint32_t)exit_tramp,
+        .reg_hash = 0
     };
 }
 

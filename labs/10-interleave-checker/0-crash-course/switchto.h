@@ -20,6 +20,7 @@ enum {
 typedef struct {
     // all 16 registers and cpsr
     uint32_t regs[17];
+    uint32_t reg_hash;
 } regs_t;
 
 // get <sp> and <lr> for mode <mode>.

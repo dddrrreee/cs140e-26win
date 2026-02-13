@@ -2,6 +2,7 @@
 #include "single-step-syscalls.h"
 #include "breakpoint.h"
 #include "full-except.h"
+#include "fast-hash32.h"
 
 #undef trace
 
@@ -130,18 +131,11 @@ regs_t single_step_fn(
         if (old != new) {
             trace("\t\tRegister r%d changed from %x to %x\n", i, old, new);
         }
-        // if(v)
-        //     trace("\t\tr%d = %x\n", i, v);
     }
-    // print_regs(regs);
-    // print_regs(exit_regs);
 
-    // trace("\tn_inst=%d: non-zero regs= {\n", n_inst);
-    // for(int i = 0; i < 16; i++) {
-    //     let v = regs.regs[i];
-    //     if(v)
-    //         trace("\t\tr%d = %x\n", i, v);
-    // }
+    /* Creating hash */
+    exit_regs.reg_hash = fast_hash32(exit_regs.regs, sizeof(exit_regs.regs)); // should be 17*4 size
+    trace("\t\tHash: %u\n", exit_regs.reg_hash);
     
     trace("\t\tcpsr=%x\n", exit_regs.regs[REGS_CPSR]);
     trace("\t}\n");
