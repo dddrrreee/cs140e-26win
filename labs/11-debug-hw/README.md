@@ -77,16 +77,16 @@ As we've seen repeatedly:
 The list of the hardware debug registers is on page 13-5.
 
 A cheat-sheet of assembly instructions to access these registers (13-26):
-<table><tr><td>
-<img src="images/cp14-asm.png"/>
-</td></tr></table>
+<p align="center">
+  <img src="images/cp14-asm.png" width="250" />
+</p>
 
 When a debug fault happens, the hardware will put additional values in
 different fault registers.  A short cheat sheet of the assembly code to
 get various of the fault registers:
-<table><tr><td>
-<img src="images/cheat-sheet-fault-regs.png"/>
-</td></tr></table>
+<p align="center">
+  <img src="images/cheat-sheet-fault-regs.png" width="250" />
+</p>
 
 -----------------------------------------------------------------------------
 ### Part 0: The pieces you need for this lab.
@@ -239,24 +239,26 @@ When you are done, both tests should pass and print `SUCCESS`.
 
 After any modification to a co-processor 14 register, you have to do a 
 `PrefetchFLush`:
-<table><tr><td>
-<img src="images/prefetch-flush.png"/>
-</td></tr></table>
+<p align="center">
+  <img src="images/prefetch-flush.png" width="250" />
+</p>
+
+
 
 How to get the data fault status register (DFSR, page 3-64): 
-<table><tr><td>
-<img src="images/dfsr-get.png"/>
-</td></tr></table>
+<p align="center">
+  <img src="images/dfsr-get.png" width="250" />
+</p>
 
 You can use the DFSR to get the cause of the fault from bits `0:3` if `bit[10]=0`:
-<table><tr><td>
-<img src="images/data-fault-field.png"/>
-</td></tr></table>
+<p align="center">
+  <img src="images/data-fault-field.png" width="250" />
+</p>
 
 How to get the fault address register (FAR): 
-<table><tr><td>
-<img src="images/far-get.png"/>
-</td></tr></table>
+<p align="center">
+  <img src="images/far-get.png" width="250" />
+</p>
 
 -----------------------------------------------------------------------------
 ### Part 2: build a simple matching breakpoint library: `breakpoint.c`
@@ -274,9 +276,9 @@ As above, differentiate that the exception was caused by a debug
 exception.
 
 How to get the instruction fault status register (IFSR): 
-<table><tr><td>
-<img src="images/ifsr-get.png"/>
-</td></tr></table>
+<p align="center">
+  <img src="images/ifsr-get.png" width="250" />
+</p>
 
 -----------------------------------------------------------------------------
 ### Part 3: extend `breakpoint.o` to handle mismatch, run last lab.
