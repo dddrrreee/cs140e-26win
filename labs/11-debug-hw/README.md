@@ -59,6 +59,10 @@ very useful in the future.
    - Last lab uses your code.
    - You code isn't ugly and has comments where you got the instructions from.
    - There's a bunch of fun extensions.
+   - If you want to do Daniel mode, it's pretty simple: just
+     implement the interfaces in `breakpoint.h` and `watchpoint.h`.
+     They are pretty simple, with no internal state besides the
+     hardware.
 
 ### The best extension: match-breakpoint replay.
 
