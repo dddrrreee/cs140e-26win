@@ -1,0 +1,29 @@
+TRACE:do_put8_test:setting watchpoint for addr 0x0
+TRACE:do_put8_test:about to call PUT8: should fault
+TRACE:watchpt_fault:	1. fault pc=
+TRACE:watchpt_fault:	2. store fault at pc=
+TRACE:watchpt_fault:	3. faulting addr = 0x0
+TRACE:watchpt_fault:	4. disabled 0x0
+TRACE:do_put8_test:afer PUT8: store_fault=1!
+TRACE:do_put8_test:setting watchpoint for addr 0x1
+TRACE:do_put8_test:about to call PUT8: should fault
+TRACE:watchpt_fault:	1. fault pc=
+TRACE:watchpt_fault:	2. store fault at pc=
+TRACE:watchpt_fault:	3. faulting addr = 0x1
+TRACE:watchpt_fault:	4. disabled 0x1
+TRACE:do_put8_test:afer PUT8: store_fault=2!
+TRACE:do_put8_test:setting watchpoint for addr 0x2
+TRACE:do_put8_test:about to call PUT8: should fault
+TRACE:watchpt_fault:	1. fault pc=
+TRACE:watchpt_fault:	2. store fault at pc=
+TRACE:watchpt_fault:	3. faulting addr = 0x2
+TRACE:watchpt_fault:	4. disabled 0x2
+TRACE:do_put8_test:afer PUT8: store_fault=3!
+TRACE:do_put8_test:setting watchpoint for addr 0x3
+TRACE:do_put8_test:about to call PUT8: should fault
+TRACE:watchpt_fault:	1. fault pc=
+TRACE:watchpt_fault:	2. store fault at pc=
+TRACE:watchpt_fault:	3. faulting addr = 0x3
+TRACE:watchpt_fault:	4. disabled 0x3
+TRACE:do_put8_test:afer PUT8: store_fault=4!
+TRACE:notmain:SUCCESS GET8 fault worked!

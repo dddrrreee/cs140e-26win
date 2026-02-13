@@ -1,0 +1,6 @@
+TRACE:notmain:total watchpoints = 2
+TRACE:notmain:total breakpoints = 6
+TRACE:notmain:version = 0x2
+TRACE:notmain:variant=: mine is 0x0 --- yours might differ
+TRACE:notmain:rev=    : mine is 0x7 --- yours might differ
+TRACE:notmain:SUCCESS: read debug register correctly.

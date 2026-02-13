@@ -1,0 +1,34 @@
+TRACE:brkpt_fault:	fault pc=
+TRACE:foo:running foo: 0
+TRACE:notmain:worked!  fill do 10 repeats
+TRACE:brkpt_fault:	fault pc=
+TRACE:brkpt_fault:	fault pc=
+TRACE:notmain:n_faults=2, i=0
+TRACE:brkpt_fault:	fault pc=
+TRACE:brkpt_fault:	fault pc=
+TRACE:notmain:n_faults=4, i=1
+TRACE:brkpt_fault:	fault pc=
+TRACE:brkpt_fault:	fault pc=
+TRACE:notmain:n_faults=6, i=2
+TRACE:brkpt_fault:	fault pc=
+TRACE:brkpt_fault:	fault pc=
+TRACE:notmain:n_faults=8, i=3
+TRACE:brkpt_fault:	fault pc=
+TRACE:brkpt_fault:	fault pc=
+TRACE:notmain:n_faults=10, i=4
+TRACE:brkpt_fault:	fault pc=
+TRACE:brkpt_fault:	fault pc=
+TRACE:notmain:n_faults=12, i=5
+TRACE:brkpt_fault:	fault pc=
+TRACE:brkpt_fault:	fault pc=
+TRACE:notmain:n_faults=14, i=6
+TRACE:brkpt_fault:	fault pc=
+TRACE:brkpt_fault:	fault pc=
+TRACE:notmain:n_faults=16, i=7
+TRACE:brkpt_fault:	fault pc=
+TRACE:brkpt_fault:	fault pc=
+TRACE:notmain:n_faults=18, i=8
+TRACE:brkpt_fault:	fault pc=
+TRACE:brkpt_fault:	fault pc=
+TRACE:notmain:n_faults=20, i=9
+TRACE:notmain:SUCCESS

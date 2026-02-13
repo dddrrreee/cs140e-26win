@@ -1,0 +1,18 @@
+TRACE:notmain:INITIAL VALUE: addr 0x0 = 0xdeadbeef
+TRACE:notmain:
+TRACE:notmain:setting watchpoint for addr 0x0
+TRACE:notmain:about to PUT32(0x0,0xfaf0faf0): should see a fault!
+TRACE:watchpt_fault:	1. fault pc=0x8024, resume pc=0x8028
+TRACE:watchpt_fault:	2. store fault at pc=0x8024
+TRACE:watchpt_fault:	3. faulting addr = 0x0
+TRACE:watchpt_fault:	4. disabled 0x0
+TRACE:notmain:afer PUT32: store_fault=1!
+TRACE:notmain:SUCCESS: correctly got a fault on addr=0x0, val=0xfaf0faf0
+TRACE:notmain:
+TRACE:notmain:setting watchpoint for addr 0x0
+TRACE:notmain:should see a load fault at pc=0x802c!
+TRACE:watchpt_fault:	1. fault pc=0x802c, resume pc=0x8030
+TRACE:watchpt_fault:	2. load fault at pc=0x802c
+TRACE:watchpt_fault:	3. faulting addr = 0x0
+TRACE:watchpt_fault:	4. disabled 0x0
+TRACE:notmain:SUCCESS GET32 fault worked!
