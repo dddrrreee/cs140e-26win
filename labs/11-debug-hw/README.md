@@ -1,6 +1,4 @@
-
 ## Using debug hardware to catch mistakes
-
 
 ------------------------------------------------------------------
 ### Errata and clarifications.
@@ -41,9 +39,6 @@
   - The mismatch routines need better comments describing, sorry.
 
 ------------------------------------------------------------------
-
-
-
 <p align="center">
   <img src="images/fetch-quest-task.png" width="450" />
 </p>
@@ -256,13 +251,12 @@ To set a watchpoint you can follow the recipe on 13-47.
   2. Set the "watchpoint value register" (WVR) on 13-20 to 0.
   3. Set the "watchpoint control register" (WCR) on 13-21.
   4. After finishing your modifications of cp14, make sure you do a
-     `prefetchflush` (see below) to make sure the processor refetches
+     `prefetch_flush` (see below) to make sure the processor refetches
      and re-decodes the instructions in the instuction prefetch buffer.
   5. Implement the code in the data abort handler
      to check if the exception is from a debug exception and, if not
      crash with an error, otherwise handle it.  (The test already
      does this.)
-
 
 For the WCR: We don't want linking (which refers to the use of context id's).
 We do want:
