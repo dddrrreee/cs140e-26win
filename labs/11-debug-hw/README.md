@@ -60,6 +60,26 @@ very useful in the future.
    - You code isn't ugly and has comments where you got the instructions from.
    - There's a bunch of fun extensions.
 
+### The best extension: match-breakpoint replay.
+
+One of the most interesting extensions (favorite from last year):
+  1. Run your code in single-step (breakpoint mismatch) mode, recording
+     the trace of all registers in a buffer.
+  2. Then replay the same code using breakpoint matching, checking that
+     the results are identical to those in your trace buffer.
+     This is a very harsh test that is near-verification that your
+     matching code works (along with all our context switching).
+  3. Then, exploit the fact that matching works at privileged-level
+     and replay again at supervisor level, checking that the code behaves
+     identically to the user-mode (other than the mode bits will be
+     different).  This is a great way to detect non-virtualizable 
+     instructions that silently behave differently at user vs 
+     privileged mode.
+
+This is super fun, not much code, and has some nice puzzles.  You'll
+probably go your entire career never meeting anyone else who has done
+this hack (though, perhaps for good reason :).
+
 ----------------------------------------------------------------------
 ### Background
 
@@ -303,6 +323,8 @@ Easiest approach:
 -----------------------------------------------------------------------------
 ### Extension: port your watchpoint code to a simple interface
 
+***NOTE: if you want to do this, let us know and we'll push the code.***
+
 So far we've done very low level hacking to get things working --- this is
 great for a time-limited situation, since there aren't much moving pieces.
 It's not so great if you want to use the stuff later.
@@ -326,6 +348,8 @@ Two tests:
 
 -----------------------------------------------------------------------------
 ### Extension: port your breakpoint code to a simple single-step
+
+***NOTE: if you want to do this, let us know and we'll push the code.***
 
 Interface is in `mini-step.h`.  Your code should go in `mini-step.c`.
 You call it with a routine and it will run it in single-step mode.
