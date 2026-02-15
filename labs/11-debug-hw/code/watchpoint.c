@@ -8,21 +8,36 @@
 // keep track of what we are watching.
 static uint32_t watch_addr;
 
-// Functions to make
-cp_asm_set(cp14_dscr, p14, 0, c0, c1, 0b000);
-cp_asm_get(cp14_dscr, p14, 0, c0, c1, 0b000);
+// P14
+cp_asm_set(cp14_dscr, p14, 0, c0, c1, 0); // P14 c1
+cp_asm_get(cp14_dscr, p14, 0, c0, c1, 0); // P14 c1
 
-cp_asm_set(cp14_wvr, p14, 0, c0, c0, 0b110);
-cp_asm_get(cp14_wvr, p14, 0, c0, c0, 0b110);
+cp_asm_set(cp14_wfar, p14, 0, c0, c6, 0); // P14 c6
+cp_asm_get(cp14_wfar, p14, 0, c0, c6, 0); // P14 c6
 
-cp_asm_set(cp14_wcr, p14, 0, c0, c0, 0b111);
-cp_asm_get(cp14_wcr, p14, 0, c0, c0, 0b111);
+cp_asm_set(cp14_wvr, p14, 0, c0, c0, 0b110); // P14 c96-97
+cp_asm_get(cp14_wvr, p14, 0, c0, c0, 0b110); // P14 c96-97
+
+cp_asm_set(cp14_wcr, p14, 0, c0, c0, 0b111); // P14 c112-113
+cp_asm_get(cp14_wcr, p14, 0, c0, c0, 0b111); // P14 c112-113
+
+// P15
+cp_asm_set(cp14_dfsr, p15, 0, c5, c0, 0); // P15 c5
+cp_asm_get(cp14_dfsr, p15, 0, c5, c0, 0); // P15 c5
+
+cp_asm_set(cp14_far, p15, 0, c6, c0, 0); // P15 c6
+cp_asm_get(cp14_far, p15, 0, c6, c0, 0); // P15 c6
 
 // was it a watchpoint fault?
 //  1. use dfsr 3-64  to make sure it was a debug event.
 //  2. and dscr 13-11: to make sure it was a watchpoint
 int watchpt_fault_p(void) {
-    return staff_watchpt_fault_p();
+    uint32_t dfsr = cp14_dfsr_get();
+    uint32_t dscr = cp14_dscr_get();
+
+    int was_debug_event = (dfsr & 0b1111) == 0b0010;
+    int was_watchpt_fault = (dscr >> 2 & 0b1111) == 0b0010;
+    return was_debug_event && was_watchpt_fault;
 }
 
 // is it a load fault?
@@ -30,7 +45,9 @@ int watchpt_fault_p(void) {
 int watchpt_load_fault_p(void) {
     if(!watchpt_fault_p())
         return 0;
-    return staff_watchpt_load_fault_p();
+
+    uint32_t dfsr = cp14_dfsr_get();
+    return (dfsr >> 11 & 0b1) == 0;
 }
 
 // get the pc of the fault.
@@ -38,13 +55,14 @@ int watchpt_load_fault_p(void) {
 // important:
 //   - pay attention to the comment on 13-12 to see how to adjust!
 uint32_t watchpt_fault_pc(void) {
-    return staff_watchpt_fault_pc();
+    uint32_t wfr = cp14_wfar_get();
+    return wfr - 8;
 }
 
 // get the data address that caused the fault.
 // use <far> 3-68 to get the fault addr.
 uint32_t watchpt_fault_addr(void) {
-    return staff_watchpt_fault_addr();
+    return cp14_far_get();
 }
 
 // set a watch-point on <addr>: 
@@ -57,12 +75,12 @@ uint32_t watchpt_fault_addr(void) {
 int watchpt_on(uint32_t addr) {
 
     watch_addr = addr;
-    assert((unsigned)addr%4 == 0);
     
     // 0. Enable CP14
     // cp14_dscr_set(1 << 15);
     uint32_t dscr = cp14_dscr_get();
-    dscr |= (1 << 15);
+    dscr |= (1 << 15); // The Monitor debug-mode enable bit
+    dscr &= ~(1 << 14); // Mode select bit (selects monitor-debug mode)
     cp14_dscr_set(dscr);
     
     // 1. Read the WCR.
@@ -80,10 +98,8 @@ int watchpt_on(uint32_t addr) {
     
     // 4. Write to the WCR with its fields set as follows:
     wcr = cp14_wcr_get();
-    
-    //  -  WCR[20] enable linking bit cleared, to indicate that 
-    //     this watchpoint is not to be linked
-    wcr &= ~(1 << 20);
+
+    wcr &= ~(1 << 20);          // WCR[20] enable linking bit cleared
     wcr &= ~(0b11 << 14);       // WCR[15:14] Matches in secure and non-secure
     wcr |= 0b1111 << 5;         // WCR[8:5] Byte address select (+1-3 offsets also trigger)
     wcr |= 0b11 << 3;           // WCR[4:3] Load/store access (Load or store)
@@ -94,7 +110,7 @@ int watchpt_on(uint32_t addr) {
 
     cp14_wcr_set(wcr);
 
-    printk("%b\n", cp14_wcr_get());
+    prefetch_flush();
 
     return 1;
 }
@@ -106,5 +122,12 @@ int watchpt_off(uint32_t addr) {
     if(addr != watch_addr)
         panic("disabling invalid watchpoint %x, tracking %x\n", 
             addr, watch_addr);
-    return staff_watchpt_off(addr);
+
+    uint32_t wcr = cp14_wcr_get();
+    wcr &= ~1;                 // WCR[0] enable watchpoint bit cleared
+    cp14_wcr_set(wcr);
+
+    prefetch_flush();
+    
+    return 1;
 }

@@ -18,21 +18,21 @@ int staff_watchpt_off(uint32_t addr);
 //   1. was a debug instruction fault
 //   2. watchpt occured
 int watchpt_fault_p(void);
-int staff_watchpt_fault_p(void);
+// int staff_watchpt_fault_p(void);
 
 // get the watchpt fault addr
 uint32_t watchpt_fault_addr(void);
-uint32_t staff_watchpt_fault_addr(void);
+// uint32_t staff_watchpt_fault_addr(void);
 
 // get the watchpt pc [won't be the exception pc]
 uint32_t watchpt_fault_pc(void);
-uint32_t staff_watchpt_fault_pc(void);
+// uint32_t staff_watchpt_fault_pc(void);
 
 // was the fault from a load?
 int watchpt_load_fault_p(void);
-int staff_watchpt_load_fault_p(void);
+// int staff_watchpt_load_fault_p(void);
 
 uint32_t watchpt_fault_addr(void);
-uint32_t staff_watchpt_fault_addr(void);
+// uint32_t staff_watchpt_fault_addr(void);
 
 #endif
