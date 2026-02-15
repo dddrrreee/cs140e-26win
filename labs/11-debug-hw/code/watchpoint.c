@@ -103,9 +103,7 @@ int watchpt_off(uint32_t addr) {
         panic("disabling invalid watchpoint %x, tracking %x\n", 
             addr, watch_addr);
 
-    uint32_t wcr = cp14_wcr_get();
-    wcr &= ~1;                 // WCR[0] enable watchpoint bit cleared
-    cp14_wcr_set(wcr);
+    cp14_wcr_set(0); // THIS MAY BE WRONG
 
     prefetch_flush();
     
