@@ -2,37 +2,17 @@
 // only handles a single watchpoint.
 #include "rpi.h"
 #include "watchpoint.h"
-#include "asm-helpers.h"
+#include "coprocessor-macros.h"
 #include "bit-support.h"
 
 // keep track of what we are watching.
 static uint32_t watch_addr;
 
-// P14
-cp_asm_set(cp14_dscr, p14, 0, c0, c1, 0); // P14 c1
-cp_asm_get(cp14_dscr, p14, 0, c0, c1, 0); // P14 c1
-
-cp_asm_set(cp14_wfar, p14, 0, c0, c6, 0); // P14 c6
-cp_asm_get(cp14_wfar, p14, 0, c0, c6, 0); // P14 c6
-
-cp_asm_set(cp14_wvr, p14, 0, c0, c0, 0b110); // P14 c96-97
-cp_asm_get(cp14_wvr, p14, 0, c0, c0, 0b110); // P14 c96-97
-
-cp_asm_set(cp14_wcr, p14, 0, c0, c0, 0b111); // P14 c112-113
-cp_asm_get(cp14_wcr, p14, 0, c0, c0, 0b111); // P14 c112-113
-
-// P15
-cp_asm_set(cp14_dfsr, p15, 0, c5, c0, 0); // P15 c5
-cp_asm_get(cp14_dfsr, p15, 0, c5, c0, 0); // P15 c5
-
-cp_asm_set(cp14_far, p15, 0, c6, c0, 0); // P15 c6
-cp_asm_get(cp14_far, p15, 0, c6, c0, 0); // P15 c6
-
 // was it a watchpoint fault?
 //  1. use dfsr 3-64  to make sure it was a debug event.
 //  2. and dscr 13-11: to make sure it was a watchpoint
 int watchpt_fault_p(void) {
-    uint32_t dfsr = cp14_dfsr_get();
+    uint32_t dfsr = cp15_dfsr_get();
     uint32_t dscr = cp14_dscr_get();
 
     int was_debug_event = (dfsr & 0b1111) == 0b0010;
@@ -46,7 +26,7 @@ int watchpt_load_fault_p(void) {
     if(!watchpt_fault_p())
         return 0;
 
-    uint32_t dfsr = cp14_dfsr_get();
+    uint32_t dfsr = cp15_dfsr_get();
     return (dfsr >> 11 & 0b1) == 0;
 }
 
@@ -62,7 +42,7 @@ uint32_t watchpt_fault_pc(void) {
 // get the data address that caused the fault.
 // use <far> 3-68 to get the fault addr.
 uint32_t watchpt_fault_addr(void) {
-    return cp14_far_get();
+    return cp15_far_get();
 }
 
 // set a watch-point on <addr>: 

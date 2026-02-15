@@ -1,12 +1,15 @@
 #include "rpi.h"
 #include "rpi-interrupts.h"
-#include "asm-helpers.h"
+#include "coprocessor-macros.h"
 #include "bit-support.h"
 #include "breakpoint.h"
 
 // make sure that cp14 (DSCR) is enabled (p13-7)
 void brkpt_match_init(void) {
-    staff_brkpt_match_init();
+    uint32_t dscr = cp14_dscr_get();
+    dscr |= (1 << 15); // The Monitor debug-mode enable bit
+    dscr &= ~(1 << 14); // Mode select bit (selects monitor-debug mode)
+    cp14_dscr_set(dscr);
 }
 
 // set match on <addr>
@@ -20,6 +23,11 @@ void brkpt_match_set(uint32_t addr) {
 
 // turn off match faults (clear bcr1)
 void brkpt_match_stop(void) {
+    uint32_t bcr1 = cp14_bcr1_get();
+    bcr1 &= ~1;                 // BCR1[0] enable watchpoint bit cleared
+    cp14_bcr1_set(bcr1);
+
+    prefetch_flush();
     staff_brkpt_match_stop();
 }
 
@@ -46,12 +54,22 @@ void brkpt_mismatch_start(void) {
 
 // turn off mismatching: clear bcr0
 void brkpt_mismatch_stop(void) {
-    staff_brkpt_mismatch_stop();
+    uint32_t bcr0 = cp14_bcr0_get();
+    bcr0 &= ~1;                 // BCR0[0] enable watchpoint bit cleared
+    cp14_bcr0_set(bcr0);
+
+    prefetch_flush();
+    // staff_brkpt_mismatch_stop();
 }
 
 // was this a breakpoint fault? (either mismatch or match)
 // check IFSR bits (p 3-66) to see it was a debug fault.
 // check DSCR bits (13-11) to see if it was a breakpoint
 int brkpt_fault_p(void) {
-    return staff_brkpt_fault_p();
+    uint32_t ifsr = cp15_ifsr_get();
+    uint32_t dscr = cp14_dscr_get();
+
+    int was_debug_event = (ifsr & 0b1111) == 0b0010;
+    int was_brkpt_fault = (dscr >> 2 & 0b1111) == 0b0001;
+    return was_debug_event && was_brkpt_fault;
 }
