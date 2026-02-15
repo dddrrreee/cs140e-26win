@@ -4,13 +4,15 @@ PROGS += 2-lib.c
 # PROGS += single-step.c
 
 COMMON_SRC += single-step.c
+COMMON_SRC += ../../11-debug-hw/code/breakpoint.c
 
 
 L := $(CS140E_2026_PATH)/libpi/
 STAFF_OBJS += $(L)/staff-objs/staff-kmalloc.o
 STAFF_OBJS += $(L)/staff-objs/staff-full-except-asm.o
 STAFF_OBJS += $(L)/staff-objs/staff-switchto-asm.o
-STAFF_OBJS += $(L)/staff-objs/staff-breakpoint.o
+# STAFF_OBJS += $(L)/staff-objs/staff-breakpoint.o
+STAFF_OBJS += ../../11-debug-hw/code/staff-breakpoint.o
 STAFF_OBJS += $(L)/staff-objs/staff-full-except.o
 
 BOOTLOADER=my-install
