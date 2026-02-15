@@ -7,10 +7,22 @@
 #undef trace
 
 static int verbose_p = 1;
+static int log_gprof = 0;
+static uint32_t check_addr = 0;
+static int addr_last_val = 0;
+
 #define trace(msg...) do { if(verbose_p) trace_nofn(msg); } while(0)
 
 void single_step_verbose(int v_p) {
     verbose_p = v_p;
+}
+
+void single_step_gprof(int enable) {
+    log_gprof = enable;
+}
+
+void single_step_check_bad_addr(int addr) {
+    check_addr = addr;
 }
 
 static const char *ss_cur_fn = "none";
@@ -32,6 +44,20 @@ void single_step_handler(regs_t *regs) {
     uint32_t pc = regs->regs[15];
     n_inst++;
     trace("fault:\t%X:\t%X  @ %d\n", pc, GET32(pc), n_inst);
+    // trace("adding to gprof...\n");
+
+    // ** ADDING EXTENSIONY THINGS
+    if (log_gprof)
+        gprof_inc(pc);
+
+    if (check_addr != 0) {
+        // trace("Checking address %x: %x \n", check_addr, GET32(check_addr));
+        if (GET32(check_addr) != addr_last_val) {
+            printk("\n");
+            trace("%x not equal to %x\n", GET32(check_addr), addr_last_val);
+            panic("WROTE TO ILLEGAL ADDRESS:\t%X  @ %d\n", pc, n_inst);
+        }
+    }
 
     // handle uart race condition
     while(!uart_can_put8())
@@ -117,7 +143,14 @@ regs_t single_step_fn(
     regs_t regs = regs_init(fp, arg, stack, nbytes);
     ss_cur_fn = fn_name;
 
+    // ** Sets initial value for the address to check
+    if (check_addr != 0) {
+        trace("Noting initial value of %x as %x\n", check_addr, GET32(check_addr));
+        addr_last_val = GET32(check_addr);
+    }
+
     trace("PRE: about to single step <%s>\n", fn_name);
+    
     single_step_on();
     switchto_cswitch(&scheduler_regs, &regs);
     single_step_off();
@@ -139,6 +172,8 @@ regs_t single_step_fn(
     
     trace("\t\tcpsr=%x\n", exit_regs.regs[REGS_CPSR]);
     trace("\t}\n");
+
+    
 
     return exit_regs;
 }

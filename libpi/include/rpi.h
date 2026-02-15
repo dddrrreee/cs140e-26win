@@ -276,6 +276,10 @@ int memiszero(const void *_p, unsigned n);
 // any extra prototypes you want to add
 #include "your-prototypes.h"
 
+// ** ADDING MORE
+#include "gprof.h"
+
+
 #define let __auto_type
 
 // returns start of heap if ran: cstart will skip 0'ing the

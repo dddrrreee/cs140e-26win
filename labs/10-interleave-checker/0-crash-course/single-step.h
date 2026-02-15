@@ -7,6 +7,8 @@
 
 
 void single_step_verbose(int v_p);
+void single_step_gprof(int enable);
+void single_step_check_bad_addr(int enable);
 
 // single-step (mismatch) breakpoint handler:
 void single_step_handler(regs_t *regs);
