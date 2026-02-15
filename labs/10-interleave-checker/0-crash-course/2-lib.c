@@ -3,10 +3,6 @@
 // a <single_step_fn> routine that will run a function with an 
 // argument in single step mode.
 #include "rpi.h"
-#include "breakpoint.h"
-// #include "full-except.h"
-// #include "cpsr-util.h"
-// #include "single-step-syscalls.h"
 #include "single-step.h"
 
 // complete example for how to run single stepping on a simple routine.
@@ -30,13 +26,4 @@ void notmain(void) {
     single_step_fn("nop_10", nop_10, 0, 0, 0);
     single_step_fn("mov_ident", mov_ident, 0, 0, 0);
     single_step_fn("hello_asm", hello_asm, 0, stack, stack_size);
-
-    // // this routine used a trampoline: check that the final pc
-    // // is correct.
-    // extern uint32_t exit_tramp_pc[]; // see <single-step-start.S>
-    // trace("expect: pc should be %x!\n", exit_tramp_pc);
-    // void *exit_pc = (void *)r.regs[15];
-    // if(exit_pc != exit_tramp_pc)
-    //     panic("final pc should be = %x, is %x!\n", exit_tramp_pc, exit_pc);
-    // trace("success: exit pc=%x!\n", exit_pc);
 }

@@ -4,6 +4,7 @@
 SRC += src/gpio.c
 SRC += src/uart.c
 SRC += src/gpio-int.c
+SRC += src/gprof.c
 SRC += src/sw-uart.c
 SRC += src/watchpoint.c
 SRC += src/breakpoint.c
