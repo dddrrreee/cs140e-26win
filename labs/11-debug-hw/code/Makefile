@@ -2,8 +2,8 @@
 # PROGS :=  0-example-debug-id.c $(wildcard [012]*-*test.c)
 
 PROGS += 2-match-test.c  
-# PROGS += 1-watchpt-byte-test.c  
-# PROGS += 1-watchpt-test.c  
+PROGS += 1-watchpt-byte-test.c  
+PROGS += 1-watchpt-test.c  
 # simplest: should run out of the box.
 # PROGS += 0-example-debug-id.c
 
@@ -12,11 +12,11 @@ PROGS += 2-match-test.c
 OUR_START = single-step-start.S
 
 # you should delete these when done.
-STAFF_OBJS += staff-watchpoint.o
-STAFF_OBJS += staff-breakpoint.o
+# STAFF_OBJS += staff-watchpoint.o
+# STAFF_OBJS += staff-breakpoint.o
 
-COMMON_SRC += breakpoint.c
-COMMON_SRC += watchpoint.c
+# COMMON_SRC += breakpoint.c
+# COMMON_SRC += watchpoint.c
 # COMMON_SRC += mini-watch.c
 # COMMON_SRC += mini-step.c
 

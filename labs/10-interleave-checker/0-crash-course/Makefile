@@ -12,7 +12,7 @@ STAFF_OBJS += $(L)/staff-objs/staff-kmalloc.o
 STAFF_OBJS += $(L)/staff-objs/staff-full-except-asm.o
 STAFF_OBJS += $(L)/staff-objs/staff-switchto-asm.o
 # STAFF_OBJS += $(L)/staff-objs/staff-breakpoint.o
-STAFF_OBJS += ../../11-debug-hw/code/staff-breakpoint.o
+# STAFF_OBJS += ../../11-debug-hw/code/staff-breakpoint.o
 STAFF_OBJS += $(L)/staff-objs/staff-full-except.o
 
 BOOTLOADER=my-install
