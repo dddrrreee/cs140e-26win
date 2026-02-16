@@ -1,6 +1,6 @@
 // trivial check example: push and pop values without having a lock.
 // should work fine w/ the data structure is correct.
-#include "check-interleave.h"
+#include "../check-interleave.h"
 #include "libc/circular.h"
 
 static int expected_A, expected_B;

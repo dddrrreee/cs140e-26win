@@ -1,6 +1,6 @@
 // trivial check example: push and pop values without having a lock.
 // should work fine
-#include "check-interleave.h"
+#include "../check-interleave.h"
 #include "libc/circular.h"
 
 enum { N = 8 };

@@ -1,5 +1,5 @@
 // trivial check example: should *always* fail
-#include "check-interleave.h"
+#include "../check-interleave.h"
 
 // do-nothing checker: should never fail.
 static void eps_A(checker_t *c) { }

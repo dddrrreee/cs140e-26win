@@ -1,6 +1,6 @@
 // trivial check example: increments variable without having a lock.
 // will fail.
-#include "check-interleave.h"
+#include "../check-interleave.h"
 
 // trivial counter.   broken.
 static volatile int cnt = 0;

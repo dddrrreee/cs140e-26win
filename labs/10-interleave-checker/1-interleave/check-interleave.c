@@ -69,7 +69,47 @@ static void single_step_handler_full(regs_t *r) {
 
 
     // TODO: you'll have to add code to do the switching here.
-    output("single-step handler: inst=%d: A:pc=%x\n", n,pc);
+    // output("single-step handler: inst=%d: A:pc=%x\n", n,pc);
+
+    // struct checker* c = (struct checker*)&r->regs[0];
+    // checker->ntrials++;
+
+    if (!checker->switched_p && n >= checker->switch_addr) {
+        int result = checker->B((struct checker*)checker);
+        
+        if (result == 1) {
+            checker->switched_p = 1;
+            brkpt_mismatch_stop();
+            brk_debug("GOT TO THIS\n");
+        }
+        // else {
+        //     checker->nerrors++;
+        // }
+        // Else just run another instruction
+
+        brk_debug("Stopped at %d with pc: %x\n", n, pc);
+    }
+    // output("\n");
+    // for (int i = 0; i < 17; i++) {
+    //     output("Reg %d: %x", i, r[i]);
+    // }
+    // output("\n");
+    // output("%x\n", r[REGS_CPSR]);
+    // regs
+    // if (pc == )
+    // output("%x\n", n);
+    // output("%x\n", checker->switch_addr);
+    
+    //      single step handler: 
+    //          if this is the ith instruction
+    //              call B().  
+    //              if B() returned 1 (B() could run)
+    //                  switched_p = 1;
+    //                  finish A() without single stepping
+    //              else
+    //                  run A() one more another instruction and try B()
+
+
 
     // recall: the weird way single step works: run the instruction 
     // at address <pc>, by setting up a mismatch fault for any other
@@ -169,60 +209,82 @@ int check(checker_t *c) {
     //
     // if AB commuted, we could also check BA but this won't be 
     // true in general.
-    for(int i = 0; i < 10; i++) {
-        // 1.  initialize the state.
-        c->init(c);     
-        // 2. run A()
-        c->A(c);
-        // 3. run B(): currently require that can't fail given that 
-        //    A() ran.
-        if(!c->B(c)) 
-            panic("B should not fail\n");
-        // 4. check that the state passes.
-        if(!c->check(c))
-            panic("check failed sequentially: code is broken\n");
-    }
+    // for(int i = 0; i < 10; i++) {
+    //     // 1.  initialize the state.
+    //     c->init(c);     
+    //     // 2. run A()
+    //     c->A(c);
+    //     // 3. run B(): currently require that can't fail given that 
+    //     //    A() ran.
+    //     if(!c->B(c)) 
+    //         panic("B should not fail\n");
+    //     // 4. check that the state passes.
+    //     if(!c->check(c))
+    //         panic("check failed sequentially: code is broken\n");
+    // }
 
     // shows how to run code with single stepping: do the same sequential
     // checking but run A() in single step mode: 
     // should still pass (obviously)
     checker = c;
-    for(int i = 0; i < 10; i++) {
-        c->init(c);
-        run_A_at_userlevel(c);
-        if(!c->B(c))
-            panic("B should not fail\n");
-        if(!c->check(c))
-            panic("check failed sequentially: code is broken\n");
-    }
+    // for(int i = 0; i < 10; i++) {
+    //     c->init(c);
+    //     run_A_at_userlevel(c);
+    //     output("%d iter\n", i);
+    //     if(!c->B(c))
+    //         panic("B should not fail\n");
+    //     if(!c->check(c))
+    //         panic("check failed sequentially: code is broken\n");
+    // }
 
     //******************************************************************
     // this is what you build: check that A(),B() code works
     // with one context switch for each possible instruction in
     // A()
-    //
-    // for(int i = 0; ; i++) {
-    //      int switched_p = 0;
-    //      c->init()
-    //      run c->A() in single step for i instructions.
-    //
-    //      single step handler: 
-    //          if this is the ith instruction
-    //              call B().  
-    //              if B() returned 1 (B() could run)
-    //                  switched_p = 1;
-    //                  finish A() without single stepping
-    //              else
-    //                  run A() one more another instruction and try B()
-    // 
-    //      checker:  when done running A(),B():
-    //          c->check()
-    //          if(!switched_p)
-    //              break;
-    //  }
-    // 
+    
+    c->interleaving_p = 1;
+    for(int i = 0; i < 10; i++) {
+        c->ntrials++;
+        // int switched_p = 0;
+        c->switched_p = 0;
+        c->init(c);
+        c->switch_addr = i;
+        run_A_at_userlevel(c);
+
+        c->inst_count = 0;
+
+        if (!c->check(c)) {
+            c->nerrors++;
+        }
+
+
+        // if (c->switched_p) {
+        //     break;
+        // }
+        // run c->A() in single step for i instructions.
+
+        // single step handler: 
+        //     if this is the ith instruction
+        //         call B().  
+        //         if B() returned 1 (B() could run)
+        //             switched_p = 1;
+        //             finish A() without single stepping
+        //         else
+        //             run A() one more another instruction and try B()
+
+        // checker:  when done running A(),B():
+        //     c->check()
+        //     if(!switched_p)
+        //         break;
+    }
+
+    if (c->nerrors > 0) {
+        return 0;
+    }
+
+
     //  return 0 if there were errors.
-    todo("implement true interleaving!\n");
+    // todo("implement true interleaving!\n");
 
     return 1;
 }

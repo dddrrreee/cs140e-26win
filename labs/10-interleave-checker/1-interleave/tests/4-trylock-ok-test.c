@@ -1,7 +1,7 @@
 // trivial check example: increments variable with a trylock
 // should succeed.
-#include "check-interleave.h"
-#include "pi-sys-lock.h"
+#include "../check-interleave.h"
+#include "../pi-sys-lock.h"
 
 // trivial counter.   broken.
 static volatile int cnt = 0;
