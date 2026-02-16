@@ -53,6 +53,7 @@ void notmain(void) {
 
     struct checker c = circq_mk_checker();
     int n;
+    // brk_verbose(1);
     if(!check(&c)) {
         assert(c.nerrors);
         panic("check should not have failed, trials=%d, errors=%d!!\n",

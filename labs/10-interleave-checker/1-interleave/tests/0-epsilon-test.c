@@ -28,7 +28,7 @@ void notmain(void) {
     enable_cache();
 
     // if you want to see what it's doing
-    brk_verbose(0);
+    // brk_verbose(1);
     struct checker c = eps_mk_checker();
     int n;
     if(!check(&c)) {

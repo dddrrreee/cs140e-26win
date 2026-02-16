@@ -25,6 +25,7 @@ void notmain(void) {
 
     struct checker c = cnt_mk_checker();
     int n;
+    // brk_verbose(1);
     if(check(&c))
         panic("check should have failed!\n");
     else 

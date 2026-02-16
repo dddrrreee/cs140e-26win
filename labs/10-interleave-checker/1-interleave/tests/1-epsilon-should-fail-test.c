@@ -26,7 +26,7 @@ void notmain(void) {
     // try with enable cache.
     enable_cache();
 
-    brk_verbose(0);
+    // brk_verbose(1);
     struct checker c = eps_mk_checker();
     int n;
     if(check(&c)) {
