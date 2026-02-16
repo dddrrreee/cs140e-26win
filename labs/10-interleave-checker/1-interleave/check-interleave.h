@@ -112,7 +112,24 @@ int check(checker_t *c);
 int syscall_invoke_asm(int sysno, ...);
 
 // you will implement this.
-#define sys_lock_try(addr)     syscall_invoke_asm(SYS_TRYLOCK, addr)
+// #define sys_lock_try(addr)     syscall_invoke_asm(SYS_TRYLOCK, addr)
+static inline int sys_lock_try(volatile int *l) {
+    // in rpi-inline-asm.h
+    uint32_t cpsr = cpsr_get();
+
+    // libpi/include/cpsr-util.h
+    if(mode_get(cpsr) == USER_MODE)
+        return syscall_invoke_asm(SYS_TRYLOCK, l);
+    else {
+        // output("Doing trylock manually");
+        // Set lock if not already set
+        if (*l == 0) {
+            *l = 1;
+            return 1;
+        }
+        return 0;
+    }
+}
 
 // a do-nothing syscall to test things.
 #define sys_test(x)          syscall_invoke_asm(SYS_TEST, x)

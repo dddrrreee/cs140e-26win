@@ -42,7 +42,13 @@ static int syscall_handler_full(regs_t *r) {
             switchto((void*)arg0);
             panic("not reached\n");
     case SYS_TRYLOCK:
-        panic("not handling yet\n");
+        pi_lock_t* l = (volatile int*)arg0;
+        if (*l == 0) {
+            *l = 1;
+            return 1;
+        }
+        return 0;
+        // panic("not handling yet\n");
 
     case SYS_TEST:
         printk("running empty syscall with arg=%d\n", arg0);
