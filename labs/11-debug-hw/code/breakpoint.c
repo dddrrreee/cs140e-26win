@@ -38,6 +38,8 @@ void brkpt_match_set(uint32_t addr) { // **
     // 4. Write to the BCR1 with its fields set as follows:
     bcr1 = cp14_bcr1_get();
 
+    bcr1 &= ~(0b11 << 21);       // Clear and set...
+
     bcr1 &= ~(1 << 20);          // BCR1[20] enable linking bit cleared
     bcr1 &= ~(0b11 << 14);       // BCR1[15:14] Matches in secure and non-secure
     bcr1 |= 0b1111 << 5;         // BCR1[8:5] Byte address select (+1-3 offsets also trigger)
@@ -90,6 +92,9 @@ void brkpt_mismatch_set(uint32_t addr) { // **
     
     // 4. Write to the BCR0 with its fields set as follows:
     bcr0 = cp14_bcr0_get();
+
+    bcr0 &= ~(0b11 << 21);       // Clear and set...
+    bcr0 |=  (0b10 << 21);       // IMVA mismatch
 
     bcr0 &= ~(1 << 20);          // BCR0[20] enable linking bit cleared
     bcr0 &= ~(0b11 << 14);       // BCR0[15:14] Matches in secure and non-secure
