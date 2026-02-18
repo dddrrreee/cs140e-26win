@@ -2,6 +2,8 @@
 #define __SWITCHTO_H__
 #include "cpsr-util.h"
 
+#include <stdint.h>
+
 // offsets used for registers in <regs> array.
 // exception trampoline should save in these
 // locations.
@@ -20,6 +22,7 @@ enum {
 typedef struct {
     // all 16 registers and cpsr
     uint32_t regs[17];
+    uint32_t reg_hash;
 } regs_t;
 
 // get <sp> and <lr> for mode <mode>.
