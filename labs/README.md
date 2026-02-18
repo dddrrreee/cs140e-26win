@@ -139,7 +139,6 @@ driver.
   - [9-mailbox](9-mailbox): we'll get more speed by using the GPU 
     mailbox interface to overclock the pi, bcm2835 and memory.
 
-====>
 
   - [10-interleave-checker](10-interleave-checker):
     we'll use single-step execution to write a concurrency checker that
@@ -150,6 +149,46 @@ driver.
     debugging hardware in a new way to catch memory corruption (such as
     null pointer bugs) *without virtual memory*.
 
+====>
+
+  - [12-preemptive](12-preemptive): you'll build a pre-emptive threads
+    package, using your debug hardware in tricky way to verify that
+    your context switching code is correct.    The method works more
+    generally to detect subtle operating system mistakes and will prove
+    invaluable next week when we do virtual memory, a topic known for
+    its extremely hard-to-track-down bugs.
+
+---------------------------------------------------------------------
+### Virtual memory I
+
+We now build virtual memory which will let us add (1) general memory
+protection and (2) user processes that can safely run with their own
+private address space.
+
+Conceptually, virtual memory is simple: it just involves building an
+integer function (usually using a table lookup; see: "page table") that
+can replaces one integer (a virtual address) with another (a physical
+address).  However, since this replacement occurs on every memory access,
+it must be fast.  This need for speed makes modern hardware for virtual
+memory wildly complicated.
+
+As a result, this topic will require the most reading --- about 100
+pages of the ARMv6 manual.  (You should start now.)  There's just no way
+around this complexity.  But, after you understand how to build virtual
+memory there's nothing more complicated, so anything else should be
+relatively easy.
+
+  - [13-pinned-vm](13-pinned-vm): you will build a simple virtual memory
+    system from ARM documents.   The interesting thing about this will
+    be how little code is required.  You will exploit a neat, novel
+    hack that lets you implement virtual memory without page tables,
+    removing a major source of complexity.    (Your system will be a
+    few hundred lines of code, which is not the typical size.)
+
+    You also add exception handling to catch protection and
+    missing translation faults.   You will be able to use this add
+    both user-level and kernel-level protection.
+   
 ---------------------------------------------------------------------
 
 
