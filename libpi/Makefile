@@ -8,7 +8,7 @@ SRC += src/gprof.c
 SRC += src/sw-uart.c
 SRC += src/watchpoint.c
 SRC += src/breakpoint.c
-# SRC += src/single-step.c
+SRC += src/single-step.c
 
 # if you want to use your own pullup-puldown
 # 1. put it in src/gpio-pud.c)

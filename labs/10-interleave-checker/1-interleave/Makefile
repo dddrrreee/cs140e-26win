@@ -27,7 +27,7 @@ L := $(CS140E_2026_PATH)/libpi/
 STAFF_OBJS += $(L)/staff-objs/staff-kmalloc.o
 STAFF_OBJS += $(L)/staff-objs/staff-full-except-asm.o
 STAFF_OBJS += $(L)/staff-objs/staff-switchto-asm.o
-STAFF_OBJS += $(L)/staff-objs/staff-breakpoint.o
+# STAFF_OBJS += $(L)/staff-objs/staff-breakpoint.o
 STAFF_OBJS += $(L)/staff-objs/staff-full-except.o
 
 
