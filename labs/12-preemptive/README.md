@@ -270,7 +270,6 @@ To see how `rfe` works:
 You'll now write the full save and restore code.  It won't be much
 code (less than 20 lines).  The art to this part of the lab is doing
 it in a way that will be easy to check.
-     
 
 To validate your register saving code: we will use a variation of the
 hack you have seen before:
@@ -283,10 +282,9 @@ hack you have seen before:
      (match the values in (1)).
   5. Fixed point: Fix (3) until (4) passes.
 
-To validate your register restore code: we will do new hack I came
-up with earlier in the quarter that makes this part so simple we've
-collapsed two labs into one:
-  1. Initialize the 17 entry register block `regs` to known values.
+To validate your register restore code: we will use a new that
+that makes this part so simple we've collapsed two labs into one:
+  1. Initialize the 17-entry register block `regs` to known values.
   2. Setup a mismatch fault for any address that isn't equal
      to the pc stored in `regs[15]`.
   3. Call `switchto_user_asm(regs)`, which will "restore" all registers
@@ -305,17 +303,13 @@ switching using a similar trick, with the exception (sorry) that you'll
 have to use a match fault.  At the end you'll have the full user-kernel
 context switching.
 
-
-What's great about this?
-  1. Without it, errors in save/restore go to a black hole.
-
 #### 1. Exception saving code: `1-simple-save-test.c`
 
-You'll write the system call trampoline to save all 17-registers
-into a contiguous array on the exception stack.  You write 
-two routines, both in `interrupt-asm.S`:
-  1. The system call trampline (`syscall_reg_save`).  
+***Code to write***:
+  1. The system call trampoline (`syscall_reg_save`) to save all 
+     17-registers into a contiguous array on the exception stack.  
   2. Steal the `rfe_asm` routine from `0-rfe-example`.
+  3.  Test: `1-simple-save-test.c`
 
 The basic idea:
  1.  If you look in `notmain`, the code uses `rfe_asm` to run
@@ -326,7 +320,6 @@ The basic idea:
     regs[1] = USER_MODE;
     rfe_asm(regs);
 ```
-
  2. `start.S:regs_init_ident` sets all registers to besides cpsr and pc
     to their register number and then does a system call instruction
     (`swi`):
@@ -339,11 +332,10 @@ The basic idea:
         mov r14, #14
         swi 1
 ```
- 3. TODO: implement the system call trampoline (`syscall_reg_save`)
-    save the 16 general registers, and the cpsr in 
-    a 17 entry array (on the stack) and pass the pointer to it
-    as the first argument to `syscall_handler`.
-
+ 3. Write the system call trampoline (`syscall_reg_save`)
+    save the 16 general registers, and the cpsr in a 17 entry array
+    (on the stack) and pass the pointer to it as the first argument to
+    `syscall_handler`.
  4. `syscall_handler` verifies the register array.
     has the right values and exits.  (i.e., it is one-shot).
 
@@ -355,16 +347,18 @@ When you're done `make check` should pass.
 
 #### 2. User-level register restore: `2-simple-restore-test.c`
 
-You'll now implement user-level register restore (`switchto_user_asm`).
+***Code to write***:
+  1.  User-level register restore: `switchto_user_asm`.
+  2.  Test: `2-simple-restore-test.c`
 
-A big problem with this code:
-  - If your restore code has a bug, the code often usually jumps into
+You'll now implement user-level register restore (`switchto_user_asm`).
+A big problem with writing the code correctly:
+  - If you have a bug, the code often usually jumps into
     a big black hole you will have no visibility into.
   - Very hard to debug since anything you do will perturb the state
     (often can't do anything but stare).
   - Our cute hack: abuse mis-matching!
   - Will make checking extremely simple, few moving parts.
-
 
 Basic idea (see: `2-simple-restore-test.c`):
   1. Initializes 17-entry register block to known values 
@@ -392,6 +386,10 @@ As before, all code to implement is in `interrupt-asm.S`:
 
 #### 3. User-level register restore: `3-multi-restore-test.c`
 
+***Code to write***:
+  1.  None.
+  2.  Test: `3-multiple-restore-test.c`
+
 You shouldn't have to write code for this test --- it just gives assurance
 by doing much much more aggressive validation:
   1. It runs the mismatch N times (default: 2000).
@@ -399,6 +397,10 @@ by doing much much more aggressive validation:
   3. Checks that your save and restore set them up.
 
 #### 4. Rewrite (2) and (3) to use matching.
+
+***Code to write***:
+  1. Write test: 4-match-restore-test.c`
+  2. Write test: 4-match-multi-restore-test.c`
 
 For this, you will take both tests above and write matching versions.
 This will:
@@ -415,6 +417,12 @@ Not much code, but you now have very aggressive checking.
 
 #### 5. Switching between privileged modes `switchto_priv_asm`.
 
+***Code to write***:
+  1. `switchto_priv_asm`.
+  2. Copy `priv_get_lr_sp_asm` from Part 1.
+  3. Test: `5-match-priv-test.c`
+  4. Test: `5-multi-priv-test.c`
+
 In this part you'll write code to save and restore registers when you're
 coming from and going to privileged (not user mode).
  1. The challenge here is that the caret operator `^` *only* loads
@@ -430,7 +438,7 @@ coming from and going to privileged (not user mode).
 What to write:
  - `switchto_priv_asm` that will switch-to a privilege mode rather
     than user mode (as `switchto_user_asm` does).
- - pull your `mode_get_lr_sp_asm` from part 1 over so that we
+ - pull your `priv_get_lr_sp_asm` from part 1 over so that we
    can patch registers after a fault from privileged mode.
 
 The easiest way to write:
@@ -469,5 +477,4 @@ Gross ARMv6 hack for handling traps from privileged code:
         void priv_get_lr_sp_asm(uint32_t mode, uint32_t *sp, uint32_t *lr)
 
     So just pull it over into `interrupt-asm.S.  The test will call it.
-
 
