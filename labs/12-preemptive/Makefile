@@ -1,4 +1,6 @@
-SUBDIRS= 0-srs-rfe-example/
+SUBDIRS  = 0-srs-rfe-example/
+SUBDIRS += 0-rfe-example/
+SUBDIRS += 1-banked/
 
 .PHONY: all check clean
 all check clean: $(SUBDIRS)
