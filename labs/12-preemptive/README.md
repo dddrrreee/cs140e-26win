@@ -150,13 +150,13 @@ pointer (sp) and return register (lr) from a privileged interrupt context.
 #### Banked registers
 
 <p align="center">
-  <img src="images/banked-registers.png" />
+  <img src="images/banked-registers.png" width="450" />
 </p>
 
 #### CPSR layout
 
 <p align="center">
-  <img src="images/cpsr-layout.png" />
+  <img src="images/cpsr-layout.png" width="450" />
 </p>
 
 ---------------------------------------------------------------
