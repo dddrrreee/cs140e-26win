@@ -196,52 +196,43 @@ Recommended to do them in the following order:
         MK_FN(cps_user_sp_get)
             cps #SYS_MODE
             prefetch_flush(r1);   @ note we have to use a caller reg
-        
             @ USER And SYSTEM share the same sp/lr/cpsr
             mov r0, sp
-        
             cps #SUPER_MODE
             prefetch_flush(r1);
-        
             bx lr
-
 ```
-
   2. `0-mem-user-sp-lr.c`: do the same as (1) but use the `ldm` and
       `stm` instructions with the carat operator "^" to access the
       user registers.  The routine `mem_user_sp_get` has an example:
 
-```
-        @ store the user mode sp into the address passed as the 
-        @ first parameter (i.e., in r0)
-        MK_FN(mem_user_sp_get)
-            @ store the user mode <sp> register into memory
-            @ pointed to by <r0>
-            stm r0, {sp}^
-            bx lr
-```
-
+            @ store the user mode sp into the address passed as the 
+            @ first parameter (i.e., in r0)
+            MK_FN(mem_user_sp_get)
+                @ store the user mode <sp> register into memory
+                @ pointed to by <r0>
+                stm r0, {sp}^
+                bx lr
      If you get confused about the semantics don't forget to look closely
      at the test!  (True for all the other parts, too.)
-
-
   3. `0-any-mode-sp-lr.c` generalize the mode switching method for
      any mode (other than USER) so that you can read and write registers
      at any privileged mode.
 
-     You should use the `msr` instruction with the `_cxsf` modifier to to set
-     the `cpsr` mode using a register:
+     You should use the `msr` instruction to set the `cpsr` mode 
+     using a register:
 
             msr cpsr_c, r0
 
-     Followed by a prefetch_flush that uses a caller saved register you
-     don't care about.  You can see an example of where we use `msr` in
-     `libpi/staff-start.S`
+     Followed by a `prefetch_flush` that uses a caller-saved register
+     you don't care about.  You can see an example of where we use `msr`
+     in `libpi/staff-start.S`
 
 You are now able to:
   1. Read and write banked registers of other modes (both privileged 
      and user-level).
   2. Switch between privileged modes.  
+
 We'll now setup the code to switch to user mode.
 
 ---------------------------------------------------------------
@@ -279,8 +270,6 @@ To see how `rfe` works:
 You'll now write the full save and restore code.  It won't be much
 code (less than 20 lines).  The art to this part of the lab is doing
 it in a way that will be easy to check.
-
-
      
 
 To validate your register saving code: we will use a variation of the
