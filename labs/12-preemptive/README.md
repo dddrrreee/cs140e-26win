@@ -384,10 +384,11 @@ Basic idea (see: `3-simple-restore-test.c`):
      - If not, you have a bug: easy to iterate since not much code.
 
 The second test `3-multi-restore-test.c` gives more assurance by doing
-much much more aggressive validation:
+much more aggressive validation:
   1. It runs the mismatch N times (default: 200).
   2. Sets all registers to random values.
   3. Checks that your save and restore set them up.
+  4. If this passes, it's surprising if there are still errors.
 
 ---------------------------------------------------------------
 ## 4. User-level register restore + test using match
@@ -399,15 +400,21 @@ much much more aggressive validation:
   4. They should work and match the outs.
 
 Goal:
-  1. Test your matching code.
+  1. Test your matching code + your understanding.
   2. Make you read the tests better :).
+
+We used mis-match in part 3 in case the code jumped to some really
+wild pc --- any value but one would cause a fault and we'd still
+get control.  Now that the pc seems to be set right, we can also
+do match faults.   The `.out` from before should be the same.
 
 You should be able to just copy the mismatch tests, modify them to use
 matching, and get the same output.
   1. Do it with our `staff-breakpoint.o` code check `make check` works.
   2. Then swap in your `breakpoint.c` and check `make check` still works.
 
-Not much code, but you now have very aggressive checking.
+Not much code, but you now have very aggressive checking: both match
+and mismatch, your exception trampoline, and your switching.
 
 ---------------------------------------------------------------
 ## 5.  Switching between privileged modes `switchto_priv_asm`.
@@ -476,11 +483,10 @@ Gross ARMv6 hack for handling traps from privileged code:
  3. So instead we do the following gross hack: in any exception
     handler that would come from privleged mode, we'll check the spsr
     and patch the registers afterwards.
+ 4. You'll write:
 
- 4. Fortunately, you don't have to write this code since you already
-    did in part 1:
-
+        // switchto-asm.S
         void priv_get_lr_sp_asm(uint32_t mode, uint32_t *sp, uint32_t *lr)
 
-    So just pull it over into `interrupt-asm.S.  The test will call it.
-
+    Based on `user_get_lr_sp_asm` it over into `switchto-asm.S`.
+    The test will call it.
