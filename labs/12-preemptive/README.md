@@ -1,8 +1,12 @@
 ## Errata and clarification.
 
 Clarifications:
-  1. `0-rfe-example/` wasn't pushed --- do a pull!
-  2. Several of the programs in `1-code` have this routine:
+  1. Because so many people are still working on the previous
+     interleave labs we are defering the thread interleaving discussed
+     in this lab til next week.  The discussion is still in today's
+     lab intro, but just treat it as foreshadowing rather than a TODO.
+  2. `0-rfe-example/` wasn't pushed --- do a pull!
+  3. Several of the programs in `1-code` have this routine:
 
             static inline void
             mode_get_lr_sp(uint32_t mode, uint32_t *sp, uint32_t *lr) {
