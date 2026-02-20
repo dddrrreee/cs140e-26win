@@ -265,7 +265,7 @@ To see how `rfe` works:
      for Part 2 below.
 
 ---------------------------------------------------------------
-## 2. Full context switching (`2-save-restore`)
+## Background: Full context switching (`2-save-restore`)
 
 You'll now write the full save and restore code.  It won't be much
 code (less than 20 lines).  The art to this part of the lab is doing
@@ -303,13 +303,15 @@ switching using a similar trick, with the exception (sorry) that you'll
 have to use a match fault.  At the end you'll have the full user-kernel
 context switching.
 
-#### 1. Exception saving code: `1-simple-save-test.c`
+
+---------------------------------------------------------------
+## 2. Exception saving code: `2-simple-save-test.c`
 
 ***Code to write***:
   1. The system call trampoline (`syscall_reg_save`) to save all 
      17-registers into a contiguous array on the exception stack.  
   2. Steal the `rfe_asm` routine from `0-rfe-example`.
-  3.  Test: `1-simple-save-test.c`
+  3.  Test: `2-simple-save-test.c`
 
 The basic idea:
  1.  If you look in `notmain`, the code uses `rfe_asm` to run
@@ -345,11 +347,16 @@ Iterate until you have the right register values. If you make a mistake
 don't stay passive!  Add whatever print statements you need, etc.
 When you're done `make check` should pass.
 
-#### 2. User-level register restore: `2-simple-restore-test.c`
+---------------------------------------------------------------
+## 3. User-level register restore + test using mismatch
 
 ***Code to write***:
-  1.  User-level register restore: `switchto_user_asm`.
-  2.  Test: `2-simple-restore-test.c`
+  1. User-level register restore: `switchto-asm.S:switchto_user_asm`.
+     Load all 17 registers and jump using `rfe`.
+  2. `interrupt-asm.S:prefetch_reg_save`: same as your system call 
+     trampoline, except the `lr` adjustment is different.
+  3.  Test: `3-simple-restore-test.c`
+  4.  Test: `3-multi-restore-test.c`
 
 You'll now implement user-level register restore (`switchto_user_asm`).
 A big problem with writing the code correctly:
@@ -360,7 +367,7 @@ A big problem with writing the code correctly:
   - Our cute hack: abuse mis-matching!
   - Will make checking extremely simple, few moving parts.
 
-Basic idea (see: `2-simple-restore-test.c`):
+Basic idea (see: `3-simple-restore-test.c`):
   1. Initializes 17-entry register block to known values 
      (as in the original test).
   2. Set a breakpoint mismatch on an illegal address (so any jump to
@@ -376,50 +383,39 @@ Basic idea (see: `2-simple-restore-test.c`):
      - If they are what you expect, both save/restore worked.
      - If not, you have a bug: easy to iterate since not much code.
 
-
-As before, all code to implement is in `interrupt-asm.S`:
-  - `switchto_user_regs_asm`:  load all 17 registers and jump
-     using `rfe`.
-  - `prefetch_reg_save`: same as your system call trampoline, except
-     the `lr` adjustment is different.
-
-
-#### 3. User-level register restore: `3-multi-restore-test.c`
-
-***Code to write***:
-  1.  None.
-  2.  Test: `3-multiple-restore-test.c`
-
-You shouldn't have to write code for this test --- it just gives assurance
-by doing much much more aggressive validation:
-  1. It runs the mismatch N times (default: 2000).
+The second test `3-multi-restore-test.c` gives more assurance by doing
+much much more aggressive validation:
+  1. It runs the mismatch N times (default: 200).
   2. Sets all registers to random values.
   3. Checks that your save and restore set them up.
 
-#### 4. Rewrite (2) and (3) to use matching.
+---------------------------------------------------------------
+## 4. User-level register restore + test using match
 
 ***Code to write***:
-  1. Write test: 4-match-restore-test.c`
-  2. Write test: 4-match-multi-restore-test.c`
+  1. Copy `3-simple-restore-test.c` as `4-match-restore-test.c`.
+  2. Copy `3-multi-restore-test.c` as 4-multi-match-restore-test.c`
+  3. Modify them to use matching rather than mismatching.
+  4. They should work and match the outs.
 
-For this, you will take both tests above and write matching versions.
-This will:
+Goal:
   1. Test your matching code.
   2. Make you read the tests better :).
 
 You should be able to just copy the mismatch tests, modify them to use
 matching, and get the same output.
-  1. Do it with our `staff-breakpoint.o` code check `make check`
-     works.
+  1. Do it with our `staff-breakpoint.o` code check `make check` works.
   2. Then swap in your `breakpoint.c` and check `make check` still works.
 
 Not much code, but you now have very aggressive checking.
 
-#### 5. Switching between privileged modes `switchto_priv_asm`.
+---------------------------------------------------------------
+## 5.  Switching between privileged modes `switchto_priv_asm`.
 
 ***Code to write***:
   1. `switchto_priv_asm`.
-  2. Copy `priv_get_lr_sp_asm` from Part 1.
+  2. Implement `priv_get_lr_sp_asm` (similar to `user_get_lr_sp_asm`
+     from Part 1.
   3. Test: `5-match-priv-test.c`
   4. Test: `5-multi-priv-test.c`
 
@@ -437,8 +433,9 @@ coming from and going to privileged (not user mode).
 
 What to write:
  - `switchto_priv_asm` that will switch-to a privilege mode rather
-    than user mode (as `switchto_user_asm` does).
- - pull your `priv_get_lr_sp_asm` from part 1 over so that we
+   than user mode (as `switchto_user_asm` does).
+ - Implement `priv_get_lr_sp_asm` similar to `user_get_lr_sp` 
+   from part 1) over so that we
    can patch registers after a fault from privileged mode.
 
 The easiest way to write:

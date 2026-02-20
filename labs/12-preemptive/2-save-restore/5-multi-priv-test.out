@@ -1,0 +1,421 @@
+TRACE:check_spsr:match fault from mode SYS MODE
+TRACE:check_regs:regs=0x486c7c6f
+TRACE:check_regs:regs=0x4e32f398
+TRACE:check_regs:regs=0x40bd0226
+TRACE:check_regs:regs=0x16feab35
+TRACE:check_regs:regs=0x68892d02
+TRACE:check_regs:regs=0x177bffc9
+TRACE:check_regs:regs=0x4ad5e883
+TRACE:check_regs:regs=0x360935d7
+TRACE:check_regs:regs=0x33e268b
+TRACE:check_regs:regs=0x287b31c3
+TRACE:check_regs:regs=0x7d7e5f7
+TRACE:check_regs:regs=0xab556b5
+TRACE:check_regs:regs=0x7d077c20
+TRACE:check_regs:regs=0x7d31038d
+TRACE:check_regs:regs=0x6fdb9848
+TRACE:check_regs:regs=0x1b2ce234
+TRACE:check_regs:regs=0x1f
+TRACE:check_regs:regs matched!
+TRACE:trial 0 passed!: expected(0x15acb3d2)==reg(0x15acb3d2)
+TRACE:check_spsr:match fault from mode SYS MODE
+TRACE:check_regs:regs=0xbd1bd36
+TRACE:check_regs:regs=0x70c366f7
+TRACE:check_regs:regs=0x480265bc
+TRACE:check_regs:regs=0x54ee0614
+TRACE:check_regs:regs=0x7d9fdb38
+TRACE:check_regs:regs=0x7b1fe1ab
+TRACE:check_regs:regs=0x11d96655
+TRACE:check_regs:regs=0x1c99c162
+TRACE:check_regs:regs=0x1b72050c
+TRACE:check_regs:regs=0x188c0f8
+TRACE:check_regs:regs=0x6f276bfb
+TRACE:check_regs:regs=0x2a77ff98
+TRACE:check_regs:regs=0x449f5176
+TRACE:check_regs:regs=0x473e907d
+TRACE:check_regs:regs=0x72e47c07
+TRACE:check_regs:regs=0x4b49143c
+TRACE:check_regs:regs=0x1f
+TRACE:check_regs:regs matched!
+TRACE:trial 1 passed!: expected(0xc717af72)==reg(0xc717af72)
+TRACE:check_spsr:match fault from mode SUPER MODE
+TRACE:check_regs:regs=0x9e3273c
+TRACE:check_regs:regs=0x7b5b7211
+TRACE:check_regs:regs=0x1f77926d
+TRACE:check_regs:regs=0x54b90fbf
+TRACE:check_regs:regs=0x3164a7e9
+TRACE:check_regs:regs=0x22b5b8f8
+TRACE:check_regs:regs=0x7d344183
+TRACE:check_regs:regs=0x393c8de0
+TRACE:check_regs:regs=0x2d6b0fad
+TRACE:check_regs:regs=0x7a3bbda3
+TRACE:check_regs:regs=0x366d916d
+TRACE:check_regs:regs=0x1d46a7f5
+TRACE:check_regs:regs=0x106f630
+TRACE:check_regs:regs=0x58dbc82e
+TRACE:check_regs:regs=0x2918652c
+TRACE:check_regs:regs=0xc729749c
+TRACE:check_regs:regs=0x13
+TRACE:check_regs:regs matched!
+TRACE:trial 2 passed!: expected(0x8e854717)==reg(0x8e854717)
+TRACE:check_spsr:match fault from mode UNDEF MODE
+TRACE:check_regs:regs=0x7e066b40
+TRACE:check_regs:regs=0x6f6a385f
+TRACE:check_regs:regs=0x1bfe0f95
+TRACE:check_regs:regs=0xfdfd195
+TRACE:check_regs:regs=0xc03f9c1
+TRACE:check_regs:regs=0x377014a1
+TRACE:check_regs:regs=0x1168928d
+TRACE:check_regs:regs=0x7b2b65bc
+TRACE:check_regs:regs=0x61e8143a
+TRACE:check_regs:regs=0x5607e404
+TRACE:check_regs:regs=0x4269f63a
+TRACE:check_regs:regs=0x54cc9041
+TRACE:check_regs:regs=0x68da2913
+TRACE:check_regs:regs=0x4a6588de
+TRACE:check_regs:regs=0x5eafb77e
+TRACE:check_regs:regs=0x90d66c90
+TRACE:check_regs:regs=0x1b
+TRACE:check_regs:regs matched!
+TRACE:trial 3 passed!: expected(0xfc074dd0)==reg(0xfc074dd0)
+TRACE:check_spsr:match fault from mode SYS MODE
+TRACE:check_regs:regs=0x3368c73d
+TRACE:check_regs:regs=0x159a430d
+TRACE:check_regs:regs=0xc92d443
+TRACE:check_regs:regs=0x309d08c0
+TRACE:check_regs:regs=0x4ed6d0ed
+TRACE:check_regs:regs=0x39fde3f0
+TRACE:check_regs:regs=0x2ad8c663
+TRACE:check_regs:regs=0x544625b
+TRACE:check_regs:regs=0x57448be6
+TRACE:check_regs:regs=0x2bdfbc94
+TRACE:check_regs:regs=0x5e202a89
+TRACE:check_regs:regs=0x5cf112
+TRACE:check_regs:regs=0x1daa19bb
+TRACE:check_regs:regs=0x7efe5873
+TRACE:check_regs:regs=0x7e635c52
+TRACE:check_regs:regs=0x3451486c
+TRACE:check_regs:regs=0x1f
+TRACE:check_regs:regs matched!
+TRACE:trial 4 passed!: expected(0x9acbdecc)==reg(0x9acbdecc)
+TRACE:check_spsr:match fault from mode UNDEF MODE
+TRACE:check_regs:regs=0xe432de7
+TRACE:check_regs:regs=0x19184bdc
+TRACE:check_regs:regs=0x526c7ca9
+TRACE:check_regs:regs=0x1fabc075
+TRACE:check_regs:regs=0x1443b199
+TRACE:check_regs:regs=0x345490e3
+TRACE:check_regs:regs=0x75b3a479
+TRACE:check_regs:regs=0x56ada7d3
+TRACE:check_regs:regs=0x9212125
+TRACE:check_regs:regs=0x5e8dcd8c
+TRACE:check_regs:regs=0x211330b1
+TRACE:check_regs:regs=0x67d0d8a3
+TRACE:check_regs:regs=0x42c368b0
+TRACE:check_regs:regs=0xaf04bfc
+TRACE:check_regs:regs=0x1b399fe0
+TRACE:check_regs:regs=0x6176aef8
+TRACE:check_regs:regs=0x1b
+TRACE:check_regs:regs matched!
+TRACE:trial 5 passed!: expected(0x2388dfcf)==reg(0x2388dfcf)
+TRACE:check_spsr:match fault from mode SYS MODE
+TRACE:check_regs:regs=0x4bd6a8a1
+TRACE:check_regs:regs=0x27347cab
+TRACE:check_regs:regs=0x5181042f
+TRACE:check_regs:regs=0x76af6f04
+TRACE:check_regs:regs=0x2c78df06
+TRACE:check_regs:regs=0x28c59015
+TRACE:check_regs:regs=0x228f2b98
+TRACE:check_regs:regs=0xa99098f
+TRACE:check_regs:regs=0x29228127
+TRACE:check_regs:regs=0x40394554
+TRACE:check_regs:regs=0x9976202
+TRACE:check_regs:regs=0x2785dd79
+TRACE:check_regs:regs=0x4d4d976f
+TRACE:check_regs:regs=0x2493ca0a
+TRACE:check_regs:regs=0x35c90b61
+TRACE:check_regs:regs=0x99978d2c
+TRACE:check_regs:regs=0x1f
+TRACE:check_regs:regs matched!
+TRACE:trial 6 passed!: expected(0xfb79c379)==reg(0xfb79c379)
+TRACE:check_spsr:match fault from mode UNDEF MODE
+TRACE:check_regs:regs=0x5574cbd6
+TRACE:check_regs:regs=0x7aa994e4
+TRACE:check_regs:regs=0x2b54d797
+TRACE:check_regs:regs=0x4b28704f
+TRACE:check_regs:regs=0x51573cb7
+TRACE:check_regs:regs=0x3475f8bc
+TRACE:check_regs:regs=0x29b63ddb
+TRACE:check_regs:regs=0x726a6d68
+TRACE:check_regs:regs=0x1c46d15f
+TRACE:check_regs:regs=0x6c79a68b
+TRACE:check_regs:regs=0x7d5ab964
+TRACE:check_regs:regs=0x37807140
+TRACE:check_regs:regs=0x44d75249
+TRACE:check_regs:regs=0x14ddd9a3
+TRACE:check_regs:regs=0x35719e1
+TRACE:check_regs:regs=0xb02f3bd4
+TRACE:check_regs:regs=0x1b
+TRACE:check_regs:regs matched!
+TRACE:trial 7 passed!: expected(0x1ca03b87)==reg(0x1ca03b87)
+TRACE:check_spsr:match fault from mode UNDEF MODE
+TRACE:check_regs:regs=0x7a0688e5
+TRACE:check_regs:regs=0x1884adfb
+TRACE:check_regs:regs=0xf246de8
+TRACE:check_regs:regs=0x1c95b47e
+TRACE:check_regs:regs=0x231db78b
+TRACE:check_regs:regs=0x3846ef10
+TRACE:check_regs:regs=0x5ccef9d2
+TRACE:check_regs:regs=0x2cb5198d
+TRACE:check_regs:regs=0x5fcccc89
+TRACE:check_regs:regs=0x2a1c9141
+TRACE:check_regs:regs=0x5148e398
+TRACE:check_regs:regs=0x1595d7ea
+TRACE:check_regs:regs=0x1082748c
+TRACE:check_regs:regs=0x48492a4c
+TRACE:check_regs:regs=0x6b0aa3c0
+TRACE:check_regs:regs=0x2cb025c4
+TRACE:check_regs:regs=0x1b
+TRACE:check_regs:regs matched!
+TRACE:trial 8 passed!: expected(0xd65691bd)==reg(0xd65691bd)
+TRACE:check_spsr:match fault from mode SYS MODE
+TRACE:check_regs:regs=0x3633140f
+TRACE:check_regs:regs=0x5c834628
+TRACE:check_regs:regs=0x2813faa0
+TRACE:check_regs:regs=0x5fe951ea
+TRACE:check_regs:regs=0x4eedb391
+TRACE:check_regs:regs=0x445acbff
+TRACE:check_regs:regs=0x4c62f876
+TRACE:check_regs:regs=0x4c486cf5
+TRACE:check_regs:regs=0x7bdb3d3f
+TRACE:check_regs:regs=0x113a4abf
+TRACE:check_regs:regs=0x61264699
+TRACE:check_regs:regs=0x7f325720
+TRACE:check_regs:regs=0x7d4619b4
+TRACE:check_regs:regs=0x4785246c
+TRACE:check_regs:regs=0x7938e006
+TRACE:check_regs:regs=0x572b1ec0
+TRACE:check_regs:regs=0x1f
+TRACE:check_regs:regs matched!
+TRACE:trial 9 passed!: expected(0xabfe8477)==reg(0xabfe8477)
+TRACE:check_spsr:match fault from mode SYS MODE
+TRACE:check_regs:regs=0x15ce9484
+TRACE:check_regs:regs=0x38e87f3b
+TRACE:check_regs:regs=0xef08164
+TRACE:check_regs:regs=0x729d8e56
+TRACE:check_regs:regs=0x659d98c8
+TRACE:check_regs:regs=0x6ebd4dee
+TRACE:check_regs:regs=0x1cba1f97
+TRACE:check_regs:regs=0x36e67c60
+TRACE:check_regs:regs=0x45325d8
+TRACE:check_regs:regs=0x2d3c9423
+TRACE:check_regs:regs=0x7f2fa6ac
+TRACE:check_regs:regs=0x6f5dc999
+TRACE:check_regs:regs=0x38689d94
+TRACE:check_regs:regs=0x72cda890
+TRACE:check_regs:regs=0x2590dda8
+TRACE:check_regs:regs=0x53af8ef4
+TRACE:check_regs:regs=0x1f
+TRACE:check_regs:regs matched!
+TRACE:trial 10 passed!: expected(0x388faa5f)==reg(0x388faa5f)
+TRACE:check_spsr:match fault from mode IRQ MODE
+TRACE:check_regs:regs=0x57a2f93
+TRACE:check_regs:regs=0x63d9974e
+TRACE:check_regs:regs=0x5f3c6f2f
+TRACE:check_regs:regs=0x51dd2809
+TRACE:check_regs:regs=0x30220443
+TRACE:check_regs:regs=0x5b17ac6f
+TRACE:check_regs:regs=0x631772c8
+TRACE:check_regs:regs=0x11484adc
+TRACE:check_regs:regs=0x5a4a038f
+TRACE:check_regs:regs=0x605d8c7d
+TRACE:check_regs:regs=0x58cd6f48
+TRACE:check_regs:regs=0x5382e395
+TRACE:check_regs:regs=0x7628542d
+TRACE:check_regs:regs=0x2f77019d
+TRACE:check_regs:regs=0x69517819
+TRACE:check_regs:regs=0xbc434da0
+TRACE:check_regs:regs=0x12
+TRACE:check_regs:regs matched!
+TRACE:trial 11 passed!: expected(0x111e1c7e)==reg(0x111e1c7e)
+TRACE:check_spsr:match fault from mode IRQ MODE
+TRACE:check_regs:regs=0x5bef066f
+TRACE:check_regs:regs=0x14ae6c30
+TRACE:check_regs:regs=0x2d24d0ef
+TRACE:check_regs:regs=0x78a92606
+TRACE:check_regs:regs=0x4b94e891
+TRACE:check_regs:regs=0x3177f6c8
+TRACE:check_regs:regs=0x25e5ba2a
+TRACE:check_regs:regs=0x4ac48f3d
+TRACE:check_regs:regs=0x20d5c061
+TRACE:check_regs:regs=0x5e4e57be
+TRACE:check_regs:regs=0x3d9237cd
+TRACE:check_regs:regs=0x46669e09
+TRACE:check_regs:regs=0x733a3b7b
+TRACE:check_regs:regs=0x5873dafd
+TRACE:check_regs:regs=0x4be0cd9c
+TRACE:check_regs:regs=0x5c4f4b24
+TRACE:check_regs:regs=0x12
+TRACE:check_regs:regs matched!
+TRACE:trial 12 passed!: expected(0xf22f1cad)==reg(0xf22f1cad)
+TRACE:check_spsr:match fault from mode SYS MODE
+TRACE:check_regs:regs=0x1dbdf5a5
+TRACE:check_regs:regs=0x735d70d
+TRACE:check_regs:regs=0x12c7f69c
+TRACE:check_regs:regs=0xd5686e
+TRACE:check_regs:regs=0x187e21e9
+TRACE:check_regs:regs=0x6d11fa2b
+TRACE:check_regs:regs=0x6132f4eb
+TRACE:check_regs:regs=0x714b9132
+TRACE:check_regs:regs=0x4094ddc1
+TRACE:check_regs:regs=0x575b4918
+TRACE:check_regs:regs=0x20c292cf
+TRACE:check_regs:regs=0x29e655da
+TRACE:check_regs:regs=0x66c1c80
+TRACE:check_regs:regs=0x5f2a15d0
+TRACE:check_regs:regs=0x5d55c4a
+TRACE:check_regs:regs=0x6c6a22c0
+TRACE:check_regs:regs=0x1f
+TRACE:check_regs:regs matched!
+TRACE:trial 13 passed!: expected(0x68e0b306)==reg(0x68e0b306)
+TRACE:check_spsr:match fault from mode UNDEF MODE
+TRACE:check_regs:regs=0x7e7e8250
+TRACE:check_regs:regs=0x66af7141
+TRACE:check_regs:regs=0x3dc6dd88
+TRACE:check_regs:regs=0x24643c7a
+TRACE:check_regs:regs=0x3174007f
+TRACE:check_regs:regs=0x5e9c9de9
+TRACE:check_regs:regs=0x2b29439
+TRACE:check_regs:regs=0x6f06384c
+TRACE:check_regs:regs=0x25033bf2
+TRACE:check_regs:regs=0x75eccfb4
+TRACE:check_regs:regs=0x477a134a
+TRACE:check_regs:regs=0x70e4098f
+TRACE:check_regs:regs=0x4d00a27e
+TRACE:check_regs:regs=0x7f2a5d77
+TRACE:check_regs:regs=0xea1ff34
+TRACE:check_regs:regs=0x50d9e62c
+TRACE:check_regs:regs=0x1b
+TRACE:check_regs:regs matched!
+TRACE:trial 14 passed!: expected(0x520dded5)==reg(0x520dded5)
+TRACE:check_spsr:match fault from mode SUPER MODE
+TRACE:check_regs:regs=0xf7767a2
+TRACE:check_regs:regs=0x6cb49b74
+TRACE:check_regs:regs=0x7f044e3e
+TRACE:check_regs:regs=0x70aa5c8d
+TRACE:check_regs:regs=0x5e002ca6
+TRACE:check_regs:regs=0x3f992bff
+TRACE:check_regs:regs=0x4805a5a5
+TRACE:check_regs:regs=0x7ec2bf75
+TRACE:check_regs:regs=0x697f81da
+TRACE:check_regs:regs=0x4e71c225
+TRACE:check_regs:regs=0x5decd546
+TRACE:check_regs:regs=0x6f54de24
+TRACE:check_regs:regs=0x698c4ad6
+TRACE:check_regs:regs=0x6a3bbc06
+TRACE:check_regs:regs=0x6dd36074
+TRACE:check_regs:regs=0x40eef05c
+TRACE:check_regs:regs=0x13
+TRACE:check_regs:regs matched!
+TRACE:trial 15 passed!: expected(0x36fe24fd)==reg(0x36fe24fd)
+TRACE:check_spsr:match fault from mode IRQ MODE
+TRACE:check_regs:regs=0x12379cef
+TRACE:check_regs:regs=0x1afbc96
+TRACE:check_regs:regs=0x69f3777
+TRACE:check_regs:regs=0x14ea3128
+TRACE:check_regs:regs=0x70b5f4e3
+TRACE:check_regs:regs=0x2ba27369
+TRACE:check_regs:regs=0xad700dc
+TRACE:check_regs:regs=0x3830082d
+TRACE:check_regs:regs=0x1c867cf8
+TRACE:check_regs:regs=0x57d7a35a
+TRACE:check_regs:regs=0x375a65a4
+TRACE:check_regs:regs=0x2b287c2d
+TRACE:check_regs:regs=0x2c0e1ce5
+TRACE:check_regs:regs=0x494cb9b7
+TRACE:check_regs:regs=0x3a9fe3cf
+TRACE:check_regs:regs=0x630ae168
+TRACE:check_regs:regs=0x12
+TRACE:check_regs:regs matched!
+TRACE:trial 16 passed!: expected(0x443c5758)==reg(0x443c5758)
+TRACE:check_spsr:match fault from mode UNDEF MODE
+TRACE:check_regs:regs=0x2b4a405d
+TRACE:check_regs:regs=0x76c2e500
+TRACE:check_regs:regs=0x7ea33f5
+TRACE:check_regs:regs=0x734fe602
+TRACE:check_regs:regs=0x7585a476
+TRACE:check_regs:regs=0x7169b5cf
+TRACE:check_regs:regs=0x41c1a828
+TRACE:check_regs:regs=0x537279bc
+TRACE:check_regs:regs=0x60be93f3
+TRACE:check_regs:regs=0x2b4df2fe
+TRACE:check_regs:regs=0x3dae35c2
+TRACE:check_regs:regs=0x4e91f467
+TRACE:check_regs:regs=0x7b89af15
+TRACE:check_regs:regs=0x65b0cf50
+TRACE:check_regs:regs=0x60c99156
+TRACE:check_regs:regs=0xf4e5aeb0
+TRACE:check_regs:regs=0x1b
+TRACE:check_regs:regs matched!
+TRACE:trial 17 passed!: expected(0x87c55a34)==reg(0x87c55a34)
+TRACE:check_spsr:match fault from mode IRQ MODE
+TRACE:check_regs:regs=0x75b3c27e
+TRACE:check_regs:regs=0x6def608f
+TRACE:check_regs:regs=0x17f27a30
+TRACE:check_regs:regs=0x8ac35b
+TRACE:check_regs:regs=0x261f68bc
+TRACE:check_regs:regs=0x3478f729
+TRACE:check_regs:regs=0x586266b5
+TRACE:check_regs:regs=0x5d79ce60
+TRACE:check_regs:regs=0x5fa17356
+TRACE:check_regs:regs=0x470839b
+TRACE:check_regs:regs=0x26c68817
+TRACE:check_regs:regs=0x1a415725
+TRACE:check_regs:regs=0x1d333bf5
+TRACE:check_regs:regs=0x6f17900c
+TRACE:check_regs:regs=0x458b9782
+TRACE:check_regs:regs=0x4fd883d4
+TRACE:check_regs:regs=0x12
+TRACE:check_regs:regs matched!
+TRACE:trial 18 passed!: expected(0xaa746e55)==reg(0xaa746e55)
+TRACE:check_spsr:match fault from mode IRQ MODE
+TRACE:check_regs:regs=0x38db7d85
+TRACE:check_regs:regs=0x97bc56b
+TRACE:check_regs:regs=0x686b79d0
+TRACE:check_regs:regs=0x7a9d25ad
+TRACE:check_regs:regs=0x5cee3f27
+TRACE:check_regs:regs=0x492a0dc3
+TRACE:check_regs:regs=0x25eb18ab
+TRACE:check_regs:regs=0x1a9c74e9
+TRACE:check_regs:regs=0x17bc022b
+TRACE:check_regs:regs=0x2174c7c0
+TRACE:check_regs:regs=0x4d4439
+TRACE:check_regs:regs=0x78859381
+TRACE:check_regs:regs=0x1eae336c
+TRACE:check_regs:regs=0x6c9d4b00
+TRACE:check_regs:regs=0x6e395600
+TRACE:check_regs:regs=0x32764fec
+TRACE:check_regs:regs=0x12
+TRACE:check_regs:regs matched!
+TRACE:trial 19 passed!: expected(0xe0bdcc39)==reg(0xe0bdcc39)
+TRACE:check_spsr:match fault from mode IRQ MODE
+TRACE:check_regs:regs=0x6ec4195b
+TRACE:check_regs:regs=0x32bcfcb7
+TRACE:check_regs:regs=0x3908bc5a
+TRACE:check_regs:regs=0x47268010
+TRACE:check_regs:regs=0x1036cb17
+TRACE:check_regs:regs=0x18aa2fb0
+TRACE:check_regs:regs=0x4b9703ab
+TRACE:check_regs:regs=0x36fd532e
+TRACE:check_regs:regs=0x32eb86d5
+TRACE:check_regs:regs=0x68ca3fa0
+TRACE:check_regs:regs=0x2614e33b
+TRACE:check_regs:regs=0x78771e58
+TRACE:check_regs:regs=0x7cc06096
+TRACE:check_regs:regs=0x1d16a73c
+TRACE:check_regs:regs=0x31529bdd
+TRACE:check_regs:regs=0x18f09804
+TRACE:check_regs:regs=0x12
+TRACE:check_regs:regs matched!
+TRACE:trial 20 passed!: expected(0xb12742)==reg(0xb12742)
+TRACE:prefetch_abort_handler:SUCCESS: 20 trials!

@@ -1,0 +1,19 @@
+TRACE:check_regs:regs=0
+TRACE:check_regs:regs=1
+TRACE:check_regs:regs=2
+TRACE:check_regs:regs=3
+TRACE:check_regs:regs=4
+TRACE:check_regs:regs=5
+TRACE:check_regs:regs=6
+TRACE:check_regs:regs=7
+TRACE:check_regs:regs=8
+TRACE:check_regs:regs=9
+TRACE:check_regs:regs=10
+TRACE:check_regs:regs=11
+TRACE:check_regs:regs=12
+TRACE:check_regs:regs=13
+TRACE:check_regs:regs=14
+TRACE:check_regs:regs=4112
+TRACE:check_regs:regs=18
+TRACE:check_regs:regs matched!
+TRACE:prefetch_abort_handler:success!
