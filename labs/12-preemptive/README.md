@@ -439,15 +439,6 @@ and mismatch, your exception trampoline, and your switching.
 ---------------------------------------------------------------
 ## 5.  Switching between privileged modes `switchto_priv_asm`.
 
-NOTE:
-  - ***IF YOU SEE THIS DO A PULL****
-  - ***IF YOU SEE THIS DO A PULL****
-  - ***IF YOU SEE THIS DO A PULL****
-  - ***IF YOU SEE THIS DO A PULL****
-  - ***IF YOU SEE THIS DO A PULL****
-  - ***IF YOU SEE THIS DO A PULL****
-
-
 ***Code to write***:
   1. `switchto-asm.S:switchto_priv_asm`.
   2. Pull your `mode_get_lr_sp_asm` (from Part 1, used to get the
@@ -456,10 +447,10 @@ NOTE:
   3. Test: `5-match-priv-test.c`
   4. Test: `5-multi-priv-test.c`
 
-In this part you'll write code to save and restore registers when you're
-coming from and going to privileged (not user mode).
+In this part you'll write code to save and restore registers when 
+you're coming from and going to privileged (not user mode).
  1. The challenge here is that the caret operator `^` *only* loads
-    or stores to user mode registers, not to any other (privileged)
+    from or stores to user-mode registers, not to any other (privileged)
     mode, so won't help us here.  So, since you don't have caret,
     what do you do?   The good thing is that `0-user-sp-lr-asm.S`
     has most of the pieces already so you can just use those.
@@ -491,22 +482,19 @@ NOTE:
             msr   cpsr_cxsf, <reg>
 ```
 
-     This is easy because you already wrote a routine that will
-     get these two registers from an arbitrary privileged mode:
-
-
 Gross ARMv6 hack for handling traps from privileged code:
  1. Our trampolines currently assume we came from user mode.
- 2. We could write the assembly to check the spsr and load
-    sp and lr from the right mode depending on where we came from.
+ 2. We could write the assembly to check the `spsr` and load
+    `sp` and `lr` from the right mode based on where we came from.
     This would likely add some bugs.
  3. So instead we do the following gross hack: in any exception
-    handler that would come from privleged mode, we'll check the spsr
-    and patch the registers afterwards.
+    handler that would come from privleged mode, we'll check the 
+    `spsr` and patch the `sp` and `lr` registers afterwards.
  4. Pull your `mode_get_lr_sp_asm` code from Part 1, put it in 
     into `switchto-asm.S` and rename it:
 
         // switchto-asm.S
         void priv_get_lr_sp_asm(uint32_t mode, uint32_t *sp, uint32_t *lr)
 
-    The test will call it.
+    The test routine `fixup_regs` will call it to fixup the 
+    registers in the `prefetch_abort_handler`.
