@@ -14,6 +14,7 @@ static inline int mode_legal(unsigned mode) {
         || mode == SUPER_MODE
         || mode == ABORT_MODE
         || mode == UNDEF_MODE
+        || mode == FIQ_MODE
         || mode == SYS_MODE)
             return 1;
     panic("illegal mode: %x [bits=%b]\n", mode, mode);

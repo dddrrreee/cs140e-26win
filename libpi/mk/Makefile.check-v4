@@ -1,3 +1,7 @@
+# only difference from <Makefile.check-v3> is that we fixed a sed
+# bug --- the problem is that this would cause problems with the
+# old .out's not matching, so we keep seperate.
+#
 # stand-alone makefile for testing: aims to compare subsequent runs ("make checkall")
 # against a previous reference run ("make emitall")
 #
