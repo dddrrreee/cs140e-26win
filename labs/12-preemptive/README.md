@@ -412,10 +412,19 @@ Not much code, but you now have very aggressive checking.
 ---------------------------------------------------------------
 ## 5.  Switching between privileged modes `switchto_priv_asm`.
 
+NOTE:
+  - ***IF YOU SEE THIS DO A PULL****
+  - ***IF YOU SEE THIS DO A PULL****
+  - ***IF YOU SEE THIS DO A PULL****
+  - ***IF YOU SEE THIS DO A PULL****
+  - ***IF YOU SEE THIS DO A PULL****
+  - ***IF YOU SEE THIS DO A PULL****
+
+
 ***Code to write***:
-  1. `switchto_priv_asm`.
+  1. `switchto-asm.S:switchto_priv_asm`.
   2. Implement `priv_get_lr_sp_asm` (similar to `user_get_lr_sp_asm`
-     from Part 1.
+     from Part 1): get the lr and sp for a given mode.
   3. Test: `5-match-priv-test.c`
   4. Test: `5-multi-priv-test.c`
 
@@ -434,9 +443,9 @@ coming from and going to privileged (not user mode).
 What to write:
  - `switchto_priv_asm` that will switch-to a privilege mode rather
    than user mode (as `switchto_user_asm` does).
- - Implement `priv_get_lr_sp_asm` similar to `user_get_lr_sp` 
-   from part 1) over so that we
-   can patch registers after a fault from privileged mode.
+ - Implement `priv_get_lr_sp_asm` similar to `user_get_lr_sp`
+   from part 1) over so that we can patch registers after a fault from
+   privileged mode.
 
 The easiest way to write:
   1. It should work should work for any privileged mode, not just
