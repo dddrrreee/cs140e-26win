@@ -1,13 +1,13 @@
-## Pre-emptive threads, checked with single step equivalence 
+## Preemptive threads, checked with single step equivalence 
 
 <p align="center">
   <img src="images/pi-ss-equiv.jpg" width="700" />
 </p>
 
 By the end of this lab you'll have:
- 1. Deeply-audited, pre-emptive context switching that can save and
+ 1. Deeply-audited, preemptive context switching that can save and
     restore all 17 ARM registers and switch between privileged modes.
- 2. A pre-emptive threads built using it.
+ 2. A preemptive threads built using it.
 And, in a plot twist no one has ever said about such code: It won't
 actually be that hard.  In fact, when you're done with lab we'll be
 surprised if your code has a bug in it.  (Surprised enough that you
@@ -17,7 +17,7 @@ two simple yet powerful tricks using debug hardware:
      easily -- by using debugging mismatch/match faults to catch execution
      at the *exact* point after your context restore completes and jumps
      to the intended resume `pc` (but before executing the instruction
-     at `pc`).  As a result, you can forensically yet leisurely check
+     at `pc`).  As a result, you can forensic-ally yet leisurely check
      that restore correctly set all registers to their intended values
      no matter what mode you are jumping from or to.
   2. You'll use mismatch faults and register hashing to verify that
@@ -41,13 +41,13 @@ virtual memory you build to make user level processes that can implement
 the UNIX system calls `fork()`, `exec()`, `exit()`, `waitpid()` etc.
 You'll also use your single-step equivalence code to validate that this
 combination works by using it compute the equivalence hash of processes
-running without virtual memory and pre-emption and verifying you get
-the same hash result when running with virtual memory, pre-emption.
+running without virtual memory and preemption and verifying you get
+the same hash result when running with virtual memory, preemption.
 
 For the rest of this quarter we will frequently use the single-step
-equivalance hashing algorithm:
+equivalence hashing algorithm:
   1. Compute a ongoing register-hash of code as it runs in the simplest
-     way possible (e.g., no pre-emption, single-threaded, start-to-finish,
+     way possible (e.g., no preemption, single-threaded, start-to-finish,
      no virtual memory, etc)
   2. Re-compute the register hash while running the code with as much
      fancy complexity as possible (virtual memory, context-switching at
@@ -62,20 +62,20 @@ equivalence checking.  (You should let us know if this ever occurs!)
 #### Checkoff
 
 The specific code you'll write:
-  - Your own low-level pre-emptive context switching and exception
+  - Your own low-level preemptive context switching and exception
     trampoline code that will replace ours from the last couple of 
     labs (`full-except-asm.o` and `staff-switchto-asm.o`).
   - The equivalent hashing code.
 
 Both of these will be fairly short.  The payoff at the end is a simple
-pre-emptive thread package that works.
+preemptive thread package that works.
 
 Checkoff:
   1. `make check` passes in `1-code` with all tests.
   2. `make check` passes in `2-code` with all tests.
 
 ---------------------------------------------------------------
-## Background: pre-emption and context switching.
+## Background: preemption and context switching.
 
 Preemption refers to forcibly interrupting a computation (for example
 using a timer-interrupt or debug exception) with, generally, a strong
@@ -90,7 +90,7 @@ positives:
   2. It is relatively simple to use. By default, non-preemptive thread
      is a non-interruptible, "critical section" that is only ever broken
      up by voluntary yields.  A nice point from Atul Adya et al: by
-     default everything in a non-prepemptive system is a critical section.
+     default everything in a non-preemptive system is a critical section.
      In contrast, by default in a preemptive system nothing is.
 
 We need preemption for our OS because we can't generally rely on user
@@ -105,7 +105,7 @@ processes to run cooperatively:
      at worse it would lose data and gain bugs.
 
 Thus, we want to two things:
-  1. To be able to run user-processes pre-emptively where they can be
+  1. To be able to run user-processes preemptively where they can be
      forcibly interrupted (e.g., by a timer-interrupt, device interrupt
      or debug hardware exceptions).
   2. When we interrupt a process we want to *completely* save its state
@@ -142,7 +142,7 @@ complications:
      "banked" registers or shadow registers.
   2. When an exception occurs we will be at a different
      mode than the code that got interrupted, making it easy-mistake
-     awkward to accesss the shadow registers of another mode.
+     awkward to access the shadow registers of another mode.
 Thus, you'll have to write code to read and write the registers at one
 level from another --- for the most part, the unprivileged user stack
 pointer (sp) and return register (lr) from a privileged interrupt context.
