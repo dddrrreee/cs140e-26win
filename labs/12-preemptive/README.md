@@ -1,3 +1,20 @@
+## Errata and clarification.
+
+Clarifications:
+  1. Several of the programs in `1-code` have this routine:
+
+        static inline void
+        mode_get_lr_sp(uint32_t mode, uint32_t *sp, uint32_t *lr) {
+            if(mode == USER_MODE)
+                mode_get_lr_sp(SYS_MODE, sp, lr);
+            else
+                mode_get_lr_sp(mode, sp, lr);
+        }
+
+     They should instead be calling `mode_get_lr_sp_asm` since otherwise
+     will do infinite recursion.  Fortunately, the tests don't actually
+     call this, but it is confusing.
+
 ## Preemptive threads, checked with single step equivalence 
 
 <p align="center">
@@ -89,7 +106,7 @@ in that threads ran until they yielded the processor (e.g., by calling
 positives:
   1. It is relatively simple to build: just save and restore the 
      callee-saved registers.  
-  2. It is relatively simple to use. By default, non-preemptive thread
+  2. It is relatively simple to use. By default, a non-preemptive thread
      is a non-interruptible, "critical section" that is only ever broken
      up by voluntary yields.  A nice point from Atul Adya et al: by
      default everything in a non-preemptive system is a critical section.
@@ -145,6 +162,7 @@ complications:
   2. When an exception occurs we will be at a different
      mode than the code that got interrupted, making it easy-mistake
      awkward to access the shadow registers of another mode.
+
 Thus, you'll have to write code to read and write the registers at one
 level from another --- for the most part, the unprivileged user stack
 pointer (sp) and return register (lr) from a privileged interrupt context.
@@ -168,7 +186,7 @@ Code to write:
  1. The file `1-banked/banked-set-get-asm.S` contains all the 
     code to write. 
  2. Before modifying anything: `make check` should pass.
- 3. Swap out the staff `staff-banked-set-get-asm.o` in the 
+ 3. Goal: Swap out the staff `staff-banked-set-get-asm.o` in the 
     Makefile, implement the code in `banked-set-get-asm.S`, 
     and make sure `make check` still passes.
 
@@ -432,8 +450,9 @@ NOTE:
 
 ***Code to write***:
   1. `switchto-asm.S:switchto_priv_asm`.
-  2. Implement `priv_get_lr_sp_asm` (similar to `user_get_lr_sp_asm`
-     from Part 1): get the lr and sp for a given mode.
+  2. Pull your `mode_get_lr_sp_asm` (from Part 1, used to get the
+     lr and sp from a privileged mode) and rename it
+     `priv_get_lr_sp_asm` (sorry, annoying I know).
   3. Test: `5-match-priv-test.c`
   4. Test: `5-multi-priv-test.c`
 
@@ -452,9 +471,8 @@ coming from and going to privileged (not user mode).
 What to write:
  - `switchto_priv_asm` that will switch-to a privilege mode rather
    than user mode (as `switchto_user_asm` does).
- - Implement `priv_get_lr_sp_asm` similar to `user_get_lr_sp`
-   from part 1) over so that we can patch registers after a fault from
-   privileged mode.
+ - Pull `mode_get_lr_sp_asm` (from part 1) over so that we can patch
+   registers after a fault from privileged mode.
 
 The easiest way to write:
   1. It should work should work for any privileged mode, not just
@@ -485,10 +503,10 @@ Gross ARMv6 hack for handling traps from privileged code:
  3. So instead we do the following gross hack: in any exception
     handler that would come from privleged mode, we'll check the spsr
     and patch the registers afterwards.
- 4. You'll write:
+ 4. Pull your `mode_get_lr_sp_asm` code from Part 1, put it in 
+    into `switchto-asm.S` and rename it:
 
         // switchto-asm.S
         void priv_get_lr_sp_asm(uint32_t mode, uint32_t *sp, uint32_t *lr)
 
-    Based on `user_get_lr_sp_asm` it over into `switchto-asm.S`.
     The test will call it.
