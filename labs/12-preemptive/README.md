@@ -2,7 +2,7 @@
 
 Clarifications:
   1. Several of the programs in `1-code` have this routine:
-
+```
         static inline void
         mode_get_lr_sp(uint32_t mode, uint32_t *sp, uint32_t *lr) {
             if(mode == USER_MODE)
@@ -10,7 +10,7 @@ Clarifications:
             else
                 mode_get_lr_sp(mode, sp, lr);
         }
-
+```
      They should instead be calling `mode_get_lr_sp_asm` since otherwise
      will do infinite recursion.  Fortunately, the tests don't actually
      call this, but it is confusing.
