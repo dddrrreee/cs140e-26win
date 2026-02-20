@@ -1,5 +1,14 @@
 ## Errata and clarification.
 
+How to write the assembly:
+ 1. The hard (probably wrong) way is to write all the assembly all
+    at once.  Difficult to get right.
+ 2. The easy way: the tests are such that you can save a few registers
+    print them and panic in the exception handler.  See if they
+    are right, and if so, start adding. 
+ 3. If you don't do this, it's very easy to make a mistake in one,
+    return, and then jump into hyperspace.
+
 Clarifications:
   1. Because so many people are still working on the previous
      interleave labs we are defering the thread interleaving discussed
