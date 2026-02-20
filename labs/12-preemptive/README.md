@@ -1,6 +1,6 @@
 ## Errata and clarification.
 
-How to write the assembly:
+How to write the save/restore assembly:
  1. The hard (probably wrong) way is to write all the assembly all
     at once.  Difficult to get right.
  2. The easy way: the tests are such that you can save a few registers
