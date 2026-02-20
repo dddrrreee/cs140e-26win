@@ -8,11 +8,13 @@ By the end of this lab you'll have:
  1. Deeply-audited, preemptive context switching that can save and
     restore all 17 ARM registers and switch between privileged modes.
  2. A preemptive threads built using it.
+
 And, in a plot twist no one has ever said about such code: It won't
 actually be that hard.  In fact, when you're done with lab we'll be
 surprised if your code has a bug in it.  (Surprised enough that you
 should please come tell me about it!)  This happy state will come from
 two simple yet powerful tricks using debug hardware:
+
   1. You'll verify your full context switching restore code works  ---
      easily -- by using debugging mismatch/match faults to catch execution
      at the *exact* point after your context restore completes and jumps
