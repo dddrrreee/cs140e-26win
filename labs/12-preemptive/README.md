@@ -9,13 +9,15 @@ How to write the assembly:
  3. If you don't do this, it's very easy to make a mistake in one,
     return, and then jump into hyperspace.
 
-Common mistake: not setting the exception sp.
-  - Recall: for simplicity we always set the exception sp as the first
+Common mistake: not setting the exception stack pointer.
+  - Recall: for simplicity we always set the exception `sp` as the first
     instruction in the exception handler.  (`4-interrupt` is a good
     example, but pretty much any of our exception handling `.S` files
     will do so.)
-  - If you don't do this, the sp will be set to 0.  And then grow
-    down into high memory, which is probably somewhere in the GPU.
+  - If you don't do this, the `sp` will often be the reset value of
+    0.  And then grow down into high memory --- unclear what happens since
+    we only have 512MB of memory and this will be near the 4GB range.
+    Might be GPU garbage, not sure.
 
 Clarifications:
   1. Because so many people are still working on the previous
