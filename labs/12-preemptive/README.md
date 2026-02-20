@@ -13,7 +13,7 @@ Clarifications:
 
      They should instead be calling `mode_get_lr_sp_asm` since otherwise
      will do infinite recursion.  Fortunately, the tests don't actually
-     call this, but it is confusing.
+     call it, but it is confusing.
 
 ## Preemptive threads, checked with single step equivalence 
 
