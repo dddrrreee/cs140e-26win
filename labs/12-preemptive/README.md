@@ -437,15 +437,16 @@ Not much code, but you now have very aggressive checking: both match
 and mismatch, your exception trampoline, and your switching.
 
 ---------------------------------------------------------------
-## 5.  Switching between privileged modes `switchto_priv_asm`.
+## 5.  Switching between privileged modes: `switchto_priv_asm`.
 
 ***Code to write***:
   1. `switchto-asm.S:switchto_priv_asm`.
-  2. Pull your `mode_get_lr_sp_asm` (from Part 1, used to get the
-     lr and sp from a privileged mode) and rename it
-     `priv_get_lr_sp_asm` (sorry, annoying I know).
-  3. Test: `5-match-priv-test.c`
-  4. Test: `5-multi-priv-test.c`
+  2. `switchto-asm.S:priv_get_lr_sp_asm`: for this just pull your
+      `mode_get_lr_sp_asm` (from Part 1, used to get the lr and sp from
+      a privileged mode) and rename it to `priv_get_lr_sp_asm` (sorry,
+      annoying I know).
+  3. Test to pass: `5-match-priv-test.c`
+  4. Test to pass: `5-multi-priv-test.c`
 
 In this part you'll write code to save and restore registers when 
 you're coming from and going to privileged (not user mode).
