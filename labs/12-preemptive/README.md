@@ -9,6 +9,14 @@ How to write the assembly:
  3. If you don't do this, it's very easy to make a mistake in one,
     return, and then jump into hyperspace.
 
+Common mistake: not setting the exception sp.
+  - Recall: for simplicity we always set the exception sp as the first
+    instruction in the exception handler.  (`4-interrupt` is a good
+    example, but pretty much any of our exception handling `.S` files
+    will do so.)
+  - If you don't do this, the sp will be set to 0.  And then grow
+    down into high memory, which is probably somewhere in the GPU.
+
 Clarifications:
   1. Because so many people are still working on the previous
      interleave labs we are defering the thread interleaving discussed
