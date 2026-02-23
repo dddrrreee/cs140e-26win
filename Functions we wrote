@@ -1,0 +1,106 @@
+00008000 <__code_start__>:
+00008024 <PUT32>:
+0000802c <GET32>:
+00008034 <BRANCHTO>:
+00008038 <cq_pop_nonblock>:
+00008078 <circq_check>:
+000080d0 <cq_pop>:
+00008134 <circq_B>:
+00008228 <cq_push>:
+000082d0 <circq_A>:
+00008338 <cq_init>:
+000084a8 <circq_init>:
+000084d4 <circq_mk_checker>:
+00008520 <notmain>:
+000085fc <syscall_invoke_asm>:
+0000860c <bits_mask>:
+0000866c <bits_get>:
+000086f4 <mode_legal>:
+0000874c <mode_get>:
+000087ac <mode_str>:
+0000885c <bits_clr>:
+000088e8 <mode_set>:
+00008954 <A_terminated>:
+000089b8 <switchto>:
+000089e0 <single_step_handler_full>:
+00008b30 <syscall_handler_full>:
+00008c04 <switchto_cswitch>:
+00008c94 <run_A_at_userlevel>:
+00008d60 <check>:
+00008e68 <kmalloc_heap_end>:
+00008e78 <kmalloc_heap_start>:
+00008e88 <kmalloc_heap_ptr>:
+00008e98 <kmalloc_init_set_start>:
+00008fc0 <kmalloc_notzero>:
+000090ac <kmalloc>:
+00009110 <kmalloc_aligned>:
+00009220 <kfree_all>:
+00009234 <bits_mask>:
+00009294 <mode_get>:
+00009304 <fixup_regs>:
+00009334 <switchto>:
+0000935c <prefetch_abort_full_except>:
+00009424 <data_abort_full_except>:
+000094ec <undef_abort_full_except>:
+000095b4 <syscall_full_except>:
+000096e0 <full_except_set_prefetch>:
+0000973c <full_except_set_undef>:
+00009798 <full_except_set_data_abort>:
+000097f4 <full_except_set_syscall>:
+00009850 <full_except_install>:
+; 00009a14 <brkpt_match_init>:
+; 00009a30 <brkpt_match_set>:
+; 00009a7c <brkpt_match_stop>:
+; 00009a98 <brkpt_match_get>:
+; 00009aa0 <brkpt_mismatch_set>:
+; 00009af0 <brkpt_mismatch_start>:
+; 00009b04 <brkpt_mismatch_stop>:
+; 00009b20 <brkpt_fault_p>:
+00009b44 <memset>:
+00009bdc <printk>:
+00009c08 <emit_val>:
+00009d18 <vprintk>:
+00009f84 <default_putchar>:
+00009f9c <rpi_putchar_set>:
+00009fb4 <asm_not_reached_helper>:
+00009fdc <asm_not_implemented_helper>:
+0000a004 <asm_todo_helper>:
+0000a038 <asm_bad_exception_helper>:
+0000a050 <caches_enable>:
+0000a060 <caches_disable>:
+0000a070 <caches_is_enabled>:
+0000a09c <clean_reboot>:
+0000a0bc <program_end>:
+0000a0c8 <_cstart>:
+0000a104 <int_vector>:
+0000a134 <reset_vector>:
+0000a164 <rpi_reboot>:
+0000a1a0 <timer_get_usec_raw>:
+0000a1b4 <timer_get_usec>:
+0000a1d0 <delay_us>:
+0000a1f4 <delay_ms>:
+0000a20c <delay_sec>:
+; 0000a224 <uart_init>:
+; 0000a2e0 <uart_can_put8>:
+; 0000a2f8 <uart_put8>:
+; 0000a32c <uart_has_data>:
+; 0000a344 <uart_get8>:
+; 0000a374 <uart_get8_async>:
+; 0000a394 <uart_tx_is_empty>:
+; 0000a3ac <uart_flush_tx>:
+; 0000a3c8 <uart_disable>:
+0000a414 <putk>:
+0000a448 <dev_barrier>:
+0000a44c <dmb>:
+0000a458 <dsb>:
+; 0000a460 <rpi_wait>:                      ? doesnt rly do anything
+; 0000a464 <gpio_set_on>:
+; 0000a4c4 <gpio_set_off>:
+; 0000a524 <gpio_write>:
+; 0000a540 <gpio_read>:
+; 0000a5ac <gpio_set_pullup>:               ?
+; 0000a650 <gpio_set_pulldown>:             ?
+; 0000a6f4 <gpio_set_function>:
+; 0000a7cc <gpio_set_output>:
+; 0000a7dc <gpio_set_input>:
+0000a7ec <delay_cycles>:
