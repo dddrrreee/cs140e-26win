@@ -17,7 +17,7 @@ int gpio_has_interrupt(void) { // **
     // Read interrupt register IRQ PENDING 2
     volatile unsigned value = GET32(IRQ_PENDING_2);
     dev_barrier();
-    return (value >> (49-32)) & 1;
+    return (value >> (GPIO_INT0-32)) & 1;
 
 }
 
@@ -46,7 +46,7 @@ void gpio_int_rising_edge(unsigned pin) {
     dev_barrier();
     
     // Enable interrupt
-    PUT32(INT_EN_2, 1 << (49 - 32));
+    PUT32(INT_EN_2, 1 << (GPIO_INT0 - 32));
 
     dev_barrier();
 }
@@ -70,7 +70,7 @@ void gpio_int_falling_edge(unsigned pin) { // **
     dev_barrier();
     
     // Enable interrupt
-    PUT32(INT_EN_2, 1 << (49 - 32));
+    PUT32(INT_EN_2, 1 << (GPIO_INT0 - 32));
 
     dev_barrier();
 }
