@@ -12,6 +12,8 @@
 // our prototypes. 
 #include "test-interrupts.h"
 
+
+
 /*************** You don't need to modify this first part ********** 
  *
  */
@@ -106,7 +108,27 @@ volatile int n_falling;
  *  2. check if it was a falling edge: return 1 if so, 0 otherwise
  */
 int falling_handler(uint32_t pc) {
-    todo("implement this: return 0 if no rising int\n");
+    dev_barrier();
+
+    // Checking for gpio event
+    if (!gpio_has_interrupt()) {
+        return 0;
+    }
+
+    volatile int detected = 0;
+
+    // More efficient way? Also we prob don't need to do this
+    for (volatile unsigned pin = 0; pin < 32; pin++) {
+        if (gpio_event_detected(pin) && gpio_read(pin) == 0) { // For rising edge 
+            gpio_event_clear(pin);
+            detected = 1;
+            n_falling++;
+            break;
+        } 
+    }
+
+    dev_barrier();
+    return detected;
 }
 
 // initialize for a falling edge
@@ -135,7 +157,27 @@ volatile int n_rising;
  *  2. check if it was a rising edge: return 1 if so, 0 otherwise
  */
 int rising_handler(uint32_t pc) {
-    todo("implement this: return 0 if no rising int\n");
+    dev_barrier();
+
+    // Checking for gpio event
+    if (!gpio_has_interrupt()) {
+        return 0;
+    }
+
+    volatile int detected = 0;
+
+    // More efficient way? Also we prob don't need to do this
+    for (volatile unsigned pin = 0; pin < 32; pin++) {
+        if (gpio_event_detected(pin) && gpio_read(pin) == 1) { // For rising edge 
+            gpio_event_clear(pin);
+            detected = 1;
+            n_rising++;
+            break;
+        } 
+    }
+
+    dev_barrier();
+    return detected;
 }
 
 static void rising_init_fn(void) {
@@ -185,8 +227,12 @@ void rise_fall_init(void) {
 int timer_test_handler(uint32_t pc) {
     dev_barrier();
 
-    // should look very similar to the timer interrupt handler.
-    todo("implement this by stealing pieces from 4-interrupts/0-timer-int");
+    unsigned pending = GET32(IRQ_basic_pending);
+    if((pending & ARM_Timer_IRQ) == 0)
+        return 0;
+
+    // Clear the ARM Timer interrupt: 
+    PUT32(ARM_Timer_IRQ_Clear, 1);
 
     dev_barrier();
     return 1;
