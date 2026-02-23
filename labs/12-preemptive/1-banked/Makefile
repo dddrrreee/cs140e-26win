@@ -10,8 +10,8 @@ PROGS  += 0-user-sp-lr.c
 PROGS  += 0-cps-user-sp-lr.c
 
 # Put your code in <banked-set-get-asm.S>
-# COMMON_SRC += banked-set-get-asm.S  
-STAFF_OBJS += staff-banked-set-get-asm.o
+COMMON_SRC += banked-set-get-asm.S  
+# STAFF_OBJS += staff-banked-set-get-asm.o
 
 # change this if you want!
 BOOTLOADER=my-install
