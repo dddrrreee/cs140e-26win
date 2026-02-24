@@ -9,18 +9,17 @@ syscall_reg_save:
 
     @ asm_todo("save all 17 registers onto stack: pass pointer to syscall_handler");
     @ For last 2 registers
-    sub sp, sp, #8 
+    sub sp, sp, #(17*4) 
 
     @ 0-14 (in for loop)
     stmia sp, {r0-r14}^
 
     @ Link register of SVR
-    @ stia sp, [sp, #(15*4)]
     str lr, [sp, #(15*4)]
 
     @ User CPSR pushed into SPSR during syscall exception
-    mrs r1, spsr
-    str r1, [sp, #(16*4)]
+    mrs r7, spsr
+    str r7, [sp, #(16*4)]
 
     mov r0, sp
     b syscall_handler
