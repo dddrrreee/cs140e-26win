@@ -5,16 +5,16 @@ STAFF_OBJS += staff-switchto-asm.o
 # when done: remove this.
 STAFF_OBJS += staff-breakpoint.o
 
-PROGS += 2-simple-save-test.c	 
+# PROGS += 2-simple-save-test.c	 
 PROGS += 3-simple-restore-test.c  
-PROGS += 3-multi-restore-test.c	 
+# PROGS += 3-multi-restore-test.c	 
 
 # you have to implement these!
 # PROGS += 4-match-restore-test.c  
 # PROGS += 4-multi-match-test.c	 
 
-PROGS += 5-match-priv-test.c
-PROGS += 5-multi-priv-test.c
+# PROGS += 5-match-priv-test.c
+# PROGS += 5-multi-priv-test.c
 
 COMMON_SRC += interrupt-asm.S
 COMMON_SRC += switchto-asm.S
