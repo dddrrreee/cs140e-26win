@@ -6,7 +6,6 @@
 
 @ terminal syscall: print the registers we have.
 syscall_reg_save:
-
     @ asm_todo("save all 17 registers onto stack: pass pointer to syscall_handler");
     @ For last 2 registers
     sub sp, sp, #(17*4) 
@@ -48,9 +47,30 @@ syscall_reg_save_vec:
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ used by the rest of tests.
 
+@ ** Executed in EXCEPTION space directly after notmain() calls switchto_user_asm
+@    due to mismatch bkpt
 @ don't forget to fix lr!
 prefetch_reg_save:
-    asm_todo("save 17 registers onto stack: pass pointer to prefetc_abort_handler");
+    asm_todo("save 17 registers onto stack: pass pointer to prefetch_abort_handler");
+    
+    @ 0-14 (in for loop)
+    stm sp, {r0-r14}^
+    @ For returning
+    mov r0, sp
+
+    @ fix LR for prefetch abort (lr_abt = fault_pc + 4)
+    add r1, pc, #4
+    str r1, [r0, #(15*4)]
+    @ str lr, [sp, #(15*4)]
+
+    @ @ save user cpsr (in spsr_abt)
+    mrs r2, spsr
+    str r2, [r0, #(16*4)]
+
+    sub sp, sp, #68
+    @ mov r0, sp
+    @ mov sp, #prefetch_abort_handler
+    b prefetch_abort_handler
     asm_not_reached();
 
 .align 5; 
