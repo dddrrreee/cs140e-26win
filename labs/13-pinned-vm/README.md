@@ -133,6 +133,15 @@ You need to show that:
   1. You aren't linking against `staff-pinned-vm.o`.
   2. You can handle protection and unallowed access faults.
 
+There are a ton of extensions, mostly not written down.  Here's
+a few:
+  1. Make a Valgrind memory checker or Eraser concurrency checking
+     using pinned memory + domains and yoour watchpoint code.
+  2. Now that you have pinned-VM, you can turn on the data cache
+     and GPIO device memory attributes --- see how much faster you 
+     can make piece of code.
+
+
 ------------------------------------------------------------------------------
 #### Virtual memory crash course.
 
