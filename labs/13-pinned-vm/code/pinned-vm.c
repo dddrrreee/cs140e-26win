@@ -109,3 +109,20 @@ void pin_set_context(uint32_t asid) {
 void pin_clear(unsigned idx)  {
     staff_pin_clear(idx);
 }
+
+void lockdown_print_entry(unsigned idx) {
+    panic("make sure to use <trace_nofn> not <trace>\n");
+}
+
+void lockdown_print_entries(const char *msg) {
+    staff_lockdown_print_entries(msg);
+#if 0
+    trace("-----  <%s> ----- \n", msg);
+    trace("  pinned TLB lockdown entries:\n");
+
+    for(int i = 0; i < 8; i++)
+        lockdown_print_entry(i);
+    trace("----- ---------------------------------- \n");
+#endif
+}
+

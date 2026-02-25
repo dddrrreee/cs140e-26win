@@ -20,7 +20,7 @@ void notmain(void) {
     assert(!mmu_is_enabled());
 
     // default domain bits.
-    staff_pin_mmu_init(dom_bits);
+    pin_mmu_init(dom_bits);
 
     unsigned idx = 0;
     pin_t kern = pin_mk_global(dom_kern, no_user, MEM_uncached);

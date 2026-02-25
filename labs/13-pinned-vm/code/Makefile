@@ -10,7 +10,7 @@ PROGS += tests/2-test-procmap.c
 # your code will go here.
 COMMON_SRC = pinned-vm.c
 
-O = $(CS140E_2025_PATH)/libpi
+O = $(CS140E_2026_PATH)/libpi
 STAFF_OBJS += $(O)/staff-objs/staff-full-except.o
 STAFF_OBJS += $(O)/staff-objs/staff-full-except-asm.o
 STAFF_OBJS += $(O)/staff-objs/staff-switchto-asm.o
@@ -18,7 +18,7 @@ STAFF_OBJS += staff-mmu-asm.o
 STAFF_OBJS += staff-mmu-except.o  
 STAFF_OBJS += staff-mmu.o  
 STAFF_OBJS += staff-pinned-vm.o
-STAFF_OBJS += $(O)/staff-objs/kmalloc.o
+STAFF_OBJS += $(O)/staff-objs/staff-kmalloc.o
 
 # define this if you need to give the device for your pi
 TTYUSB = 

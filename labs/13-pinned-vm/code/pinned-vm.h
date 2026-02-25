@@ -233,6 +233,10 @@ int staff_pin_exists(uint32_t va, int verbose_p);
 // not sure if we are guaranteed that these have their
 // valid bit set to 0?   
 void lockdown_print_entries(const char *msg);
+void staff_lockdown_print_entries(const char *msg);
+
+void lockdown_print_entry(unsigned idx);
+void staff_lockdown_print_entry(unsigned idx);
 
 // set pin index <idx> to all 0s.
 void pin_clear(unsigned idx);

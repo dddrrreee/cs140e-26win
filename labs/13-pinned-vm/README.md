@@ -4,72 +4,6 @@
   <img src="images/int-int.jpg" width="450" />
 </p>
 
-### Clarifications and Errata
-
-BUG:
-  - Part 3: This step is a bit annoying.  The initial `staff-pinned-vm.o`
-    exports the name `lockdown_print_entries`, so you wouldn't be
-    able to write yours and still use staff routines.
-
-    So do a git pull, and drop the following code at the end of your
-    `pinned-vm.c` and do a `make clean` and `make check` to make
-    sure things still work.
-
-```
-void staff_lockdown_print_entry(unsigned idx);
-
-void lockdown_print_entry(unsigned idx) {
-
-    staff_lockdown_print_entry(idx);
-}
-
-void lockdown_print_entries(const char *msg) {
-    trace("-----  <%s> ----- \n", msg);
-    trace("  pinned TLB lockdown entries:\n");
-    for(int i = 0; i < 8; i++)
-        lockdown_print_entry(i);
-    trace("----- ---------------------------------- \n");
-}
-```
-
-    
-
-  - Part 2: change the following calls in the tests to delete
-    the `staff_pin_`.  So from:
-
-        1-test-two-addr.c: staff_pin_mmu_init(dom_bits);
-
-    To:
-
-        1-test-two-addr.c: pin_mmu_init(dom_bits);
-
-    Note: ignore the  `1-test-setup.c` test.  We don't use it.
-
-  - Part 2: You have to implement both `pinned-vm.c:pin_mmu_init` and
-    `pin_set_context` at the same time.
-
-  - You are only implementing the pinned routines.  For today,
-    you should call any needed `staff_mmu_*` routines (just 
-    like the tests do) rather than re-implementing them.  You
-    will write the `mmu_*` routines next week.
-  - We added some clarification for `pin_clear` and `tlb_contains_va`.
-    in Part 2.
-
-Hints:
-  - We don't use secure mode.  So just set that stuff to 0.
-
-  - One way to make things much easier is to run with our code
-    and call `lockdown_print_entries` to see the exact content of the TLB.
-    Makes it easy to check what bits should be (e.g., for secure mode,
-    not secure).  Even easier is that you could also look directly in
-    the .out files since they often have printed the TLB.
-
-    Of course, if you want Daniel mode do without :).  
-
-  - NOTE: if you do call `lockdown_print_entries` it modifies
-    the lockdown index register so you can't rely on its value
-    afterwards.  In particular you probably don't want to call
-    it when doing `pin_mmu_sec`.
 
 ------------------------------------------------------------------------------
 ### Overview
@@ -358,6 +292,34 @@ Then start going through the rest.  For:
   - `tlb_contains_va`: this is on 3-79.  Do a translation in the current
     mode, as a "privileged read".  In both success and failure cases,
     assign the result of the translation to `result`.
+
+#### Clarifications and Errata
+
+  - Part 2: You have to implement both `pinned-vm.c:pin_mmu_init` and
+    `pin_set_context` at the same time.
+
+  - You are only implementing the pinned routines.  For today,
+    you should call any needed `staff_mmu_*` routines (just 
+    like the tests do) rather than re-implementing them.  You
+    will write the `mmu_*` routines next week.
+  - We added some clarification for `pin_clear` and `tlb_contains_va`.
+    in Part 2.
+
+Hints:
+  - We don't use secure mode.  So just set that stuff to 0.
+
+  - One way to make things much easier is to run with our code
+    and call `lockdown_print_entries` to see the exact content of the TLB.
+    Makes it easy to check what bits should be (e.g., for secure mode,
+    not secure).  Even easier is that you could also look directly in
+    the .out files since they often have printed the TLB.
+
+    Of course, if you want Daniel mode do without :).  
+
+  - NOTE: if you do call `lockdown_print_entries` it modifies
+    the lockdown index register so you can't rely on its value
+    afterwards.  In particular you probably don't want to call
+    it when doing `pin_mmu_sec`.
 
 ----------------------------------------------------------------------
 ## Part 3: implement `pinned-vm.c:lockdown_print_entries`
