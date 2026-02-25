@@ -140,7 +140,11 @@ a few:
   2. Now that you have pinned-VM, you can turn on the data cache
      and GPIO device memory attributes --- see how much faster you 
      can make piece of code.
-
+  3. Make the smallest pages possible --- in theory we can have
+     1k subpages, which means you can do more precise trapping or
+     extremely tiny processes.    Every year, I mean to do this,
+     and then promptly forget until the next --- am very curious
+     if it works!
 
 ------------------------------------------------------------------------------
 #### Virtual memory crash course.
