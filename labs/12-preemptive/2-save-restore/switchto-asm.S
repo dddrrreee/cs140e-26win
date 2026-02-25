@@ -17,7 +17,34 @@ MK_FN(switchto_user_asm)
 @ assembler will set all the bits.  get mismatches otherwise
 @   msr   cpsr_cxsf, <reg>
 MK_FN(switchto_priv_asm)
-    b staff_switchto_priv_asm
+    @ asm_todo("ONE OF THE FUNCTIONS")
+
+    @ ----- Inside FIRST mode -----
+    @ put array in sp_first and save current mode
+    mov sp, r0
+    mrs r3, cpsr
+    add r1, r0, #(8*4)
+
+    @ Switch to other mode and get pointer from FIRST mode
+    ldr r4, [sp, #(16*4)]
+    msr cpsr_c, r4
+    prefetch_flush(r0); @ when i use r0 to perform the flush, it works
+
+    @ ----- Inside SECOND mode -----
+    ldm r1, {r8-r14}
+
+    @ Switch back
+    msr cpsr_c, r3
+    prefetch_flush(r0); @ when i use r0 to perform the flush, it works
+
+    @ ----- Inside FIRST mode -----
+
+    @ Set remaining regs
+    ldm sp, {r0-r7}
+
+    add sp, sp, #(15*4)
+    rfe sp
+    @ b staff_switchto_priv_asm
     asm_not_reached();
 
 @ void priv_get_sp_lr_asm(uint32_t mode, uint32_t *sp, uint32_t *lr);
@@ -27,17 +54,20 @@ MK_FN(switchto_priv_asm)
 @   - lr pointer in r2
 @
 MK_FN(priv_get_sp_lr_asm)
+    @ asm_todo("ONE OF THE FUNCTIONS")
     push {lr}
+
+    @ Store previous cpsr and switch to temporary one
+    mrs r3, cpsr
     msr cpsr_c, r0
     prefetch_flush(r0); @ when i use r0 to perform the flush, it works
 
-    @ USER And SYSTEM share the same sp/lr/cpsr
+    @ Obtain
     str sp, [r1]
     str lr, [r2]
 
-    cps #SUPER_MODE
+    msr cpsr_c, r3
     prefetch_flush(r0); @ when i use r0 to perform the flush, it works
-
     pop {lr}
     bx lr
 
@@ -50,7 +80,7 @@ MK_FN(priv_get_sp_lr_asm)
 @ and call the right switchto on <next>
 MK_FN(cswitchto_priv_asm)
     @ initially just forward to ours.
-    b staff_cswitchto_priv_asm
+    @ b staff_cswitchto_priv_asm
 
     @ to implement:
     @ 1. save all the callee regs (just like in your threads library)
@@ -77,7 +107,7 @@ MK_FN(cswitchto_priv_asm)
 @ and call the right switchto on <next>
 MK_FN(cswitchto_user_asm)
     @ initially just forward to ours.
-    b staff_cswitchto_user_asm
+    @ b staff_cswitchto_user_asm
 
     asm_todo("save the registers: identical to <switchto_priv_asm>")
     bl switchto_user_asm
