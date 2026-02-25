@@ -4,28 +4,12 @@
 MK_FN(switchto_user_asm)
     @ r0 = pointer to 17-entry regs array
     mov sp, r0
-    ldm sp, {r0-r14}^
-    add sp, sp, #(15*4)
-    rfe sp
 
-    @ ldr r1, [sp, #(16*4)]
-    @ msr spsr, r1
-
-    @ Load saved pc into lr_svc (supervisor)
-    @ so it can be moved to pc later
-    @ ldr lr, [sp, #(15*4)]
-    
     # Take stuff from array into registers (does not change the sp)
     ldm sp, {r0-r14}^
-    
-    @ mov pc,
-
-    @ nop                         @ required after banked reg access
-    
 
     @ Goes to where lr and cpsr are
     add sp, sp, #(15*4)
-
     rfe sp
     asm_not_reached();
 
@@ -43,8 +27,19 @@ MK_FN(switchto_priv_asm)
 @   - lr pointer in r2
 @
 MK_FN(priv_get_sp_lr_asm)
-    b staff_priv_get_sp_lr_asm
-    asm_not_reached();
+    push {lr}
+    msr cpsr_c, r0
+    prefetch_flush(r0); @ when i use r0 to perform the flush, it works
+
+    @ USER And SYSTEM share the same sp/lr/cpsr
+    str sp, [r1]
+    str lr, [r2]
+
+    cps #SUPER_MODE
+    prefetch_flush(r0); @ when i use r0 to perform the flush, it works
+
+    pop {lr}
+    bx lr
 
 @ you'll have to write this, but it should mirror your other save
 @ routines.
