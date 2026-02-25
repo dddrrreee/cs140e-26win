@@ -73,7 +73,7 @@ check_regs(uint32_t regs[17], uint32_t expect[17]) {
     for(int i = 0; i < 17; i++)  {
         if(regs[i] != expect[i])
             panic("reg[%d] = %x, expected = %x\n", 
-                regs[i], expect[i]);
+                i, regs[i], expect[i]);
         trace("regs[%d]=%d\n", i, regs[i]);
     }
     // should be redundant, but check that saved <cpsr> == <spsr>

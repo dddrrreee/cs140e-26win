@@ -4,22 +4,26 @@
 MK_FN(switchto_user_asm)
     @ r0 = pointer to 17-entry regs array
     mov sp, r0
+    ldm sp, {r0-r14}^
+    add sp, sp, #(15*4)
+    rfe sp
 
-    @ Restore SPSR first (will become SPSR on return
-    @ due to mov pc, lr
-    ldr r1, [sp, #(16*4)]
-    msr spsr, r1
+    @ ldr r1, [sp, #(16*4)]
+    @ msr spsr, r1
 
     @ Load saved pc into lr_svc (supervisor)
     @ so it can be moved to pc later
-    ldr lr, [sp, #(15*4)]
+    @ ldr lr, [sp, #(15*4)]
     
     # Take stuff from array into registers (does not change the sp)
     ldm sp, {r0-r14}^
+    
+    @ mov pc,
 
     @ nop                         @ required after banked reg access
     
 
+    @ Goes to where lr and cpsr are
     add sp, sp, #(15*4)
 
     rfe sp
