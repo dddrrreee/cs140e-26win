@@ -9,10 +9,26 @@
 #include "mmu.h"
 #include "procmap.h"
 
+
+// ** DO WE NEED THIS?
+#include "rpi-interrupts.h"
+
 // generate the _get and _set methods.
 // (see asm-helpers.h for the cp_asm macro 
 // definition)
 // arm1176.pdf: 3-149
+
+#include "asm-helpers.h"
+
+// Page 3-153
+cp_asm_get(lockdown_idx, p15, 5, c15, c4, 2); // Read TLB Lockdown Index Register
+cp_asm_set(lockdown_idx, p15, 5, c15, c4, 2); // Write TLB Lockdown Index Register
+cp_asm_get(lockdown_va, p15, 5, c15, c5, 2); // Read TLB Lockdown VA Register
+cp_asm_set(lockdown_va, p15, 5, c15, c5, 2); // Write TLB Lockdown VA Register
+cp_asm_get(lockdown_pa, p15, 5, c15, c6, 2); // Read TLB Lockdown PA Register
+cp_asm_set(lockdown_pa, p15, 5, c15, c6, 2); // Write TLB Lockdown PA Register
+cp_asm_get(lockdown_attr, p15, 5, c15, c7, 2); // Read TLB Lockdown Attributes Register
+cp_asm_set(lockdown_attr, p15, 5, c15, c7, 2); // Write TLB Lockdown Attributes Register
 
 static void *null_pt = 0;
 
@@ -25,7 +41,9 @@ void domain_access_ctrl_set(uint32_t d) {
 // NOTE: 
 //    you'll need to allocate an invalid page table
 void pin_mmu_init(uint32_t domain_reg) {
-    staff_pin_mmu_init(domain_reg);
+    // staff_pin_mmu_init(domain_reg);
+
+
     return;
 }
 
@@ -56,19 +74,38 @@ void pin_mmu_sec(unsigned idx,
 
     debug("about to map %x->%x\n", va,pa);
 
-
-    // delete this and do add your code below.
-    staff_pin_mmu_sec(idx, va, pa, e);
-    return;
-
     // these will hold the values you assign for the tlb entries.
-    uint32_t x, va_ent, pa_ent, attr;
-    todo("assign these variables!\n");
+    volatile uint32_t x, va_ent, pa_ent, attr = 0;
+    // todo("assign these variables!\n");
 
-    // put your code here.
-    unimplemented();
+    disable_interrupts(); // ? Should we do it? Written on last page
+    // ----- Select required entry ----- 
+    lockdown_idx_set(idx & 0xFF);
+    // ----- VA Register ----- 
+    va_ent = va & 0xFFFFF000;                    // Start with VA
+    va_ent |= (e.G & 1) << 9;       // Is global
 
-#if 0
+    if (!e.G)
+        va_ent |= e.asid & 0xFF;    // ASID only set for non-global entries
+
+    lockdown_va_set(va_ent);
+
+    // ----- Attributes Register ----- 
+    attr = e.mem_attr << 1;
+    attr |= (e.dom & 0b1111) << 7;   // Took the longest to do
+    lockdown_attr_set(attr);
+    
+    // ----- PA Register ----- 
+    pa_ent = pa & 0xFFFFF000;                // Start with PA for [12:31]
+    pa_ent |= e.pagesize << 6;
+    pa_ent |= e.AP_perm << 1;
+    pa_ent |= 1;                // Valid bit set automatically though
+
+    lockdown_pa_set(pa_ent);
+
+    enable_interrupts(); // ? Should we do it? Written on last page
+
+#if 1
     if((x = lockdown_va_get()) != va_ent)
         panic("lockdown va: expected %x, have %x\n", va_ent,x);
     if((x = lockdown_pa_get()) != pa_ent)
