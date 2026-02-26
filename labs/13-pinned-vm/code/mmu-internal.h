@@ -1,5 +1,5 @@
+#include <stdint.h>
 #include "armv6-cp15.h"
-
 //*************************************************************
 // internal routines for <mmu.c> ignore for today.
 void set_procid_ttbr0(unsigned pid, unsigned asid, void *pt);

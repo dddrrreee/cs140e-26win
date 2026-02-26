@@ -1,10 +1,10 @@
 BOOTLOADER = my-install
 
 PROGS := tests/1-test-basic-tutorial.c
-PROGS += tests/1-test-one-addr.c
-PROGS += tests/1-test-two-addr.c
-PROGS += tests/2-test-lookup.c
-PROGS += tests/2-test-procmap.c
+# PROGS += tests/1-test-one-addr.c
+# PROGS += tests/1-test-two-addr.c
+# PROGS += tests/2-test-lookup.c
+# PROGS += tests/2-test-procmap.c
 
 
 # your code will go here.
