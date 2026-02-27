@@ -30,6 +30,14 @@ cp_asm_set(lockdown_pa, p15, 5, c15, c6, 2); // Write TLB Lockdown PA Register
 cp_asm_get(lockdown_attr, p15, 5, c15, c7, 2); // Read TLB Lockdown Attributes Register
 cp_asm_set(lockdown_attr, p15, 5, c15, c7, 2); // Write TLB Lockdown Attributes Register
 
+cp_asm_set(va_to_pa_priv, p15, 0, c7, c8, 1); // Write VA-to-PA translation
+cp_asm_set(va_to_pa_user, p15, 0, c7, c8, 3); // Write VA-to-PA translation
+
+cp_asm_get(pa_priv, p15, 0, c7, c4, 0); // Read PA translation
+cp_asm_get(pa_user, p15, 0, c7, c4, 2); // Read PA translation
+
+// cp_asm_set(va_to_pa, p15, 0, c7, c8, 0); // Read PA translation PRIVILEGED READ
+
 static void *null_pt = 0;
 
 // should we have a pinned version?
@@ -37,14 +45,19 @@ void domain_access_ctrl_set(uint32_t d) {
     staff_domain_access_ctrl_set(d);
 }
 
+// ****** GLOBAL ENUMS ******
+
 // fill this in based on the <1-test-basic-tutorial.c>
 // NOTE: 
 //    you'll need to allocate an invalid page table
+//    CPU will check TLB for VA, if not found, go to page table, but it needs to fault if it goes there
 void pin_mmu_init(uint32_t domain_reg) {
-    // staff_pin_mmu_init(domain_reg);
 
+    // Allocate an invalid 16 KB page table
+    null_pt = kmalloc_aligned(4096*4, 1<<14);
+    assert((uint32_t)null_pt % (1<<14) == 0);
 
-    return;
+    domain_access_ctrl_set(domain_reg); 
 }
 
 // do a manual translation in tlb:
@@ -57,7 +70,13 @@ int tlb_contains_va(uint32_t *result, uint32_t va) {
 
     // 3-79
     assert(bits_get(va, 0,2) == 0);
-    return staff_tlb_contains_va(result, va);
+
+    va_to_pa_priv_set(va);
+    *result = pa_priv_get();
+
+    // return staff_tlb_contains_va(result, va);
+    uint32_t zero_bit_set = *result & 1;
+    return !zero_bit_set;
 }
 
 // map <va>-><pa> at TLB index <idx> with attributes <e>
@@ -137,14 +156,19 @@ int pin_exists(uint32_t va, int verbose_p) {
 // to switch processes.
 void pin_set_context(uint32_t asid) {
     // put these back
-    // demand(asid > 0 && asid < 64, invalid asid);
-    // demand(null_pt, must setup null_pt --- look at tests);
+    demand(asid > 0 && asid < 64, invalid asid);
+    demand(null_pt, must setup null_pt --- look at tests);
 
-    staff_pin_set_context(asid);
+    enum { PID = 128 };
+    staff_mmu_set_ctx(PID, asid, null_pt);
+
 }
 
 void pin_clear(unsigned idx)  {
-    staff_pin_clear(idx);
+    lockdown_idx_set(idx & 0xFF);
+    lockdown_va_set(0);
+    lockdown_attr_set(0);
+    lockdown_pa_set(0);
 }
 
 void lockdown_print_entry(unsigned idx) {
