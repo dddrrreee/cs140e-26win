@@ -21,8 +21,8 @@
 #include "asm-helpers.h"
 
 // Page 3-153
-cp_asm_get(lockdown_idx, p15, 5, c15, c4, 2); // Read TLB Lockdown Index Register
-cp_asm_set(lockdown_idx, p15, 5, c15, c4, 2); // Write TLB Lockdown Index Register
+cp_asm_get(lockdown_index, p15, 5, c15, c4, 2); // Read TLB Lockdown Index Register
+cp_asm_set(lockdown_index, p15, 5, c15, c4, 2); // Write TLB Lockdown Index Register
 cp_asm_get(lockdown_va, p15, 5, c15, c5, 2); // Read TLB Lockdown VA Register
 cp_asm_set(lockdown_va, p15, 5, c15, c5, 2); // Write TLB Lockdown VA Register
 cp_asm_get(lockdown_pa, p15, 5, c15, c6, 2); // Read TLB Lockdown PA Register
@@ -103,7 +103,7 @@ void pin_mmu_sec(unsigned idx,
 
     disable_interrupts(); // ? Should we do it? Written on last page
     // ----- Select required entry ----- 
-    lockdown_idx_set(idx & 0xFF);
+    lockdown_index_set(idx & 0xFF);
     // ----- VA Register ----- 
     va_ent = va & 0xFFFFF000;                    // Start with VA
     va_ent |= (e.G & 1) << 9;       // Is global
@@ -169,25 +169,55 @@ void pin_set_context(uint32_t asid) {
 }
 
 void pin_clear(unsigned idx)  {
-    lockdown_idx_set(idx & 0xFF);
+    lockdown_index_set(idx & 0xFF);
     lockdown_va_set(0);
     lockdown_attr_set(0);
     lockdown_pa_set(0);
 }
 
 void lockdown_print_entry(unsigned idx) {
-    panic("make sure to use <trace_nofn> not <trace>\n");
+    trace_nofn("   idx=%d\n", idx);
+    lockdown_index_set(idx);
+    uint32_t va_ent = lockdown_va_get();
+    uint32_t pa_ent = lockdown_pa_get();
+    uint32_t attr = lockdown_attr_get();
+    uint32_t v = bit_get(pa_ent, 0);
+
+    if(!v) {
+        trace_nofn("     [invalid entry %d]\n", idx);
+        return;
+    }
+
+    // 3-149
+    uint32_t va = (va_ent >> 12) & 0xFFFFF; 
+    uint32_t G = (va_ent >> 9) & 1;
+    uint32_t asid = va_ent & 0xFF;
+    trace_nofn("     va_ent=%x: va=%x|G=%d|ASID=%d\n",
+        va_ent, va, G, asid);
+
+    // 3-150
+    uint32_t pa = (pa_ent >> 12) & 0xFFFFF;
+    uint32_t nsa = (pa_ent >> 9) & 1;
+    uint32_t nstid = (pa_ent >> 8) & 1;
+    uint32_t size = (pa_ent >> 6) & 0b11;
+    uint32_t apx = (pa_ent >> 1) & 0b111;
+    trace_nofn("     pa_ent=%x: pa=%x|nsa=%d|nstid=%d|size=%b|apx=%b|v=%d\n",
+                pa_ent, pa, nsa,nstid,size, apx,v);
+
+    // 3-151
+    uint32_t dom = (attr >> 7) & 0b1111;
+    uint32_t xn = (attr >> 6) & 1;
+    uint32_t tex = (attr >> 3) & 0b111;
+    uint32_t C = (attr >> 2) & 1;
+    uint32_t B = (attr >> 1) & 1;
+    trace_nofn("     attr=%x: dom=%d|xn=%d|tex=%b|C=%d|B=%d\n",
+            attr, dom,xn,tex,C,B);
 }
 
 void lockdown_print_entries(const char *msg) {
-    staff_lockdown_print_entries(msg);
-#if 0
-    trace("-----  <%s> ----- \n", msg);
-    trace("  pinned TLB lockdown entries:\n");
-
+    trace_nofn("-----  <%s> ----- \n", msg);
+    trace_nofn("  pinned TLB lockdown entries:\n");
     for(int i = 0; i < 8; i++)
         lockdown_print_entry(i);
-    trace("----- ---------------------------------- \n");
-#endif
+    trace_nofn("----- ---------------------------------- \n");
 }
-
