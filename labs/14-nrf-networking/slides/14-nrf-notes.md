@@ -107,6 +107,21 @@ section li + li {
    uint8_t nrf_put8_chk(nrf_t *nic, uint8_t reg, uint8_t v);
 ```
 ---
+# Huge cheat code: read-back any value you set
+
+- As with any device: if you set a deterministic register: read it back.
+
+- Catches many human errors trivially:
+  - register discards values in ways you didn't expect.
+  - register uses a different size than expected
+  - you misunderstood the helper routines
+  - Device mis-configuration: 
+    - e.g., SPI clock was too fast so the device couldn't keep up.
+
+- Catches many broken hardwares trivially:
+  - if one of your NRF devices (or Parthiv board slots) is dead.
+
+---
 # Common symptom:  `MAX_RT`
 
 - Seeing a lot of `MAX_RT` (p59)?
