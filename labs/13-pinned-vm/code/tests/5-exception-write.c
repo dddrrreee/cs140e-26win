@@ -27,8 +27,12 @@ static void data_abort_handler(regs_t *r) {
     else
         trace("SUCCESS!: got a fault on pc=%x\n", pc);
 
+    // trace("dfsr: %x\n", cp15_dfsr_get());
+    // trace("ifsr: %x\n", cp15_ifsr_get());
     uint32_t dfsr = cp15_dfsr_get();
-    uint32_t fault_status = dfsr & 0x7FF;
+    uint32_t fault_status = 
+        ( (dfsr >> 10) & 0b1 )
+        | (dfsr & 0b111);
     
     if(fault_status != TRANSLATION_SECTION_FAULT)
         panic("Fault status wrong! expected %x, got %x\n",
@@ -40,7 +44,19 @@ static void data_abort_handler(regs_t *r) {
     // done with test.
     trace("Done! Reset domain permissions\n");
 
-    clean_reboot();
+    trace("pc: %x\n", r->regs[14]);
+
+    asm volatile("subs pc, lr, #8");
+
+    // uint32_t lr_val;
+    // asm volatile("mov %0, lr" : "=r"(lr_val));
+    // trace("LR = %x\n", lr_val);
+
+    // asm volatile(
+    //     "mov pc, lr"
+    // );
+
+    // clean_reboot();
 }
 
 

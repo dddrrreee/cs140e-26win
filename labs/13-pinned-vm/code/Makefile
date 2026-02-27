@@ -8,8 +8,8 @@ BOOTLOADER = my-install
 
 # My own tests
 # PROGS += tests/5-exception-read.c
-# PROGS += tests/5-exception-write.c
-PROGS += tests/5-exception-jump.c
+PROGS += tests/5-exception-write.c
+# PROGS += tests/5-exception-jump.c
 
 
 # your code will go here.

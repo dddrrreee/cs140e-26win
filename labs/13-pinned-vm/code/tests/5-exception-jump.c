@@ -15,20 +15,25 @@
 #define BX_LR 0xe12fff1e
 
 // used to store address we will write to
-static volatile uint32_t heap_addr;
+static volatile uint32_t bad_instr_addr;
 
+__attribute__((noreturn))
 static void prefetch_handler(regs_t *r) {
     uint32_t pc = r->regs[15];
 
-    // // make sure we faulted on the GET32 address.
-    // if(pc != PUT32_ADDR)
-    //     panic("illegal fault!  expected %x, got %x\n",
-    //         PUT32_ADDR, pc);
-    // else
-    //     trace("SUCCESS!: got a fault on pc=%x\n", pc);
+    // make sure we faulted on the GET32 address.
+    if(pc != bad_instr_addr)
+        panic("illegal fault!  expected %x, got %x\n",
+            bad_instr_addr, pc);
+    else
+        trace("SUCCESS!: got a fault on pc=%x\n", pc);
 
-    // uint32_t dfsr = cp15_dfsr_get();
-    // uint32_t fault_status = dfsr & 0x7FF;
+    uint32_t ifsr = cp15_ifsr_get();
+    uint32_t fault_status = 
+        ( (ifsr >> 10) & 0b1 )
+        | (ifsr & 0b111);
+
+    trace("SUCCESS!: got fault status=%x\n", fault_status);
     
     // if(fault_status != TRANSLATION_SECTION_FAULT)
     //     panic("Fault status wrong! expected %x, got %x\n",
@@ -39,8 +44,15 @@ static void prefetch_handler(regs_t *r) {
 
     // done with test.
     trace("Done!\n");
+    
+    asm volatile(
+        "subs pc, lr, #4\n"
+    );
+    
+    
+    trace("Done!\n");
 
-    clean_reboot();
+    // clean_reboot();
 }
 
 
@@ -73,17 +85,17 @@ void notmain(void) {
 
 
     // Heap address to write "bx lr" encoding
-    heap_addr = SEG_HEAP;
+    bad_instr_addr = SEG_HEAP;
 
-    PUT32(heap_addr, BX_LR);
+    PUT32(bad_instr_addr, BX_LR);
 
     
     // Should fault on something like this (e.g. will fault on 0x802c)
     
-    // staff_mmu_enable();
-    // assert(staff_mmu_is_enabled());
-    BRANCHTO(heap_addr);
+    staff_mmu_enable();
+    assert(staff_mmu_is_enabled());
+    BRANCHTO(bad_instr_addr);
     // output("about to write to heap: <%x>\n", illegal_addr);
     // PUT32(illegal_addr, 0);
-    // panic("should not reach here\n");
+    panic("should not reach here\n");
 }
