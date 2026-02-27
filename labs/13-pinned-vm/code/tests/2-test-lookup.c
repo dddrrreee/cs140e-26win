@@ -1,7 +1,7 @@
 /* Miles' little test for tlb_contains_va */
 
 #include "rpi.h"
-#include "procmap.h"
+#include "../procmap.h"
 
 void notmain(void) { 
     kmalloc_init_set_start((void*)SEG_HEAP, MB(1));

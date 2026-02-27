@@ -13,11 +13,59 @@
 //  are from the armv6 pdf, if with a number, from arm1176 pdf
 #include "rpi.h"
 #include "../pinned-vm.h"
-#include "../memmap-default.h"
 #include "full-except.h"
 #include "memmap.h"
 
 #define MB(x) ((x)*1024*1024)
+
+// These are the default segments (segment = one MB)
+// that need to be mapped for our binaries so far
+// this quarter. 
+//
+// these will hold for all our tests today.
+//
+// if we just map these segments we will get faults
+// for stray pointer read/writes outside of this region.
+enum {
+    // code starts at 0x8000, so map the first MB
+    //
+    // if you look in <libpi/memmap> you can see
+    // that all the data is there as well, and we have
+    // small binaries, so this will cover data as well.
+    //
+    // NOTE: obviously it would be better to not have 0 (null) 
+    // mapped, but our code starts at 0x8000 and we are using
+    // 1mb sections (which require 1MB alignment) so we don't
+    // have a choice unless we do some modifications.  
+    //
+    // you can fix this problem as an extension: very useful!
+    SEG_CODE = MB(0),
+
+    // as with previous labs, we initialize 
+    // our kernel heap to start at the first 
+    // MB. it's 1MB, so fits in a segment. 
+    SEG_HEAP = MB(1),
+
+    // if you look in <staff-start.S>, our default
+    // stack is at STACK_ADDR, so subtract 1MB to get
+    // the stack start.
+    SEG_STACK = STACK_ADDR - MB(1),
+
+    // the interrupt stack that we've used all class.
+    // (e.g., you can see it in the <full-except-asm.S>)
+    // subtract 1MB to get its start
+    SEG_INT_STACK = INT_STACK_ADDR - MB(1),
+
+    // the base of the BCM device memory (for GPIO
+    // UART, etc).  Three contiguous MB cover it.
+    SEG_BCM_0 = 0x20000000,
+    SEG_BCM_1 = SEG_BCM_0 + MB(1),
+    SEG_BCM_2 = SEG_BCM_0 + MB(2),
+
+    // we guarantee this (2MB) is an 
+    // unmapped address
+    SEG_ILLEGAL = MB(2),
+};
 
 // used to store the illegal address we will write.
 static volatile uint32_t illegal_addr;
@@ -79,16 +127,51 @@ void notmain(void) {
     full_except_install(0);
     full_except_set_data_abort(data_abort_handler);
 
-    // armv6 has 16 different domains with their own privileges.
-    // just pick one for the kernel.
-    pin_mmu_init(DOM_client << dom_kern*2);
+    // allocate a page table with invalid
+    // entries.
+    //
+    // we will TLB pin all valid mappings.  
+    // if the code is correct, the hardware
+    // will never look anything up in the page
+    // table.
+    // 
+    // however, if the code is buggy and does a 
+    // a wild memory access that isn't in any
+    // pinnned entry, the hardware would then try 
+    // to look the address up in the page table
+    // pointed to by the tlbwr0 register.
+    //
+    // if this page table isn't explicitly
+    // initialized to invalid entries, the hardware
+    // would interpret the garbage bits there 
+    // valid and potentially insert them (very
+    // hard bug to find).
+    //
+    // to prevent this we allocate a zero-filled 
+    // page table.
+    //  - 4GB/1MB section * 4 bytes = 4096*4.
+    //  - zero-initialized will set each entry's 
+    //    valid bit to 0 (invalid).
+    //  - lower 14 bits (16k aligned) as required
+    //    by the hardware.
+    void *null_pt = kmalloc_aligned(4096*4, 1<<14);
+    assert((uint32_t)null_pt % (1<<14) == 0);
 
     // in <mmu.h>: checks cp15 control reg 1.
     //  - will implement in next vm lab.
     assert(!mmu_is_enabled());
 
+    // no access for user (r/w privileged only)
+    // defined in <mem-attr.h>.  
+    //
+    // is APX and AP fields bit-wise or'd
+    // together: (APX << 2 | AP) see 
+    //  - 3-151 for table, or B4-9
+    enum { no_user = perm_rw_priv };
+
     // armv6 has 16 different domains with their own privileges.
     // just pick one for the kernel.
+    enum { dom_kern = 1 };
 
     // attribute for device memory (see <pin.h>).  this 
     // is needed when pinning device memory:
@@ -130,6 +213,26 @@ void notmain(void) {
     pin_mmu_sec(4, SEG_BCM_0, SEG_BCM_0, dev); 
     pin_mmu_sec(5, SEG_BCM_1, SEG_BCM_1, dev); 
     pin_mmu_sec(6, SEG_BCM_2, SEG_BCM_2, dev); 
+
+    // ******************************************************
+    // 3. setup virtual address context.
+    //  - domain permissions.
+    //  - page table, asid, pid.
+
+    // b4-42: give permissions for all domains.
+    // Q4: if you set this to ~0, what happens w.r.t. Q1?
+    // Q5: if you set this to 0, what happens?
+    staff_domain_access_ctrl_set(DOM_client << dom_kern*2); 
+
+    // set address space id, page table, and pid.
+    // note:
+    //  - <pid> is ignored by the hw: it's just to help the os.
+    //  - <asid> doesn't matter for this test b/c all entries 
+    //    are global.
+    //  - recall the page table has all entries invalid and is
+    //    just to catch memory errors.
+    enum { ASID = 1, PID = 128 };
+    staff_mmu_set_ctx(PID, ASID, null_pt);
 
     // if you want to see the lockdown entries.
     // lockdown_print_entries("about to turn on first time");

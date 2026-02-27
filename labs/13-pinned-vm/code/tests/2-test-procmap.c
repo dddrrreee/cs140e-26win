@@ -1,6 +1,6 @@
 // simple example of using procmap.  replicates <1-test-one-addr.c>
 #include "rpi.h"
-#include "procmap.h"
+#include "../procmap.h"
 
 void notmain(void) { 
     kmalloc_init_set_start((void*)SEG_HEAP, MB(1));

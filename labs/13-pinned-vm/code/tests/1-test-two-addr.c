@@ -8,9 +8,9 @@
 //      <phys_addr2>.
 //   3. switch between them reading and writing
 #include "rpi.h"
-#include "pinned-vm.h"
-#include "mmu.h"
-#include "memmap-default.h"
+#include "../pinned-vm.h"
+#include "../mmu.h"
+#include "../memmap-default.h"
 #include "full-except.h"
 
 void notmain(void) { 

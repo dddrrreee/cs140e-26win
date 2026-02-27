@@ -242,4 +242,8 @@ void staff_lockdown_print_entry(unsigned idx);
 void pin_clear(unsigned idx);
 void staff_pin_clear(unsigned idx);
 
+
+// ** For setting domain bits
+void domain_access_ctrl_set(uint32_t d);
+
 #endif
