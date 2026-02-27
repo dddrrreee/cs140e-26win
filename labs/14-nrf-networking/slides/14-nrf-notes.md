@@ -206,3 +206,16 @@ section li + li {
 
 ![bg right:55% contain](../images/robots-done.png)
 
+---
+# Next tuesday: hard.
+
+
+- VM coherence.
+  - maybe the most tricky 12 pages you'll ever read.
+  - not many words.
+  - but very very very subtle.
+
+- Do 3-4 passes this weekend.
+  - if you don't get several sleeps will not go well.
+
+![bg right:45% contain](images/bugs-glowing.png)
