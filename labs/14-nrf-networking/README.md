@@ -4,12 +4,18 @@
   <img src="images/pi-network.jpg" width="650" />
 </p>
 
+
 Today you'll build some code to make the NRF chips we have talk to each
 other.  The NRF's are very common, and fairly cheap (we are using clones
 that were about $14 per 12).  The lab is organized as a fetch-quest
 where you'll build the routines to (1) initialize, (2) receive, (3)
 send non-acked packets, (4) send acked packets.  This gives you a simple
 starting point for networking.
+
+***Readings***:
+  - [datasheet](./docs/nRF24L01P_PS_v1.0.annot.pdf)
+  - [CHEATSHEET-nrf24l01p.md](./CHEATSHEET-nrf24l01p.md)
+  - [slides/14-nrf-notes.pdf](slides/14-nrf-notes.pdf)
 
 The NRFs are extremely common and fairly cheap --- ours were 12 boards
 for $14 (though, likely fake clones).
