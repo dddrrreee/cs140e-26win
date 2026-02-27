@@ -27,7 +27,7 @@ spi_t nrf_spi_init(unsigned ce, unsigned spi_chip) {
     // SPI goes.  
     //
     // NOTE: the NRF has a limit [look in the datasheet]
-    spi_t s = spi_n_init(spi_chip, 20 /* 1024 */);
+    spi_t s = spi_n_init(spi_chip, 40 /* 1024 */);
     assert(s.chip == spi_chip);
 
     // give spi time to start-up [not sure if needed]
@@ -37,8 +37,11 @@ spi_t nrf_spi_init(unsigned ce, unsigned spi_chip) {
     gpio_set_output(ce);
     // alot of transient electrical with these devices, make sure
     // signal is clean.
+    gpio_set_input(ce);
     gpio_set_pulldown(ce);
+    gpio_set_output(ce);
     gpio_set_off(ce);
+    delay_ms(100);  // let it go to power down
     dev_barrier();
 
     return s;
