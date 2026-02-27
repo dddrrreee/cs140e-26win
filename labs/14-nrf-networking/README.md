@@ -4,123 +4,15 @@
   <img src="images/pi-network.jpg" width="650" />
 </p>
 
+Today you'll build some code to make the NRF chips we have talk to each
+other.  The NRF's are very common, and fairly cheap (we are using clones
+that were about $14 per 12).  The lab is organized as a fetch-quest
+where you'll build the routines to (1) initialize, (2) receive, (3)
+send non-acked packets, (4) send acked packets.  This gives you a simple
+starting point for networking.
 
-
------------------------------------------------------------------
-### Errata
-
-  - Going from "Power Down" to "RX": table 16 on page 24: a safe
-    value seems to be 5ms.  I'm not sure how we calculated 2ms
-    (which does *appear* to work).
-
-  - `nrf_init`: so the test pass always set `NRF_RX_ADDR_P0` to 0.
-    This is a bit weird, but that's the way the tests are (sorry).
-
-  - make sure you increment the stats fields.  
-
-    When you send a packet:
-
-            n->tot_sent_msgs++;
-            n->tot_sent_bytes += nbytes;
-
-    On tx if a packet gets lost:
-
-            n->tot_lost++;
-
-    When you receive a packet:
-
-            n->tot_recv_msgs++;
-            n->tot_recv_bytes += nbytes;
-
-
-
------------------------------------------------------------------
-#### tl;dr: hints and mistakes
-
-We put these here so you can easily scroll.  Will add errata
-as needed.
-
-
-HINTS:
-  - If you have issues, the first thing to do is
-    switch to using the `staff_nrf_init` routine.
-  - Make sure you look at the first few test cases, since they
-    have a lot of comments about where stuff is.
-
-Key pages:
-  - p 57-63: The full set of NRF registers.
-  - p 75: transmit protocol.
-  - p 76: receive protocol.
-  - p22: state machine: make sure you know what states to move to and
-    how to do it.  we care about RX, TX, standby-I.  stay in the
-    "recommended" states.
-  - Make sure you go through the [CHEATSHEET](./CHEATSHEET-nrf24l01p.md).
-    A bunch of facts you need are there, so it's a good cheat-code.
-
-Common mistakes:
-
-  - Getting a max-intr message consistently: this can happen if
-    your send and receive pipes don't match up (different byte
-    or ack settings).
-
-  - NRF addresses are more than one byte!  Make sure you
-    use the `nrf_get_addr` and `nrf_set_addr` methods (`nrf-hw-support.c`)
-    which (1) do sanity checking and (2) use the right SPI calls to set
-    and get multiple-bytes.  For example:
-```
-    nrf_set_addr(n, NRF_TX_ADDR, 0, addr_nbytes);
-    nrf_set_addr(n, NRF_RX_ADDR_P1, rxaddr1, addr_nbytes);
-    nrf_set_addr(n, NRF_RX_ADDR_P0, rxaddr0, addr_nbytes);
-```
-  - Hard to debug error: Hard-coding a value in `nrf_init`.
-    Works fine on an initial test, then doesn't work at all
-    when client code uses a different value (e.g., for rx or tx 
-    addresses).  This mistake caused some groups last year to 
-    waste over an hour.
-
-  - If you've finished init (and your dump matches the staff), but 
-    you can't tx/rx/ack anything, make sure you're setting the 
-    CE pin correctly (it's a GPIO pin, so you have to control it 
-    manually)
-
-
-NOTE: The code is currently setup so that all the tests *should* pass
-if you just run `make check`.
-
-   - ***NOTE: with 70+ people in one room we may have significant
-     RF interference***
-   - So: if the tests don't pass, this doesn't mean the code is broken.
-     It may just mean you are getting interference.
-
-     If you look in `nrf-default-values.h` there are different addresses
-     you can try (you can use others too).  You can change `server_addr`
-     and `client_addr` (the tests use these for configuration).
-     Worth plugging them in to see if reduces issues.
-
-     You can also use a different channel by changing
-     `nrf_default_channel`.
-
-     NOTE: if you change these values, the tests won't pass as-is since
-     the addresses are encoded in them.  Make sure "make run" works fine,
-     make a backup copy of the tests and you can then regenerate the
-     tests with "make emit".
-
-
------------------------------------------------------------------
-
-#### Description
-
-Today you'll build some code to make the NRF chips we have talk to
-each other.   
-The NRF's are very common, and fairly cheap (we are using clones that
-were about $14 per 12).
-The lab is organized as a fetch-quest where you'll build
-the routines to (1) initialize, (2) receive, (3) send non-acked packets,
-(4) send acked packets.  This gives you a simple starting point for
-networking.    
-
-The NRFs are extremely common and fairly cheap --- ours were 
-12 boards for $14 (though, likely fake clones).
+The NRFs are extremely common and fairly cheap --- ours were 12 boards
+for $14 (though, likely fake clones).
 
 <p align="center">
   <img src="images/nrf-closeup.jpg" width="250" />
@@ -208,24 +100,107 @@ Major extension:
     Doing this plus a network boot-loader would be a reasonable final
     project.
 
+-----------------------------------------------------------------
+### tl;dr: hints and mistakes
+
+We put these here so you can easily scroll. 
+
+Common mistake: Make sure you increment the stats fields.  
+  - When you send a packet:
+```
+            n->tot_sent_msgs++;
+            n->tot_sent_bytes += nbytes;
+```
+  - On tx if a packet gets lost:
+```
+            n->tot_lost++;
+```
+  - When you receive a packet:
+```
+            n->tot_recv_msgs++;
+            n->tot_recv_bytes += nbytes;
+```
+
+HINTS:
+  - If you have issues, the first thing to do is switch to using the
+  `staff_nrf_init` routine.
+  - Make sure you look at the first few test cases, since they
+    have a lot of comments about where stuff is.
+
+Key pages:
+  - p 57-63: The full set of NRF registers.
+  - p 75: transmit protocol.
+  - p 76: receive protocol.
+  - p22: state machine: make sure you know what states to move to and
+    how to do it.  we care about RX, TX, standby-I.  stay in the
+    "recommended" states.
+  - Make sure you go through the [CHEATSHEET](./CHEATSHEET-nrf24l01p.md).
+    A bunch of facts you need are there, so it's a good cheat-code.
+
+Common mistakes:
+
+  - Getting a max-intr message consistently: this can happen if
+    your send and receive pipes don't match up (different byte
+    or ack settings).
+
+  - NRF addresses are more than one byte!  Make sure you
+    use the `nrf_get_addr` and `nrf_set_addr` methods (`nrf-hw-support.c`)
+    which (1) do sanity checking and (2) use the right SPI calls to set
+    and get multiple-bytes.  For example:
+```
+    nrf_set_addr(n, NRF_TX_ADDR, 0, addr_nbytes);
+    nrf_set_addr(n, NRF_RX_ADDR_P1, rxaddr1, addr_nbytes);
+    nrf_set_addr(n, NRF_RX_ADDR_P0, rxaddr0, addr_nbytes);
+```
+  - Hard to debug error: Hard-coding a value in `nrf_init`.
+    Works fine on an initial test, then doesn't work at all
+    when client code uses a different value (e.g., for rx or tx 
+    addresses).  This mistake caused some groups last year to 
+    waste over an hour.
+
+  - If you've finished init (and your dump matches the staff), but 
+    you can't tx/rx/ack anything, make sure you're setting the 
+    CE pin correctly (it's a GPIO pin, so you have to control it 
+    manually)
+
+NOTE: The code is currently setup so that all the tests *should* pass
+if you just run `make check`.
+
+   - ***NOTE: with 93+ people in one room we may have significant
+     RF interference***
+   - So: if the tests don't pass, this doesn't mean the code is broken.
+     It may just mean you are getting interference.
+
+     If you look in `nrf-default-values.h` there are different addresses
+     you can try (you can use others too).  You can change `server_addr`
+     and `client_addr` (the tests use these for configuration).
+     Worth plugging them in to see if reduces issues.
+
+     You can also use a different channel by changing
+     `nrf_default_channel`.
+
+     NOTE: if you change these values, the tests won't pass as-is since
+     the addresses are encoded in them.  Make sure "make run" works fine,
+     make a backup copy of the tests and you can then regenerate the
+     tests with "make emit".
+
 --------------------------------------------------------------------------------
-
 ### Some incomplete big picture information.
-
 
 #### SPI
 
 The NRF uses SPI to communicate.  This is a reasonably simple digital
-protocol, that you can bit bang without much fuss.  One big downside
-of SPI is that it needs many wires.  And when you multiply these by the
+protocol, that you can bit bang without much fuss.  One big downside of
+SPI is that it needs many wires.  And when you multiply these by the
 number of ends (2) and number of NRFs (2) there's a high probability
 one is loose.  (Fortunately Parthiv's board has solved that for us:
 we can just plug them in!)
 
 
-The r/pi has hardware support for SPI.  We give you this driver,
-but you can write it driver as an extension.  Or you just bit bang
-using [the Wikipedia code](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface):
+The r/pi has hardware support for SPI.  We give
+you this driver, but you can write it driver as an
+extension.  Or you just bit bang using [the Wikipedia
+code](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface):
 
 <kdb> <img src="images/spi-bit-bang.png"  /> </kdb>
 
@@ -334,6 +309,13 @@ What to do:
      send and receive some packets (versus 0) before panic'ing.  You
      can also try changing addresses (see start of `README`).
 
+Note:
+  - Going from "Power Down" to "RX": table 16 on page 24: a safe
+    value seems to be 5ms.  I'm not sure how we calculated 2ms
+    (which does *appear* to work).
+  - `nrf_init`: so the test pass always set `NRF_RX_ADDR_P0` to 0.
+    This is a bit weird, but that's the way the tests are (sorry).
+
 #### longer description
 
 This is the longest part, since you need to set all the registers.
@@ -342,12 +324,10 @@ Cheat code:
    - If you get stuck you can use `nrf_dump` to print the staff
      hardware configuration and then walk down the registers setting
      them to the same thing.
-
    - COMMON MISTAKE: sure you set the values ***based on the inputs***.
      A common mistake is to hard-code values (e.g., receive and transmit
      addresses), which won't work when you write code that uses different
      ones.  (Such as the last tests.)
-
    - NOTE: It should be the case that if you change default values that
      both still agree!
 
@@ -623,6 +603,9 @@ Roughly:
      was called with).
   8. When you get rid of the call to our `staff_nrf_tx_send_noack` the
      tests should work.
+
+
+
 
 --------------------------------------------------------------------------------
 ### Part 2: Implement `nrf-driver.c:nrf_get_pkts`.
