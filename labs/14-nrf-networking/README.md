@@ -123,7 +123,6 @@ Common mistakes:
   - Getting a max-intr message consistently: this can happen if
     your send and receive pipes don't match up (different byte
     or ack settings).
-
   - NRF addresses are more than one byte!  Make sure you
     use the `nrf_get_addr` and `nrf_set_addr` methods (`nrf-hw-support.c`)
     which (1) do sanity checking and (2) use the right SPI calls to set
@@ -138,7 +137,6 @@ Common mistakes:
     when client code uses a different value (e.g., for rx or tx 
     addresses).  This mistake caused some groups last year to 
     waste over an hour.
-
   - If you've finished init (and your dump matches the staff), but 
     you can't tx/rx/ack anything, make sure you're setting the 
     CE pin correctly (it's a GPIO pin, so you have to control it 
@@ -176,7 +174,6 @@ SPI is that it needs many wires.  And when you multiply these by the
 number of ends (2) and number of NRFs (2) there's a high probability
 one is loose.  (Fortunately Parthiv's board has solved that for us:
 we can just plug them in!)
-
 
 The r/pi has hardware support for SPI.  We give
 you this driver, but you can write it driver as an
