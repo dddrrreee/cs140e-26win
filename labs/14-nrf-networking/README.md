@@ -26,22 +26,6 @@ If you are doing this *without* Parthiv's board and need to wire things
 up with jumpers, the 2022 NRF lab has some discussion 
 on [how to do this](https://github.com/dddrrreee/cs140e-22win/tree/main/labs/17-nrf24l01p).
 
-Before you start:
-  - Plug in the NRF boards.
-  - The code is currently setup so that all the tests *should* pass
-    if you just run `make check`.
-  - If it fails, look at why. 
-
-    If the configuration failed (e.g., the "0" tests): the problem
-    could be that you plugged the boards in wrong (see the photo).
-    Or you could have a defective NRF or Parthiv board --- you'll have
-    to swap things out to narrow down.
-
-    If you get a smattering of packet losses, this is likely just
-    interference. Try rerunning the tests.  If it gets too bad, we'll
-    need to change addresses --- if you do look at the above note on
-    how to redo the tests.
-
 #### The code
 
 Common methods you'll use:
@@ -59,7 +43,6 @@ Common methods you'll use:
 
 What you will change:
   - `nrf-driver.c`: all the code you write will be in here.
-
   - `nrf-default-values.h`: different default values for the NRF.  You 
     can change these if you want to tweak different decisions, but
     you don't have to.
@@ -105,25 +88,23 @@ Major extension:
 
 We put these here so you can easily scroll. 
 
-Common mistake: Make sure you increment the stats fields.  
-  - When you send a packet:
-```
-            n->tot_sent_msgs++;
-            n->tot_sent_bytes += nbytes;
-```
-  - On tx if a packet gets lost:
-```
-            n->tot_lost++;
-```
-  - When you receive a packet:
-```
-            n->tot_recv_msgs++;
-            n->tot_recv_bytes += nbytes;
-```
+Before you start:
+  - Plug in the NRF boards.
+  - The code is currently setup so that all the tests *should* pass
+    if you just run `make check`.
+  - If it fails, look at why. 
+    - If the configuration failed (e.g., the "0" tests): the problem
+      could be that you plugged the boards in wrong (see the photo).
+      Or you could have a defective NRF or Parthiv board --- you'll have
+      to swap things out to narrow down.
+    - If you get a smattering of packet losses, this is likely just
+      interference. Try rerunning the tests.  If it gets too bad, we'll
+      need to change addresses --- if you do look at the above note on
+      how to redo the tests.
 
 HINTS:
   - If you have issues, the first thing to do is switch to using the
-  `staff_nrf_init` routine.
+    `staff_nrf_init` routine.
   - Make sure you look at the first few test cases, since they
     have a lot of comments about where stuff is.
 
@@ -545,6 +526,22 @@ What to do:
   3. `make check` for the `tests/1-one-way-no-ack-4bytes.c` should pass.
   4. NOTE: again, if there is enough interference (or just bad luck) 
      packets can get lost and `make check` won't pass.
+
+Common mistake: Make sure you increment the stats fields.  
+  - When you send a packet:
+```
+            n->tot_sent_msgs++;
+            n->tot_sent_bytes += nbytes;
+```
+  - On tx if a packet gets lost:
+```
+            n->tot_lost++;
+```
+  - When you receive a packet:
+```
+            n->tot_recv_msgs++;
+            n->tot_recv_bytes += nbytes;
+```
 
 #### Longer description
 
