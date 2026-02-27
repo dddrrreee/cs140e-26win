@@ -31,12 +31,11 @@ cp_asm_get(lockdown_attr, p15, 5, c15, c7, 2); // Read TLB Lockdown Attributes R
 cp_asm_set(lockdown_attr, p15, 5, c15, c7, 2); // Write TLB Lockdown Attributes Register
 
 cp_asm_set(va_to_pa_priv, p15, 0, c7, c8, 1); // Write VA-to-PA translation
-cp_asm_set(va_to_pa_user, p15, 0, c7, c8, 3); // Write VA-to-PA translation
+// cp_asm_set(va_to_pa_user, p15, 0, c7, c8, 3); // Write VA-to-PA translation
 
 cp_asm_get(pa_priv, p15, 0, c7, c4, 0); // Read PA translation
-cp_asm_get(pa_user, p15, 0, c7, c4, 2); // Read PA translation
+// cp_asm_get(pa_user, p15, 0, c7, c4, 2); // Read PA translation
 
-// cp_asm_set(va_to_pa, p15, 0, c7, c8, 0); // Read PA translation PRIVILEGED READ
 
 static void *null_pt = 0;
 
@@ -74,8 +73,13 @@ int tlb_contains_va(uint32_t *result, uint32_t va) {
     va_to_pa_priv_set(va);
     *result = pa_priv_get();
 
-    // return staff_tlb_contains_va(result, va);
     uint32_t zero_bit_set = *result & 1;
+
+    // Mask out non-addr bits
+    *result &= ~0xFFFFF;
+    // Do we just or these?
+    *result |= (va & 0xFFFFF);
+    
     return !zero_bit_set;
 }
 
