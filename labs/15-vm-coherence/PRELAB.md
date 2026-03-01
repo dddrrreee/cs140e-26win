@@ -4,7 +4,7 @@ Prelab is pretty simple: read chapter B2 of the armv6 document, focusing
 on pages B2-16 til the end of the chapter.  More than any other document,
 I would recommend printing this one out (we gave this out in class):
 
-   - `12-pinned-vm/docs/armv6.b2-memory.annot.pdf`
+   - `13-pinned-vm/docs/armv6.b2-memory.annot.pdf`
    - And its companion [cheat sheet for B2](MEMORY-ORDER-cheatsheet.md).
      This has a useful, hopefully correct distillation of the rules.
 
