@@ -176,20 +176,20 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
     for(int i = 2; i < 6; i++)
         assert(!nrf_pipe_is_enabled(n, i));
 
-
     // reg=3: NRF_SETUP_AW: setup address size (maybe 1-3 to 3-5)
-    nrf_put8_chk(n, NRF_SETUP_AW, nrf_get_addr_nbytes(n) - 2);
-    
+    uint32_t n_addr_bytes = nrf_get_addr_nbytes(n);
+    nrf_put8_chk(n, NRF_SETUP_AW, n_addr_bytes - 2);
 
-    // clear NRF_TX_ADDR for determinism.
-    nrf_put8_chk(n, NRF_TX_ADDR, 0);
+
+    // clear NRF_TX_ADDR for determinism (max length of 5)
+    nrf_set_addr(n, NRF_TX_ADDR, 0, n_addr_bytes);
 
     // set NRF_RX_PW_P1 and  NRF_RX_ADDR_P1
     // set NRF_RX_ADDR_P0 if enabled.
     // could also do when setup pipes.
     nrf_put8_chk(n, NRF_RX_PW_P1, c.nbytes);
-    nrf_put8_chk(n, NRF_RX_ADDR_P0, n->rxaddr); // Uses this to set first n-1 bytes
-    nrf_put8_chk(n, NRF_RX_ADDR_P1, n->rxaddr);
+    nrf_set_addr(n, NRF_RX_ADDR_P1, n->rxaddr, n_addr_bytes);
+    nrf_set_addr(n, NRF_RX_ADDR_P0, n->rxaddr, n_addr_bytes);
 
     // Set message size = 0 for unused pipes.  
     //  [NOTE: I think redundant, but just to be sure.]

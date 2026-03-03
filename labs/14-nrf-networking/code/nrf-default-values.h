@@ -45,4 +45,8 @@ enum {
     nrf_default_addr_nbytes         = 3,
 };
 
+enum {
+    nrf_max_addr_bytes              = 5,
+};
+
 #endif
