@@ -1,6 +1,8 @@
 #ifndef __NRF_DEFAULT_VALUES_H__
 #define __NRF_DEFAULT_VALUES_H__
 
+#include "nrf.h"
+
 // seperated out so you can mess with to control values.
 // if you are getting conflicts, you have two options:
 //   1. change the client/server addresses.   easiest!

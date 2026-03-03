@@ -88,10 +88,12 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
     // to write yours, comment this out and start editing below.
     // if you get weird results later (part 2, part 3 etc), 
     // flip back on.
-    return staff_nrf_init(c, rxaddr, acked_p);
+    // return staff_nrf_init(c, rxaddr, acked_p);
 
     // start of initialization: go through and handle no-ack first,
     // then ack.  i'd do one test at a time.
+
+    volatile uint8_t val;
 
     nrf_t *n = kmalloc(sizeof *n);
     n->config = c;      // set initial config.
@@ -116,7 +118,18 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
         // enable pipe 1: 
         //   - NRF_EN_RXADDR
         //   - NRF_SETUP_RETR
-        todo("fill this in!\n");
+        // ** 
+
+        // Auto retransmission (p. 57)
+        val = nrf_get8(n, NRF_EN_AA);
+        nrf_put8_chk(n, NRF_EN_AA, val & !0b10);
+
+        // Enable ONLY pipe 1 and nothing else (p. 57)
+        nrf_put8_chk(n, NRF_EN_RXADDR, 0b10);
+
+        // Disable retransmission (p. 57-58)
+        volatile uint32_t steup_retr = nrf_get8(n, NRF_SETUP_RETR);
+        nrf_put8_chk(n, NRF_SETUP_RETR, steup_retr & ~0b1111);
 
         // when done, these should be true.
         // <nrf-hw-support.h>
@@ -130,14 +143,23 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
         //    to be ENAA_P* = 1
         // reg=2: NRF_EN_RXADDR: enable pipes --- always enable pipe 
         //    0 for retran.
+        val = nrf_get8(n, NRF_EN_AA);
+        nrf_put8_chk(n, NRF_EN_AA, val & !0b11);
+
+        val = 0b10;
+        nrf_put8_chk(n, NRF_EN_RXADDR, 0b00111111);
 
         // reg = 4: NRF_SETUP_RETR: set retrans attempt and delay
         // compute NRF_SETUP_RETR using:
         //  - nrf_default_retran_attempts;
         //  - nrf_default_retran_delay [note you have to 
         //    convert to the right encoding]
+        // ** p.34 "ARD=500µs is long enough for any ACK payload length in 1 or 2Mbps mode."
+        val = nrf_default_retran_attempts | nrf_default_retran_delay / 500;
+        nrf_put8_chk(n, NRF_EN_RXADDR, val);
 
-        todo("fill this in!\n");
+
+        // todo("fill this in!\n");
 
         // double check that both are enabled + acked.
         // helpers are in: <nrf-hw-support.h>
@@ -148,26 +170,35 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
     }
 
     // turn off the other pipes.
-    todo("turn off other pipes\n");
+    // todo("turn off other pipes\n");
 
     // check
     for(int i = 2; i < 6; i++)
         assert(!nrf_pipe_is_enabled(n, i));
 
 
-
-    // reg=3: NRF_SETUP_AW: setup address size
-    todo("look at encoding!\n");
+    // reg=3: NRF_SETUP_AW: setup address size (maybe 1-3 to 3-5)
+    nrf_put8_chk(n, NRF_SETUP_AW, nrf_get_addr_nbytes(n) - 2);
+    
 
     // clear NRF_TX_ADDR for determinism.
-    todo("set TX_ADDR addr to 0 for determinism\n");
+    nrf_put8_chk(n, NRF_TX_ADDR, 0);
 
     // set NRF_RX_PW_P1 and  NRF_RX_ADDR_P1
     // set NRF_RX_ADDR_P0 if enabled.
     // could also do when setup pipes.
+    nrf_put8_chk(n, NRF_RX_PW_P1, c.nbytes);
+    nrf_put8_chk(n, NRF_RX_ADDR_P0, n->rxaddr); // Uses this to set first n-1 bytes
+    nrf_put8_chk(n, NRF_RX_ADDR_P1, n->rxaddr);
 
     // Set message size = 0 for unused pipes.  
     //  [NOTE: I think redundant, but just to be sure.]
+    // ** HARDCODED GODDAMN. Might figure out better way to do this
+    nrf_put8_chk(n, NRF_RX_PW_P0, 0);
+    nrf_put8_chk(n, NRF_RX_PW_P2, 0);
+    nrf_put8_chk(n, NRF_RX_PW_P3, 0);
+    nrf_put8_chk(n, NRF_RX_PW_P4, 0);
+    nrf_put8_chk(n, NRF_RX_PW_P5, 0);
 
     // reg=6: RF_SETUP: setup data rate and power.
     // datarate already has the right encoding.
@@ -175,7 +206,9 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
     // use:
     //  - nrf_default_data_rate;
     //  - nrf_default_db;
-    todo("setup NRF_RF_SETUP\n");
+    nrf_put8_chk(n, NRF_RF_CH, c.channel);
+    val = nrf_default_data_rate | nrf_default_db;
+    nrf_put8_chk(n, NRF_RF_SETUP, val);
 
     // reg=7: status.  p59
     // sanity check that it is empty and nothing else is set.
@@ -188,6 +221,8 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
     // ideally we would do something where we use different 
     // addresses across reboots?   we get a bit of this benefit
     // by waiting the 100ms.
+    uint8_t status_reg = nrf_get8(n, NRF_STATUS); // Wait but RX_P_NO
+    assert(status_reg == 0b00001110);
 
     // i think w/ the nic is off, this better be true.
     assert(!nrf_tx_fifo_full(n));
@@ -212,11 +247,17 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
 
     // p20: go from <PowerDown> to <Standby-I>
     // now go from make sure you delay long enough!
-    todo("go from <PowerDown> to <Standby-I>");
+    // todo("go from <PowerDown> to <Standby-I>");
+    nrf_put8_chk(n, NRF_CONFIG, nrf_get8(n, NRF_CONFIG) | 0b10);
+    delay_ms(100);
 
     // now go to RX mode: invariant = we are always in RX except for the 
     // small amount of time we need to switch to TX to send a message.
-    todo("go from <Standby-I> to RX");
+    // todo("go from <Standby-I> to RX");
+    nrf_put8_chk(n, NRF_CONFIG, rx_config);
+    gpio_write(n->config.ce_pin, 1);
+    delay_us(130); // Settling time on state machine 
+
 
     // should be true after setup.
     if(acked_p) {

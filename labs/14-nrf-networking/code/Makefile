@@ -7,15 +7,15 @@ BOOTLOADER = sleep 1; my-install
 
 
 # easiest
-# PROGS := 0-no-ack-check.c
+PROGS := tests/0-no-ack-check.c
 # then.
-# PROGS := 0-ack-check.c
+# PROGS := tests/0-ack-check.c
 
 # ordered easy to harder
-PROGS += $(wildcard tests/0-*.c)
-PROGS += $(wildcard tests/1-*.c)
-PROGS += $(wildcard tests/2-*.c)
-PROGS += $(wildcard tests/3-*.c)
+# PROGS += $(wildcard tests/0-*.c)
+# PROGS += $(wildcard tests/1-*.c)
+# PROGS += $(wildcard tests/2-*.c)
+# PROGS += $(wildcard tests/3-*.c)
 
 # starter code.  
 COMMON_SRC := nrf-hw-support.c nrf-public.c nrf-driver.c

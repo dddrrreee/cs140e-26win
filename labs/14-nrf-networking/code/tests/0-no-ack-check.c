@@ -1,5 +1,5 @@
 // configure and dump hardware configuration.  get these working first.
-#include "nrf-test.h"
+#include "../nrf-test.h"
 
 void notmain(void) {
     unsigned nbytes = 32;
