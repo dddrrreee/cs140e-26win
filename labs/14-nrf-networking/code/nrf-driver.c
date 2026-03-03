@@ -94,6 +94,7 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
     // then ack.  i'd do one test at a time.
 
     volatile uint8_t val;
+    volatile uint8_t pipe_0_enabled = acked_p; // TX alias?
 
     nrf_t *n = kmalloc(sizeof *n);
     n->config = c;      // set initial config.
@@ -128,8 +129,7 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
         nrf_put8_chk(n, NRF_EN_RXADDR, 0b10);
 
         // Disable retransmission (p. 57-58)
-        volatile uint32_t steup_retr = nrf_get8(n, NRF_SETUP_RETR);
-        nrf_put8_chk(n, NRF_SETUP_RETR, steup_retr & ~0b1111);
+        nrf_put8_chk(n, NRF_SETUP_RETR, 0);
 
         // when done, these should be true.
         // <nrf-hw-support.h>
@@ -144,10 +144,8 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
         // reg=2: NRF_EN_RXADDR: enable pipes --- always enable pipe 
         //    0 for retran.
         val = nrf_get8(n, NRF_EN_AA);
-        nrf_put8_chk(n, NRF_EN_AA, val & !0b11);
-
-        val = 0b10;
-        nrf_put8_chk(n, NRF_EN_RXADDR, 0b00111111);
+        nrf_put8_chk(n, NRF_EN_AA, val | 0b11);
+        nrf_put8_chk(n, NRF_EN_RXADDR, 0b00000011); // Pipes 0,1
 
         // reg = 4: NRF_SETUP_RETR: set retrans attempt and delay
         // compute NRF_SETUP_RETR using:
@@ -155,11 +153,8 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
         //  - nrf_default_retran_delay [note you have to 
         //    convert to the right encoding]
         // ** p.34 "ARD=500µs is long enough for any ACK payload length in 1 or 2Mbps mode."
-        val = nrf_default_retran_attempts | nrf_default_retran_delay / 500;
-        nrf_put8_chk(n, NRF_EN_RXADDR, val);
-
-
-        // todo("fill this in!\n");
+        val = nrf_default_retran_attempts | ((nrf_default_retran_delay/250 - 1) << 4);
+        nrf_put8_chk(n, NRF_SETUP_RETR, val);
 
         // double check that both are enabled + acked.
         // helpers are in: <nrf-hw-support.h>
@@ -169,8 +164,7 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
         assert(nrf_pipe_is_acked(n, 0));
     }
 
-    // turn off the other pipes.
-    // todo("turn off other pipes\n");
+    // turn off the other pipes. (they should be off since bits [2:7] are 0)
 
     // check
     for(int i = 2; i < 6; i++)
@@ -189,7 +183,9 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
     // could also do when setup pipes.
     nrf_put8_chk(n, NRF_RX_PW_P1, c.nbytes);
     nrf_set_addr(n, NRF_RX_ADDR_P1, n->rxaddr, n_addr_bytes);
-    nrf_set_addr(n, NRF_RX_ADDR_P0, n->rxaddr, n_addr_bytes);
+
+    if (pipe_0_enabled) // MAYBE? if transmitter
+        nrf_set_addr(n, NRF_RX_ADDR_P0, 0, n_addr_bytes);
 
     // Set message size = 0 for unused pipes.  
     //  [NOTE: I think redundant, but just to be sure.]
