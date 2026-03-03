@@ -1,5 +1,5 @@
 // one way test of 16-byte not-ack'd packets
-#include "nrf-test.h"
+#include "../nrf-test.h"
 
 // useful to mess around with these. 
 enum { ntrial = 1000, timeout_usec = 1000 };

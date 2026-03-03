@@ -50,6 +50,19 @@ typedef struct {
     uint8_t channel;    // what MHz channel the RF is using.
 } nrf_conf_t;
 
+typedef struct {
+    // some simple statistics.  maybe seperate this out into a struct.
+    uint32_t start_usec,
+             tot_sent_msgs,
+             tot_sent_bytes,
+
+             tot_retrans,
+             tot_lost,
+
+             tot_recv_msgs,
+             tot_recv_bytes;
+} nrf_stats_t;
+
 
 typedef struct nrf {
     // values for the many different hardware settings.
@@ -90,6 +103,7 @@ typedef struct nrf {
 
              tot_recv_msgs,
              tot_recv_bytes;
+    // nrf_stats_t stats;
 } nrf_t;
 
 // initialize the NRF hardware described by config <c>  (which specifies

@@ -88,13 +88,11 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
     // to write yours, comment this out and start editing below.
     // if you get weird results later (part 2, part 3 etc), 
     // flip back on.
-    // return staff_nrf_init(c, rxaddr, acked_p);
 
     // start of initialization: go through and handle no-ack first,
     // then ack.  i'd do one test at a time.
 
     volatile uint8_t val;
-    volatile uint8_t pipe_0_enabled = acked_p; // TX alias?
 
     nrf_t *n = kmalloc(sizeof *n);
     n->config = c;      // set initial config.
@@ -121,14 +119,15 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
         //   - NRF_SETUP_RETR
         // ** 
 
-        // Auto retransmission (p. 57)
-        val = nrf_get8(n, NRF_EN_AA);
-        nrf_put8_chk(n, NRF_EN_AA, val & !0b10);
+        // Disable auto retransmission (p. 57)
+        // val = nrf_get8(n, NRF_EN_AA);
+        // nrf_put8_chk(n, NRF_EN_AA, val & !0b10);
+        nrf_put8_chk(n, NRF_EN_AA, 0);
 
         // Enable ONLY pipe 1 and nothing else (p. 57)
         nrf_put8_chk(n, NRF_EN_RXADDR, 0b10);
 
-        // Disable retransmission (p. 57-58)
+        // Disable retransmission in general (p. 57-58)
         nrf_put8_chk(n, NRF_SETUP_RETR, 0);
 
         // when done, these should be true.
@@ -184,13 +183,12 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
     nrf_put8_chk(n, NRF_RX_PW_P1, c.nbytes);
     nrf_set_addr(n, NRF_RX_ADDR_P1, n->rxaddr, n_addr_bytes);
 
-    if (pipe_0_enabled) // MAYBE? if transmitter
-        nrf_set_addr(n, NRF_RX_ADDR_P0, 0, n_addr_bytes);
+    // if (acked_p) // MAYBE? if transmitter
+    nrf_set_addr(n, NRF_RX_ADDR_P0, 0, n_addr_bytes); // ** TEST QUIRK
 
     // Set message size = 0 for unused pipes.  
     //  [NOTE: I think redundant, but just to be sure.]
     // ** HARDCODED GODDAMN. Might figure out better way to do this
-    nrf_put8_chk(n, NRF_RX_PW_P0, 0);
     nrf_put8_chk(n, NRF_RX_PW_P2, 0);
     nrf_put8_chk(n, NRF_RX_PW_P3, 0);
     nrf_put8_chk(n, NRF_RX_PW_P4, 0);
@@ -281,8 +279,10 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
 //    of time we need to switch to TX to send a message.
 //    we then immediately switch back to RX.
 static void nrf_rx_mode(nrf_t *n) {
-    todo("go to RX with delay");
-
+    nrf_opt_assert(n, nrf_is_tx(n));
+    gpio_write(n->config.ce_pin, 0);
+    nrf_put8_chk(n, NRF_CONFIG, rx_config); // Set first bit
+    gpio_write(n->config.ce_pin, 1);
     nrf_opt_assert(n, nrf_is_rx(n));
 }
 
@@ -299,7 +299,11 @@ static void nrf_rx_mode(nrf_t *n) {
 // immediately if CE is set low. [p75]
 static void nrf_tx_mode(nrf_t *n) {
     // NOTE: tx fifo should not be empty.
-    todo("go RX->StandbyI->StandbyII->TX");
+    nrf_opt_assert(n, nrf_is_rx(n));
+    gpio_write(n->config.ce_pin, 0);
+    nrf_put8_chk(n, NRF_CONFIG, tx_config);
+    gpio_write(n->config.ce_pin, 1);
+    delay_us(15);
 
     nrf_opt_assert(n, nrf_is_tx(n));
 }
@@ -357,7 +361,6 @@ int nrf_tx_send_noack(nrf_t *n, uint32_t txaddr,
     while(nrf_get_pkts(n))
         ;
 
-    // TODO: you would implement the send packet code.
     // see page 75.
     // 1. put packet on TX fifo.
     // 2. put NRF in TX mode, 
@@ -368,13 +371,40 @@ int nrf_tx_send_noack(nrf_t *n, uint32_t txaddr,
     // NOTE: 
     //   - If nRF24L01+ is in standby-II mode, it goes to 
     //     standby-I mode immediately if CE is set low.
-    int res = staff_nrf_tx_send_noack(n, txaddr, msg, nbytes);
+
+    // 0. Actually put the TX address (as in page 75) 
+    unsigned nbytes_addr = nrf_get_addr_nbytes(n);
+    nrf_set_addr(n, NRF_TX_ADDR, txaddr, nbytes_addr);
+
+    // 1./2. put packet on TX fifo and put in TX mode (thru RX into STBY 1)
+    nrf_putn(n, NRF_W_TX_PAYLOAD, msg, nbytes);
+    nrf_tx_mode(n);
+
+    // 3. wait for TX interrupt.
+    while(!nrf_has_tx_intr(n))
+        ;
+
+    // 4. assert that tx fifo is empty.
+    assert(nrf_tx_fifo_empty(n));
+
+    // 5. Clear the tx interrupt.
+    nrf_tx_intr_clr(n);
+    
+    // 6. put back in rx mode.  (via standbyII->standbyI)
+    nrf_rx_mode(n);
+    
+    // 7. Increment things
+    n->tot_sent_msgs++;
+    n->tot_sent_bytes += nbytes;
+
+    // HOW CAN WE TELL IF PACKET IS LOST??!
+
 
     // after done: tx interrupt better be cleared.
     nrf_opt_assert(n, !nrf_has_tx_intr(n));
     // after done: better be back in rx mode.
     nrf_opt_assert(n, nrf_get8(n, NRF_CONFIG) == rx_config);
-    return res;
+    return nbytes;
 }
 
 // while the RX fifo is not empty: read packets into the 
@@ -399,18 +429,36 @@ int nrf_get_pkts(nrf_t *n) {
     // TODO:
     // data sheet gives the sequence to follow to get packets.
     // p76: 
-    // do {
-    //    0. assert(pipeid from STATUS != PIPEID_EMPTY)
-    //    1. read packet through spi [nrf_getn]
-    //    2. push onto the receive queue [cq_push_n],
-    //       increment <tot_recv_msgs> and <tot_recv_bytes>
-    //    3. clear rx IRQ.
-    //    4. read fifo status to see if more packets: 
-    //       if so, repeat from (1) --- we need to do this now in case
-    //       a packet arrives b/n (1) and (2)
-    // } while (rx fifo is not empty)
-    int res = staff_nrf_get_pkts(n);
+
+    gpio_write(n->config.ce_pin, 1);
+    delay_us(130);
+
+    uint32_t N = n->config.nbytes;
+    uint8_t buffer[N];
+    memset(buffer, 0, N); // might not even need
+
+    unsigned n_packets = 0;
+
+    while (nrf_rx_has_packet(n)) {
+        // 0. assert(pipeid from STATUS != PIPEID_EMPTY)
+        assert(nrf_rx_get_pipeid(n) != NRF_PIPEID_EMPTY);
+
+        // 1. read packet through spi [nrf_getn]
+        nrf_getn(n, NRF_R_RX_PAYLOAD, buffer, N);
+
+        // 2. push onto the receive queue [cq_push_n],
+        //       increment <tot_recv_msgs> and <tot_recv_bytes>
+        cq_push_n(&n->recvq, buffer, N);
+        n->tot_recv_bytes += N;
+        n_packets++;
+
+        // 3. clear rx IRQ.
+        nrf_rx_intr_clr(n);
+
+    };
+
+    n->tot_recv_msgs += n_packets;
 
     nrf_opt_assert(n, nrf_get8(n, NRF_CONFIG) == rx_config);
-    return res;
+    return n_packets;
 }
