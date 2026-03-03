@@ -7,9 +7,7 @@ BOOTLOADER = my-install
 # PROGS += tests/2-test-procmap.c
 
 # My own tests
-# PROGS += tests/5-exception-read.c
-PROGS += tests/5-exception-write.c
-# PROGS += tests/5-exception-jump.c
+PROGS += tests/5-exceptions.c
 
 
 # your code will go here.

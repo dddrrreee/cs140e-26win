@@ -215,8 +215,15 @@ nrf_t *nrf_init(nrf_conf_t c, uint32_t rxaddr, unsigned acked_p) {
     // ideally we would do something where we use different 
     // addresses across reboots?   we get a bit of this benefit
     // by waiting the 100ms.
+    // nrf_put8(n, NRF_STATUS, 0x70); // Clear FIFO
+
+    nrf_tx_flush(n);
+    nrf_rx_flush(n);
+    nrf_put8(n, NRF_STATUS, 0x70);
     uint8_t status_reg = nrf_get8(n, NRF_STATUS); // Wait but RX_P_NO
     assert(status_reg == 0b00001110);
+
+    // Clear FIFO
 
     // i think w/ the nic is off, this better be true.
     assert(!nrf_tx_fifo_full(n));
@@ -347,6 +354,8 @@ int nrf_tx_send_ack(nrf_t *n, uint32_t txaddr,
 
     // 3. wait for TX interrupt.
     while(!nrf_has_tx_intr(n)) {
+        nrf_tx_intr_clr(n);
+        nrf_tx_flush(n);
         if (nrf_has_max_rt_intr(n)) {
             panic("Could not send packet in %d retransmission attempts.", nrf_default_retran_attempts);
         }

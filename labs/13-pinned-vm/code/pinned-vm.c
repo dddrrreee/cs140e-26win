@@ -51,6 +51,7 @@ void domain_access_ctrl_set(uint32_t d) {
 //    you'll need to allocate an invalid page table
 //    CPU will check TLB for VA, if not found, go to page table, but it needs to fault if it goes there
 void pin_mmu_init(uint32_t domain_reg) {
+    // staff_pin_mmu_init(domain_reg); return;
 
     // Allocate an invalid 16 KB page table
     null_pt = kmalloc_aligned(4096*4, 1<<14);
@@ -65,6 +66,7 @@ void pin_mmu_init(uint32_t domain_reg) {
 //
 // NOTE: mmu must be on (confusing).
 int tlb_contains_va(uint32_t *result, uint32_t va) {
+    // return staff_tlb_contains_va(result, va); 
     assert(mmu_is_enabled());
 
     // 3-79
@@ -88,6 +90,7 @@ void pin_mmu_sec(unsigned idx,
                 uint32_t va, 
                 uint32_t pa,
                 pin_t e) {
+    // staff_pin_mmu_sec(idx, va, pa, e); return;
 
 
     demand(idx < 8, lockdown index too large);
@@ -95,7 +98,7 @@ void pin_mmu_sec(unsigned idx,
     demand(bits_get(va, 0, 19) == 0, only handling 1MB sections);
     demand(bits_get(pa, 0, 19) == 0, only handling 1MB sections);
 
-    debug("about to map %x->%x\n", va,pa);
+    // debug("about to map %x->%x\n", va,pa);
 
     // these will hold the values you assign for the tlb entries.
     volatile uint32_t x, va_ent, pa_ent, attr = 0;
@@ -140,6 +143,7 @@ void pin_mmu_sec(unsigned idx,
 
 // check that <va> is pinned.  
 int pin_exists(uint32_t va, int verbose_p) {
+    // return staff_pin_exists(va, verbose_p); 
     if(!mmu_is_enabled())
         panic("XXX: i think we can only check existence w/ mmu enabled\n");
 
@@ -159,6 +163,7 @@ int pin_exists(uint32_t va, int verbose_p) {
 // need to set the <asid> before turning VM on and 
 // to switch processes.
 void pin_set_context(uint32_t asid) {
+    // staff_pin_set_context(asid); return;
     // put these back
     demand(asid > 0 && asid < 64, invalid asid);
     demand(null_pt, must setup null_pt --- look at tests);
@@ -169,6 +174,7 @@ void pin_set_context(uint32_t asid) {
 }
 
 void pin_clear(unsigned idx)  {
+    // staff_pin_clear(idx); return;
     lockdown_index_set(idx & 0xFF);
     lockdown_va_set(0);
     lockdown_attr_set(0);
