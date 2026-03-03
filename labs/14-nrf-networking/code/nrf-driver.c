@@ -333,7 +333,39 @@ int nrf_tx_send_ack(nrf_t *n, uint32_t txaddr,
     //  - if you get more than max_rt_interrupts
     //    you can panic for today.  but dump out the 
     //    configuration: good chance its a bad configure.
-    int res = staff_nrf_tx_send_ack(n, txaddr, msg, nbytes);
+
+    // ---------------------
+
+    // 0. TX and RX addresses (as in page 75) 
+    unsigned nbytes_addr = nrf_get_addr_nbytes(n);
+    nrf_set_addr(n, NRF_TX_ADDR, txaddr, nbytes_addr);
+    nrf_set_addr(n, NRF_RX_ADDR_P0, txaddr, nbytes_addr);
+
+    // 1/2. Put packet on TX fifo and put in TX mode (thru RX into STBY 1)
+    nrf_putn(n, NRF_W_TX_PAYLOAD, msg, nbytes);
+    nrf_tx_mode(n);
+
+    // 3. wait for TX interrupt.
+    while(!nrf_has_tx_intr(n)) {
+        if (nrf_has_max_rt_intr(n)) {
+            panic("Could not send packet in %d retransmission attempts.", nrf_default_retran_attempts);
+        }
+    }
+
+    // 4. assert that tx fifo is empty.
+    assert(nrf_tx_fifo_empty(n));
+
+    // 5. Clear the tx interrupt.
+    nrf_tx_intr_clr(n);
+    
+    // 6. put back in rx mode
+    nrf_rx_mode(n);
+    
+    // 7. Increment things
+    n->tot_sent_msgs++;
+    n->tot_sent_bytes += nbytes;
+
+    // ---------------------
 
     // How to increment the total number of retransmissions.
     //  uint8_t cnt = nrf_get8(n, NRF_OBSERVE_TX);
@@ -343,7 +375,7 @@ int nrf_tx_send_ack(nrf_t *n, uint32_t txaddr,
     nrf_opt_assert(n, !nrf_has_tx_intr(n));
     // when done: better be back in rx mode.
     nrf_opt_assert(n, nrf_get8(n, NRF_CONFIG) == rx_config);
-    return res;
+    return nbytes;
 }
 
 // send packet without hardware ack.
@@ -367,7 +399,7 @@ int nrf_tx_send_noack(nrf_t *n, uint32_t txaddr,
     // 3. wait for TX interrupt.
     // 4. assert that tx fifo is empty.
     // 5. Clear the tx interrupt.
-    // 6. put back in rx mode.  (via standbyII->standbyI)
+    // 6. put back in rx mode
     // NOTE: 
     //   - If nRF24L01+ is in standby-II mode, it goes to 
     //     standby-I mode immediately if CE is set low.
@@ -376,7 +408,7 @@ int nrf_tx_send_noack(nrf_t *n, uint32_t txaddr,
     unsigned nbytes_addr = nrf_get_addr_nbytes(n);
     nrf_set_addr(n, NRF_TX_ADDR, txaddr, nbytes_addr);
 
-    // 1./2. put packet on TX fifo and put in TX mode (thru RX into STBY 1)
+    // 1/2. put packet on TX fifo and put in TX mode (thru RX into STBY 1)
     nrf_putn(n, NRF_W_TX_PAYLOAD, msg, nbytes);
     nrf_tx_mode(n);
 
@@ -390,7 +422,7 @@ int nrf_tx_send_noack(nrf_t *n, uint32_t txaddr,
     // 5. Clear the tx interrupt.
     nrf_tx_intr_clr(n);
     
-    // 6. put back in rx mode.  (via standbyII->standbyI)
+    // 6. put back in rx mode
     nrf_rx_mode(n);
     
     // 7. Increment things
