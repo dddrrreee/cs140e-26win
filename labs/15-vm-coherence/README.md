@@ -4,6 +4,7 @@
   <img src="images/pi-vm-lab2.jpg" width="700" />
 </p>
 
+---------------------------------------------------------------------
 #### tl;dr: what to do:
 
 Replace:
@@ -18,6 +19,7 @@ Also:
   - Checking that the new test in `code/tests/4-test-vm-cache-mgmt.c` 
     works.
 
+---------------------------------------------------------------------
 #### Lab intro
 
 Last VM lab we did the page table, the main noun of the VM universe.  This
@@ -140,21 +142,10 @@ Extensions:
     is if you can write tests that find if a given memory synchronization
     is missing.
 
------------------------------------------------------------------------
-### Useful macros for `<your-mmu-asm.S>`
-
-The header `arm6-coprocessor-asm.h` has a bunch of useful macros
-you can use in your the assembly code.  E.g.,
-```
-        mov r2, #0  @ clear r2
-        INV_DCACHE(r2)
-        INV_ICACHE(r2)
-        INV_TLB(r2)
-```
 
 
 ------------------------------------------------------------------------
-#### Flushing stale state.
+### Background: Flushing stale state.
 
 The trickiest part of this lab is not figuring out the instructions
 to change the state we need, but is making sure you do --- exactly ---
@@ -209,7 +200,21 @@ ARMv6 manual (`docs/armv6.b2-memory.annot.pdf`).  Useful pages:
   - B2-24: must flush after a CP15.
 
 ----------------------------------------------------------------------
-## Part 0: The new test.
+### implementation notes
+
+##### Useful macros
+
+The header `arm6-coprocessor-asm.h` has a bunch of useful macros
+you can use in your the assembly code.  E.g.,
+```
+        mov r2, #0  @ clear r2
+        INV_DCACHE(r2)
+        INV_ICACHE(r2)
+        INV_TLB(r2)
+```
+
+
+##### New test
 
 There is now a new test:
   - `code/tests/4-test-vm-cache-mgmt.c`.  You should look through
@@ -238,11 +243,11 @@ good argument for why it is ok to elide, you can change the test so it
 doesn't check this (see the `mmu_enable` part of the lab below.
 
 ----------------------------------------------------------------------
-## Part 1: simple helpers
+## Part 1: write two trivial helpers
 
 To warm up, we'll do two simple helper routines.
 
-#### write `mmu.c:domain_access_ctrl_set()` 
+#### `mmu.c:domain_access_ctrl_set()` 
 
 Most of you already have this, but in case not:
   - Implement `domain_access_ctrl_set()`  in `mmu.c`
@@ -262,7 +267,7 @@ Useful intuition:
   - When you flush the `BTB`, you need to do a `PrefetchFlush` to wait for
     it to complete (B2.7.5, p B2-24).
 
-#### write `your-mmu-asm.S:cp15_ctrl_reg1_rd()
+#### `your-mmu-asm.S:cp15_ctrl_reg1_rd()
 
 Write `cp15_ctrl_reg1_rd()` which reads the control reg 1 and returns it
 as a `struct control_reg1` (defined in `armv6-cp15.h`), which is exactly
@@ -273,6 +278,7 @@ as a `struct control_reg1` (defined in `armv6-cp15.h`), which is exactly
 Its probably easiest to write the routine in the assembly file so you
 don't have to mess with casting.    But you can also put it in `mmu.c`
 using inline assembly.
+
 
 ----------------------------------------------------------------------
 ##### B4-32: Bits to set in Domain
@@ -312,7 +318,6 @@ You need to:
   - As mentioned above: `armv6-coprocessor-asm.h` has many 
     useful assembly instructions and page numbers.
   - Replace the calls in both labs and make sure your tests still pass.
-
 
 ----------------------------------------------------------------------
 ## Part 3: implement `mmu_enable_set_asm` and `mmu_disable_set_asm`
@@ -409,6 +414,7 @@ Where and what:
 
   3. Coherence requirements: B2-21, B2-22, B2-23, B2-24 rules for changing
   page table register. And B2-25 the cookbook for changing an `ASID`.
+
 ----------------------------------------------------------------------
 ##### 3-129: must do after setting the context id register:
 
@@ -457,7 +463,6 @@ Where and what:
 <table><tr><td>
   <img src="images/part3-flush-btb.png" width=500/>
 </td></tr></table>
-
 
 
 ----------------------------------------------------------------------
