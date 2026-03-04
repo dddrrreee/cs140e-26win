@@ -5,6 +5,7 @@
 #include "rpi-interrupts.h"
 #include "libc/helper-macros.h"
 #include "mmu-internal.h"
+// #include "mmu.h"
 
 #include "asm-helpers.h"
 
@@ -32,7 +33,8 @@ void mmu_disable_set(cp15_ctrl_reg1_t c) {
     // record if dcache on.
     uint32_t cache_on_p = c.C_unified_enable;
 
-    staff_mmu_disable_set_asm(c);
+    // staff_mmu_disable_set_asm(c);
+    mmu_disable_set_asm(c);
 
     // re-enable if it was on.
     if(cache_on_p) {
@@ -56,9 +58,10 @@ void mmu_disable(void) {
 // <c>.   we start in C so we can do assertions
 // and then call out to the assembly for the 
 // real work (you'll write this code next time).
-void mmu_enable_set(cp15_ctrl_reg1_t c) {
+void mmu_enable_set(cp15_ctrl_reg1_t c) { // **
     assert(c.MMU_enabled);
-    staff_mmu_enable_set_asm(c);
+    mmu_enable_set_asm(c);
+    // staff_mmu_enable_set_asm(c);
 }
 
 // enable mmu by flipping enable bit.
@@ -74,7 +77,8 @@ void mmu_set_ctx(uint32_t pid, uint32_t asid, void *pt) {
     assert(asid!=0);
     assert(asid<64);
     // set_procid_ttbr0(pid, asid, pt);
-    staff_cp15_set_procid_ttbr0(pid << 8 | asid, pt);
+    cp15_set_procid_ttbr0((pid << 8) | asid, pt);
+    // staff_cp15_set_procid_ttbr0(pid << 8 | asid, pt);
 }
 
 // set so that we use armv6 memory.
@@ -101,7 +105,7 @@ void mmu_init(void) { // **
     
     struct control_reg1 reg = cp15_ctrl_reg1_rd();
     reg.XP_pt = 1;
-    normal_cp15_ctrl_reg1_wr((cp15_ctrl_reg1_t)reg); // ** DONT USE STAFF FUNCTION
+    cp15_ctrl_reg1_wr((cp15_ctrl_reg1_t)reg); // ** DONT USE STAFF FUNCTION
     prefetch_flush();
 
     // make sure write succeeded.

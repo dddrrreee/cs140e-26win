@@ -164,7 +164,7 @@ void pin_set_context(uint32_t asid) {
     demand(null_pt, must setup null_pt --- look at tests);
 
     enum { PID = 128 };
-    staff_mmu_set_ctx(PID, asid, null_pt);
+    mmu_set_ctx(PID, asid, null_pt);
 
 }
 
