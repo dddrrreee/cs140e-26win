@@ -115,29 +115,26 @@ reached QED:
   2. Then the arguments were much too weak and;
   3. You are definitely not done.
 
-**This class generally has no real code style requirements.  However,
-today we do, and it is a hard requirement: You must write comments 
-for each important action stating:
-     1. Why you decided to do that (give page/section numbers)
-     2. What you intend to accomplish (give page numbers).**
-
 #### Check-off
 
 You're going to write a tiny amount of code (< 20 lines for each part),
 but it has to be the right code.  
 
+**This class generally has no real code style requirements.  However,
+today we do, and it is a hard requirement:**
+  -  You must write comments for each important action stating:
+     (1) why you decided to do that (give page/section numbers) and
+     (2) what you intend to accomplish (give page numbers).**
+
 You will:
-
-  1. Replace all our assembly code from labs 12 and 13 lab and show that
-     the previous tests run. Also upload your `your-vm-asm.S` to Gradescope and
-     make sure you pass the tests.  (Note: our "tests" are incredibly weak so
-     this isn't a high bar; apologies.  Next Tuesday will have a more
-     ruthless approach)
-
-  3. ***Have detailed comments in your `.S` stating why exactly you did
+  1. Replace all our assembly code from 13 lab and show that
+     the previous tests run. Also upload your `your-vm-asm.S`
+     to Gradescope and make sure you pass the tests.  (Note: our
+     "tests" are incredibly weak so this isn't a high bar; apologies.
+     Next Tuesday will have a more ruthless approach)
+  2. ***Have detailed comments in your `.S` stating why exactly you did
      what you did with page numbers.***  This is not optional.
-
-  4. Check-off should be 5-8 people at once where anyone can answer
+  3. Check-off should be 5-8 people at once where anyone can answer
      questions: "why did you do this?"
 
 Extensions:
@@ -146,8 +143,6 @@ Extensions:
     *tons* from designing tests that can catch errors.  Especially good
     is if you can write tests that find if a given memory synchronization
     is missing.
-
-
 
 ------------------------------------------------------------------------
 ### Background: Flushing stale state.
