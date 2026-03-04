@@ -354,8 +354,6 @@ int nrf_tx_send_ack(nrf_t *n, uint32_t txaddr,
 
     // 3. wait for TX interrupt.
     while(!nrf_has_tx_intr(n)) {
-        nrf_tx_intr_clr(n);
-        nrf_tx_flush(n);
         if (nrf_has_max_rt_intr(n)) {
             panic("Could not send packet in %d retransmission attempts.", nrf_default_retran_attempts);
         }

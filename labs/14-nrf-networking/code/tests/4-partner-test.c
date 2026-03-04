@@ -67,8 +67,10 @@ ping_pong_ack(nrf_t *s, int verbose_p) {
             trace("sent %d ack'd packets [timeouts=%d]\n", 
                     npackets, ntimeout);
 
-        delay_ms(1000);
+        delay_ms(100);
+        trace("putting packet\n");
         net_put32(s, test_client_addr, ++exp, verbose_p);
+        trace("sent packet");
         while(!net_get32(s, &got, verbose_p))
             ;
         trace("Got packet (in for)\n");
