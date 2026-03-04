@@ -16,10 +16,12 @@
 
 static void *null_pt = 0;
 
+#if 0
 // should we have a pinned version?
 void domain_access_ctrl_set(uint32_t d) {
     staff_domain_access_ctrl_set(d);
 }
+#endif
 
 // fill this in based on the <1-test-basic-tutorial.c>
 // NOTE: 
