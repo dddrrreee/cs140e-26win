@@ -116,10 +116,10 @@ reached QED:
   3. You are definitely not done.
 
 **This class generally has no real code style requirements.  However,
-today we do, and it is a hard requirement:**
-  - You must write comments for each important action stating:
+today we do, and it is a hard requirement: You must write comments 
+for each important action stating:
      1. Why you decided to do that (give page/section numbers)
-     2. What you intend to accomplish (give page numbers).
+     2. What you intend to accomplish (give page numbers).**
 
 #### Check-off
 
