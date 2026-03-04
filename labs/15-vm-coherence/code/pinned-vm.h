@@ -173,12 +173,12 @@ void staff_pin_mmu_init(uint32_t domain_reg);
 // simple wrappers
 static inline void pin_mmu_enable(void) {
     assert(!mmu_is_enabled());
-    staff_mmu_enable();
+    mmu_enable();
     assert(mmu_is_enabled());
 }
 static inline void pin_mmu_disable(void) {
     assert(mmu_is_enabled());
-    staff_mmu_disable();
+    mmu_disable();
     assert(!mmu_is_enabled());
 }
 

@@ -43,10 +43,12 @@ MK_FN(mmu_reset)
     bx lr
 
 // void cp15_domain_ctrl_wr(uint32_t dom_reg);
-//  need to do cp15 sync: flush_btb, dsb, prefetch flush
+// NOTE:
+//   - definitely need to do prefetch flush 
+//   - I don't *think* we need the full cp15 sync: flush_btb, 
+//     dsb, prefetch flush.
 MK_FN(cp15_domain_ctrl_wr)
     b staff_cp15_domain_ctrl_wr
-
     asm_not_implemented()
     bx lr
 

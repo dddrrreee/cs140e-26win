@@ -1,81 +1,17 @@
-## Hooking translation up to hardware
+## The last piece of VM: MMU initialization and coherence.
 
 <p align="center">
   <img src="images/pi-vm-lab2.jpg" width="700" />
 </p>
 
------------------------------------------------------------------------
-***Bugs***:
+#### tl;dr: what to do:
 
-  - Part 5: talked about `ttbd` --- it's `ttbc` (we've updated the readme below).
+Replace:
+  - `staff-mmu-asm.o` by writing your own `your-mmu-asm.S`.
+  - `staff-mmu.o` by writing your own `mmu.c`.
+  - `staff-pinned-vm.o` with your lab 13 implementation.
 
-  - Part 1: Multiple definitions: When you implement
-    `cp15_ctrl_reg1_rd` you'll get a multiple definition error.  Just do
-    a pull and this will get fixed.
-
-    If you pulled and got a undefined error, just drop in:
-
-            cp15_ctrl_reg1_t cp15_ctrl_reg1_rd(void) {
-                return staff_cp15_ctrl_reg1_rd();
-            }
-
-  - Part 1: The comment for `cp15_domain_ctrl_wr` says you need to
-    "flush_btb, dsb, prefetch flush" but I think you only need the
-    prefetch flush.  You'll also need to make a `cp15_domain_ctrl_rd`.
-
-  - Part 6: when you remove all the staff code, you will have to modify
-    your pinned-vm.h to remove the staff calls:
-
-```
-        // pinned-vm.h: delete the staff_* prefixes
-        
-        // simple wrappers
-        static inline void pin_mmu_enable(void) {
-            assert(!mmu_is_enabled());
-            staff_mmu_enable();
-            assert(mmu_is_enabled());
-        }
-        static inline void pin_mmu_disable(void) {
-            assert(mmu_is_enabled());
-            staff_mmu_disable();
-            assert(!mmu_is_enabled());
-        }
-```
-
-
-***Clarifications***:
-
-  - You can use the macros in `arm6-coprocessor-asm.h` in the assembly
-    code.  E.g.,
-
-
-```
-        mov r2, #2  @ clear r2
-        INV_DCACHE(r2)
-        INV_ICACHE(r2)
-        INV_TLB(r2)
-```
-
-
-  - If your `pinned-vm.c` has issues: we've checked in
-    `code/orig-pinned-vm.c` you can just change the `Makefile` to use
-    this instead.
-
-        # change the code/Makefile to use orig-pinnned-vm.c
-        # COMMON_SRC += pinned-vm.c
-        COMMON_SRC += orig-pinned-vm.c
-
-  - Note: the test `4-test-vm-cache-mgmt.c` assumes your enable/disable
-    does an icache invalidation.  As the lab discusses below if you 
-    do not want to do this, and have a good argument for why it is ok
-    to elide, you can change the test so it doesn't check this (see
-    the `mmu_enable` part of the lab below.
-
------------------------------------------------------------------------
-#### tl;dr
-
-Today you will:
-  - replace `staff-mmu-asm.o` by writing your own versions in `your-mmu-asm.S`
+Also:
   - have a thorough set of arguments for why your versions are correct
     (page numbers etc).
   - Checking that the old tests work.
@@ -160,8 +96,6 @@ have one) and then move on.  (Yeah, I know: Pot. Kettle. Black.) This
 is worse than nothing in our context.  Better to have never written the
 VM code since then you know it doesn't work.
 
-<img src="images/bugs-glowing.png" align="right" width="400px"/>
-
 So, the way we handle this is how you generally handle things that are
 (1) very difficult to reason about and (2) very difficult to test:
 careful discussion with peers and lots of specific comments giving the
@@ -206,17 +140,28 @@ Extensions:
     is if you can write tests that find if a given memory synchronization
     is missing.
 
+-----------------------------------------------------------------------
+### Useful macros for `<your-mmu-asm.S>`
+
+The header `arm6-coprocessor-asm.h` has a bunch of useful macros
+you can use in your the assembly code.  E.g.,
+```
+        mov r2, #0  @ clear r2
+        INV_DCACHE(r2)
+        INV_ICACHE(r2)
+        INV_TLB(r2)
+```
+
+
 ------------------------------------------------------------------------
 #### Flushing stale state.
 
-<img src="images/swirling-code.png" align="right" width="450px"/>
-
-The trickiest part of this lab is not figuring out the instructions 
+The trickiest part of this lab is not figuring out the instructions
 to change the state we need, but is making sure you do --- exactly ---
-the operations needed to flush all stale state throughout the machine. 
+the operations needed to flush all stale state throughout the machine.
 As mentioned in the previous lab, the hardware caches:
   - Page table entries (in the TLB).  If you change the page table,
-  you need to flush the entries affected.
+    you need to flush the entries affected.
   - Memory (in both data and instruction caches).  If you change a virtual
   mapping or change addresses, you need to flush all affected entries.
   - The ARM optionally caches branch targets in a "branch target buffer"
@@ -287,6 +232,11 @@ The header files used:
   - `cache-support.h`: enable different caches on the arm by setting
     the right bits in the cp15 register.
 
+NOTE: it assumes your enable/disable does an icache invalidation.
+As the lab discusses below if you do not want to do this, and have a
+good argument for why it is ok to elide, you can change the test so it
+doesn't check this (see the `mmu_enable` part of the lab below.
+
 ----------------------------------------------------------------------
 ## Part 1: simple helpers
 
@@ -315,7 +265,7 @@ Useful intuition:
 #### write `your-mmu-asm.S:cp15_ctrl_reg1_rd()
 
 Write `cp15_ctrl_reg1_rd()` which reads the control reg 1 and returns it
-as a `struct control_reg1` (defined in `armv6-cp15.h`) which is exactly
+as a `struct control_reg1` (defined in `armv6-cp15.h`), which is exactly
 32-bits wide.
 
             struct control_reg1 c1 = cp15_ctrl_reg1_rd();
@@ -363,7 +313,7 @@ You need to:
     useful assembly instructions and page numbers.
   - Replace the calls in both labs and make sure your tests still pass.
 
-----------------------------------------------------------------------
+
 ----------------------------------------------------------------------
 ## Part 3: implement `mmu_enable_set_asm` and `mmu_disable_set_asm`
 
@@ -400,6 +350,7 @@ are correct.
   * Note that the flush instruction cache operation has bugs in 
     some ARM v6 chips, so we provided the recommended sequences (taken
     from Linux).
+
 ----------------------------------------------------------------------
 ##### 6-9: Protocol for turning on MMU.
 
@@ -507,43 +458,25 @@ Where and what:
   <img src="images/part3-flush-btb.png" width=500/>
 </td></tr></table>
 
-----------------------------------------------------------------------
+
+
 ----------------------------------------------------------------------
 ## Part 6: Get rid of our code.
 
 You should go through and delete all uses of our MMU / pinned-vm code
-in the `code/Makefile`:
+in the `code/Makefile`.
 
+First, copy your `pinned-vm.c` from lab 13 into code and swap
+it in.  Make sure the tests pass.
+
+Second, delete our object files:
 ```
     # you should be able to delete all of these after the lab.
+    STAFF_OBJS += staff-pinned-vm.o
     STAFF_OBJS += staff-mmu-asm.o
     STAFF_OBJS += staff-mmu.o
-    
-    # these are just from lab 13: should be able to delete
-    # after you copy your code over.
-    STAFF_OBJS += staff-mmu-except.o
-    STAFF_OBJS += staff-pinned-vm.o
-```
-
-
-Also, delete the `staff_` prefix in `pinned-vm.h`:
 
 ```
-        // pinned-vm.h: delete the staff_* prefixes
-        
-        // simple wrappers
-        static inline void pin_mmu_enable(void) {
-            assert(!mmu_is_enabled());
-            staff_mmu_enable();
-            assert(mmu_is_enabled());
-        }
-        static inline void pin_mmu_disable(void) {
-            assert(mmu_is_enabled());
-            staff_mmu_disable();
-            assert(!mmu_is_enabled());
-        }
-```
-
 
 At this point, all VM code is written by you!  This is a legit capstone.
 
