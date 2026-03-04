@@ -1,7 +1,7 @@
 ## The last piece of VM: MMU initialization and coherence.
 
 <p align="center">
-  <img src="images/pi-vm-lab2.jpg" width="700" />
+  <img src="images/samsara.jpg" width="700" />
 </p>
 
 ---------------------------------------------------------------------
