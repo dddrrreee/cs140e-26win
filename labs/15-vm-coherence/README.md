@@ -108,15 +108,14 @@ Among those that actually build working systems IRL, the kind of careful,
 manual reasoning is the state of the art --- there is no silver bullet.
 You just have to work closely with your peers, arguing and double-checking
 each other's reasoning and having a cite-able sentence for why you did
-(or did not do) something and in the order you chose.  
-
-A heuristic for when these discussions have reached QED: 
+(or did not do) something and in the order you chose.  A heuristic for
+when these discussions have reached QED:
   1. If you don't have a strongly held belief that got invalided;
   2. Then the arguments were much too weak and;
   3. You are definitely not done.
 
-This class generally has no real code style requirements.  
-***However, today we do, and it is a hard requirement:***
+This class generally has no real code style requirements.  **However,
+today we do, and it is a hard requirement:**
   - You must write comments for each important action stating:
      1. Why you decided to do that (give page/section numbers)
      2. What you intend to accomplish (give page numbers).
