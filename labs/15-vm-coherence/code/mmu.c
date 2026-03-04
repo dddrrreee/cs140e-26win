@@ -6,6 +6,14 @@
 #include "libc/helper-macros.h"
 #include "mmu-internal.h"
 
+#include "asm-helpers.h"
+
+cp_asm_get(cp15_ctrl_1, p15, 0, c1, c0, 0); // Read Control 1 Register 
+cp_asm_set(cp15_ctrl_1, p15, 0, c1, c0, 0); // Write Control 1 Register 
+
+cp_asm_get(cp15_domain_ctrl, p15, 0, c3, c0, 0); // Read Domain Control Register
+cp_asm_set(cp15_domain_ctrl, p15, 0, c3, c0, 0); // Write TLB Lockdown Attributes Register
+
 // given.
 
 int mmu_is_enabled(void) {
@@ -104,13 +112,17 @@ uint32_t domain_access_ctrl_get(void) {
 // b4-42
 // set domain access control register to <r>
 __attribute__((weak))
-void domain_access_ctrl_set(uint32_t r) {
-    staff_domain_access_ctrl_set(r);
+void domain_access_ctrl_set(uint32_t r) { // **
+    // staff_domain_access_ctrl_set(r);
+
+    cp15_domain_ctrl_set(r);
+    prefetch_flush(); // ** TODO FIGURE OUT IF I NEED TO SET ANOTHER
     assert(domain_access_ctrl_get() == r);
 }
 #if 0
 #endif
 
-cp15_ctrl_reg1_t cp15_ctrl_reg1_rd(void) {
-    return staff_cp15_ctrl_reg1_rd();
-}
+// cp15_ctrl_reg1_t cp15_ctrl_reg1_rd(void) {
+//     volatile uint32_t reg = cp15_ctrl_1_get();
+//     // return staff_cp15_ctrl_reg1_rd();
+// }

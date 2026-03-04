@@ -20,9 +20,9 @@ PROGS += tests/4-test-vm-cache-mgmt.c
 #
 # 1. get rid of <orig-pinned-vm.c> and use your lab 13.
 #    comment out:
-COMMON_SRC += orig-pinned-vm.c
+# COMMON_SRC += orig-pinned-vm.c
 #    uncomment, copy your pinned-vm.c over.
-# COMMON_SRC += pinned-vm.c
+COMMON_SRC += pinned-vm.c
 
 # 2. comment these out!  all done.
 STAFF_OBJS += staff-pinned-vm.o

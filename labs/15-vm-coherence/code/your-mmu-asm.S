@@ -88,3 +88,8 @@ MK_FN(mmu_sync_pte_mods)
     asm_not_implemented()
     bx lr
 
+// **
+MK_FN(cp15_ctrl_reg1_rd)
+    MRC p15, 0, r0, c1, c0, 0
+    bx lr
+
