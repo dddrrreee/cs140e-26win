@@ -78,6 +78,7 @@ cp15_ctrl_reg1_t cp15_ctrl_reg1_rd(void);
 cp15_ctrl_reg1_t staff_cp15_ctrl_reg1_rd(void);
 uint32_t cp15_ctrl_reg1_get(void);
 void cp15_ctrl_reg1_wr(cp15_ctrl_reg1_t r);
+void normal_cp15_ctrl_reg1_wr(cp15_ctrl_reg1_t r);
 
 /******************************************************************************
  * set page table pointers.

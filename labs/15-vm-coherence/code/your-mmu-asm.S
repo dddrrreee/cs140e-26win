@@ -36,10 +36,17 @@ MK_FN(get_cache_type)
 
 // void reset(void)
 // clear the dcache, icache, tlbs
-MK_FN(mmu_reset)
-    b staff_mmu_reset
+MK_FN(mmu_reset) // **
+    @ b staff_mmu_reset
+    
+    mov r2, #0  @ clear r2
+    INV_DCACHE(r2)
+    DSB(r2)
+    INV_ICACHE(r2)
+    INV_TLB(r2)
+    DSB(r2)
+    PREFETCH_FLUSH(r2)
 
-    asm_not_implemented()
     bx lr
 
 // void cp15_domain_ctrl_wr(uint32_t dom_reg);
@@ -90,6 +97,13 @@ MK_FN(mmu_sync_pte_mods)
 
 // **
 MK_FN(cp15_ctrl_reg1_rd)
-    MRC p15, 0, r0, c1, c0, 0
+    MRC p15, 0, r0, c1, c0, 0 // Don't need prefetch because it is a get
     bx lr
 
+// **
+MK_FN(normal_cp15_ctrl_reg1_wr)
+    MCR p15, 0, r0, c1, c0, 0 // Don't need prefetch because it is a get
+    mov r3, #0
+    PREFETCH_FLUSH(r3)
+    
+    bx lr

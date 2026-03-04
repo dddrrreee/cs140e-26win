@@ -83,16 +83,26 @@ void mmu_set_ctx(uint32_t pid, uint32_t asid, void *pt) {
 //  1. the fields are defined in vm.h.
 //  2. specify armv6 (no subpages).
 //  3. check that the coprocessor write succeeded.
-void mmu_init(void) { 
-    staff_mmu_init();
-    return;
+void mmu_init(void) { // **
+    // staff_mmu_init();
+    // return;
 
     // initialize the MMU hardware state
     mmu_reset();
 
     // trivial: RMW the xp bit in control reg 1.
     // leave mmu disabled.
-    unimplemented();
+    // volatile uint32_t reg;
+    // asm volatile("MRC p15, 0, %0, c1, c0, 0" : "=r" (reg)); // ** DO RD INSTEAD
+    // reg |= (1 << 23);
+    // asm volatile("MCR p15, 0, %0, c1, c0, 0" : "=r" (reg)); // ** DO RD INSTEAD
+    // asm volatile("MCR p15, 0, %0, c1, c0, 0" : "=r" (reg)); // ** DO RD INSTEAD
+    
+    
+    struct control_reg1 reg = cp15_ctrl_reg1_rd();
+    reg.XP_pt = 1;
+    normal_cp15_ctrl_reg1_wr((cp15_ctrl_reg1_t)reg); // ** DONT USE STAFF FUNCTION
+    prefetch_flush();
 
     // make sure write succeeded.
     struct control_reg1 c1 = cp15_ctrl_reg1_rd();
@@ -101,8 +111,10 @@ void mmu_init(void) {
 }
 
 // read and return the domain access control register
-uint32_t domain_access_ctrl_get(void) {
-    return staff_domain_access_ctrl_get();
+uint32_t domain_access_ctrl_get(void) { // **
+    volatile uint32_t reg = cp15_domain_ctrl_get();
+    prefetch_flush(); 
+    return reg;
 }
 
 // NOTE: to stop duplicate symbol errors for
@@ -121,8 +133,3 @@ void domain_access_ctrl_set(uint32_t r) { // **
 }
 #if 0
 #endif
-
-// cp15_ctrl_reg1_t cp15_ctrl_reg1_rd(void) {
-//     volatile uint32_t reg = cp15_ctrl_1_get();
-//     // return staff_cp15_ctrl_reg1_rd();
-// }
