@@ -99,22 +99,27 @@ is worse than nothing in our context.  Better to have never written the
 VM code since then you know it doesn't work.
 
 So, the way we handle this is how you generally handle things that are
-(1) very difficult to reason about and (2) very difficult to test:
-careful discussion with peers and lots of specific comments giving the
-basis and logical argument for why you are doing what you are doing.
-Without this informal "proof" someone will have a hard time figuring
-out if you know what you are doing and if the code does what it purports
-to do.  This kind of careful, manual reasoning is the state of the art
---- there is no silver bullet.  You just have to work closely with your
-peers, arguing and double-checking each other's reasoning and having a
-cite-able sentence for why you did (or did not do) something and in the
-order you chose.
+(1) very difficult to reason about and (2) very difficult to test: careful
+discussion with peers and lots of specific comments giving the basis and
+logical argument for why you are doing what you are doing.  Without this
+informal comment "proof" someone will have a hard time figuring out if
+you know what you are doing and if the code does what it purports to do.
+Among those that actually build working systems IRL, the kind of careful,
+manual reasoning is the state of the art --- there is no silver bullet.
+You just have to work closely with your peers, arguing and double-checking
+each other's reasoning and having a cite-able sentence for why you did
+(or did not do) something and in the order you chose.  
 
-This class generally has no real code style requirements.  However,
-this lab has a hard requirement: you must write comments for each
-important action stating (1) why you decided to do that (give page
-numbers or section numbers) and (2) what you intend to accomplish (give
-page numbers).
+A heuristic for when these discussions have reached QED: 
+  1. If you don't have a strongly held belief that got invalided;
+  2. Then the arguments were much too weak and;
+  3. You are definitely not done.
+
+This class generally has no real code style requirements.  
+***However, today we do, and it is a hard requirement:***
+  - You must write comments for each important action stating:
+     1. Why you decided to do that (give page/section numbers)
+     2. What you intend to accomplish (give page numbers).
 
 #### Check-off
 
