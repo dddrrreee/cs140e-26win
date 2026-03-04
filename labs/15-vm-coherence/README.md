@@ -1,10 +1,10 @@
-## The last piece of VM: MMU initialization and coherence.
 
 <p align="center">
   <img src="images/samsara.jpg" width="700" />
 </p>
 
----------------------------------------------------------------------
+## The trickiest lab: MMU initialization and coherence.
+
 #### tl;dr: what to do:
 
 Replace:
