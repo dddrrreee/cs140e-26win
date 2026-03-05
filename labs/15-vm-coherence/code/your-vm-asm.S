@@ -23,6 +23,9 @@
 #include "armv6-coprocessor-asm.h"
 
 
+// B2-18/19 DMB (observed, LDR, STR) VS DSB (observed that complete, cache, branch predictors)
+
+
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ many page numbers are in 
 @    armv6-coprocessor-asm.h
@@ -73,7 +76,7 @@ MK_FN(cp15_set_procid_ttbr0) // **
     DSB(r2)
 
     // B2-25 recipe
-    ASID_SET(r2)
+    ASID_SET(r2)  // B4-52 for Register 13 (ContextID)
     FLUSH_BTB(r2) // B2-24 (B2.7.5) after ASID or TTBR
     PREFETCH_FLUSH(r2)
     
@@ -111,14 +114,15 @@ MK_FN(mmu_disable_set_asm) // **
 
     // 1. Clear bit 2 to 0 to disable data cache
     // 6-9 disable dcache and disable mmu simultaneously
+    // Disabling MMU assumes that that operation does things to dcache
     @ bic r0, r0, #0x4 // Assume already set
     MCR p15, 0, r0, c1, c0, 0
-    PREFETCH_FLUSH(r2) // B2-24 for prefetch after CP15 to make sure not prefetching early
+    PREFETCH_FLUSH(r2) // B2-24 for prefetch after CP15
 
     // After MMU enable 
     INV_ICACHE(r2)
+    DSB(r2) // MUST be after ICACHE, can also 
     FLUSH_BTB(r2) // B2-24 (B2.7.5)
-    DSB(r2) // TODO: figure out - completion of issued
     PREFETCH_FLUSH(r2) // B2-24 for prefetch after CP15 - visibility of completed
 
     @ asm_not_implemented()
@@ -126,9 +130,13 @@ MK_FN(mmu_disable_set_asm) // **
 
 // void mmu_enable_set_asm(cp15_ctrl_reg1_t c);
 MK_FN(mmu_enable_set_asm) // **
+
+
     @ b staff_mmu_enable_set_asm
 
     mov r2, #0
+
+    // TODO: FIGURE OUT PAGE TABLES IN LATER LAB ?????!!???!
 
     // 6-9 - Disabling ICache before MMU
     MRC p15, 0, r1, c1, c0, 0
