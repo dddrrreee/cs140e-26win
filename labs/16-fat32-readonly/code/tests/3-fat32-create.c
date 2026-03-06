@@ -1,6 +1,6 @@
 #include "rpi.h"
-#include "pi-sd.h"
-#include "fat32.h"
+#include "../pi-sd.h"
+#include "../fat32.h"
 
 void notmain() {
   kmalloc_init(FAT32_HEAP_MB);

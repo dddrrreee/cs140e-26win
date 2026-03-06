@@ -1,5 +1,5 @@
 #include "rpi.h"
-#include "pi-sd.h"
+#include "../pi-sd.h"
 
 #define SECTOR_SIZE 512
 

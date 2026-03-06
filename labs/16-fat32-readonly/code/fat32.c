@@ -115,19 +115,35 @@ static uint32_t get_cluster_chain_length(fat32_fs_t *fs, uint32_t start_cluster)
     // TODO: Walk the cluster chain in the FAT until you see a cluster where
     // `fat32_fat_entry_type(cluster) == LAST_CLUSTER`.  Count the number of
     // clusters.
-    uint32_t length = 1;
+    uint32_t length = 0;
     uint32_t cluster = start_cluster;
-    
-    while(fat32_fat_entry_type(cluster) == USED_CLUSTER) {
+
+    // while (fat32_fat_entry_type(cluster) == USED_CLUSTER) {
+    //     if (dump_p)
+    //         trace_nofn("Cluster %d: %x\n", length, cluster);
+            
+    //     length++;
+            
+    //     if (length == MAX_CHAIN_LENGTH)
+    //         panic("CHAIN BIGGER THAN %x\n", MAX_CHAIN_LENGTH);
+
+    //     cluster = fs->fat[cluster];
+    // } 
+    // while (fat32_fat_entry_type(cluster) == USED_CLUSTER);
+
+    do {
+        length++;
+
         if (dump_p)
             trace_nofn("Cluster %d: %x\n", length, cluster);
 
-        cluster = fs->fat[cluster];
-        length++;
-
-        if (length > MAX_CHAIN_LENGTH)
+        // End condition, otherwise just keep incrementing
+        if (length == MAX_CHAIN_LENGTH)
             panic("CHAIN BIGGER THAN %x\n", MAX_CHAIN_LENGTH);
-    }
+
+        cluster = fs->fat[cluster];
+
+    } while (fat32_fat_entry_type(cluster) == USED_CLUSTER);
 
     return length;
 }
@@ -142,16 +158,26 @@ static void read_cluster_chain(fat32_fs_t *fs, uint32_t start_cluster, uint8_t *
     // appropriate amount each time.
 
     uint32_t cluster = start_cluster;
-    uint32_t offset = 0;
+    uint32_t data_offset = 0;
 
-    uint8_t buffer[NBYTES_PER_SECTOR * fs->sectors_per_cluster];
+    uint8_t buffer[NBYTES_PER_SECTOR * fs->sectors_per_cluster]; // for one cluster
 
-    while( cluster != LAST_CLUSTER ) {
-        pi_sd_read(buffer, cluster_to_lba(fs, cluster), 1);
-        memcpy256(data + offset, buffer, NBYTES_PER_SECTOR);
-        offset += NBYTES_PER_SECTOR;
+    // while( fat32_fat_entry_type(cluster) == USED_CLUSTER ) {
+    //     pi_sd_read(buffer, cluster_to_lba(fs, cluster), fs->sectors_per_cluster);
+    //     memcpy256(data + data_offset, buffer, NBYTES_PER_SECTOR * fs->sectors_per_cluster);
+    //     data_offset += NBYTES_PER_SECTOR;
+    //     cluster = fs->fat[cluster];
+    // }
+
+    do {
+
+        pi_sd_read(buffer, cluster_to_lba(fs, cluster), fs->sectors_per_cluster);
+        memcpy256(data + data_offset, buffer, NBYTES_PER_SECTOR * fs->sectors_per_cluster);
+        data_offset += NBYTES_PER_SECTOR;
         cluster = fs->fat[cluster];
-    }
+
+    } while (fat32_fat_entry_type(cluster) == USED_CLUSTER);
+
 }
 
 // Converts a fat32 internal dirent into a generic one suitable for use outside
@@ -173,46 +199,65 @@ static pi_dirent_t dirent_convert(fat32_dirent_t *d) {
 // Return a heap-allocated array of dirents.
 static fat32_dirent_t *get_dirents(fat32_fs_t *fs, uint32_t cluster_start, uint32_t *dir_n) {
 
-    // Allocate a buffer large enough to hold the whole directory
+    // Get lengths
     uint32_t n_clusters = get_cluster_chain_length(fs, cluster_start);
     uint32_t total_root_dir_bytes = NBYTES_PER_SECTOR * fs->sectors_per_cluster * n_clusters;
-    uint32_t total_dir_entries = total_root_dir_bytes / DIR_ENTRY_BYTES;
-    
-    // Get data
-    uint8_t data[total_root_dir_bytes];
-    read_cluster_chain(fs, cluster_start, data);
+    *dir_n = total_root_dir_bytes / DIR_ENTRY_BYTES;
 
-    // Parse through to count valid directories
-    uint32_t valid_directories = 0;
-    for (uint32_t i = 0; i < total_dir_entries; i++) {
+    if (trace_p)
+        trace("Chain of %x\n", n_clusters);
 
-    }
+    // Get data with buffer
+    fat32_dirent_t* directories = kmalloc(total_root_dir_bytes);
+    read_cluster_chain(fs, cluster_start, (uint8_t*)directories);
 
-    
-    return (fat32_dirent_t *)NULL;
+    return directories;
 }
 
 pi_directory_t fat32_readdir(fat32_fs_t *fs, pi_dirent_t *dirent) {
-  demand(init_p, "fat32 not initialized!");
-  demand(dirent->is_dir_p, "tried to readdir a file!");
-  // TODO: use `get_dirents` to read the raw dirent structures from the disk
-  uint32_t n_dirents;
-  fat32_dirent_t *dirents = get_dirents(fs, dirent->cluster_id, &n_dirents);
+    demand(init_p, "fat32 not initialized!");
+    demand(dirent->is_dir_p, "tried to readdir a file!");
+    
+    uint32_t n_dirents;
+    fat32_dirent_t *dirents = get_dirents(fs, dirent->cluster_id, &n_dirents);
 
-  // TODO: allocate space to store the pi_dirent_t return values
-  unimplemented();
+    // Count valid entries (no free() so we want to allocate minimum space)
+    uint32_t n_valid = 0;
+    for (int i = 0; i < n_dirents; i++) {
+        if (fat32_dirent_free(&dirents[i])) continue; // free space
+        if (fat32_dirent_is_lfn(&dirents[i])) continue; // LFN version of name
+        if (dirents[i].attr & FAT32_VOLUME_LABEL) continue; // volume label
+        n_valid++;
+    }
+    // Allocate space to store the pi_dirent_t return values
+    pi_dirent_t* dir_structs = kmalloc(n_valid * sizeof(pi_dirent_t));
+    // unimplemented();
 
-  // TODO: iterate over the directory and create pi_dirent_ts for every valid
-  // file.  Don't include empty dirents, LFNs, or Volume IDs.  You can use
-  // `dirent_convert`.
-  unimplemented();
+    // TODO: iterate over the directory and create pi_dirent_ts for every valid
+    // file.  Don't include empty dirents, LFNs, or Volume IDs.  You can use
+    // `dirent_convert`.
+    uint32_t dir_struct_idx = 0;
+    for (int i = 0; i < n_dirents; i++) {
+        if (fat32_dirent_free(&dirents[i])) continue; // free space
+        if (fat32_dirent_is_lfn(&dirents[i])) continue; // LFN version of name
+        if (dirents[i].attr & FAT32_VOLUME_LABEL) continue; // volume label
+        
+        dir_structs[dir_struct_idx] = dirent_convert(&dirents[i]);
+        dir_struct_idx++;
+    }
 
-  // TODO: create a pi_directory_t using the dirents and the number of valid
-  // dirents we found
-  return (pi_directory_t) {
-    .dirents = NULL,
-    .ndirents = 0,
-  };
+    // // Allocate and store valid `pi_dirent_t` (not empty dirents, LFNs, or Volume IDs)
+    // pi_dirent_t* valid_dir = kmalloc(n_valid * sizeof(pi_dirent_t));
+    // for (int i = 0; i < n_valid; i++) {
+    //     memcpy(valid_dir + i, dirents + valid_idxs[i], sizeof(pi_dirent_t));
+    // }
+
+    // TODO: create a pi_directory_t using the dirents and the number of valid
+    // dirents we found
+    return (pi_directory_t) {
+        .dirents = dir_structs,
+        .ndirents = n_valid
+    };
 }
 
 static int find_dirent_with_name(fat32_dirent_t *dirents, int n, char *filename) {

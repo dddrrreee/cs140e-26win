@@ -1,6 +1,6 @@
 #include "rpi.h"
-#include "pi-sd.h"
-#include "fat32.h"
+#include "../pi-sd.h"
+#include "../fat32.h"
 #include "libc/fast-hash32.h"
 
 static pi_file_t *

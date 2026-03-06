@@ -12,8 +12,8 @@ COMMON_SRC += mbr.c
 # STAFF_OBJS +=  staff-mbr.o
 
 # swap these when you build <fat32.c>
-# COMMON_SRC += fat32.c
-STAFF_OBJS +=  staff-fat32.o
+COMMON_SRC += fat32.c
+# STAFF_OBJS +=  staff-fat32.o
 
 # the tests in decreasing order of difficulty.
 
@@ -28,9 +28,9 @@ STAFF_OBJS +=  staff-fat32.o
 # PROGS := tests/2-fat32-mk.c
 # PROGS := tests/2-fat32-read.c
 # PROGS := tests/2-fat32-hash-read.c  
-# PROGS := tests/2-fat32-ls.c  
+PROGS := tests/2-fat32-ls.c  
 # PROGS := tests/2-fat32-jump.c	   
-PROGS := tests/1-mbr.c  
+# PROGS := tests/1-mbr.c  
 
 # for checkoff don't do r/w
 ALL_PROGS := $(wildcard tests/[012]-*.c)
