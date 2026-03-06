@@ -7,7 +7,7 @@
 #   include "bzt-sd.h"
 #else
     // zach's driver
-#   include "emmc.h"
+#   include "external-code/emmc.h"
 #endif
 
 #include "libc/our-crc32.h"

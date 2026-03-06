@@ -6,6 +6,11 @@
 // 128MB heap.
 enum { FAT32_HEAP_MB = 128 };
 
+enum { 
+    MAX_CHAIN_LENGTH =  8388608,
+    DIR_ENTRY_BYTES =   32,
+};
+
 /*
  * Aggregate the FAT32 information.  Refer to Paul's writeup for
  * how to compute thes.   you can compute each using either:

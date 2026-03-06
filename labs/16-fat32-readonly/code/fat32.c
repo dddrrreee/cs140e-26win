@@ -5,94 +5,105 @@
 
 // Print extra tracing info when this is enabled.  You can and should add your
 // own.
+static int dump_p = 0;
 static int trace_p = 1; 
 static int init_p = 0;
 
 fat32_boot_sec_t boot_sector;
+struct fsinfo fs_sector;
 
+static uint32_t get_cluster_chain_length(fat32_fs_t *fs, uint32_t start_cluster);
 
-fat32_fs_t fat32_mk(mbr_partition_ent_t *partition) {
-  demand(!init_p, "the fat32 module is already in use\n");
-  // TODO: Read the boot sector (of the partition) off the SD card.
-  unimplemented();
+fat32_fs_t fat32_mk(mbr_partition_ent_t *partition) { // **
+    demand(!init_p, "the fat32 module is already in use\n");
 
-  // TODO: Verify the boot sector (also called the volume id, `fat32_volume_id_check`)
-  unimplemented();
+    mbr_t* mbr = mbr_read();
 
-  // TODO: Read the FS info sector (the sector immediately following the boot
-  // sector) and check it (`fat32_fsinfo_check`, `fat32_fsinfo_print`)
-  assert(boot_sector.info_sec_num == 1);
-  unimplemented();
+    // ----- Get boot partition entry -----
+    mbr_partition_ent_t boot_sector_entry = mbr_get_partition(mbr, 0);
+    if (dump_p)
+        mbr_partition_print("Partition", &boot_sector_entry); // Print debugging
 
-  // END OF PART 2
-  // The rest of this is for Part 3:
+    // ----- Read and check boot sector -----
+    assert(pi_sd_read(&boot_sector, boot_sector_entry.lba_start, 1));
+    fat32_volume_id_check(&boot_sector);
+    if (dump_p)
+        fat32_volume_id_print("msg", &boot_sector);
 
-  // TODO: calculate the fat32_fs_t metadata, which we'll need to return.
-  unsigned lba_start = -1; // from the partition
-  unsigned fat_begin_lba = -1; // the start LBA + the number of reserved sectors
-  unsigned cluster_begin_lba = -1; // the beginning of the FAT, plus the combined length of all the FATs
-  unsigned sec_per_cluster = -1; // from the boot sector
-  unsigned root_first_cluster = -1; // from the boot sector
-  unsigned n_entries = -1; // from the boot sector
-  unimplemented();
+    // ----- Read and check filesystem sector -----
+    struct fsinfo fs_sector;
+    assert(boot_sector.info_sec_num == 1);
+    assert(pi_sd_read(&fs_sector, boot_sector_entry.lba_start + boot_sector.info_sec_num, 1));
+    fat32_fsinfo_check(&fs_sector);
+    if (dump_p)
+        fat32_fsinfo_print("msg", &fs_sector);
 
-  /*
-   * TODO: Read in the entire fat (one copy: worth reading in the second and
-   * comparing).
-   *
-   * The disk is divided into clusters. The number of sectors per
-   * cluster is given in the boot sector byte 13. <sec_per_cluster>
-   *
-   * The File Allocation Table has one entry per cluster. This entry
-   * uses 12, 16 or 28 bits for FAT12, FAT16 and FAT32.
-   *
-   * Store the FAT in a heap-allocated array.
-   */
-  uint32_t *fat;
-  unimplemented();
+    // END OF PART 2
+    // The rest of this is for Part 3:
 
-  // Create the FAT32 FS struct with all the metadata
-  fat32_fs_t fs = (fat32_fs_t) {
+    // TODO: calculate the fat32_fs_t metadata, which we'll need to return.
+    unsigned lba_start = boot_sector_entry.lba_start;
+    unsigned fat_begin_lba = lba_start + boot_sector.reserved_area_nsec; // the start LBA + the number of reserved sectors
+    unsigned cluster_begin_lba = fat_begin_lba + (boot_sector.nfats * boot_sector.nsec_per_fat); // the beginning of the FAT, plus the combined length of all the FATs
+    unsigned sec_per_cluster = boot_sector.sec_per_cluster; // from the boot sector
+    unsigned root_first_cluster = boot_sector.first_cluster; // from the boot sector
+    unsigned n_entries = boot_sector.nsec_per_fat; // from the boot sector
+
+    /*
+    * TODO: Read in the entire fat (one copy: worth reading in the second and
+    * comparing).
+    *
+    * The disk is divided into clusters. The number of sectors per
+    * cluster is given in the boot sector byte 13. <sec_per_cluster>
+    *
+    * The File Allocation Table has one entry per cluster. This entry
+    * uses 12, 16 or 28 bits for FAT12, FAT16 and FAT32.
+    *
+    * Store the FAT in a heap-allocated array.
+    */
+    uint32_t *fat = kmalloc(boot_sector.nfats * boot_sector.nsec_per_fat * NBYTES_PER_SECTOR);
+    // pi_sd_read(fat, fat_begin_lba, 3);
+    pi_sd_read(fat, fat_begin_lba, boot_sector.nfats * boot_sector.nsec_per_fat);
+
+    // Create the FAT32 FS struct with all the metadata
+    fat32_fs_t fs = (fat32_fs_t) {
     .lba_start = lba_start,
-      .fat_begin_lba = fat_begin_lba,
-      .cluster_begin_lba = cluster_begin_lba,
-      .sectors_per_cluster = sec_per_cluster,
-      .root_dir_first_cluster = root_first_cluster,
-      .fat = fat,
-      .n_entries = n_entries,
-  };
+        .fat_begin_lba = fat_begin_lba,
+        .cluster_begin_lba = cluster_begin_lba,
+        .sectors_per_cluster = sec_per_cluster,
+        .root_dir_first_cluster = root_first_cluster,
+        .fat = fat,
+        .n_entries = n_entries,
+    };
 
-  if (trace_p) {
-    trace("begin lba = %d\n", fs.fat_begin_lba);
-    trace("cluster begin lba = %d\n", fs.cluster_begin_lba);
-    trace("sectors per cluster = %d\n", fs.sectors_per_cluster);
-    trace("root dir first cluster = %d\n", fs.root_dir_first_cluster);
-  }
+    if (trace_p) {
+        trace("begin lba = %d\n", fs.fat_begin_lba);
+        trace("cluster begin lba = %d\n", fs.cluster_begin_lba);
+        trace("sectors per cluster = %d\n", fs.sectors_per_cluster);
+        trace("root dir first cluster = %d\n", fs.root_dir_first_cluster);
+    }
 
-  init_p = 1;
-  return fs;
+    init_p = 1;
+    return fs;
 }
 
 // Given cluster_number, get lba.  Helper function.
-static uint32_t cluster_to_lba(fat32_fs_t *f, uint32_t cluster_num) {
+static uint32_t cluster_to_lba(fat32_fs_t *f, uint32_t cluster_num) { // **
   assert(cluster_num >= 2);
-  // TODO: calculate LBA from cluster number, cluster_begin_lba, and
-  // sectors_per_cluster
-  unimplemented();
-  unsigned lba;
+
+  unsigned lba = f->cluster_begin_lba + (cluster_num - 2) * f->sectors_per_cluster;
   if (trace_p) trace("cluster %d to lba: %d\n", cluster_num, lba);
+
   return lba;
 }
 
-pi_dirent_t fat32_get_root(fat32_fs_t *fs) {
+pi_dirent_t fat32_get_root(fat32_fs_t *fs) { // **
   demand(init_p, "fat32 not initialized!");
-  // TODO: return the information corresponding to the root directory (just
-  // cluster_id, in this case)
-  unimplemented();
+
   return (pi_dirent_t) {
     .name = "",
       .raw_name = "",
-      .cluster_id = -1, // fix this
+      .cluster_id = fs->root_dir_first_cluster,
       .is_dir_p = 1,
       .nbytes = 0,
   };
@@ -100,24 +111,47 @@ pi_dirent_t fat32_get_root(fat32_fs_t *fs) {
 
 // Given the starting cluster index, get the length of the chain.  Helper
 // function.
-static uint32_t get_cluster_chain_length(fat32_fs_t *fs, uint32_t start_cluster) {
-  // TODO: Walk the cluster chain in the FAT until you see a cluster where
-  // `fat32_fat_entry_type(cluster) == LAST_CLUSTER`.  Count the number of
-  // clusters.
+static uint32_t get_cluster_chain_length(fat32_fs_t *fs, uint32_t start_cluster) { // **
+    // TODO: Walk the cluster chain in the FAT until you see a cluster where
+    // `fat32_fat_entry_type(cluster) == LAST_CLUSTER`.  Count the number of
+    // clusters.
+    uint32_t length = 1;
+    uint32_t cluster = start_cluster;
+    
+    while(fat32_fat_entry_type(cluster) == USED_CLUSTER) {
+        if (dump_p)
+            trace_nofn("Cluster %d: %x\n", length, cluster);
 
-  unimplemented();
-  return 0;
+        cluster = fs->fat[cluster];
+        length++;
+
+        if (length > MAX_CHAIN_LENGTH)
+            panic("CHAIN BIGGER THAN %x\n", MAX_CHAIN_LENGTH);
+    }
+
+    return length;
 }
 
 // Given the starting cluster index, read a cluster chain into a contiguous
 // buffer.  Assume the provided buffer is large enough for the whole chain.
 // Helper function.
-static void read_cluster_chain(fat32_fs_t *fs, uint32_t start_cluster, uint8_t *data) {
-  // TODO: Walk the cluster chain in the FAT until you see a cluster where
-  // fat32_fat_entry_type(cluster) == LAST_CLUSTER.  For each cluster, copy it
-  // to the buffer (`data`).  Be sure to offset your data pointer by the
-  // appropriate amount each time.
-  unimplemented();
+static void read_cluster_chain(fat32_fs_t *fs, uint32_t start_cluster, uint8_t *data) { // **?
+    // TODO: Walk the cluster chain in the FAT until you see a cluster where
+    // fat32_fat_entry_type(cluster) == LAST_CLUSTER.  For each cluster, copy it
+    // to the buffer (`data`).  Be sure to offset your data pointer by the
+    // appropriate amount each time.
+
+    uint32_t cluster = start_cluster;
+    uint32_t offset = 0;
+
+    uint8_t buffer[NBYTES_PER_SECTOR * fs->sectors_per_cluster];
+
+    while( cluster != LAST_CLUSTER ) {
+        pi_sd_read(buffer, cluster_to_lba(fs, cluster), 1);
+        memcpy256(data + offset, buffer, NBYTES_PER_SECTOR);
+        offset += NBYTES_PER_SECTOR;
+        cluster = fs->fat[cluster];
+    }
 }
 
 // Converts a fat32 internal dirent into a generic one suitable for use outside
@@ -138,16 +172,24 @@ static pi_dirent_t dirent_convert(fat32_dirent_t *d) {
 // Gets all the dirents of a directory which starts at cluster `cluster_start`.
 // Return a heap-allocated array of dirents.
 static fat32_dirent_t *get_dirents(fat32_fs_t *fs, uint32_t cluster_start, uint32_t *dir_n) {
-  // TODO: figure out the length of the cluster chain (see
-  // `get_cluster_chain_length`)
-  unimplemented();
 
-  // TODO: allocate a buffer large enough to hold the whole directory
-  unimplemented();
+    // Allocate a buffer large enough to hold the whole directory
+    uint32_t n_clusters = get_cluster_chain_length(fs, cluster_start);
+    uint32_t total_root_dir_bytes = NBYTES_PER_SECTOR * fs->sectors_per_cluster * n_clusters;
+    uint32_t total_dir_entries = total_root_dir_bytes / DIR_ENTRY_BYTES;
+    
+    // Get data
+    uint8_t data[total_root_dir_bytes];
+    read_cluster_chain(fs, cluster_start, data);
 
-  // TODO: read in the whole directory (see `read_cluster_chain`)
-  unimplemented();
-  return (fat32_dirent_t *)NULL;
+    // Parse through to count valid directories
+    uint32_t valid_directories = 0;
+    for (uint32_t i = 0; i < total_dir_entries; i++) {
+
+    }
+
+    
+    return (fat32_dirent_t *)NULL;
 }
 
 pi_directory_t fat32_readdir(fat32_fs_t *fs, pi_dirent_t *dirent) {
@@ -396,3 +438,46 @@ int fat32_flush(fat32_fs_t *fs) {
   // no-op
   return 0;
 }
+
+
+
+/*
+
+    // TODO: return the information corresponding to the root directory (just
+    // cluster_id, in this case)
+    uint8_t root_cluster[NBYTES_PER_SECTOR];
+    print_bytes("FAT:", (uint8_t*)fs->fat, NBYTES_PER_SECTOR);
+    trace("Cluster length: %x\n", get_cluster_chain_length(fs, fs->root_dir_first_cluster));
+
+
+    // uint32_t clusters; = read_cluster_chain()
+    // pi_sd_read(&root_cluster, cluster_to_lba(fs, fs->root_dir_first_cluster), 1);
+
+    
+
+    // print_bytes("Root cluster bytes:", (uint8_t*)root_dir, sizeof(fat32_dirent_t));
+    // trace("%s\n", root_dir->filename);
+    // fat32_dirent_t* root_dir = (fat32_dirent_t*)root_cluster;
+
+    // fat32_dirent_print("Root:", (fat32_dirent_t*)root_cluster);
+    // fat32_dirent_print("Root:", (fat32_dirent_t*)root_cluster + 0x20);
+    // fat32_dirent_print("Root:", (fat32_dirent_t*)root_cluster + 0x40);
+    // fat32_dirent_print("Root:", (fat32_dirent_t*)root_cluster + 0xC0);
+
+    // print_bytes("Root cluster bytes:", (uint8_t*)&root_cluster, sizeof(root_cluster));
+    // print_as_string("Filename:", root_cluster, NBYTES_PER_SECTOR);
+    // print_as_string("Filename:", root_cluster + 0x20, 11);
+    // print_as_string("Filename:", root_cluster + 0x40, 11);
+    // print_as_string("Filename:", root_cluster + 0xC0, 11);
+    
+    unimplemented();
+
+    
+
+    pi_dirent_t dirent;
+
+
+
+
+
+*/
