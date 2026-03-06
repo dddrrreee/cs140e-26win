@@ -2,6 +2,12 @@
 #include "../pi-sd.h"
 #include "../fat32.h"
 #include "libc/fast-hash32.h"
+    
+#include "../fat32-helpers.h"
+
+#include "asm-helpers.h"
+
+extern void fat32_jump_trampoline(uint32_t addr);
 
 void notmain() {
   kmalloc_init_mb(FAT32_HEAP_MB);
@@ -69,16 +75,45 @@ void notmain() {
     // address to copy at is at offset 2
     uint32_t addr = p[2];
     assert(addr == 0x9000000);
+    
+    uint32_t header_size = p[1];
+    assert(header_size == 0x10);
+
+    uint32_t program_start = addr + header_size;
 
 
     trace("about to call <%s>\n", name);
 
+    trace("Heap addr: %x (%d)\n", f->data, f->data);
+    trace("Program Addr: %x (%d)\n", addr, addr);
+    trace("Header size: %x (%d)\n", header_size, header_size);
+    trace("Actual start: %x (%d)\n", program_start, program_start);
+
+    // Copy data to where the program thinks it is in the heap
+    memcpy((void*)addr, f->data, f->n_data);
+
+    
     // jump to it using BRANCHTO.  make sure
     // you skip the header!  (see in hello-f.list
     // and memmap.fixed in 13-fat32/hello-fixed
-    unimplemented();
+    // unimplemented();
+    // // LINK_ADDR+SIZEOF(.crt0_header)
+
+
+    // uint32_t header_size = p[1];
+    // uint32_t program_start = header_size + addr;
+    // uint8_t* actual_start = f->data + program_start; 
+    // trace("Calling at %x\n", actual_start);
+
+    // Verify program is loaded into the heap correctly
+    print_bytes("Program bytes", (uint8_t*)f->data, 64);
+    print_bytes("Program bytes", (uint8_t*)program_start, 64);
+
+    BRANCHTO(addr + header_size);
+    // fat32_jump_trampoline(program_start);
+
 
     trace("returned from <%s>!\n", name);
 
-  printk("PASS: %s\n", __FILE__);
+    printk("PASS: %s\n", __FILE__);
 }

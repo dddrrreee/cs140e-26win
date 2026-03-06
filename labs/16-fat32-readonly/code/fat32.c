@@ -6,7 +6,7 @@
 // Print extra tracing info when this is enabled.  You can and should add your
 // own.
 static int dump_p = 0;
-static int trace_p = 1; 
+static int trace_p = 0; 
 static int init_p = 0;
 
 fat32_boot_sec_t boot_sector;
@@ -301,31 +301,39 @@ pi_file_t *fat32_read(fat32_fs_t *fs, pi_dirent_t *directory, char *filename) {
     demand(directory->is_dir_p, "tried to use a file as a directory!");
 
     pi_dirent_t* file_entry = fat32_stat(fs, directory, filename);
-  // TODO: read the dirents of the provided directory and look for one matching the provided name
 
     // TODO: figure out the length of the cluster chain
     uint32_t cluster_length = get_cluster_chain_length(fs, file_entry->cluster_id);
     uint32_t n_sectors = fs->sectors_per_cluster * cluster_length;
-    uint32_t total_bytes = n_sectors * NBYTES_PER_SECTOR;
 
-    // TODO: allocate a buffer large enough to hold the whole file
-    uint8_t* data = kmalloc(total_bytes);
+    // uint32_t total_bytes = n_sectors * NBYTES_PER_SECTOR;
 
-    // TODO: read in the whole file (if it's not empty)
-    pi_sd_read(data, cluster_to_lba(fs, file_entry->cluster_id), n_sectors);
-
+    // Aligned to 4 bytes
+    uint32_t file_bytes = file_entry->nbytes;
+    uint32_t alloc_bytes = (file_bytes + 3) & ~3;
     pi_file_t *file = kmalloc(sizeof(pi_file_t));
-    *file = (pi_file_t) {
-        .data = data,
-        .n_data = file_entry->nbytes,
-        .n_alloc = total_bytes,
-    };
+
+    // Read in the whole file (if it's not empty)
+    if (file_bytes == 0) {
+        *file = (pi_file_t){.data=NULL, .n_data = 0, .n_alloc = 0};
+        // return file;
+    }
+    else {
+        uint8_t* data = kmalloc_aligned(alloc_bytes, 4);
+        pi_sd_read(data, cluster_to_lba(fs, file_entry->cluster_id), n_sectors);
+    
+        *file = (pi_file_t) {
+            .data = data,
+            .n_data = file_entry->nbytes,
+            .n_alloc = alloc_bytes,
+        };
+    }
 
     #if 1
         trace("pi_file_t:\n");
         trace("\tdata: %x\n", file->data);
         trace("\tn_data: %x\n", file->n_data);
-        trace("\tn_alloc: %x\n", file->n_data);
+        trace("\tn_alloc: %x\n", file->n_alloc);
     #endif
 
     return file;

@@ -15,21 +15,23 @@ COMMON_SRC += mbr.c
 COMMON_SRC += fat32.c
 # STAFF_OBJS +=  staff-fat32.o
 
+COMMON_SRC += helpers.S
+
 # the tests in decreasing order of difficulty.
 
-# PROGS := $(wildcard tests/[3]-*.c)
-# PROGS := $(wildcard tests/[2]-*.c)
-# PROGS := $(wildcard tests/[1]-*.c)
-# PROGS := $(wildcard tests/[0]-*.c)
+# PROGS += $(wildcard tests/[3]-*.c)
+# PROGS += $(wildcard tests/[2]-*.c)
+# PROGS += $(wildcard tests/[1]-*.c)
+# PROGS += $(wildcard tests/[0]-*.c)
 
 # since each takes so long to run, break them out.
 # when doing part 2 just build one at a time
 # to save time.
 # PROGS := tests/2-fat32-mk.c
 # PROGS := tests/2-fat32-ls.c  
-PROGS := tests/2-fat32-read.c
+# PROGS := tests/2-fat32-read.c
 # PROGS := tests/2-fat32-hash-read.c  
-# PROGS := tests/2-fat32-jump.c	   
+PROGS := tests/2-fat32-jump.c	   
 # PROGS := tests/1-mbr.c  
 
 # for checkoff don't do r/w

@@ -58,7 +58,7 @@ void notmain() {
   }
 #endif
 
-    todo("run hash-sd/hash-files on your firmware and fill in the hash values!\n");
+    // todo("run hash-sd/hash-files on your firmware and fill in the hash values!\n");
     // check that you can read data correctly.
     read_and_hash(&fs, &root, "BOOTCODE.BIN", 0xfd8d57d1);
     read_and_hash(&fs, &root, "START.ELF", 0xf36a80ce);
@@ -66,13 +66,15 @@ void notmain() {
     // this could possibly fail if you have a different gcc
     // version --- change the cksum if so.
     output("if the hash of <hello-f.bin> fails: make sure its hash is correct\n");
-    read_and_hash(&fs, &root, "HELLO-F.BIN", 0xd9e29bb9);
+    // read_and_hash(&fs, &root, "HELLO-F.BIN", 0xd9e29bb9);
+    read_and_hash(&fs, &root, "HELLO-F.BIN", 0x452bb85e);
 
     // fill in the cksum values for these.
-    todo("fill in the checksum for these next three files (use `hash-files`)\n");
-    read_and_hash(&fs, &root, "BOOTLO~1.BIN", 0);
-    read_and_hash(&fs, &root, "CONFIG.TXT", 0);
-    read_and_hash(&fs, &root, "KERNEL.IMG", 0);
+    // Running
+    //          ./hash-files /Volumes/PIE/*
+    read_and_hash(&fs, &root, "BOOTLO~3.BIN", 0xed7e8fc7);
+    read_and_hash(&fs, &root, "CONFIG.TXT", 0x21dc53c); // weird 4-byte alignment thing
+    read_and_hash(&fs, &root, "KERNEL.IMG", 0xc633494c);
 
     printk("PASS: %s\n", __FILE__);
 }

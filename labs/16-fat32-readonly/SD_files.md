@@ -11,7 +11,7 @@ drwx------ 1 magi-nerv staff  16K Mar  6 10:27 .fseventsd
 drwx------ 1 magi-nerv staff  16K Mar  5 19:03 .Spotlight-V100
 -rwx------ 1 magi-nerv staff  50K Feb 12 17:19 bootcode.bin
 -rwx------ 1 magi-nerv staff 2.0M Feb 12 16:42 bootloader.bin
--rwx------ 1 magi-nerv staff  394 Feb 12 17:44 config.txt
+-rwx------ 1 magi-nerv staff  396 Feb 12 17:44 config.txt
 drwx------ 1 magi-nerv staff  16K Mar  6 10:26 dir1
 -rwx------ 1 magi-nerv staff 3.1K Feb 12 17:19 fixup_cd.dat
 -rwx------ 1 magi-nerv staff 2.0M Feb 10 17:19 kernel.img
@@ -28,7 +28,7 @@ Got 15 files.
         F: _BOOT~10.BIN (cluster 164; 4096 bytes)
         F: BOOTLO~3.BIN (cluster 165; 2067364 bytes)
         F: _BOOT~11.BIN (cluster 292; 4096 bytes)
-        F: CONFIG.TXT (cluster 293; 394 bytes)
+        F: CONFIG.TXT (cluster 293; 396 bytes)
         F: _CONFI~5.TXT (cluster 154; 4096 bytes)
         F: FIXUP_CD.DAT (cluster 294; 3149 bytes)
         F: _FIXU~12.DAT (cluster 295; 4096 bytes)
