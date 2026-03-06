@@ -24,8 +24,7 @@ static inline uint32_t get16bits(const void *ptr) {
 }
 
 
-static inline uint32_t 
-fast_hash_inc32(const void * _data, uint32_t len, uint32_t hash) {
+static inline uint32_t fast_hash_inc32(const void * _data, uint32_t len, uint32_t hash) {
     
 #if 0
     const char * data = (const void*)_data;
@@ -62,8 +61,6 @@ fast_hash_inc32(const void * _data, uint32_t len, uint32_t hash) {
     if (len <= 0 || data == NULL) return 0;
 
     rem = len & 3;
-    if(rem)
-        panic("only doing 4 byte multiples! nbytes=%d\n", rem);
     len >>= 2;
 
     /* Main loop */
@@ -74,8 +71,6 @@ fast_hash_inc32(const void * _data, uint32_t len, uint32_t hash) {
         data  += 2*sizeof (uint16_t);
         hash  += hash >> 11;
     }
-
-#if 0
 
     /* Handle end cases */
     switch (rem) {
@@ -92,7 +87,6 @@ fast_hash_inc32(const void * _data, uint32_t len, uint32_t hash) {
                 hash ^= hash << 10;
                 hash += hash >> 1;
     }
-#endif
 
     /* Force "avalanching" of final 127 bits */
     hash ^= hash << 3;
