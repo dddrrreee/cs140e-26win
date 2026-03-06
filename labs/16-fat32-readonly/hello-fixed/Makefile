@@ -24,8 +24,7 @@ BOOTLOADER = my-install
 # uncomment if you want it to automatically run.
 RUN=0
 
-# include $(CS140E_2025_PATH)/libpi/mk/Makefile.template-fixed
-include $(CS140E_2025_PATH)/libpi/mk/Makefile.robust
+include $(CS140E_2026_PATH)/libpi/mk/Makefile.robust-v3
 
 # add more actions to clean
 clean::

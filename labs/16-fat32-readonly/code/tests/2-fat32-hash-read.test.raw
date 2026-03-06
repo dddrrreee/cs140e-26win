@@ -1,0 +1,31 @@
+staff-find-ttyusb.c:find_ttyusb_last:89:DEBUG:FOUND: </dev/ttyUSB0>
+my-install.c:main:150:DEBUG:my-install: tty-usb=</dev/ttyUSB0> program=<./tests/2-fat32-hash-read.bin>: about to boot
+TRACE:simple_boot: sending 33472 bytes, crc32=1d7992ad
+BOOT:waiting for a start
+BOOT:bootloader: Done.
+listening on ttyusb=</dev/ttyUSB0>
+Reading the MBR.
+Loading the first partition.
+Loading the FAT.
+info struct:
+	sig1              = 0x41615252
+	sig2              = 0x61417272
+	sig3              = 0xaa550000
+	free cluster cnt  = 1905648
+	next free cluster = 0x3
+Loading the root directory.
+Looking for BOOTCODE.BIN.
+Reading BOOTCODE.BIN
+crc of BOOTCODE.BIN (nbytes=50248) = 0xfd8d57d1
+Looking for START.ELF.
+Reading START.ELF
+crc of START.ELF (nbytes=2818884) = 0xf36a80ce
+if the hash of <hello-f.bin> fails: make sure its hash is correct
+Looking for HELLO-F.BIN.
+Reading HELLO-F.BIN
+crc of HELLO-F.BIN (nbytes=2924) = 0xccd6803c
+PANIC:tests/2-fat32-hash-read.c:read_and_hash:22:expected hash = 0xd9e29bb9, computed hash = 0xccd6803c
+
+DONE!!!
+
+BOOT: bootloader: pi exited.  cleaning up
