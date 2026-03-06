@@ -29,7 +29,8 @@ Today you'll build a read-only FAT32 file system that can read from the
 microSD card plugged into your pi.
 
 I keep forgetting how long masters admissions folders take, so this lab
-is identical to last year, based on a lab reworking by Akshay:
+is identical to last year (for the second time!), based on a lab reworking 
+by Akshay:
   - Make sure you start with the [PRELAB](PRELAB.md)!
   - There is also a [FAT32 cheatsheet](./fat32-cheat-sheet.md).  You
     really want to read and use this.
@@ -45,8 +46,6 @@ is identical to last year, based on a lab reworking by Akshay:
   driver we use.
 - If make isn't working, open the makefile and replace `CFLAGS_EXTRA` with `CFLAGS`
 - Once the test works, change the Makefile to not use the staff object files.
-
-
 
 
 It's kind of cool that we can write a read-only FS for (arguably) the most
@@ -243,6 +242,15 @@ A reasonable description of the information you need is
 
 At the end of this, you should pass `tests/2-fat32-mk.c` completely.
 
+Extension:
+  1. The FAT is relatively huge, so reading the entire fat all at once
+     takes a long time and uses alot of memory.
+  2. We generally don't use most of of the FAT entries, so most of the
+     time and space to get it and hold it are wasted.
+  3. Extension: rewrite your code to not put the FAT in an actual array, 
+     but instead read in sectors on demand and cache them. Will make 
+     a huge difference for not a lot of code.
+
 -------------------------------------------------------------------------
 ### Part 4: read in the root directory (10 minutes)
 
@@ -298,7 +306,6 @@ free directories, LFN entries and volume labels:
     if (fat32_dirent_free(&dirents[i])) continue; // free space
     if (fat32_dirent_is_lfn(&dirents[i])) continue; // LFN version of name
     if (dirents[i].attr & FAT32_VOLUME_LABEL) continue; // volume label
-
 
 -------------------------------------------------------------------------
 ### Part 5: read in and print `config.txt`
