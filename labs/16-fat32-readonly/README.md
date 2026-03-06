@@ -3,6 +3,9 @@
 ------------------------------------------------------------------------
 ***Note***:
 
+  - NOTE: if you get errors b/c the length sent to the hash function
+    is not divisible by 4 --- just do a `git pull` and recompile.
+    Will fix it.
   - The README below is for a harder version of the lab
     where you'd modify the linker script.  Currently we just give
     you everything for `hello-f.bin` --- you can just compile and
@@ -19,7 +22,6 @@
     bitwise-or so in general you'll have to bitwise-and them rather than
     directly compare.  Also make sure you're ignoreing hidden files,
     volume labels, long file name entries.
-
   - Also if you write/delete you should set the first byte to 0xe5 not
     0x00.  Otherwise it's a subtle bug.
 
