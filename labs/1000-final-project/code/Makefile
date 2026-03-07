@@ -1,7 +1,8 @@
 COMMON_SRC += w5500.c
 
 # PROGS += tests/playground-nrf.c
-PROGS += tests/playground-w5500.c
+# PROGS += tests/playground-w5500.c
+PROGS += tests/playground-driver.c
 
 # next week you'll get rid of all of these
 O = $(CS140E_2026_PATH)/libpi

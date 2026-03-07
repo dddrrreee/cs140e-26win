@@ -1,6 +1,6 @@
 #include "rpi.h"
 #include "spi.h"
-
+#include "../w5500-defs.h"
 typedef struct {
     spi_t spi;
     uint32_t cs;
@@ -25,20 +25,7 @@ w5500_t w5500_chip_init(unsigned cs) {
 
 }
 
-enum {
-    W5500_READ =                0,
-    W5500_WRITE =               1 << 2,
 
-    SPI_MODE_VDM =              0,
-    
-    W5500_BLOCK_COMMON =        0b00000 << 3,
-    W5500_BLOCK_SOCK_0 =        0b00001 << 3,
-    W5500_BLOCK_SOCK_TX_0 =     0b00010 << 3,
-    W5500_BLOCK_SOCK_RX_0 =     0b00100 << 3,
-
-    W5500_CHIP_ID =             0x0039;
-    W5500_CHIP_ID =             0x0039;
-};
 
 enum {
     SPI_REG_BASE = 0x20204000,
@@ -67,20 +54,21 @@ void notmain(void) {
 
     uint16_t chip_id_reg = 0x0039;
 
-    uint8_t ctrl = W5500_BLOCK_COMMON | SPI_MODE_VDM | W5500_READ;
+    uint8_t ctrl = W5500_BLK_COMMON | SPI_MODE_VDM | W5500_READ;
 
     dump_spi_regs();
 
     uint8_t rx[16];
     uint8_t tx[16];
 
-    // Set data length
+    // Set chip ID
     tx[0] = (chip_id_reg >> 8) & 0xFF;
     tx[1] = (chip_id_reg) & 0xFF;
     tx[2] = ctrl;
     spi_n_transfer(chip.spi, rx, tx, 4);
     printk("%x\n", rx[3]);
 
+    // 
     tx[0] = (chip_id_reg >> 8) & 0xFF;
     tx[1] = (chip_id_reg) & 0xFF;
     tx[2] = ctrl;
