@@ -80,13 +80,27 @@ void w5500_socket_command(w5500_t* nic, uint8_t socket, uint8_t command);
 // Interrupt status
 
 /**********************************************************
+ * Internet!
+ */
+
+uint16_t w5500_send_ping(const w5500_t* nic, const uint8_t* dest_ipv4_addr, const void* data, uint16_t nbytes, uint8_t socket);
+
+uint16_t w5500_write_ipv4_packet(const w5500_t* nic, const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, const void* data, uint16_t nbytes, uint8_t socket);
+#define w5500_write_broadcast_ipv4_packet(nic, ipv4_protocol, data, nbytes, socket) \
+    w5500_write_ipv4_packet(nic, IPV4_BROADCAST, ipv4_protocol, ETH_BROADCAST, data, nbytes, socket)
+
+
+uint16_t w5500_write_frame(const w5500_t* nic, const uint8_t* dest_hw_addr, uint16_t ethertype, void* data, uint16_t nbytes, uint8_t socket);
+#define w5500_write_broadcast_frame(nic, data, nbytes, socket) \
+    w5500_write_frame(nic, ETH_BROADCAST, data, nbytes, socket)
+
+/**********************************************************
  * Buffers
  */
 
 
 uint16_t w5500_tx_available(const w5500_t* nic, uint8_t socket);
 uint16_t w5500_write_tx_bytes(const w5500_t* nic, const void* buffer, uint32_t nbytes, uint8_t socket);
-uint16_t w5500_write_frame(const w5500_t* nic, const frame_t* frame, uint8_t socket);
 
 uint16_t w5500_rx_available(const w5500_t* nic, uint8_t socket);
 uint16_t w5500_read_rx_bytes(const w5500_t* nic, void* buffer, uint8_t socket);

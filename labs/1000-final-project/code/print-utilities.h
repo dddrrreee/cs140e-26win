@@ -10,7 +10,7 @@
  */
 
 // print [p, p+n) as a string: use for ascii filled files.
-void print_as_string(const char *msg, uint8_t *p, int n) {
+static inline void print_as_string(const char *msg, uint8_t *p, int n) {
     printk("%s\n", msg);
     for(int i = 0; i < n; i++) {
         char c = p[i];
@@ -19,7 +19,7 @@ void print_as_string(const char *msg, uint8_t *p, int n) {
     printk("\n");
 }
 
-void print_bytes(const char *msg, void *p, int n) {
+static inline void print_bytes(const char *msg, void *p, int n) {
     printk("%s\n", msg);
     for(int i = 0; i < n; i++) {
         if(i % 16 == 0)
@@ -28,7 +28,7 @@ void print_bytes(const char *msg, void *p, int n) {
     }
     printk("\n");
 }
-void print_words(const char *msg, uint32_t *p, int n) {
+static inline void print_words(const char *msg, uint32_t *p, int n) {
     printk("%s\n", msg);
     for(int i = 0; i < n; i++) {
         if(i % 16 == 0)

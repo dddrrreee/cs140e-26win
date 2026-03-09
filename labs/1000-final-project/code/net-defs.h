@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-#define ETH_BROADCAST {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}
-#define IP_BROADCAST {255, 255, 255, 255}
+const static uint8_t ETH_BROADCAST[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; // FF:FF:FF:FF:FF:FF
+const static uint8_t IPV4_BROADCAST[4] = {255, 255, 255, 255}; // 255.255.255.255
 
 /* ---------- Length Constants ---------- */
 enum {
@@ -41,7 +41,12 @@ enum {
     PROTOCOL_ICMP = 1,
     PROTOCOL_TCP = 6,
     PROTOCOL_UDP = 17,
-    
+};
+
+/* ---------- ICMP Constants  ---------- */
+enum { // https://www.rfc-editor.org/rfc/rfc792
+    ICMP_ECHO_MSG = 8,
+    ICMP_ECHO_REPLY = 0,
 };
 
 typedef struct { // https://datatracker.ietf.org/doc/html/rfc9542
@@ -49,10 +54,8 @@ typedef struct { // https://datatracker.ietf.org/doc/html/rfc9542
     uint8_t src_hw_addr[6];
     uint16_t ethertype; // Length. Going to make it FRAME_MAX_PAYLOAD_SIZE bytes or less
     uint8_t data[FRAME_MAX_PAYLOAD_SIZE];
-    uint16_t data_length;
-    uint16_t total_length;
 } frame_t;
-_Static_assert(sizeof(frame_t) == FRAME_MAX_SIZE + 4, "frame_t size wrong"); // 4 for the metadata that I added
+_Static_assert(sizeof(frame_t) == FRAME_MAX_SIZE, "frame_t size wrong");
 
 typedef struct { // https://www.rfc-editor.org/rfc/rfc791.txt
     uint8_t version:4, 
@@ -70,22 +73,19 @@ typedef struct { // https://www.rfc-editor.org/rfc/rfc791.txt
     // uint32_t options:24, 
     //          padding:8;
     uint8_t data[IPV4_MAX_DATA_SIZE];
-    uint16_t data_length;
     
 } ipv4_t;
-_Static_assert(sizeof(ipv4_t) == IPV4_MAX_SIZE + 2, "frame_t size wrong"); // 2 for the metadata that I added
+_Static_assert(sizeof(ipv4_t) == IPV4_MAX_SIZE, "ipv4_t size wrong");
 
 typedef struct { // https://www.rfc-editor.org/rfc/rfc792
-    uint8_t echo; // 1 or 0
+    uint8_t type; // 8 or 0
     uint8_t code;
     uint16_t checksum;
     uint16_t identifier;
     uint16_t seq_number;
     uint8_t data[ICMP_MAX_DATA_SIZE];
-    uint16_t data_length;
-    uint16_t total_length;
+} icmp_echo_t;
 
-} icmp_t;
-_Static_assert(sizeof(icmp_t) == ICMP_MAX_SIZE + 4, "icmp_t size wrong"); // 4 for the metadata that I added
+_Static_assert(sizeof(icmp_echo_t) == ICMP_MAX_SIZE, "icmp_t size wrong");
 
 #endif

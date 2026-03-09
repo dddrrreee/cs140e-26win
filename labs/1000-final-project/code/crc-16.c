@@ -1,9 +1,6 @@
-#ifndef __CRC_16_H__
-#define __CRC_16_H__
+#include "crc-16.h"
 
-#include <stdint.h>
-
-static inline uint16_t our_crc16(const void* data, uint32_t nbytes)  {
+uint16_t our_crc16(const void* data, uint32_t nbytes)  {
     
     uint8_t* bytes = (uint8_t*)data;
     uint32_t sum = 0;
@@ -22,5 +19,3 @@ static inline uint16_t our_crc16(const void* data, uint32_t nbytes)  {
 
     return (uint16_t)(~sum);
 }
-
-#endif
