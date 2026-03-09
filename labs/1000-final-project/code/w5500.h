@@ -5,6 +5,7 @@
 #include "circular.h"   // for the circular queue.
 #include "src-loc.h"    // For some version of logging
 
+#include "net-defs.h"
 #include "w5500-defs.h"
 
 // configuration settigs for W5500.
@@ -20,8 +21,7 @@ typedef struct {
     
     uint8_t phy_mode;
 
-    uint8_t sockets_enabled; // nth bit is for enabled
-    
+    // uint8_t sockets_enabled; // nth bit is for enabled
 
 } w5500_conf_t;
 
@@ -82,29 +82,18 @@ void w5500_socket_command(w5500_t* nic, uint8_t socket, uint8_t command);
 /**********************************************************
  * Buffers
  */
-typedef struct { // https://www.ietf.org/rfc/rfc768.txt
-    uint8_t dest_hw_addr[6];
-    uint8_t src_hw_addr[6];
-    uint16_t ethertype; // Length. Going to make it MAX_FRAME_PAYLOAD_SIZE bytes or less
-    uint8_t payload[MAX_FRAME_PAYLOAD_SIZE];
-} frame_t;
 
-// Returns -1 if invalid socket or not enough bytes in buffer
-int w5500_write_tx_bytes(const w5500_t* nic, void* buffer, uint32_t nbytes, uint8_t socket);
 
-// void w5500_write_frame(const w5500_t* nic, frame_t* frame) {
+uint16_t w5500_tx_available(const w5500_t* nic, uint8_t socket);
+uint16_t w5500_write_tx_bytes(const w5500_t* nic, const void* buffer, uint32_t nbytes, uint8_t socket);
+uint16_t w5500_write_frame(const w5500_t* nic, const frame_t* frame, uint8_t socket);
 
-//     uint16_t frame_size = frame->length + FRAME_HEADER_BYTES;
+uint16_t w5500_rx_available(const w5500_t* nic, uint8_t socket);
+uint16_t w5500_read_rx_bytes(const w5500_t* nic, void* buffer, uint8_t socket);
 
-//     frame_t buffer;
-//     memcpy(&buffer, frame, frame_size);
 
-//     // Swap bytes around in the length field to make it BIG ENDIAN
-//     buffer.length = (frame->length >> 8) | (frame->length << 8);
+// void w5500_fast_flush_rx(const w5500_t* nic, uint8_t socket);
 
-//     w5500_putn(nic, W5500_BLK_SOCKET_0, W5500_Sn_REG_TX_RD0,
-//         &buffer, frame->length + FRAME_HEADER_BYTES);
-// }
 /**********************************************************
  * Hardware routines that use SPI to read/write 
  * registers
@@ -123,9 +112,9 @@ uint8_t w5500_put8_chk_helper(src_loc_t l, const w5500_t* nic, uint8_t block, ui
 // read <nbytes> of data pointed to by <bytes> from <reg>
 uint8_t w5500_getn(const w5500_t* nic, uint8_t block, uint16_t reg, void *bytes, uint32_t nbytes);
 // write <nbytes> of data pointed to by <bytes> to <reg>
-uint8_t w5500_putn(const w5500_t* nic, uint8_t block, uint16_t reg, void *bytes, uint32_t nbytes);
+uint8_t w5500_putn(const w5500_t* nic, uint8_t block, uint16_t reg, const void *bytes, uint32_t nbytes);
 // write <nbytes> of data pointed to by <bytes> to <reg> and check
-uint8_t w5500_putn_chk_helper(src_loc_t l, const w5500_t* nic, uint8_t block, uint16_t reg, void *bytes, uint32_t nbytes);
+uint8_t w5500_putn_chk_helper(src_loc_t l, const w5500_t* nic, uint8_t block, uint16_t reg, const void *bytes, uint32_t nbytes);
 
 #define w5500_putn_chk(nic, block, reg, bytes, nbytes) \
     w5500_putn_chk_helper(SRC_LOC_MK(), nic, block, reg, bytes, nbytes)

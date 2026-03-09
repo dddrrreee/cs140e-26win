@@ -1,6 +1,7 @@
 #include "w5500.h"
 
 
+
 /**********************************************************
  * Hardware routines that use SPI to read/write 
  * registers
@@ -68,73 +69,40 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
     val |= W5500_RESET_PHY;
     w5500_put8(nic, W5500_BLK_COMMON, W5500_REG_PHYCFGR, val);
 
-    trace("Takes about 3 seconds for it to establish a link. Make sure RJ45 is plugged in");
-    delay_ms(3000);
-    while (!(w5500_get8(nic, W5500_BLK_COMMON, W5500_REG_PHYCFGR) & W5500_LINK_UP)) {}
-
     trace("\n# ----- OTHER SOCKET INIT -----\n");
+    // TODO: Turn other sockets off
+    // for (int i = 0; i < 8; i++) {
+    //     uint8_t sock = (i << 5);
 
-    for (int i = 0; i < 8; i++) {
-        uint8_t sock = (i << 5);
+    //     w5500_put8_chk(nic, sock | W5500_BLK_SOCKET_REG,
+    //         W5500_Sn_REG_TXBUF_SIZE, (i == 0) ? 2 : 0);
 
-        w5500_put8_chk(nic, sock | W5500_BLK_SOCKET_REG,
-            W5500_Sn_REG_TXBUF_SIZE, (i == 0) ? 2 : 0);
+    //     w5500_put8_chk(nic, sock | W5500_BLK_SOCKET_REG,
+    //         W5500_Sn_REG_RXBUF_SIZE, (i == 0) ? 2 : 0);
+    // }
 
-        w5500_put8_chk(nic, sock | W5500_BLK_SOCKET_REG,
-            W5500_Sn_REG_RXBUF_SIZE, (i == 0) ? 2 : 0);
-    }
+    
+    trace("\n# ----- SOCKET 0 INIT -----\n");
 
-    // uint8_t PHYCFG = w5500_get8(nic, W5500_BLK_COMMON, W5500_REG_PHYCFGR);
-    // trace("W5500_REG_PHYCFGR = %x\n", PHYCFG);
-
-
-    // Initialize SOCKET_0 as MACRAW and set to OPEN
-    trace("\n# ----- BEFORE SOCKET 0 INIT -----\n");
-
-    // w5500_put8_chk(nic, W5500_SOCKET_0 | W5500_BLK_SOCKET_REG,
-    //             W5500_Sn_REG_TXBUF_SIZE, 2);   // 2 KB
-
-    // w5500_put8_chk(nic, W5500_SOCKET_0 | W5500_BLK_SOCKET_REG,
-    //             W5500_Sn_REG_RXBUF_SIZE, 2);   // 2 KB
-
+    // Close and Open Socket 0 as MACRAW
     w5500_put8_chk(nic, W5500_SOCKET_0 | W5500_BLK_SOCKET_REG,
         W5500_Sn_REG_MR, W5500_MACRAW_PROTOCOL);
 
-    delay_ms(100);
+    w5500_put8(nic, W5500_SOCKET_0 | W5500_BLK_SOCKET_REG,
+        W5500_Sn_REG_CR, W5500_CLOSE);
 
-
-    // uint8_t sr = w5500_get8(nic, W5500_SOCKET_0 | W5500_BLK_SOCKET_REG, W5500_Sn_REG_SR);
-
-    // trace("SR before OPEN = %x\n", sr);  // Should be 0x0
-
-    trace("BEFORE OPEN\n");
-    w5500_put8_chk(nic, W5500_SOCKET_0 | W5500_BLK_SOCKET_REG,
+    w5500_put8(nic, W5500_SOCKET_0 | W5500_BLK_SOCKET_REG,
         W5500_Sn_REG_CR, W5500_OPEN);
-    trace("AFTER OPEN\n");
 
-    uint8_t cr = w5500_get8(nic, W5500_SOCKET_0 | W5500_BLK_SOCKET_REG, W5500_Sn_REG_CR);
-    trace("CR after OPEN = %x\n\n\n", cr);
-    
-    // wait for command to complete
-    // while (w5500_get8(nic, W5500_SOCKET_0 | W5500_BLK_SOCKET_REG, W5500_Sn_REG_CR) != 0) {
-    while (1) {
-        trace("MR: %x\n", w5500_get8(nic,
+    // Make sure it was put in MACRAW mode correctly (MUST DO AFTER OPENING IT)
+    // "It changes to SOCK_MACRAW when S0_MR(P[3:0] = ‘0100’ and OPEN command is ordered" (p. 50)
+    assert(w5500_get8(nic,
         W5500_SOCKET_0 | W5500_BLK_SOCKET_REG,
-        W5500_Sn_REG_MR));
-        trace("SR: %x\n", w5500_get8(nic,
-        W5500_SOCKET_0 | W5500_BLK_SOCKET_REG,
-        W5500_Sn_REG_SR));
-        trace("CR: %x\n", w5500_get8(nic,
-        W5500_SOCKET_0 | W5500_BLK_SOCKET_REG,
-        W5500_Sn_REG_CR));
-        trace("IR: %x\n", w5500_get8(nic,
-        W5500_SOCKET_0 | W5500_BLK_SOCKET_REG,
-        W5500_Sn_REG_IR));
-        trace("PHYCFGR: %x\n\n", w5500_get8(nic, W5500_BLK_COMMON, W5500_REG_PHYCFGR));
-        delay_ms(1000);
-    }
+        W5500_Sn_REG_SR) == W5500_SOCK_MACRAW);
 
-    trace("# ----- AFTER SOCKET 0 INIT -----\n");
+    trace("Takes about 3 seconds for it to establish a link. Make sure RJ45 is plugged in\n");
+    while(!(w5500_get8(nic, W5500_BLK_COMMON, W5500_REG_PHYCFGR) & 1)) {}
+    trace("Connected!\n");
 
 
     trace("VERSIONR = %x\n", w5500_get8(nic,W5500_BLK_COMMON,W5500_REG_VERSIONR));
@@ -146,38 +114,96 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
  * Buffers
  */
 
-int w5500_write_tx_bytes(const w5500_t* nic, void* buffer, uint32_t nbytes, uint8_t socket) {
+uint16_t w5500_tx_available(const w5500_t* nic, uint8_t socket) {
+    uint8_t buf[2];
+    w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_TX_FSR0, buf, 2);
+    return (buf[0] << 8) | buf[1];
+}
+
+uint16_t w5500_write_tx_bytes(const w5500_t* nic, const void* buffer, uint32_t nbytes, uint8_t socket) {
 
     uint16_t tx_ptr;
     uint8_t ptr_buf[2];
 
+    // ---------- Get TX buffer pointer ---------- 
     w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_TX_WR0, ptr_buf, 2);
     tx_ptr = (ptr_buf[0] << 8) | ptr_buf[1];
 
     // TODO: implement buffer length checking. Default value of 2KB for TX buffer size
 
-    // write data to TX buffer
-    w5500_putn(nic, socket | W5500_BLK_SOCKET_TX_BUF, tx_ptr, buffer, nbytes);
-
-    // advance pointer
+    // ---------- Advance TX buffer pointer ---------- 
     tx_ptr += nbytes;
-
     ptr_buf[0] = tx_ptr >> 8;
     ptr_buf[1] = tx_ptr & 0xFF;
-
-    w5500_putn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_TX_WR0, ptr_buf, 2);
-
-    // send command
-    w5500_put8(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_CR, W5500_SEND_MAC);
-
-    trace("SR reg: %x\n", w5500_get8(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_SR));
     
-    // while (!(w5500_get8(nic, W5500_SOCKET_0|W5500_BLK_SOCKET_REG, W5500_Sn_REG_IR) & 0x10))
-    //     ;
+
+    // ---------- write data ----------
+    w5500_putn(nic, socket | W5500_BLK_SOCKET_TX_BUF, tx_ptr, buffer, nbytes);
+
+    // ---------- update ptr and send ---------- 
+    w5500_putn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_TX_WR0, ptr_buf, 2);
+    w5500_put8(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_CR, W5500_SEND_MAC);
 
     return nbytes;
 }
 
+uint16_t w5500_write_frame(const w5500_t* nic, const frame_t* frame, uint8_t socket) {
+    return w5500_write_tx_bytes(nic, frame, FRAME_HEADER_BYTES + frame->data_length, socket);
+}
+
+uint16_t w5500_rx_available(const w5500_t* nic, uint8_t socket) {
+    uint8_t buf[2];
+    w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RSR0, buf, 2);
+    return (buf[0] << 8) | buf[1];
+}
+
+uint16_t w5500_read_rx_bytes(const w5500_t* nic, void* buffer, uint8_t socket)
+{
+    uint16_t rx_ptr;
+    uint8_t ptr_buf[2];
+    uint8_t len_buf[2];
+    uint16_t packet_len;
+
+    // ---------- Get RX read pointer ----------
+    w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RD0, ptr_buf, 2);
+    rx_ptr = (ptr_buf[0] << 8) | ptr_buf[1];
+
+    // ---------- Read 2-byte packet length ----------
+    w5500_getn(nic, socket | W5500_BLK_SOCKET_RX_BUF, rx_ptr, len_buf, 2);
+    packet_len = (len_buf[0] << 8) | len_buf[1];
+
+    // ---------- Read the actual packet ----------
+    w5500_getn(nic, socket | W5500_BLK_SOCKET_RX_BUF, rx_ptr + 2, buffer, packet_len);
+
+    // ---------- Advance RX read pointer ----------
+    rx_ptr += (packet_len + 2);
+    ptr_buf[0] = rx_ptr >> 8;
+    ptr_buf[1] = rx_ptr & 0xFF;
+    w5500_putn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RD0, ptr_buf, 2);
+
+    // ---------- Notify chip that data was read ----------
+    w5500_put8(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_CR, W5500_RECV);
+
+    return packet_len;
+}
+
+// void w5500_fast_flush_rx(const w5500_t* nic, uint8_t socket)
+// {
+//     uint16_t rx_ptr;
+//     uint8_t buf[2];
+
+//     // ---------- Read RX write pointer ---------- 
+//     w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_WR0, buf, 2);
+//     rx_ptr = (buf[0] << 8) | buf[1];
+
+//     // ---------- Set RX read pointer = write pointer ---------- 
+//     buf[0] = rx_ptr >> 8;
+//     buf[1] = rx_ptr & 0xFF;
+//     w5500_putn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RD0, buf, 2);
+
+//     // ---------- Tell chip RX data was consumed ---------- 
+//     w5500_put8(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_CR, W5500_RECV);
+// }
 
 /**********************************************************
  * Hardware routines that use SPI to read/write 
@@ -192,9 +218,9 @@ uint8_t w5500_get8(const w5500_t* nic, uint8_t block, uint16_t reg) {
     tx[2] = W5500_READ | SPI_MODE_VDM | block;
     tx[3] = 0;
 
-    trace("TX: {%x, %x, %x, %x}\n", tx[0], tx[1], tx[2], tx[3]);
+    // trace("TX: {%x, %x, %x, %x}\n", tx[0], tx[1], tx[2], tx[3]);
     spi_n_transfer(nic->spi, rx,tx,4);
-    trace("Received {%x}\n", rx[3]);
+    // trace("Received {%x}\n", rx[3]);
 
     // trace("wr8: sent: tx[0]=%b, tx[1]=%b\n", tx[0], tx[1]);
     // spi_n_transfer(nic->spi, rx,tx,4);
@@ -211,7 +237,7 @@ uint8_t w5500_put8(const w5500_t* nic, uint8_t block, uint16_t reg, uint8_t val)
     tx[2] = W5500_WRITE | SPI_MODE_VDM | block;
     tx[3] = val;
 
-    trace("TX: {%x, %x, %x, %x}\n", tx[0], tx[1], tx[2], tx[3]);
+    // trace("TX: {%x, %x, %x, %x}\n", tx[0], tx[1], tx[2], tx[3]);
     spi_n_transfer(nic->spi, rx,tx,4);
     // trace("Received {%x}\n", rx[3]);
     
@@ -229,7 +255,7 @@ uint8_t w5500_put8_chk_helper(src_loc_t l, const w5500_t* nic, uint8_t block, ui
     return status;
 }
 
-uint8_t w5500_getn(const w5500_t* nic, uint8_t block, uint16_t reg, void *data, uint32_t nbytes) {
+uint8_t w5500_getn(const w5500_t* nic, uint8_t block, uint16_t reg, void *bytes, uint32_t nbytes) {
     uint8_t rx[W5500_MAX_RW_BUF_SIZE], tx[W5500_MAX_RW_BUF_SIZE];
     assert(nbytes + 3 < sizeof(rx));
 
@@ -238,12 +264,12 @@ uint8_t w5500_getn(const w5500_t* nic, uint8_t block, uint16_t reg, void *data, 
     tx[2] = W5500_READ | SPI_MODE_VDM | block;
 
     spi_n_transfer(nic->spi, rx, tx, nbytes + 3);
-    memcpy(data, &rx[3], nbytes);
+    memcpy(bytes, &rx[3], nbytes);
 
     return rx[0];   // status
 }
 
-uint8_t w5500_putn(const w5500_t* nic, uint8_t block, uint16_t reg, void *data, uint32_t nbytes) {
+uint8_t w5500_putn(const w5500_t* nic, uint8_t block, uint16_t reg, const void *bytes, uint32_t nbytes) {
     uint8_t rx[W5500_MAX_RW_BUF_SIZE], tx[W5500_MAX_RW_BUF_SIZE];
     assert(nbytes + 3 < sizeof(tx));
 
@@ -251,14 +277,14 @@ uint8_t w5500_putn(const w5500_t* nic, uint8_t block, uint16_t reg, void *data, 
     tx[1] = reg & 0xFF;
     tx[2] = W5500_WRITE | SPI_MODE_VDM | block;
 
-    memcpy(&tx[3], data, nbytes);
+    memcpy(&tx[3], bytes, nbytes);
     spi_n_transfer(nic->spi, rx, tx, nbytes + 3);
 
     return rx[0];   // status
 }
 
 uint8_t w5500_putn_chk_helper(
-    src_loc_t l, const w5500_t* nic, uint8_t block, uint16_t reg, void *bytes, uint32_t nbytes) {
+    src_loc_t l, const w5500_t* nic, uint8_t block, uint16_t reg, const void *bytes, uint32_t nbytes) {
     uint8_t status = w5500_putn(nic, block, reg, bytes, nbytes);
 
     uint8_t rx[W5500_MAX_RW_BUF_SIZE];

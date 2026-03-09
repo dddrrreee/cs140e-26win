@@ -1,3 +1,6 @@
+#ifndef __PRINT_UTILITIES_H__
+#define __PRINT_UTILITIES_H__
+
 #include <stdint.h>
 
 #include "rpi.h"
@@ -34,3 +37,6 @@ void print_words(const char *msg, uint32_t *p, int n) {
     }
     printk("\n");
 }
+
+
+#endif

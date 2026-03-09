@@ -7,12 +7,6 @@
 #define W5500_CHIP_ID 4
 #define W5500_MAX_RW_BUF_SIZE 255
 
-/* ---------- Frame/Packet Constants ---------- */
-enum {
-    MAX_FRAME_PAYLOAD_SIZE = 100, // Just doing this for now (usually 1500)
-    FRAME_HEADER_BYTES = 14, // 6 bytes dest hw addr, 6 bytes src hw addr, 2 bytes length/length
-    MAX = FRAME_HEADER_BYTES + MAX_FRAME_PAYLOAD_SIZE,
-};
 
 /* ---------- Control Phase (p. 15-16) ---------- */
 enum {
@@ -77,25 +71,11 @@ enum {
     W5500_Sn_REG_TX_RD0         = 0x0022, // Socket TX Buffer Read Pointer (2 bytes)
     W5500_Sn_REG_TX_WR0         = 0x0024, // Socket TX Buffer Write Pointer (2 bytes)
 
-    W5500_Sn_REG_RX_FSR0        = 0x0026, // Socket RX Buffer Free Size (2 bytes)
+    W5500_Sn_REG_RX_RSR0        = 0x0026, // Socket RX Buffer Free Size (2 bytes)
     W5500_Sn_REG_RX_RD0         = 0x0028, // Socket RX Buffer Read Pointer (2 bytes)
     W5500_Sn_REG_RX_WR0         = 0x002A, // Socket RX Buffer Write Pointer (2 bytes)
 
     W5500_Sn_REG_IMR            = 0x002C, // Socket Interrupt Mask
-};
-
-/* ---------- Socket Commands Register (p. 46-47) ---------- */
-
-enum {
-    W5500_OPEN                  = 0x01,
-    W5500_LISTEN                = 0x02,
-    W5500_CONNECT               = 0x04,
-    W5500_DISCON                = 0x08,
-    W5500_CLOSE                 = 0x10,
-    W5500_SEND                  = 0x20,
-    W5500_SEND_MAC              = 0x21,
-    W5500_SEND_KEEP             = 0x22,
-    W5500_RECV                  = 0x40,
 };
 
 /* ---------- Mode Register (p. 32-33) ---------- */
@@ -152,6 +132,32 @@ enum W5500 {
 /* ---------- Socket Mode Register (p. 32-33) ---------- */
 enum {
     W5500_MACRAW_PROTOCOL       = 0b0100,
+};
+
+/* ---------- Socket Commands Register (p. 46-48) ---------- */
+
+enum {
+    W5500_OPEN                  = 0x01,
+    W5500_LISTEN                = 0x02,
+    W5500_CONNECT               = 0x04,
+    W5500_DISCON                = 0x08,
+    W5500_CLOSE                 = 0x10,
+    W5500_SEND                  = 0x20,
+    W5500_SEND_MAC              = 0x21,
+    W5500_SEND_KEEP             = 0x22,
+    W5500_RECV                  = 0x40,
+};
+
+/* ---------- Socket Status Register (p. 49-50) ---------- */
+
+enum {
+    W5500_SOCK_CLOSED           = 0x00,
+    W5500_SOCK_INIT             = 0x13,
+    W5500_SOCK_LISTEN           = 0x14,
+    W5500_SOCK_ESTABLISHED      = 0x17,
+    W5500_SOCK_CLOSE_WAIT       = 0x1C,
+    W5500_SOCK_UDP              = 0x22,
+    W5500_SOCK_MACRAW           = 0x42
 };
 
 
