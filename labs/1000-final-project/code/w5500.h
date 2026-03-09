@@ -17,11 +17,23 @@ typedef struct {
     uint8_t subnet_mask[4];
     uint8_t gateway_addr[4];
 
-    uint8_t sockets_enabled; // nth bit is for enabled
-
+    
     uint8_t phy_mode;
 
+    uint8_t sockets_enabled; // nth bit is for enabled
+    
+
 } w5500_conf_t;
+
+typedef struct {
+    uint8_t protocol;
+    uint16_t port;
+
+    uint8_t dest_hw_addr[6];
+    uint8_t dest_ip_addr[4];
+    uint16_t dest_ip_port;
+
+} w5500_socket_t;
 
 typedef struct {
     uint32_t start_usec, // idk exactly what this one is used for
@@ -49,6 +61,17 @@ typedef struct w5500 {
 } w5500_t;
 
 /**********************************************************
+ * Setup
+ */
+
+// Must init respective socket too
+void w5500_init(w5500_t* nic, w5500_conf_t* config);
+
+// void w5500_init_socket(w5500_t* nic, w5500_sock_conf_t* config);
+
+void w5500_socket_command(w5500_t* nic, uint8_t socket, uint8_t command);
+
+/**********************************************************
  * Things
  */
 
@@ -57,11 +80,35 @@ typedef struct w5500 {
 // Interrupt status
 
 /**********************************************************
+ * Buffers
+ */
+typedef struct { // https://www.ietf.org/rfc/rfc768.txt
+    uint8_t dest_hw_addr[6];
+    uint8_t src_hw_addr[6];
+    uint16_t ethertype; // Length. Going to make it MAX_FRAME_PAYLOAD_SIZE bytes or less
+    uint8_t payload[MAX_FRAME_PAYLOAD_SIZE];
+} frame_t;
+
+// Returns -1 if invalid socket or not enough bytes in buffer
+int w5500_write_tx_bytes(const w5500_t* nic, void* buffer, uint32_t nbytes, uint8_t socket);
+
+// void w5500_write_frame(const w5500_t* nic, frame_t* frame) {
+
+//     uint16_t frame_size = frame->length + FRAME_HEADER_BYTES;
+
+//     frame_t buffer;
+//     memcpy(&buffer, frame, frame_size);
+
+//     // Swap bytes around in the length field to make it BIG ENDIAN
+//     buffer.length = (frame->length >> 8) | (frame->length << 8);
+
+//     w5500_putn(nic, W5500_BLK_SOCKET_0, W5500_Sn_REG_TX_RD0,
+//         &buffer, frame->length + FRAME_HEADER_BYTES);
+// }
+/**********************************************************
  * Hardware routines that use SPI to read/write 
  * registers
  */
-
-void w5500_init(w5500_t* nic, w5500_conf_t* config);
 
 // read 8 bits of data from <reg>
 uint8_t w5500_get8(const w5500_t* nic, uint8_t block, uint16_t reg);
