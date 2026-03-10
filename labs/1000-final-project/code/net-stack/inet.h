@@ -9,16 +9,24 @@
 
 typedef struct w5500 w5500_t;   // forward declaration
 
+// ----- ERROR CODES! -----
+enum {
+    INET_SUCCESS = 0,
+    INET_ERROR = -1,
+    INET_MAC_FILTERED = -2,
+    INET_NOT_IPV4 = -3,
+    INET_NOT_FOR_US = -4,
+    INET_NO_DATA_READ = -5,
+};
+
 /**********************************************************
  * Setup
  */
 
-
-
 void inet_nic_init(const w5500_t* nic);
 
 /**********************************************************
- * Internet!
+ * Write!
  */
 
 uint16_t inet_send_ping(const uint8_t* dest_ipv4_addr, const void* data, uint16_t nbytes, uint8_t socket);
@@ -31,5 +39,12 @@ uint16_t inet_write_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_prot
 uint16_t inet_write_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, void* data, uint16_t nbytes, uint8_t socket);
 #define inet_write_broadcast_frame(nic, data, nbytes, socket) \
     inet_write_frame(nic, ETH_BROADCAST, data, nbytes, socket)
+
+/**********************************************************
+ * Read!
+ */
+
+int inet_read_frame(frame_t* frame, uint16_t* nbytes, uint8_t socket);
+
 
 #endif

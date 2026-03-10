@@ -46,46 +46,51 @@ void print_protocol(uint16_t protocol) {
 }
 
 int process_packets(const w5500_t* nic, uint8_t* rx_buffer, uint8_t socket) {
-    uint16_t bytes_available = w5500_rx_available(nic, socket);
-    if (bytes_available == 0) return 0;
+    
+    int err;
 
-    // trace("Bytes available: %d\n", bytes_available);
-    uint16_t read_bytes = w5500_read_rx_bytes(nic, rx_buffer, socket);
-    trace_nofn("Read %d bytes\n", read_bytes);
-    if (read_bytes == 0) {
-        // No valid packet, still flush to clear buffer
+    // ---------- Get frame ----------
+    frame_t frame;
+    uint16_t nbytes;
+    err = inet_read_frame(&frame, &nbytes, socket);
+    if (err != INET_SUCCESS) {
+        // trace("Error reading frame: %d\n", err);
+        return err;
+    }
+    print_ethertype(frame.ethertype);
+
+    if (frame.ethertype != FRAME_IPV4) {
         w5500_fast_flush_rx(nic, socket);
         return 0;
     }
 
-    // Frame is already validated for size and MAC; now filter protocol
-    uint16_t ethertype = (rx_buffer[12] << 8) | rx_buffer[13];
-    print_ethertype(ethertype);
+    // ---------- IPV4 Packet ----------
+    ipv4_t packet;
+    uint16_t packet_length = nbytes - FRAME_HEADER_BYTES;
+    memcpy(&packet, frame.data, packet_length);
 
-    if (ethertype != FRAME_IPV4) {
+    print_protocol(packet.protocol);
+
+    if (packet.protocol != PROTOCOL_ICMP) {
+        trace("Skipping non-ICMP IPv4 packet (proto: %x)\n", packet.protocol);
         w5500_fast_flush_rx(nic, socket);
         return 0;
     }
 
-    uint8_t ip_protocol = rx_buffer[23];
-    // print_protocol(ip_protocol);
-    // print_bytes("RX: ", rx_buffer, read_bytes);
-    // print_as_string("RX: ", rx_buffer, read_bytes);
+    // ---------- ICMP Echo ----------
+    icmp_echo_t echo;
+    uint16_t echo_length = packet_length - IPV4_PACKET_HEADER_BYTES;
+    memcpy(&echo, packet.data, echo_length);
 
-    print_protocol(ip_protocol);
+    uint16_t data_len = echo_length - ICMP_HEADER_BYTES;
+    print_bytes("RX: ", echo.data, data_len);
+    print_as_string("RX: ", echo.data, data_len);
 
-    if (ip_protocol != PROTOCOL_ICMP) {
-        trace("Skipping non-ICMP IPv4 packet (proto: %x)\n", ip_protocol);
-        w5500_fast_flush_rx(nic, socket);
-        return 0;
-    }
 
-    print_bytes("RX: ", rx_buffer, read_bytes);
-    print_as_string("RX: ", rx_buffer, read_bytes);
 
     // Flush the buffer after processing one packet
     w5500_fast_flush_rx(nic, socket);
-    return read_bytes;
+    return nbytes;
 }
 
 #if 0

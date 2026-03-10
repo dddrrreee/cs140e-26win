@@ -7,9 +7,18 @@
 
 static const w5500_t* global_nic;
 
+/**********************************************************
+ * Setup
+ */
+
 void inet_nic_init(const w5500_t* nic) {
     global_nic = nic;
 }
+
+/**********************************************************
+ * Write!
+ */
+
 uint16_t inet_send_ping(const uint8_t* dest_ipv4_addr, const void* data, uint16_t nbytes, uint8_t socket) {
 
     uint16_t icmp_length = nbytes + ICMP_HEADER_BYTES;
@@ -83,10 +92,27 @@ uint16_t inet_write_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, void*
     swapEndian16(&frame.ethertype); // Swap ethertype since it is sent big endian
 
     // print_bytes("Frame: ", &frame, frame_length);
-    
-    uint8_t chip_id = w5500_get8(global_nic, W5500_BLK_COMMON, W5500_REG_VERSIONR);
-    assert(chip_id == W5500_CHIP_ID);
-
      
     return w5500_write_tx_bytes(global_nic, &frame, frame_length, socket);
+}
+
+/**********************************************************
+ * Read!
+ */
+
+int inet_read_frame(frame_t* frame, uint16_t* nbytes, uint8_t socket) {
+    *nbytes = w5500_read_rx_bytes(global_nic, frame, socket);
+    if (*nbytes == 0) {
+        w5500_fast_flush_rx(global_nic, socket);
+        return INET_NO_DATA_READ;  // No data read
+    }
+
+    // Verify MAC address (multicast or unicast to us)
+    if (!((frame->dest_hw_addr[0] & 0x01) || memcmp(&frame->dest_hw_addr[0], global_nic->hw_addr, 6) == 0)) {
+        return INET_NOT_FOR_US;  // Not addressed to us
+    }
+
+    swapEndian16(&frame->ethertype); // Swap ethertype since it is sent big endian
+
+    return INET_SUCCESS;  // Valid IPv4 frame
 }
