@@ -11,6 +11,7 @@ enum {
     FRAME_HEADER_BYTES = 14, // 6 bytes dest hw addr, 6 bytes src hw addr, 2 bytes length/length
     FRAME_MAX_PAYLOAD_SIZE = 420, // Just doing this for now (usually 1500)
     FRAME_MAX_SIZE = FRAME_HEADER_BYTES + FRAME_MAX_PAYLOAD_SIZE,
+    FRAME_MIN_SIZE = 64,
 
     IPV4_MAX_SIZE = FRAME_MAX_PAYLOAD_SIZE,
     IPV4_PACKET_HEADER_WORDS = 5, // Assumes no options/padding at end
@@ -25,6 +26,7 @@ enum {
 /* ---------- Frame types  ---------- */
 enum { // https://www.iana.org/assignments/ieee-802-numbers/ieee-802-numbers.xhtml
     FRAME_IPV4                              = 0x0800,
+    FRAME_ARP                               = 0x0806,
     FRAME_IPV6                              = 0x86DD,
     FRAME_LOCAL_EXPERIMENTAL_ETHERTYPE      = 0x88B5,
 };
