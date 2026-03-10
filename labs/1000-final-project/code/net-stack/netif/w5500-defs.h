@@ -2,10 +2,11 @@
 #define __W5500_DEFS_H__
 #include "rpi.h"
 #include "libc/bit-support.h"
+#include "../net-defs.h"
 
 
 #define W5500_CHIP_ID 4
-#define W5500_MAX_RW_BUF_SIZE 255
+#define W5500_MAX_RW_BUF_SIZE (FRAME_MAX_SIZE + 3) // Max size of buffer for w5500_getn/putn (data + control bytes)
 
 
 /* ---------- Control Phase (p. 15-16) ---------- */

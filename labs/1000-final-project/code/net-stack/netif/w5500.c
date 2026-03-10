@@ -4,6 +4,8 @@
 #include "../../crc-16.h"
 #include "../../print-utilities.h"
 
+
+#define BUFFER_SIZE_KB 2
 /**********************************************************
  * Hardware routines that use SPI to read/write 
  * registers
@@ -73,15 +75,17 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
 
     trace("\n# ----- OTHER SOCKET INIT -----\n");
     // TODO: Turn other sockets off
-    // for (int i = 0; i < 8; i++) {
-    //     uint8_t sock = (i << 5);
 
-    //     w5500_put8_chk(nic, sock | W5500_BLK_SOCKET_REG,
-    //         W5500_Sn_REG_TXBUF_SIZE, (i == 0) ? 2 : 0);
+    // Clear buffers
+    for (int i = 0; i < 8; i++) {
+        uint8_t sock = (i << 5);
 
-    //     w5500_put8_chk(nic, sock | W5500_BLK_SOCKET_REG,
-    //         W5500_Sn_REG_RXBUF_SIZE, (i == 0) ? 2 : 0);
-    // }
+        w5500_put8_chk(nic, sock | W5500_BLK_SOCKET_REG,
+            W5500_Sn_REG_TXBUF_SIZE, (i == 0) ? BUFFER_SIZE_KB : 0);
+
+        w5500_put8_chk(nic, sock | W5500_BLK_SOCKET_REG,
+            W5500_Sn_REG_RXBUF_SIZE, (i == 0) ? BUFFER_SIZE_KB : 0);
+    }
 
     
     trace("\n# ----- SOCKET 0 INIT -----\n");
@@ -101,6 +105,8 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
     assert(w5500_get8(nic,
         W5500_SOCKET_0 | W5500_BLK_SOCKET_REG,
         W5500_Sn_REG_SR) == W5500_SOCK_MACRAW);
+
+    w5500_fast_flush_rx(nic, W5500_SOCKET_0); // Clear RX buffer
 
     trace("Takes about 3 seconds for it to establish a link. Make sure RJ45 is plugged in\n");
     while(!(w5500_get8(nic, W5500_BLK_COMMON, W5500_REG_PHYCFGR) & 1)) {}
@@ -152,11 +158,24 @@ uint16_t w5500_write_tx_bytes(const w5500_t* nic, const void* buffer, uint32_t n
 uint16_t w5500_rx_available(const w5500_t* nic, uint8_t socket) {
     uint8_t buf[2];
     w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RSR0, buf, 2);
-    return (buf[0] << 8) | buf[1];
+
+    uint16_t bytes_available = (buf[0] << 8) | buf[1];
+
+    if (bytes_available > 2048 || bytes_available == 0xFFFF) {  // Invalid if > buffer size or all 1s
+        return 0;
+    }
+
+    return bytes_available;
 }
 
-uint16_t w5500_read_rx_bytes(const w5500_t* nic, void* buffer, uint8_t socket)
+uint16_t w5500_read_rx_bytes(const w5500_t* nic, void* buffer, uint8_t socket) // TODO
 {
+    // Check to make sure there is enough data
+    uint16_t bytes_available = w5500_rx_available(nic, socket);
+    if (bytes_available < 2) {
+            trace("Not enough data (%d)\n", bytes_available);
+        return 0;  // Need at least 2 bytes for length
+    }
     uint16_t rx_ptr;
     uint8_t ptr_buf[2];
     uint8_t len_buf[2];
@@ -169,6 +188,19 @@ uint16_t w5500_read_rx_bytes(const w5500_t* nic, void* buffer, uint8_t socket)
     // ---------- Read 2-byte packet length ----------
     w5500_getn(nic, socket | W5500_BLK_SOCKET_RX_BUF, rx_ptr, len_buf, 2);
     packet_len = (len_buf[0] << 8) | len_buf[1];
+
+
+    if ( (packet_len == 0) || (packet_len > bytes_available - 2) || (packet_len > FRAME_MAX_SIZE) ) { // TODO UHHHHH
+        trace("Invalid packet length: %d bytes (bytes_available: %d)\n", packet_len, bytes_available);
+        // w5500_fast_flush_rx(nic, socket);  // Flush on invalid length
+        // Advance read pointer by 2 to skip this invalid length, try next frame
+        rx_ptr += 2;
+        ptr_buf[0] = rx_ptr >> 8;
+        ptr_buf[1] = rx_ptr & 0xFF;
+        w5500_putn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RD0, ptr_buf, 2);
+        w5500_put8(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_CR, W5500_RECV);
+        return 0;  // Skip this frame
+    }
 
     // ---------- Read the actual packet ----------
     w5500_getn(nic, socket | W5500_BLK_SOCKET_RX_BUF, rx_ptr + 2, buffer, packet_len);
@@ -255,7 +287,8 @@ uint8_t w5500_put8_chk_helper(src_loc_t l, const w5500_t* nic, uint8_t block, ui
 
 uint8_t w5500_getn(const w5500_t* nic, uint8_t block, uint16_t reg, void *bytes, uint32_t nbytes) {
     uint8_t rx[W5500_MAX_RW_BUF_SIZE], tx[W5500_MAX_RW_BUF_SIZE];
-    assert(nbytes + 3 < sizeof(rx));
+    if (nbytes + 3 >= sizeof(rx))
+        panic("nbytes (%u + 3) too large for getn (%u)\n", nbytes, sizeof(rx));
 
     tx[0] = reg >> 8;
     tx[1] = reg & 0xFF;

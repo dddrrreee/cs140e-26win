@@ -27,7 +27,7 @@ uint16_t inet_send_ping(const uint8_t* dest_ipv4_addr, const void* data, uint16_
     *cksum_ptr = ( (checksum >> 8) & 0xFF);
     *(cksum_ptr + 1) = (checksum & 0xFF);
 
-    print_bytes("ICMP packet: ", &icmp, icmp_length);
+    // print_bytes("ICMP packet: ", &icmp, icmp_length);
 
     return inet_write_ipv4_packet(dest_ipv4_addr, PROTOCOL_ICMP, &icmp, icmp_length, socket);
 }
@@ -64,7 +64,7 @@ uint16_t inet_write_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_prot
     // TODO: resolve IP ADDRESS
     const uint8_t* dest_hw_addr = ETH_BROADCAST;
 
-    print_bytes("Packet: ", &packet, packet_length);
+    // print_bytes("Packet: ", &packet, packet_length);
     
     // ---------- Make frame! ---------- 
     return inet_write_frame(dest_hw_addr, FRAME_IPV4, &packet, packet_length, socket);
@@ -82,7 +82,7 @@ uint16_t inet_write_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, void*
 
     swapEndian16(&frame.ethertype); // Swap ethertype since it is sent big endian
 
-    print_bytes("Frame: ", &frame, frame_length);
+    // print_bytes("Frame: ", &frame, frame_length);
     
     uint8_t chip_id = w5500_get8(global_nic, W5500_BLK_COMMON, W5500_REG_VERSIONR);
     assert(chip_id == W5500_CHIP_ID);

@@ -15,7 +15,7 @@ typedef struct w5500 w5500_t;   // forward declaration
 
 
 
-void inet_nic_init(w5500_t* nic);
+void inet_nic_init(const w5500_t* nic);
 
 /**********************************************************
  * Internet!

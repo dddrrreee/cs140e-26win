@@ -3,7 +3,8 @@ COMMON_SRC += net-stack/netif/w5500.c net-stack/inet.c
 # PROGS += tests/playground-nrf.c
 # PROGS += tests/playground-w5500.c
 # PROGS += tests/playground-driver.c
-PROGS += tests/playground-frame-testing.c
+# PROGS += tests/playground-frame-testing.c
+PROGS += tests/playground-rx.c
 
 # next week you'll get rid of all of these
 O = $(CS140E_2026_PATH)/libpi
