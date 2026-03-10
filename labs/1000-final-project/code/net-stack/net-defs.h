@@ -87,7 +87,15 @@ typedef struct { // https://www.rfc-editor.org/rfc/rfc792
     uint16_t seq_number;
     uint8_t data[ICMP_MAX_DATA_SIZE];
 } icmp_echo_t;
-
 _Static_assert(sizeof(icmp_echo_t) == ICMP_MAX_SIZE, "icmp_t size wrong");
+
+typedef struct {
+    uint8_t ip_addr[4]; // 4-byte IP address
+    uint8_t hw_address[6];    // 6-byte MAC address
+    uint8_t is_static;            // true if static, false if dynamic
+    // Other fields like timestamp for aging out dynamic entries could be added here
+} arp_entry_t;
+_Static_assert(sizeof(arp_entry_t) == 11, "arp_entry_t size wrong");
+
 
 #endif

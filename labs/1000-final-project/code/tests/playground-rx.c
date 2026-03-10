@@ -65,11 +65,42 @@ int process_packets(const w5500_t* nic, uint8_t* rx_buffer, uint8_t socket) {
     }
 
     // ---------- IPV4 Packet ----------
+
+    uint8_t version = frame.data[0] >> 4;
+    uint8_t ihl = (frame.data[0] & 0x0F) * 4;
+
+    if (version != 4) {
+        trace("Not IPv4\n");
+        w5500_fast_flush_rx(nic, socket);
+        return 0;
+    }
+
+    if (ihl < 20) {
+        trace("Invalid IHL: %d\n", ihl);
+        w5500_fast_flush_rx(nic, socket);
+        return 0;
+    }
+
+    if (ihl != 20) {
+        trace("IPv4 options unsupported (IHL=%d)\n", ihl);
+        w5500_fast_flush_rx(nic, socket);
+        return 0;
+    }
+
     ipv4_t packet;
     uint16_t packet_length = nbytes - FRAME_HEADER_BYTES;
     memcpy(&packet, frame.data, packet_length);
 
     print_protocol(packet.protocol);
+
+    uint16_t total_length = (frame.data[2] << 8) | frame.data[3]; // Received total length field
+
+    if (total_length < ihl || total_length > packet_length) {
+        trace("Invalid IPv4 length: total=%u ihl=%u packet=%u\n",
+            total_length, ihl, packet_length);
+        w5500_fast_flush_rx(nic, socket);
+        return 0;
+    }
 
     if (packet.protocol != PROTOCOL_ICMP) {
         trace("Skipping non-ICMP IPv4 packet (proto: %x)\n", packet.protocol);
@@ -78,6 +109,11 @@ int process_packets(const w5500_t* nic, uint8_t* rx_buffer, uint8_t socket) {
     }
 
     // ---------- ICMP Echo ----------
+    if ((packet.data[0] != ICMP_ECHO_MSG) && (packet.data[0] != ICMP_ECHO_REPLY)) {
+        trace("Skipping non-echo ICMP packet (type: %x)\n", packet.data[0]);
+        w5500_fast_flush_rx(nic, socket);
+        return 0;
+    }
     icmp_echo_t echo;
     uint16_t echo_length = packet_length - IPV4_PACKET_HEADER_BYTES;
     memcpy(&echo, packet.data, echo_length);
@@ -88,8 +124,9 @@ int process_packets(const w5500_t* nic, uint8_t* rx_buffer, uint8_t socket) {
 
 
 
-    // Flush the buffer after processing one packet
+    // ---------- Flush the buffer after processing one packet ---------- (ik it's bad)
     w5500_fast_flush_rx(nic, socket);
+
     return nbytes;
 }
 
@@ -178,7 +215,7 @@ void notmain(void) {
         inet_send_ping(IPV4_BROADCAST, message, msg_len, W5500_SOCKET_0);
         int status = process_packets(&nic, rx_buffer, W5500_SOCKET_0);
 
-        uint16_t rx_bytes = w5500_rx_available(&nic, W5500_SOCKET_0);
+        // uint16_t rx_bytes = w5500_rx_available(&nic, W5500_SOCKET_0);
         delay_ms(10);
         // trace("RX buffer available: %d bytes\n", rx_bytes);
 

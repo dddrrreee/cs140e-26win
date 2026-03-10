@@ -1,18 +1,42 @@
+// LAYER 2: Ethernet Frame Handling with network interface (W5500 driver)
 
 #include "inet.h"
 #include "netif/w5500.h"
 #include "../crc-16.h"
-#include "../print-utilities.h"
 #include "../endian.h"
 
-static const w5500_t* global_nic;
+static const w5500_t* global_nic = NULL;
 
 /**********************************************************
  * Setup
  */
 
-void inet_nic_init(const w5500_t* nic) {
-    global_nic = nic;
+void inet_nic_init(const w5500_t* nic) { global_nic = nic; }
+
+/**********************************************************
+ * Read!
+ */
+
+int inet_read_frame(frame_t* frame, uint16_t* nbytes, uint8_t socket) {
+    if (global_nic == NULL) return INET_NIC_NOT_INITIALIZED; // NIC not initialized
+    
+
+    // Read frame
+    *nbytes = w5500_read_rx_bytes(global_nic, frame, socket);
+    
+    if (*nbytes == 0) {
+        w5500_fast_flush_rx(global_nic, socket);
+        return INET_NO_DATA_READ;  // No data read
+    }
+
+    swapEndian16(&frame->ethertype); // Swap ethertype since it is sent big endian
+
+    // Verify MAC address (multicast or unicast to us), and still returns so we can peek at the packet
+    if (!((frame->dest_hw_addr[0] & 0x01) || memcmp(&frame->dest_hw_addr[0], global_nic->hw_addr, 6) == 0)) {
+        return INET_NOT_FOR_US;  // Not addressed to us
+    }
+
+    return INET_SUCCESS;  // Valid frame
 }
 
 /**********************************************************
@@ -80,6 +104,7 @@ uint16_t inet_write_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_prot
 }
 
 uint16_t inet_write_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, void* data, uint16_t nbytes, uint8_t socket) {
+    if (global_nic == NULL) return INET_NIC_NOT_INITIALIZED;
 
     uint16_t frame_length = nbytes + FRAME_HEADER_BYTES;
 
@@ -96,23 +121,15 @@ uint16_t inet_write_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, void*
     return w5500_write_tx_bytes(global_nic, &frame, frame_length, socket);
 }
 
+
+
 /**********************************************************
- * Read!
+ * Internal Helpers
  */
 
-int inet_read_frame(frame_t* frame, uint16_t* nbytes, uint8_t socket) {
-    *nbytes = w5500_read_rx_bytes(global_nic, frame, socket);
-    if (*nbytes == 0) {
-        w5500_fast_flush_rx(global_nic, socket);
-        return INET_NO_DATA_READ;  // No data read
-    }
+const w5500_t* inet_get_nic() { return global_nic; }
+const uint8_t* inet_get_hw_addr() { return global_nic->hw_addr; }
+const uint8_t* inet_get_ipv4_addr() { return global_nic->ipv4_addr; }
+const uint8_t* inet_get_subnet_mask() { return global_nic->subnet_mask; }
+const uint8_t* inet_get_gateway_addr() { return global_nic->gateway_addr; }
 
-    // Verify MAC address (multicast or unicast to us)
-    if (!((frame->dest_hw_addr[0] & 0x01) || memcmp(&frame->dest_hw_addr[0], global_nic->hw_addr, 6) == 0)) {
-        return INET_NOT_FOR_US;  // Not addressed to us
-    }
-
-    swapEndian16(&frame->ethertype); // Swap ethertype since it is sent big endian
-
-    return INET_SUCCESS;  // Valid IPv4 frame
-}
