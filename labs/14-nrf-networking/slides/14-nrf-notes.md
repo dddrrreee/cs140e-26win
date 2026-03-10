@@ -219,3 +219,15 @@ section li + li {
   - if you don't get several sleeps will not go well.
 
 ![bg right:45% contain](images/bugs-glowing.png)
+
+---
+# Clarifications
+
+![bg left:40%](../images/nrf-side.jpg)
+
+- Given the number of people there seem to be collisions
+  1. If you hit this (or "dup/out of space") at start of class.
+  2. Just see that the first couple send tests work.
+- If tests don't work in sequence, just try them in isolation.
+  - NRF's can be finicky.  
+  - mostly: If you pass a big test, supercedes easier.
