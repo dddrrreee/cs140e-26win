@@ -126,13 +126,16 @@ Page table:
 ---
 # What to do: write `pt-vm.c`
 
-- Each routine in calls a staff version so you can 
+- Each `vm_*` routine in calls a staff version so you can 
   knock off 1-by-1.
 
-- The tests are roughly (same as lab 13,15)
-  - Just use PT instead of pinned
+- The tests are roughly same as lab 13,15
+  - They just use `vm_*` instead of `pin_*`
   - Can get oriented by looking side by side.
 
 - When done:
-  1. Catch a couple exceptions same as lab 13.
+  1. Catch a couple exceptions (same as lab 13).
   2. Choose-own-adventure: Do some kind of extension.
+
+- Because we did pinned + coherency already today = fairly mechanical.
+  - Compared to past years: huge complexity reduction.
