@@ -7,28 +7,12 @@
 -----------------------------------------------------------------------
 ## tl;dr: clarifications and errata
 
-BUG:
-
-  - Do a pull.  The .out's for test 2, 3, 4 had the wrong hashes.
-    User memory should be mapped to `MEM_uncached` (just as we
-    have done all quarter).
-
-  - For `code/Makefile` get rid of `.staff` by changing:
-
-            YOUR_VM = $(CS140E_2025_PATH)/labs/15-vm-coherence/code.staff/
-
-    To:
-
-            YOUR_VM = $(CS140E_2025_PATH)/labs/15-vm-coherence/code/
-
-
 Clarifications:
   - Compare the tests for the coherence lab (15) with the tests
     in the code directory: the only difference between them is
     the use of page tables versus pinned, so you can see the
     exact semantics and example usage.
 
-  - Part 0: do a pull, and the README will get updated.
   - Part 1: when you're done and removing staff code,
     replace `3-test-cache.c:staff_sync_tlb()` with
     a call to your `mmu_sync_pte_mods()` --- all the test
