@@ -1,4 +1,4 @@
-COMMON_SRC += w5500.c
+COMMON_SRC += net-stack/netif/w5500.c net-stack/inet.c
 
 # PROGS += tests/playground-nrf.c
 # PROGS += tests/playground-w5500.c

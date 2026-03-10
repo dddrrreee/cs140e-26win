@@ -2,9 +2,9 @@
 #include "spi.h"
 #include "../print-utilities.h"
 #include "../crc-16.h"
-#include "../net-defs.h"
-#include "../endian.h"
-#include "../w5500.h"
+#include "../net-stack/netif/w5500.h"
+#include "../net-stack/inet.h"
+// #include "../w5500.h"
 
 
 void notmain(void) { 
@@ -21,6 +21,10 @@ void notmain(void) {
     };
     w5500_t nic;
     
+    w5500_init(&nic, &config);
+    
+
+    inet_nic_init(&nic); // 0 IS THE ONE CLOSEST TO IMU
 
     uint8_t* data_ptr;
     uint16_t checksum;
@@ -29,28 +33,10 @@ void notmain(void) {
     const char* message = "Hello World! This is a message that needs to be long enough to send";
     uint16_t msg_len = strlen(message);
 
-    // icmp_t icmp = {
-    //     .echo = 1,
-    //     .checksum = 0, // Checksum to be filled
-    //     .identifier = N_A,
-    //     .seq_number = N_A,
-    //     .data_length = msg_len,
-    //     .total_length = ICMP_HEADER_BYTES + msg_len
-    // };
 
-    // data_ptr = (uint8_t*)&icmp;
-    // icmp.echo = !!icmp.echo * 8; // Make it 0 or 8
-    // memcpy(icmp.data, message, icmp.data_length);
-    // swapEndian16(&icmp.identifier);
-    // swapEndian16(&icmp.seq_number);
-    // checksum = our_crc16(data_ptr, icmp.total_length);
-    // data_ptr[2] = ( (checksum >> 8) & 0xFF);
-    // data_ptr[3] = (checksum & 0xFF);
 
-    w5500_init(&nic, &config); // 0 IS THE ONE CLOSEST TO IMU
-    
     while(1) {
-        w5500_send_ping(&nic, IPV4_BROADCAST, message, msg_len, W5500_SOCKET_0);
+        inet_send_ping(IPV4_BROADCAST, message, msg_len, W5500_SOCKET_0);
         // w5500_write_broadcast_ipv4_packet(&nic, PROTOCOL_ICMP, &icmp, icmp.total_length, W5500_SOCKET_0);
         delay_ms(1000);
     }
