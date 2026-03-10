@@ -75,9 +75,25 @@ vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr)
     unsigned index = va >> 20;
     assert(index < PT_LEVEL1_N);
 
+    // 1. lookup the <pte> in <pt> using index.
     vm_pte_t *pte = 0;
+
+    // 2. use values in <attr> to set pte's:
+    //  - nG
+    //  - B
+    //  - C
+    //  - TEX
+    //  - AP
+    //  - domain
+    //  - XN
+    // also: <tag> since its a 1mb section.
+
+    // 3. set <pte->sec_base_addr> to the right physical section.
+
     return staff_vm_map_sec(pt,va,pa,attr);
 
+    // 4. you modified the page table!  
+    //   - make sure you call your sync PTE (lab 15).
 
     if(verbose_p)
         vm_pte_print(pt,pte);
@@ -86,15 +102,16 @@ vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr)
 }
 
 // lookup 32-bit address va in pt and return the pte
-// if it exists, 0 otherwise.
+// if it exists, return 0 otherwise (use tag)
 vm_pte_t * vm_lookup(vm_pt_t *pt, uint32_t va) {
     return staff_vm_lookup(pt,va);
 }
 
 // manually translate <va> in page table <pt>
-// - if doesn't exist, returns 0.
-// - if does exist returns the corresponding physical
-//   address in <pa>
+// - if doesn't exist, return 0.
+// - if does exist:
+//    1. write the translated physical address to <*pa> 
+//    2. return the pte pointer.
 //
 // NOTE: 
 //   - we can't just return the <pa> b/c page 0 could be mapped.
@@ -120,7 +137,7 @@ static inline pin_t attr_mk(pr_ent_t *e) {
 }
 
 // setup the initial kernel mapping.  This will mirror
-//  static inline void procmap_pin_on(procmap_t *p) 
+//    static inline void procmap_pin_on(procmap_t *p) 
 // in <13-pinned-vm/code/procmap.h>  but will call
 // your vm_ routines, not pinned routines.
 //
@@ -128,14 +145,28 @@ static inline pin_t attr_mk(pr_ent_t *e) {
 // you setup the page table and asid. use  
 // kern_asid, and kern_pid.
 vm_pt_t *vm_map_kernel(procmap_t *p, int enable_p) {
+    return staff_vm_map_kernel(p,enable_p);
+
+    // install at least the default handlers so we get 
+    // error messages.
+    full_except_install(0);
+
     // the asid and pid we start with.  
     //    shouldn't matter since kernel is global.
     enum { kern_asid = 1, kern_pid = 0x140e };
 
+    // 1. compute domains being used.
+    // 2. call <vm_mmu_init> to set domain reg (using 1) and init MMU.
+    // 3. allocate a page table <vm_pt_alloc>
+    // 4. walk through procmap, mapping each entry <vm_map_sec>
+    //    - note: for today we use identity map, so <addr> --> <addr>
+    // 5. use <vm_mmu_switch> to setup <kern_asid>, <pt>, and <kern_pid>
+    // 6. if <enable_p>=1
+    //    - <mmu_sync_pte_mods> since modified page table.
+    //    - <vm_mmu_enable> to turn on
     vm_pt_t *pt = 0;
 
-    return staff_vm_map_kernel(p,enable_p);
-
+    // return page table.
     assert(pt);
     return pt;
 }
