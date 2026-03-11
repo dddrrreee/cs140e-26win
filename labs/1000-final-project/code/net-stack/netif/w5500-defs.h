@@ -9,7 +9,7 @@
 #define W5500_MAX_RW_BUF_SIZE (FRAME_MAX_SIZE + 3) // Max size of buffer for w5500_getn/putn (data + control bytes)
 
 
-/* ---------- Control Phase (p. 15-16) ---------- */
+/* ---------- Control Phase (p. 15-1MAC_ADDR_LENGTH) ---------- */
 enum {
     W5500_BLK_COMMON            = 0b00000 << 3, // Doesn't really mean anything but just symbolic
 

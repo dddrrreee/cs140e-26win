@@ -1,4 +1,4 @@
-// LAYER 2: Ethernet Frame Handling with network interface (W5500 driver)
+// Layer 3 (high-ish)
 
 #include "inet.h"
 
@@ -14,7 +14,7 @@ int inet_icmp_handler(const uint8_t* data, const uint8_t* src_addr, uint16_t icm
             // trace("ICMP ECHO!\n");
             const char* msg = "THIS IS A REPLY";
             // Send back to the source of the echo request
-            inet_send_ping(src_addr, ICMP_ECHO_REPLY, msg, strlen(msg), W5500_SOCKET_0);
+            inet_send_ping(src_addr, ICMP_ECHO_REPLY, msg, strlen(msg));
             return INET_SUCCESS;
         case ICMP_ECHO_REPLY:
             trace("ICMP REPLY!\n");
@@ -27,7 +27,7 @@ int inet_icmp_handler(const uint8_t* data, const uint8_t* src_addr, uint16_t icm
 }
 
 
-uint16_t inet_send_ping(const uint8_t* dest_ipv4_addr, uint8_t ping_type, const void* data, uint16_t nbytes, uint8_t socket) {
+int inet_send_ping(const uint8_t* dest_ipv4_addr, uint8_t ping_type, const void* data, uint16_t nbytes) {
 
     uint16_t icmp_length = nbytes + ICMP_HEADER_BYTES;
 
@@ -49,6 +49,6 @@ uint16_t inet_send_ping(const uint8_t* dest_ipv4_addr, uint8_t ping_type, const 
 
     // print_bytes("ICMP packet: ", &icmp, icmp_length);
 
-    return inet_write_ipv4_packet(dest_ipv4_addr, PROTOCOL_ICMP, &icmp, icmp_length, socket);
+    return inet_send_ipv4_packet(dest_ipv4_addr, PROTOCOL_ICMP, &icmp, icmp_length);
 }
 

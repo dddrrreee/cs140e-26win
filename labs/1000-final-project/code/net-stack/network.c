@@ -16,7 +16,7 @@ IP layer and all the packet handling logic
 
 #include "icmp.h"
 
-uint8_t _ipv4_addr[4]; // At this layer
+static uint8_t _ipv4_addr[4]; // At this layer
 
 static ipv4_t _ipv4_rx; // IPv4 buffer. will do one for each protocol perhaps
 
@@ -26,22 +26,20 @@ static int _verbose_p = 0;
  * Setup
  */
 
-int inet_layer3_init(uint8_t* ipv4_addr, int verbose_p) {
+int inet_layer3_init(int verbose_p) {
 
     _verbose_p = (verbose_p >> 3) & 1;
-    // Layer 3
-    memcpy(_ipv4_addr, ipv4_addr, 4);
     
     return INET_SUCCESS;
 }
 
-
+const uint8_t* ipv4_get_addr() { return _ipv4_addr; }
 
 /**********************************************************
  * Public interface
  */
 
-uint16_t inet_write_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, const void* data, uint16_t nbytes, uint8_t socket) {
+int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, const void* data, uint16_t nbytes) {
 
     // ---------- TX packet ---------- 
     uint16_t packet_length = nbytes + IPV4_PACKET_HEADER_BYTES;
@@ -53,11 +51,11 @@ uint16_t inet_write_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_prot
     packet.identification = N_A;
     packet.flags = N_A;
     packet.fragment_offset = N_A;
-    packet.ttl = 1;
+    packet.ttl = IPV4_DEFAULT_TTL;
     packet.protocol = ipv4_protocol;
     packet.checksum = 0; // Checksum to be filled later but must be 0 for now
-    memcpy(packet.src_ip_address, _ipv4_addr, 4);
-    memcpy(packet.dest_ip_address, dest_ipv4_addr, 4);
+    memcpy(packet.src_ipv4_address, _ipv4_addr, IPV4_ADDR_LENGTH);
+    memcpy(packet.dest_ip_address, dest_ipv4_addr, IPV4_ADDR_LENGTH);
     memcpy(packet.data, data, nbytes);
 
     // ---------- Packet conditioning for endianness and stuff ---------- 
@@ -76,15 +74,15 @@ uint16_t inet_write_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_prot
     // print_bytes("Packet: ", &packet, packet_length);
     
     // ---------- Make frame (Layer 2)! ---------- 
-    return inet_write_frame(dest_hw_addr, FRAME_IPV4, &packet, packet_length, socket);
+    return inet_send_frame(dest_hw_addr, FRAME_IPV4, &packet, packet_length);
 }
 
 int inet_resolve_ip_address(const uint8_t* ipv4_addr, uint8_t* hw_addr) {
-    memcpy(hw_addr, IPV4_BROADCAST, 4); // TODO: ONCE ARP IS DONE
+    memcpy(hw_addr, IPV4_BROADCAST, IPV4_ADDR_LENGTH); // TODO: ONCE ARP IS DONE
     return INET_SUCCESS;
 }
 int inet_resolve_hw_address(const uint8_t* hw_addr, uint8_t* ipv4_addr) {
-    memcpy(ipv4_addr, MAC_BROADCAST, 6); // TODO: ONCE ARP IS DONE
+    memcpy(ipv4_addr, MAC_BROADCAST, MAC_ADDR_LENGTH); // TODO: ONCE ARP IS DONE
     return INET_SUCCESS;
 }
 
@@ -95,7 +93,7 @@ int inet_resolve_hw_address(const uint8_t* hw_addr, uint8_t* ipv4_addr) {
 int ipv4_check_header(const ipv4_t* packet, uint16_t header_bytes) {
 
     // Make sure it is IPV4!!!!!
-    if (packet->version != 4) {
+    if (packet->version != IPV4_VERS_4) {
         return INET_NOT_IPV4;
     }
 
@@ -122,7 +120,7 @@ int ipv4_protocol_handler(const ipv4_t* packet, uint16_t packet_bytes)  {
 
     switch(protocol) {
         case PROTOCOL_ICMP:
-            err = inet_icmp_handler(packet->data, packet->src_ip_address, packet_bytes - IPV4_PACKET_HEADER_BYTES);
+            err = inet_icmp_handler(packet->data, packet->src_ipv4_address, packet_bytes - IPV4_PACKET_HEADER_BYTES);
             return err;
         default:
             return INET_IPV4_UNSUPPORTED_PROTOCOL;
@@ -147,6 +145,7 @@ int inet_ipv4_handler(const uint8_t* data, uint16_t packet_bytes) {
 
     // TODO: more checks?
 
+
     if (_verbose_p) {
         print_bytes("Layer 3 ipv4: ", &_ipv4_rx, packet_bytes);
         print_bytes("Layer 3 ipv4: ", &_ipv4_rx, packet_bytes);
@@ -158,91 +157,10 @@ int inet_ipv4_handler(const uint8_t* data, uint16_t packet_bytes) {
         return err;
     }
 
+    // 4. ipv4_addr checks
+
     return ipv4_protocol_handler(&_ipv4_rx, packet_bytes);
 }
-
-#if 0
-
-void inet_ipv4_handler(uint8_t *packet, uint16_t total_len) {
-
-    uint8_t version, ihl;
-    int err = inet_parse_header(ipv4, total_len, &version, &ihl);
-
-    if (err != INET_SUCCESS) {
-        trace("Error parsing IPv4 header: %d\n", err);
-        return;
-    }
-
-    uint16_t packet_length = total_len - FRAME_HEADER_BYTES;
-    memcpy(&packet, frame.data, packet_length);
-
-    print_protocol(packet.protocol);
-
-    uint16_t total_length = (frame.data[2] << 8) | frame.data[3]; // Received total length field
-
-    if (total_length < ihl || total_length > packet_length) {
-        trace("Invalid IPv4 length: total=%u ihl=%u packet=%u\n",
-            total_length, ihl, packet_length);
-        w5500_fast_flush_rx(nic, socket);
-        return 0;
-    }
-
-    if (packet.protocol != PROTOCOL_ICMP) {
-        trace("Skipping non-ICMP IPv4 packet (proto: %x)\n", packet.protocol);
-        w5500_fast_flush_rx(nic, socket);
-        return 0;
-    }
-
-    ipv4_hdr_t *ip = (ipv4_hdr_t*)packet;
-
-    if ((ip->version_ihl >> 4) != 4)
-        return;
-
-    uint8_t ihl = (ip->version_ihl & 0x0F) * 4;
-
-    switch (ip->protocol)
-    {
-        case 1:
-            icmp_process(packet + ihl, len - ihl);
-            break;
-
-        case 17:
-            udp_process(packet + ihl, len - ihl);
-            break;
-    }
-
-    // TODO: checksum
-}
-
-
-
-int inet_packet_handler(uint8_t* buffer, uint16_t* nbytes, uint16_t* protocol, uint8_t socket) {
-
-    uint8_t packet_data[FRAME_MAX_PAYLOAD_SIZE];
-    uint16_t read_bytes, ethertype;
-    int err = inet_read_frame_data(packet_data, &read_bytes, &ethertype, socket);
-    if (err != INET_SUCCESS) {
-        // trace("Error handling frame: %d\n", err);
-        return err;
-    }
-
-    // Check header based on ethertype
-    //  switch (ethertype) {
-    //     case FRAME_ARP:
-    //         return inet_arp_handler(packet_data, read_bytes, socket);
-    //     case FRAME_IPV4:
-    //         return inet_ipv4_handler(packet_data, read_bytes, socket);
-    //     default:
-    //         // trace("Unsupported ethertype: %x\n", ethertype);
-    //         return INET_FRAME_UNSUPPORTED_ETHERTYPE; // Don't handle this protocol
-    // }
-
-    // 
-    return INET_SUCCESS;
-}
-
-
-#endif
 
 /**********************************************************
  * Write!

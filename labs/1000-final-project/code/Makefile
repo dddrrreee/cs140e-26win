@@ -2,6 +2,7 @@ COMMON_SRC += net-stack/netif/w5500.c
 
 # Layer 2
 COMMON_SRC += net-stack/data-link.c 
+COMMON_SRC += net-stack/arp.c
 
 # Layer 3
 COMMON_SRC += net-stack/network.c 

@@ -3,6 +3,8 @@
 #include "inet.h"
 #include "netif/w5500.h"
 #include "data-link.h"
+
+#include "arp.h"
 #include "network.h"
 
 #include "../crc-16.h"
@@ -26,7 +28,7 @@ int inet_init(w5500_t* nic, int verbose_p) {
     _nic = nic;
 
     // Layer 3
-    int err = inet_layer3_init(nic->ipv4_addr, verbose_p);
+    int err = inet_layer3_init(verbose_p);
     return err;
 }
 
@@ -34,11 +36,11 @@ int inet_init(w5500_t* nic, int verbose_p) {
  * Public Interface
  */
 
-int inet_poll_frame(uint8_t socket, int flush_buffer) {
+int inet_poll_frame(int flush_buffer) {
 
     // Read frame
     uint16_t read_bytes;
-    int err = inet_read_frame(&_frame_rx, &read_bytes, socket);
+    int err = inet_read_frame(&_frame_rx, &read_bytes);
     if (err != INET_SUCCESS) {
         return err;
     }
@@ -49,7 +51,7 @@ int inet_poll_frame(uint8_t socket, int flush_buffer) {
     }
 
     // 1. Verify MAC address (multicast or unicast to us), and still returns so we can peek at the packet
-    if (!((_frame_rx.dest_hw_addr[0] & 0x01) || memcmp(&_frame_rx.dest_hw_addr[0], _nic->hw_addr, 6) == 0)) {
+    if (!((_frame_rx.dest_hw_addr[0] & 0x01) || memcmp(&_frame_rx.dest_hw_addr[0], _nic->hw_addr, MAC_ADDR_LENGTH) == 0)) {
         return INET_MAC_NOT_FOR_US;  // Not addressed to us
     }
 
@@ -61,20 +63,20 @@ int inet_poll_frame(uint8_t socket, int flush_buffer) {
 
     // 3. Flush at end
     if (flush_buffer) {
-        w5500_fast_flush_rx(_nic, socket);
+        w5500_fast_flush_rx(_nic, INET_NIC_SOCKET);
     }
 
     return INET_SUCCESS;
 }
 
-uint16_t inet_write_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, void* data, uint16_t nbytes, uint8_t socket) {
+int inet_send_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, const void* data, uint16_t nbytes) {
     if (_nic == NULL) return INET_NIC_NOT_INITIALIZED;
 
     uint16_t frame_length = nbytes + FRAME_HEADER_BYTES;
 
     frame_t frame;
-    memcpy(frame.dest_hw_addr, dest_hw_addr, 6);
-    memcpy(frame.src_hw_addr, _nic->hw_addr, 6);
+    memcpy(frame.dest_hw_addr, dest_hw_addr, MAC_ADDR_LENGTH);
+    memcpy(frame.src_hw_addr, _nic->hw_addr, MAC_ADDR_LENGTH);
     frame.ethertype = ethertype;
     memcpy(&frame.data, data, nbytes);
 
@@ -82,7 +84,11 @@ uint16_t inet_write_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, void*
 
     // print_bytes("Frame: ", &frame, frame_length);
      
-    return w5500_write_tx_bytes(_nic, &frame, frame_length, socket);
+    uint16_t bytes_written = w5500_write_tx_bytes(_nic, &frame, frame_length, INET_NIC_SOCKET);
+    if (bytes_written == 0)
+        return INET_WRITE_FRAME_ERROR;
+
+    return INET_SUCCESS;
 }
 
 
@@ -92,15 +98,15 @@ uint16_t inet_write_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, void*
  */
 
 // Swaps ethertype bytes to be correct too since it is sent big endian on the wire, but our platform is little endian
-int inet_read_frame(frame_t* frame, uint16_t* nbytes, uint8_t socket) {
+int inet_read_frame(frame_t* frame, uint16_t* nbytes) {
     if (_nic == NULL) return INET_NIC_NOT_INITIALIZED; // NIC not initialized
     
 
     // Read frame
-    *nbytes = w5500_read_rx_bytes(_nic, frame, socket);
+    *nbytes = w5500_read_rx_bytes(_nic, frame, INET_NIC_SOCKET);
     
     if (*nbytes == 0) {
-        w5500_fast_flush_rx(_nic, socket);
+        w5500_fast_flush_rx(_nic, INET_NIC_SOCKET);
         return INET_NO_DATA_READ;  // No data read
     }
 
@@ -108,35 +114,6 @@ int inet_read_frame(frame_t* frame, uint16_t* nbytes, uint8_t socket) {
 
     return INET_SUCCESS;  // Valid frame
 }
-
-#if 0
-// int inet_read_frame_data(uint8_t* frame_payload, uint16_t* nbytes, uint16_t* ethertype, uint8_t socket) {
-
-//     frame_t frame;
-//     uint16_t read_bytes;
-//     int err = inet_read_frame(&frame, &read_bytes, socket);
-//     if (err != INET_SUCCESS) {
-//         // memcpy(frame_payload, &frame, read_bytes);
-//         return err;
-//     }
-
-//     // Ethertype handled by caller
-//     *ethertype = frame.ethertype;
-//     memcpy(frame_payload, &frame.data, read_bytes - FRAME_HEADER_BYTES);
-//     *nbytes = read_bytes - FRAME_HEADER_BYTES;
-
-//     if (*ethertype <= FRAME_IEEE802_3) {
-//         return INET_FRAME_802_3; // Not handling IEEE 802.3 frames
-//     }
-
-//     // Checking size (this may already be handled in w5500 though) TODO: delegate/split
-
-//     // Put into circular buffer for threads?
-
-//     return INET_SUCCESS;
-// }
-
-#endif
 
 //  https://www.cavebear.com/archive/cavebear/Ethernet/type.html
 // [Reference](https://datatracker.ietf.org/doc/html/rfc9542 ) according to [this site](https://www.iana.org/assignments/ieee-802-numbers/ieee-802-numbers.xhtml)
@@ -152,10 +129,10 @@ int handle_ethertype(frame_t* frame, uint16_t frame_nbytes) {
             int err = inet_ipv4_handler(frame->data, frame_nbytes - FRAME_HEADER_BYTES);
             return err; // Handle in caller
 
-        // case FRAME_ARP:
-        //     trace("ARP not implemented yet!\n"); // TODO: implement ARP
-        //     // not_reached();
-        //     return INET_FRAME_UNSUPPORTED_ETHERTYPE;
+        case FRAME_ARP:
+            inet_arp_handler(frame->data, frame_nbytes - FRAME_HEADER_BYTES);
+            // not_reached();
+            return INET_FRAME_UNSUPPORTED_ETHERTYPE;
 
         default:
             return INET_FRAME_UNSUPPORTED_ETHERTYPE; // Don't handle this protocol

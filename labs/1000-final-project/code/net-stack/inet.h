@@ -11,48 +11,29 @@ typedef struct w5500 w5500_t;   // forward declaration
 
 // TODO: make a verbose_p that enables for each layer based on bits
 
-// ----- ERROR CODES! -----
-enum {
-    INET_SUCCESS = 0,
-    INET_ERROR = -1,
-
-
-
-    // Frame
-    INET_MAC_FILTERED = -2,
-    INET_NOT_IPV4 = -3,
-    INET_MAC_NOT_FOR_US = -4,
-    INET_NO_DATA_READ = -5,
-    INET_NIC_NOT_INITIALIZED = -6,
-    INET_FRAME_802_3 = -8,
-
-    // IPV4
-    INET_IPV4_UNSUPPORTED_VERS = -10,
-    INET_IPV4_UNSUPPORTED_HEADER_LEN = -11,
-
-
-    INET_FRAME_UNSUPPORTED_ETHERTYPE = -100,
-    INET_IPV4_UNSUPPORTED_PROTOCOL = -101,
-    INET_ICMP_UNSUPPORTED_TYPE = -102,
-};
 
 /**********************************************************
  * Setup
  */
 
 int inet_init(w5500_t* nic, int verbose_p);
-int inet_layer3_init(uint8_t* ipv4_addr, int verbose_p);
+int inet_layer3_init(int verbose_p);
 
 /**********************************************************
  * Layer 2
  */
 
 // Entry point to stack. Starts at Layer 2
-int inet_poll_frame(uint8_t socket, int flush_buffer); 
+int inet_poll_frame(int flush_buffer); 
 
-uint16_t inet_write_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, void* data, uint16_t nbytes, uint8_t socket);
-#define inet_write_broadcast_frame(nic, data, nbytes, socket) \
-    inet_write_frame(nic, MAC_BROADCAST, data, nbytes, socket)
+int inet_send_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, const void* data, uint16_t nbytes);
+#define inet_send_broadcast_frame(nic, data, nbytes) \
+    inet_send_frame(nic, MAC_BROADCAST, data, nbytes)
+
+// https://www.rfc-editor.org/rfc/rfc826.html
+int inet_send_arp(const uint8_t* their_hw_addr, const uint8_t* their_ipv4_addr, uint8_t operation);
+
+// TODO: print ARP table
 
 /**********************************************************
  * Layer 3
@@ -61,15 +42,15 @@ uint16_t inet_write_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, void*
 int inet_resolve_ip_address(const uint8_t* ipv4_addr, uint8_t* hw_addr);
 int inet_resolve_hw_address(const uint8_t* hw_addr, uint8_t* ipv4_addr);
 
-uint16_t inet_write_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, const void* data, uint16_t nbytes, uint8_t socket);
-#define inet_write_broadcast_ipv4_packet(nic, ipv4_protocol, data, nbytes, socket) \
-    inet_write_ipv4_packet(nic, IPV4_BROADCAST, ipv4_protocol, MAC_BROADCAST, data, nbytes, socket)
+int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, const void* data, uint16_t nbytes);
+#define inet_send_broadcast_ipv4_packet(nic, ipv4_protocol, data, nbytes) \
+    inet_send_ipv4_packet(nic, IPV4_BROADCAST, ipv4_protocol, MAC_BROADCAST, data, nbytes)
 
 /**********************************************************
  * Layer 3.5 Protocol Handlers
  */
 
-uint16_t inet_send_ping(const uint8_t* dest_ipv4_addr, uint8_t ping_type, const void* data, uint16_t nbytes, uint8_t socket);
+int inet_send_ping(const uint8_t* dest_ipv4_addr, uint8_t ping_type, const void* data, uint16_t nbytes);
 
 /**********************************************************
  * Internal Helpers

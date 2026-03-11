@@ -35,7 +35,7 @@ void notmain(void) {
         // inet_send_ping(IPV4_BROADCAST, message, msg_len, W5500_SOCKET_0);
 
         uint8_t flush_buffer = 1;
-        inet_poll_frame(W5500_SOCKET_0, flush_buffer);
+        inet_poll_frame(flush_buffer);
 
         // delay_ms(10);
 

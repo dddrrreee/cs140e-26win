@@ -5,8 +5,10 @@
 #include <stdint.h>
 #include "net-defs.h"
 
-int inet_read_frame(frame_t* frame, uint16_t* nbytes, uint8_t socket);
+int inet_read_frame(frame_t* frame, uint16_t* nbytes);
 
 int handle_ethertype(frame_t* frame, uint16_t frame_nbytes);
+
+const uint8_t* eth_get_mac();
 
 #endif
