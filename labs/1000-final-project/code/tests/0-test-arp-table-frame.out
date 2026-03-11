@@ -1,0 +1,46 @@
+TRACE:w5500_init:# ----- After reset -----
+TRACE:w5500_init:# ----- After addresses -----
+TRACE:w5500_init:
+TRACE:w5500_init:
+TRACE:w5500_init:Takes about 3 seconds for it to establish a link. Make sure RJ45 is plugged in
+TRACE:w5500_init:Connected!
+TRACE:w5500_init:VERSIONR = 0x4
+TRACE:w5500_init:PHYCFGR  = 0xff
+TRACE:w5500_init:Sn_SR    = 0x42
+TRACE:notmain:Polling for frames...
+TRACE:notmain:ARP entry discovered:
+TRACE:notmain:
+TRACE:ARP Table now!
+TRACE:0.	{1.2.3.0} --> {0:11:22:33:44:0} Valid
+TRACE:1.	{1.2.3.1} --> {0:11:22:33:44:1} Valid
+TRACE:2.	{1.2.3.2} --> {0:11:22:33:44:2} Valid
+TRACE:3.	{1.2.3.3} --> {0:11:22:33:44:3} Valid
+TRACE:4.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:5.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:6.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:7.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:8.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:9.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:10.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:11.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:12.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:13.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:14.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:15.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:16.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:17.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:18.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:19.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:20.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:21.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:22.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:23.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:24.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:25.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:26.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:27.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:28.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:29.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:30.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:31.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:

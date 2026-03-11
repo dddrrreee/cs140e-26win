@@ -38,6 +38,7 @@ int inet_init(w5500_t* nic, int verbose_p) {
  */
 
 int inet_poll_frame(int flush_buffer) {
+    if (_nic == NULL) return INET_NIC_NOT_INITIALIZED;
 
     // Read frame
     uint16_t read_bytes;
@@ -92,8 +93,6 @@ int inet_send_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, const void*
     return INET_SUCCESS;
 }
 
-
-
 /**********************************************************
  * Private Interface
  */
@@ -124,22 +123,16 @@ int handle_ethertype(frame_t* frame, uint16_t frame_nbytes) {
     if (frame->ethertype <= FRAME_IEEE802_3) { return INET_FRAME_802_3; }
     
     // Jump to protocol handler based on ethertype
+    uint16_t frame_data_length = frame_nbytes - FRAME_HEADER_BYTES;
     switch (frame->ethertype) {
 
         case FRAME_IPV4:
-            int err = inet_ipv4_handler(frame->data, frame_nbytes - FRAME_HEADER_BYTES);
-            return err; // Handle in caller
-
+            return inet_ipv4_handler(frame->data, frame_data_length);
         case FRAME_ARP:
-            if (frame_nbytes - FRAME_HEADER_BYTES == ARP_MESSAGE_BYTES) {
-                trace("Invalid ARP Packet length. Read %d. Expected %d",
-                    frame_nbytes - FRAME_HEADER_BYTES, ARP_MESSAGE_BYTES);
-                return INET_ARP_INVALID_MSG_LEN;
-            }
-            inet_arp_handler(frame->data);
-            // not_reached();
-            return INET_FRAME_UNSUPPORTED_ETHERTYPE;
-
+            // ARP message is 46 total bytes (see below) but minimum frame read length sent is 60 bytes (uses padding to get to that)
+            // FRAME_HEADER_BYTES + ARP_MESSAGE_BYTES = 46
+            // Therefore we strip the padding and stick to the protocol
+            return inet_arp_handler(frame->data, ARP_MESSAGE_BYTES);
         default:
             return INET_FRAME_UNSUPPORTED_ETHERTYPE; // Don't handle this protocol
     }

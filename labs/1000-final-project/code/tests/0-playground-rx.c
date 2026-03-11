@@ -46,14 +46,14 @@ void print_protocol(uint16_t protocol) {
     }
 }
 
-int process_packets(const w5500_t* nic, uint8_t* rx_buffer, uint8_t socket) {
+int process_packets(const w5500_t* nic, uint8_t* rx_buffer) {
     
     int err;
 
     // ---------- Get frame ----------
     frame_t frame;
     uint16_t nbytes;
-    err = inet_read_frame(&frame, &nbytes, socket);
+    err = inet_read_frame(&frame, &nbytes);
     if (err != INET_SUCCESS) {
         // trace("Error reading frame: %d\n", err);
         return err;
@@ -61,7 +61,7 @@ int process_packets(const w5500_t* nic, uint8_t* rx_buffer, uint8_t socket) {
     print_ethertype(frame.ethertype);
 
     if (frame.ethertype != FRAME_IPV4) {
-        w5500_fast_flush_rx(nic, socket);
+        w5500_fast_flush_rx(nic);
         return 0;
     }
 
@@ -231,10 +231,10 @@ void notmain(void) {
 
     while(1) {
 
-        inet_send_ping(IPV4_BROADCAST, ICMP_ECHO_MSG, message, msg_len, W5500_SOCKET_0);
+        inet_send_ping(IPV4_BROADCAST, ICMP_ECHO_MSG, message, msg_len);
         // int status = process_packets(&nic, rx_buffer, W5500_SOCKET_0);
         uint8_t flush_buffer = 1;
-        inet_poll_frame(W5500_SOCKET_0, flush_buffer);
+        inet_poll_frame(flush_buffer);
 
         // uint16_t rx_bytes = w5500_rx_available(&nic, W5500_SOCKET_0);
         delay_ms(10);

@@ -1,0 +1,148 @@
+TRACE:Initial ARP Table:
+TRACE:0.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:1.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:2.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:3.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:4.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:5.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:6.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:7.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:8.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:9.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:10.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:11.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:12.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:13.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:14.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:15.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:16.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:17.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:18.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:19.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:20.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:21.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:22.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:23.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:24.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:25.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:26.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:27.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:28.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:29.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:30.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:31.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:
+TRACE:ARP Table after calling 'find_arp_entry()':
+TRACE:0.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:1.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:2.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:3.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:4.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:5.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:6.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:7.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:8.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:9.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:10.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:11.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:12.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:13.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:14.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:15.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:16.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:17.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:18.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:19.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:20.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:21.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:22.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:23.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:24.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:25.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:26.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:27.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:28.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:29.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:30.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:31.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:
+TRACE:arp_add_entry_test:Found at entry 0
+TRACE:arp_add_entry_test:Found at entry 1
+TRACE:arp_add_entry_test:Found at entry 2
+TRACE:arp_add_entry_test:Found at entry 3
+TRACE:ARP Table after calling 'inet_add_arp_entry()':
+TRACE:0.	{1.2.3.0} --> {1:2:3:4:5:0} Valid
+TRACE:1.	{1.2.3.1} --> {1:2:3:4:5:1} Valid
+TRACE:2.	{1.2.3.2} --> {1:2:3:4:5:2} Valid
+TRACE:3.	{1.2.3.3} --> {1:2:3:4:5:3} Valid
+TRACE:4.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:5.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:6.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:7.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:8.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:9.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:10.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:11.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:12.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:13.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:14.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:15.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:16.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:17.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:18.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:19.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:20.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:21.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:22.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:23.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:24.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:25.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:26.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:27.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:28.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:29.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:30.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:31.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:
+TRACE:arp_entry_should_exist_test:Entry 0 Found!
+TRACE:arp_entry_should_exist_test:Entry 0 Found!
+TRACE:arp_entry_should_exist_test:Entry 1 Found!
+TRACE:arp_entry_should_exist_test:Entry 1 Found!
+TRACE:arp_entry_should_exist_test:Entry 2 Found!
+TRACE:arp_entry_should_exist_test:Entry 2 Found!
+TRACE:arp_entry_should_exist_test:Entry 3 Found!
+TRACE:arp_entry_should_exist_test:Entry 3 Found!
+TRACE:ARP Table after calling 'find_arp_entry()' again:
+TRACE:0.	{1.2.3.0} --> {1:2:3:4:5:0} Valid
+TRACE:1.	{1.2.3.1} --> {1:2:3:4:5:1} Valid
+TRACE:2.	{1.2.3.2} --> {1:2:3:4:5:2} Valid
+TRACE:3.	{1.2.3.3} --> {1:2:3:4:5:3} Valid
+TRACE:4.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:5.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:6.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:7.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:8.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:9.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:10.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:11.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:12.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:13.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:14.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:15.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:16.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:17.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:18.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:19.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:20.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:21.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:22.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:23.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:24.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:25.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:26.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:27.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:28.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:29.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:30.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:31.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:

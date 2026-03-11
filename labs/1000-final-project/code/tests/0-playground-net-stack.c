@@ -8,7 +8,7 @@
 
 void notmain(void) { 
 
-    int verbose_p = 0b000; // Layer 3 debug
+    int verbose_p = 0b0000; // Layer 3 debug
 
     w5500_conf_t config = {
         .chip_select = 0,
@@ -35,10 +35,10 @@ void notmain(void) {
         // inet_send_ping(IPV4_BROADCAST, message, msg_len, W5500_SOCKET_0);
 
         // uint8_t flush_buffer = 1;
-        uint8_t flush_buffer = 0;
-        inet_poll_frame(flush_buffer);
+        uint8_t flush_buffer = 1;
+        // inet_poll_frame(flush_buffer);
 
-        // delay_ms(10);
+        delay_ms(10);
 
     }
     
