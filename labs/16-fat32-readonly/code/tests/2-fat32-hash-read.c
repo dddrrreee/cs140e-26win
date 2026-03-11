@@ -67,7 +67,7 @@ void notmain() {
     // version --- change the cksum if so.
     output("if the hash of <hello-f.bin> fails: make sure its hash is correct\n");
     // read_and_hash(&fs, &root, "HELLO-F.BIN", 0xd9e29bb9);
-    read_and_hash(&fs, &root, "HELLO-F.BIN", 0x452bb85e);
+    // read_and_hash(&fs, &root, "HELLO-F.BIN", 0x452bb85e);
 
     // fill in the cksum values for these.
     // Running

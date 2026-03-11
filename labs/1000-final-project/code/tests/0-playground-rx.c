@@ -4,6 +4,7 @@
 #include "../crc-16.h"
 #include "../net-stack/netif/w5500.h"
 #include "../net-stack/inet.h"
+#include "../net-stack/data-link.h"
 
 void print_ethertype(uint16_t ethertype) {
     if (ethertype <= 0x05DC) {
@@ -63,6 +64,21 @@ int process_packets(const w5500_t* nic, uint8_t* rx_buffer, uint8_t socket) {
         w5500_fast_flush_rx(nic, socket);
         return 0;
     }
+
+    //      // Check ethertype and send to respective protocol handler
+    // switch (frame.ethertype) {
+    //     case FRAME_ARP:
+    //         *nbytes = read_bytes - FRAME_HEADER_BYTES;
+    //         panic("ARP not implemented yet!"); // TODO: implement ARP
+    //         not_reached();
+    //     case FRAME_IPV4:
+    //         *nbytes = read_bytes - FRAME_HEADER_BYTES;
+    //         panic("IPV4 not implemented yet!"); // TODO: implement IPV4
+    //         not_reached();
+    //     default:
+    //         memcpy(frame_payload, &frame, read_bytes);
+    //         return INET_FRAME_UNSUPPORTED_ETHERTYPE; // Don't handle this protocol
+    // }
 
     // ---------- IPV4 Packet ----------
 
@@ -192,6 +208,8 @@ int process_packets(const w5500_t* nic, uint8_t* rx_buffer, uint8_t socket) {
 
 void notmain(void) { 
 
+    int verbose_p = 0b100; // Layer 3 debug
+
     w5500_conf_t config = {
         .chip_select = 0,
         .clk_div = 80,
@@ -203,7 +221,8 @@ void notmain(void) {
     };
     w5500_t nic;
     w5500_init(&nic, &config);
-    inet_nic_init(&nic); // 0 IS THE ONE CLOSEST TO IMU
+
+    inet_init(&nic, verbose_p); // 0 IS THE ONE CLOSEST TO IMU
 
     uint8_t rx_buffer[FRAME_MAX_SIZE];
 
@@ -212,11 +231,15 @@ void notmain(void) {
 
     while(1) {
 
-        inet_send_ping(IPV4_BROADCAST, message, msg_len, W5500_SOCKET_0);
-        int status = process_packets(&nic, rx_buffer, W5500_SOCKET_0);
+        inet_send_ping(IPV4_BROADCAST, ICMP_ECHO_MSG, message, msg_len, W5500_SOCKET_0);
+        // int status = process_packets(&nic, rx_buffer, W5500_SOCKET_0);
+        uint8_t flush_buffer = 1;
+        inet_poll_frame(W5500_SOCKET_0, flush_buffer);
 
         // uint16_t rx_bytes = w5500_rx_available(&nic, W5500_SOCKET_0);
         delay_ms(10);
+
+        
         // trace("RX buffer available: %d bytes\n", rx_bytes);
 
     }

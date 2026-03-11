@@ -109,7 +109,10 @@ void notmain() {
     print_bytes("Program bytes", (uint8_t*)f->data, 64);
     print_bytes("Program bytes", (uint8_t*)program_start, 64);
 
-    BRANCHTO(addr + header_size);
+    void(*cursed)(void) = (void (*)(void))(program_start);
+
+    cursed();
+    // BRANCHTO(addr + header_size);
     // fat32_jump_trampoline(program_start);
 
 

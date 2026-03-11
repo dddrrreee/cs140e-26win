@@ -70,7 +70,7 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config);
 
 // void w5500_init_socket(w5500_t* nic, w5500_sock_conf_t* config);
 
-void w5500_socket_command(w5500_t* nic, uint8_t socket, uint8_t command);
+// void w5500_socket_command(w5500_t* nic, uint8_t socket, uint8_t command);
 
 /**********************************************************
  * Things

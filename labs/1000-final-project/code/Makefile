@@ -1,10 +1,18 @@
-COMMON_SRC += net-stack/netif/w5500.c net-stack/frame.c
+COMMON_SRC += net-stack/netif/w5500.c 
 
-# PROGS += tests/playground-nrf.c
-# PROGS += tests/playground-w5500.c
-# PROGS += tests/playground-driver.c
-# PROGS += tests/playground-frame-testing.c
-PROGS += tests/playground-rx.c
+# Layer 2
+COMMON_SRC += net-stack/data-link.c 
+
+# Layer 3
+COMMON_SRC += net-stack/network.c 
+COMMON_SRC += net-stack/icmp.c
+
+# PROGS += tests/0-playground-nrf.c
+# PROGS += tests/0-playground-w5500.c
+# PROGS += tests/0-playground-driver.c
+# PROGS += tests/0-playground-frame-testing.c
+# PROGS += tests/0-playground-rx.c
+PROGS += tests/0-playground-net-stack.c
 
 # next week you'll get rid of all of these
 O = $(CS140E_2026_PATH)/libpi

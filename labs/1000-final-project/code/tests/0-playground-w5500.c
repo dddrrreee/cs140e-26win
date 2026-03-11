@@ -1,6 +1,7 @@
 #include "rpi.h"
 #include "spi.h"
 #include "../w5500-defs.h"
+
 typedef struct {
     spi_t spi;
     uint32_t cs;

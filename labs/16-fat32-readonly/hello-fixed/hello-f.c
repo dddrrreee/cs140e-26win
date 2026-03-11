@@ -27,6 +27,10 @@ void notmain(void) {
     // <_start> is defined in <loader-start.S>
     extern uint32_t _start[];
 	printk("TRACE: hello world from address %p\n", (void*)_start);
+
+    // uint32_t lr;
+    // asm volatile ("mov %0, lr" : "=r" (lr));
+    // printk("LR: %x\n", lr);
 	return;
 
 	// NB: this is supposed to be a thread_exit().  calling reboot will

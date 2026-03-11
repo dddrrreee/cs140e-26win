@@ -138,10 +138,11 @@ uint16_t w5500_write_tx_bytes(const w5500_t* nic, const void* buffer, uint32_t n
     // ---------- Get TX buffer pointer ---------- 
     w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_TX_WR0, ptr_buf, 2);
     tx_ptr = (ptr_buf[0] << 8) | ptr_buf[1];
-
+    
     // TODO: implement buffer length checking. Default value of 2KB for TX buffer size
-
+    
     // ---------- Advance TX buffer pointer ---------- 
+    // TODO: wrap / mod
     tx_ptr += nbytes;
     ptr_buf[0] = tx_ptr >> 8;
     ptr_buf[1] = tx_ptr & 0xFF;
@@ -220,6 +221,8 @@ uint16_t w5500_read_rx_bytes(const w5500_t* nic, void* buffer, uint8_t socket) {
     uint16_t raw_len = w5500_read_length_header(nic, socket, &rx_ptr);
     uint16_t data_len = raw_len - 2;  // Subtract header size
 
+    // Simple frame size checking
+    // should this be in here or in inet_frame_handler?
     if (data_len > FRAME_MAX_SIZE) {
         // Ignore oversized frame by skipping it
         w5500_advance_rx_pointer(nic, socket, &rx_ptr, data_len);

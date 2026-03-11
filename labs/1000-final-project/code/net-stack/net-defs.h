@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-const static uint8_t ETH_BROADCAST[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; // FF:FF:FF:FF:FF:FF
+const static uint8_t MAC_BROADCAST[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; // FF:FF:FF:FF:FF:FF
 const static uint8_t IPV4_BROADCAST[4] = {255, 255, 255, 255}; // 255.255.255.255
 
 /* ---------- Length Constants ---------- */
@@ -24,7 +24,8 @@ enum {
 };
 
 /* ---------- Frame types  ---------- */
-enum { // https://www.iana.org/assignments/ieee-802-numbers/ieee-802-numbers.xhtml
+enum { //  https://www.cavebear.com/archive/cavebear/Ethernet/type.html
+    FRAME_IEEE802_3                         = 0x05DC, // Not handled. If length field is <= this value, it is a IEEE 802.3 frame
     FRAME_IPV4                              = 0x0800,
     FRAME_ARP                               = 0x0806,
     FRAME_IPV6                              = 0x86DD,
