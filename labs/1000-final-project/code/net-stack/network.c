@@ -16,8 +16,6 @@ IP layer and all the packet handling logic
 
 #include "icmp.h"
 
-static uint8_t _ipv4_addr[4]; // At this layer
-
 static ipv4_t _ipv4_rx; // IPv4 buffer. will do one for each protocol perhaps
 
 static int _verbose_p = 0;
@@ -32,8 +30,6 @@ int inet_layer3_init(int verbose_p) {
     
     return INET_SUCCESS;
 }
-
-const uint8_t* ipv4_get_addr() { return _ipv4_addr; }
 
 /**********************************************************
  * Public interface
@@ -54,7 +50,7 @@ int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, 
     packet.ttl = IPV4_DEFAULT_TTL;
     packet.protocol = ipv4_protocol;
     packet.checksum = 0; // Checksum to be filled later but must be 0 for now
-    memcpy(packet.src_ipv4_address, _ipv4_addr, IPV4_ADDR_LENGTH);
+    memcpy(packet.src_ipv4_address, inet_get_ipv4_addr(), IPV4_ADDR_LENGTH);
     memcpy(packet.dest_ip_address, dest_ipv4_addr, IPV4_ADDR_LENGTH);
     memcpy(packet.data, data, nbytes);
 
@@ -75,15 +71,6 @@ int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, 
     
     // ---------- Make frame (Layer 2)! ---------- 
     return inet_send_frame(dest_hw_addr, FRAME_IPV4, &packet, packet_length);
-}
-
-int inet_resolve_ip_address(const uint8_t* ipv4_addr, uint8_t* hw_addr) {
-    memcpy(hw_addr, IPV4_BROADCAST, IPV4_ADDR_LENGTH); // TODO: ONCE ARP IS DONE
-    return INET_SUCCESS;
-}
-int inet_resolve_hw_address(const uint8_t* hw_addr, uint8_t* ipv4_addr) {
-    memcpy(ipv4_addr, MAC_BROADCAST, MAC_ADDR_LENGTH); // TODO: ONCE ARP IS DONE
-    return INET_SUCCESS;
 }
 
 /**********************************************************

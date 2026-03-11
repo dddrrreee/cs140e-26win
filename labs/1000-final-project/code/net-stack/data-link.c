@@ -26,6 +26,7 @@ int inet_init(w5500_t* nic, int verbose_p) {
     _verbose_p = (verbose_p >> 2) & 1;
     // Layer 2
     _nic = nic;
+    inet_clear_arp_table();
 
     // Layer 3
     int err = inet_layer3_init(verbose_p);
@@ -130,7 +131,12 @@ int handle_ethertype(frame_t* frame, uint16_t frame_nbytes) {
             return err; // Handle in caller
 
         case FRAME_ARP:
-            inet_arp_handler(frame->data, frame_nbytes - FRAME_HEADER_BYTES);
+            if (frame_nbytes - FRAME_HEADER_BYTES == ARP_MESSAGE_BYTES) {
+                trace("Invalid ARP Packet length. Read %d. Expected %d",
+                    frame_nbytes - FRAME_HEADER_BYTES, ARP_MESSAGE_BYTES);
+                return INET_ARP_INVALID_MSG_LEN;
+            }
+            inet_arp_handler(frame->data);
             // not_reached();
             return INET_FRAME_UNSUPPORTED_ETHERTYPE;
 

@@ -5,8 +5,6 @@
 #include <stdint.h>
 #include "inet.h"
 
-const uint8_t* ipv4_get_addr();
-
 int ipv4_check_header(const ipv4_t* packet, uint16_t header_bytes);
 
 // [Reference](https://datatracker.ietf.org/doc/html/rfc9542 ) according to [this site](https://www.iana.org/assignments/ieee-802-numbers/ieee-802-numbers.xhtml)

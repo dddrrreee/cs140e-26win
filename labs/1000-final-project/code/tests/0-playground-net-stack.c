@@ -12,7 +12,7 @@ void notmain(void) {
 
     w5500_conf_t config = {
         .chip_select = 0,
-        .clk_div = 80,
+        .clk_div = 16,
         .hw_addr = {0x76, 0x67, 0x67, 0x67, 0x67, 0x67},
         .ipv4_addr = {192, 168, 0, 3},
         .gateway_addr = {192, 168, 0, 1},
@@ -34,7 +34,8 @@ void notmain(void) {
         // uint8_t ip[4] = {1,1,1,1};
         // inet_send_ping(IPV4_BROADCAST, message, msg_len, W5500_SOCKET_0);
 
-        uint8_t flush_buffer = 1;
+        // uint8_t flush_buffer = 1;
+        uint8_t flush_buffer = 0;
         inet_poll_frame(flush_buffer);
 
         // delay_ms(10);

@@ -33,6 +33,11 @@ int inet_send_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, const void*
 // https://www.rfc-editor.org/rfc/rfc826.html
 int inet_send_arp(const uint8_t* their_hw_addr, const uint8_t* their_ipv4_addr, uint8_t operation);
 
+// If INET_SUCCESS (table not filled), `table_index` is set to index of ip_addr (key)
+// int inet_find_arp_entry(const uint8_t* ipv4_addr, const uint8_t* hw_addr, uint32_t* table_index);
+
+int inet_invalidate_arp_entry(const uint8_t* ipv4_addr);
+void inet_clear_arp_table();
 // TODO: print ARP table
 
 /**********************************************************

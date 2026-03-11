@@ -18,7 +18,11 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
     volatile uint8_t val;
 
     
-    // TODO: look in BCM2835 datasheet p. 156 for cluck div
+    // TODO: look in BCM2835 datasheet p. 156 for clock div
+    // "SCLK = Core Clock / CDIV
+    // If CDIV is set to 0, the divisor is 65536. The
+    // divisor must be a power of 2. Odd numbers
+    // rounded down. "
     assert(config->chip_select == 0 || config->chip_select == 1);
     nic->spi = spi_n_init(config->chip_select, config->clk_div);
     assert(nic->spi.chip == config->chip_select);

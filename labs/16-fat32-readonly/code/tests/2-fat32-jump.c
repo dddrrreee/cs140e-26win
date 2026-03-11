@@ -7,6 +7,8 @@
 
 #include "asm-helpers.h"
 
+typedef void (*cursed_type)(void);
+
 extern void fat32_jump_trampoline(uint32_t addr);
 
 void notmain() {
@@ -72,12 +74,13 @@ void notmain() {
     // magic cookie at offset 0.
     assert(p[0] == 0x12345678);
 
+   
+    uint32_t header_size = p[1];
+    assert(header_size == 0x10);
+
     // address to copy at is at offset 2
     uint32_t addr = p[2];
     assert(addr == 0x9000000);
-    
-    uint32_t header_size = p[1];
-    assert(header_size == 0x10);
 
     uint32_t program_start = addr + header_size;
 
@@ -109,9 +112,10 @@ void notmain() {
     print_bytes("Program bytes", (uint8_t*)f->data, 64);
     print_bytes("Program bytes", (uint8_t*)program_start, 64);
 
-    void(*cursed)(void) = (void (*)(void))(program_start);
+    // void(*cursed)(void) = (void (*)(void))(program_start);
+    cursed_type c = (cursed_type)program_start;
 
-    cursed();
+    c();
     // BRANCHTO(addr + header_size);
     // fat32_jump_trampoline(program_start);
 

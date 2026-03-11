@@ -15,8 +15,9 @@ const static uint8_t IPV4_BROADCAST[4] = {255, 255, 255, 255}; // 255.255.255.25
 enum {
     INET_SUCCESS = 0,
     INET_ERROR = -1,
+    INET_NOT_IMPLEMENTED = -2,
 
-    INET_WRITE_FRAME_ERROR = -2,
+    INET_WRITE_FRAME_ERROR = -4,
 
 
 
@@ -36,6 +37,10 @@ enum {
     INET_ARP_INVALID_MAC_LEN = -22,
     INET_ARP_INVALID_OP = -23,
     INET_ARP_NOT_FOR_US = -24,
+    INET_ARP_INVALID_MSG_LEN = -25,
+    INET_ARP_NO_TABLE_ENTRY = -26,
+    INET_ARP_FOUND_BUT_INVALID = -26,
+    INET_ARP_TABLE_FULL = -26,
 
     // IPV4
     INET_IPV4_UNSUPPORTED_VERS = -50,
@@ -64,6 +69,7 @@ enum {
 
     // ARP
     ARP_MESSAGE_BYTES = 28,
+    ARP_TABLE_SIZE = 32,
 
     // IPV4
     IPV4_MAX_SIZE = FRAME_MAX_PAYLOAD_SIZE,
@@ -97,7 +103,7 @@ enum { //  https://www.cavebear.com/archive/cavebear/Ethernet/type.html
 //*******************************************************************************************************************
 
 enum { // https://www.rfc-editor.org/rfc/rfc826.html
-    ARP_HTYPE_ETHERNET = 1, // ares_hrd$Ethernet (= 1).
+    ARP_HTYPE_ETHERNET = 1,
     ARP_REQUEST = 1,
     ARP_REPLY = 2,
 };
@@ -195,14 +201,17 @@ typedef struct { // https://www.rfc-editor.org/rfc/rfc826.html
 } arp_packet_t;
 _Static_assert(sizeof(arp_packet_t) == 28, "arp_packet_t size wrong");
 
-
 typedef struct {
-    uint8_t ip_addr[4]; // 4-byte IP address
-    uint8_t hw_address[6];    // 6-byte MAC address
-    uint8_t is_static;            // true if static, false if dynamic
+    uint8_t ip_addr[4];    // 4-byte IP address (mapped key)
+    uint8_t hw_addr[6];    // 6-byte MAC address (mapped value)
+    uint8_t valid;
+    // uint16_t valid:1,       
+    //          dynamic:1,     // Dynamic or static
+    //          timeout_s:14;  // IF dynamic
+    // uint16_t epoch;         // IF dynamic
     // Other fields like timestamp for aging out dynamic entries could be added here
 } arp_table_entry_t;
-_Static_assert(sizeof(arp_table_entry_t) == 11, "arp_entry_t size wrong");
+_Static_assert(sizeof(arp_table_entry_t) == 11, "arp_table_t size wrong");
 
 
 #endif
