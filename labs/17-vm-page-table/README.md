@@ -4,23 +4,6 @@
   <img src="images/pi-vm.jpg" width="650" />
 </p>
 
------------------------------------------------------------------------
-## tl;dr: clarifications and errata
-
-Clarifications:
-  - Compare the tests for the coherence lab (15) with the tests
-    in the code directory: the only difference between them is
-    the use of page tables versus pinned, so you can see the
-    exact semantics and example usage.
-
-  - Part 1: when you're done and removing staff code,
-    replace `3-test-cache.c:staff_sync_tlb()` with
-    a call to your `mmu_sync_pte_mods()` --- all the test
-    is trying to do is to verify that 
-    TLB misses occur after invalidating the TLB.
-
------------------------------------------------------------------------
-
 We've done trivial virtual memory system without page tables by pinning
 entries in the TLB.  This approach lets us map a reasonable amount of
 memory (16MB * 8 = 128MB) without much complexity.  If you can get away
