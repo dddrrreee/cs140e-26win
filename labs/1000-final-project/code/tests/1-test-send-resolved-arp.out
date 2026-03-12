@@ -1,0 +1,64 @@
+TRACE:w5500_init:# ----- After reset -----
+TRACE:w5500_init:# ----- After addresses -----
+TRACE:w5500_init:
+TRACE:w5500_init:
+TRACE:w5500_init:Takes about 3 seconds for it to establish a link. Make sure RJ45 is plugged in
+TRACE:w5500_init:Connected!
+TRACE:w5500_init:VERSIONR = 0x4
+TRACE:w5500_init:PHYCFGR  = 0xff
+TRACE:w5500_init:Sn_SR    = 0x42
+TRACE:inet_init:Data link sending frame verbosity enabled
+TRACE:arp_init:ARP verbosity enabled
+TRACE:arp_init:ARP table initalized (cleared)
+TRACE:icmp_init:ICMP layer verbosity enabled
+TRACE:notmain:Polling for frames...
+TRACE:inet_icmp_handler:ICMP packet received from 1.2.3.4, type=8, bytes=29
+TRACE:inet_icmp_handler:Sending ping ECHO reply to {1.2.3.4}
+TRACE:inet_send_ping:Sending ping of type 0 and length 23 to {1.2.3.4}
+TRACE:inet_send_frame:Sending frame, ethertype 0x800, dest MAC {ff:ff:ff:ff:ff:ff}, length 57
+TRACE:inet_arp_handler:Received ARP packet of 28 bytes
+TRACE:inet_add_arp_entry:ARP table updated: {1.2.3.4} -> {82:a4:9f:79:21:4e}
+TRACE:inet_send_arp:Sending ARP reply to {1.2.3.4}
+TRACE:inet_send_frame:Sending frame, ethertype 0x806, dest MAC {82:a4:9f:79:21:4e}, length 42
+TRACE:notmain:ARP entry discovered:
+TRACE:ARP Table now!
+TRACE:0.	{1.2.3.4} --> {82:a4:9f:79:21:4e} Valid
+TRACE:1.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:2.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:3.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:4.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:5.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:6.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:7.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:8.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:9.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:10.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:11.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:12.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:13.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:14.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:15.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:16.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:17.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:18.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:19.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:20.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:21.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:22.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:23.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:24.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:25.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:26.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:27.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:28.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:29.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:30.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:31.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
+TRACE:
+TRACE:inet_send_ping:Sending ping of type 8 and length 11 to {1.2.3.4}
+TRACE:inet_send_frame:Sending frame, ethertype 0x800, dest MAC {82:a4:9f:79:21:4e}, length 45
+TRACE:inet_icmp_handler:ICMP packet received from 1.2.3.4, type=8, bytes=29
+TRACE:inet_icmp_handler:Sending ping ECHO reply to {1.2.3.4}
+TRACE:inet_send_ping:Sending ping of type 0 and length 23 to {1.2.3.4}
+TRACE:inet_send_frame:Sending frame, ethertype 0x800, dest MAC {82:a4:9f:79:21:4e}, length 57
+TRACE:notmain:Return code: 60

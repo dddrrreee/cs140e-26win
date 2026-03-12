@@ -90,10 +90,11 @@ int inet_poll_frame(int flush_buffer) {
     int is_for_us = (memcmp(_frame_rx.dest_hw_addr, _nic->hw_addr, MAC_ADDR_LENGTH) == 0);
 
     if (!(is_multicast || is_for_us)) {
-        trace("Frame not for us but for {%X:%X:%X:%X:%X:%X}\n",
-            _frame_rx.dest_hw_addr[0], _frame_rx.dest_hw_addr[1],
-            _frame_rx.dest_hw_addr[2], _frame_rx.dest_hw_addr[3],
-            _frame_rx.dest_hw_addr[4], _frame_rx.dest_hw_addr[5]);
+        if (_verbose_p)
+            trace("Frame not for us but for {%X:%X:%X:%X:%X:%X}\n",
+                _frame_rx.dest_hw_addr[0], _frame_rx.dest_hw_addr[1],
+                _frame_rx.dest_hw_addr[2], _frame_rx.dest_hw_addr[3],
+                _frame_rx.dest_hw_addr[4], _frame_rx.dest_hw_addr[5]);
         return INET_MAC_NOT_FOR_US;  // Not addressed to us
     }
 
