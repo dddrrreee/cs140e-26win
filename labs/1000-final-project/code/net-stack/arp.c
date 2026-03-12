@@ -3,16 +3,24 @@
 #include "arp.h"
 
 #include "data-link.h" // For setting mac
-#include "network.h" // For setting ip
+#include "ipv4.h" // For setting ip
 
 #include "../print-utilities.h"
 #include "../endian.h"
 
 static arp_table_entry_t _arp_table[ARP_TABLE_SIZE];
 
-static int verbose_p = 0;
+static int _verbose_p = 0;
 
-void arp_set_verbose_p(int verbose) {verbose_p = verbose;}
+void arp_init(const verbose_t* verbosity) {
+    if (verbosity->arp || verbosity->all) {
+        _verbose_p = 1;
+        trace("ARP verbosity enabled\n");
+    }
+
+    inet_clear_arp_table();
+    trace("ARP table initalized (cleared)\n");
+}
 
 /**********************************************************
  * Public interface
@@ -78,8 +86,13 @@ int inet_add_arp_entry(const uint8_t* their_ipv4_addr, const uint8_t* their_hw_a
             memcpy(_arp_table[idx].hw_addr, their_hw_addr, MAC_ADDR_LENGTH);
             memcpy(_arp_table[idx].ip_addr, their_ipv4_addr, IPV4_ADDR_LENGTH);
             _arp_table[idx].valid = 1;
-            if (verbose_p)
-                trace_arp_table("Arp table now");
+
+            trace("ARP table updated: {%d.%d.%d.%d} -> {%X:%X:%X:%X:%X:%X}\n",
+                their_ipv4_addr[0], their_ipv4_addr[1],
+                their_ipv4_addr[2], their_ipv4_addr[3],
+                their_hw_addr[0], their_hw_addr[1], their_hw_addr[2],
+                their_hw_addr[3], their_hw_addr[4], their_hw_addr[5]);
+                
             return INET_SUCCESS;
 
         case INET_ARP_FOUND_BUT_INVALID:
@@ -100,6 +113,7 @@ int inet_resolve_ip_address(const uint8_t* ipv4_addr, uint8_t* hw_addr) { // TOD
     
     return err;
 }
+
 int inet_resolve_hw_address(const uint8_t* hw_addr, uint8_t* ipv4_addr) { // TODO
     uint32_t entry_index;
     int err = find_arp_entry_by_mac(hw_addr, &entry_index);
@@ -118,6 +132,9 @@ int inet_resolve_hw_address(const uint8_t* hw_addr, uint8_t* ipv4_addr) { // TOD
 
 int inet_arp_handler(const uint8_t* data, uint16_t nbytes) {
 
+    if (_verbose_p)
+        trace("Received ARP packet of %d bytes\n", nbytes);
+
     // Check length of message
     if (nbytes != ARP_MESSAGE_BYTES) {
         trace("Invalid ARP message length. Read %d. Expected %d\n",
@@ -132,46 +149,57 @@ int inet_arp_handler(const uint8_t* data, uint16_t nbytes) {
     swapEndian16(&arp->hardware_type);
     swapEndian16(&arp->protocol_type);
     swapEndian16(&arp->operation);
-            
-    if (verbose_p)
-        trace("GOT ARP\n");
+    
+
+
 
     // ---------- 2. Check packet ----------
 
     // Physical, RJ45 ethernet
-    if (arp->hardware_type != ARP_HTYPE_ETHERNET) {return INET_ARP_BAD_HTYPE; }
-    if (arp->hardware_len != MAC_ADDR_LENGTH) { return INET_ARP_INVALID_MAC_LEN; }
-
+    if (arp->hardware_type != ARP_HTYPE_ETHERNET) { 
+        trace("Invalid ARP hardware type %x\n", arp->hardware_type);
+        return INET_ARP_BAD_HTYPE; 
+    }
+    if (arp->hardware_len != MAC_ADDR_LENGTH) { 
+        trace("Invalid ARP hardware length %d\n", arp->hardware_len);
+        return INET_ARP_INVALID_MAC_LEN; 
+    }
+    
+    
     // IPV4 addresses
-    if (arp->protocol_type != FRAME_IPV4) { return INET_ARP_BAD_HTYPE; }
-    if (arp->protocol_len != IPV4_ADDR_LENGTH) { return INET_ARP_INVALID_IP_LEN; }
-
-    // print_bytes("ARP PACKET:", (void*)data, ARP_MESSAGE_BYTES);
-    // print_as_string("ARP PACKET:", (void*)data, ARP_MESSAGE_BYTES);
+    if (arp->protocol_type != FRAME_IPV4) { 
+        trace("Invalid ARP protocol type %x\n", arp->protocol_type);
+        return INET_ARP_BAD_HTYPE; 
+    }
+    if (arp->protocol_len != IPV4_ADDR_LENGTH) { 
+        trace("Invalid ARP protocol length %d\n", arp->protocol_len);
+        return INET_ARP_INVALID_IP_LEN; 
+    }
+    
 
     // ---------- 3. Logic ----------
 
     // "?Am I the target protocol address?" -rfc
     if (memcmp(arp->dest_ipv4_addr, inet_get_ipv4_addr(), IPV4_ADDR_LENGTH) != 0) {
+        if (_verbose_p)
+            trace("ARP packet not for us, but for {%d.%d.%d.%d}\n",
+                arp->dest_ipv4_addr[0], arp->dest_ipv4_addr[1], arp->dest_ipv4_addr[2], arp->dest_ipv4_addr[3]);
         return INET_ARP_NOT_FOR_US;
     }
 
     // ---------- 4. Add to table ----------
     // "add <protocol type, sender protocol address, sender hardware address> to the translation table" -rfc
-    inet_add_arp_entry(arp->src_ipv4_addr, arp->src_hw_addr); 
+    inet_add_arp_entry(arp->src_ipv4_addr, arp->src_hw_addr);  // Adds no matter what (not sure if I should trace or not)
 
     // ?Is the opcode ares_op$REQUEST? -rfc
     switch (arp->operation) {
         case ARP_REQUEST:
-            if (verbose_p)
-                trace("Received ARP request from %d.%d.%d.%d\n",
-                    arp->src_ipv4_addr[0],
-                    arp->src_ipv4_addr[1],
-                    arp->src_ipv4_addr[2],
-                    arp->src_ipv4_addr[3]);
             return inet_send_arp(arp->src_hw_addr, arp->src_ipv4_addr, ARP_REPLY);
             
         case ARP_REPLY: // Do nothing
+            if (_verbose_p)
+                trace("ARP from {%d.%d.%d.%d} is reply. Doing nothing now\n",
+                    arp->src_ipv4_addr[0], arp->src_ipv4_addr[1], arp->src_ipv4_addr[2], arp->src_ipv4_addr[3]);
             return INET_SUCCESS;
 
         default:
@@ -183,7 +211,8 @@ int inet_arp_handler(const uint8_t* data, uint16_t nbytes) {
 int inet_send_arp(const uint8_t* their_hw_addr, const uint8_t* their_ipv4_addr, uint8_t operation) {
 
     if (operation != ARP_REPLY && operation != ARP_REQUEST) {
-        trace("Invalid ARP operation (%x)\n", operation);
+        if (_verbose_p)
+            trace("Invalid ARP operation (%x)\n", operation);
         return INET_ARP_INVALID_OP;
     }
 
@@ -205,7 +234,8 @@ int inet_send_arp(const uint8_t* their_hw_addr, const uint8_t* their_ipv4_addr, 
     swapEndian16(&arp.protocol_type);
     swapEndian16(&arp.operation);
 
-    return INET_SUCCESS;
+    trace("Sending ARP reply to {%d.%d.%d.%d}\n",
+        their_ipv4_addr[0], their_ipv4_addr[1], their_ipv4_addr[2], their_ipv4_addr[3]);
 
     return inet_send_frame(their_hw_addr, FRAME_ARP, &arp, ARP_MESSAGE_BYTES);
 }

@@ -8,7 +8,7 @@
 // TODO: make more fields and invalidate, etc.
 
 
-void arp_set_verbose_p(int verbose);
+void arp_init(const verbose_t* verbosity);
 
 // https://www.rfc-editor.org/rfc/rfc826.html
 int inet_arp_handler(const uint8_t* data, uint16_t nbytes);

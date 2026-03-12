@@ -16,9 +16,8 @@ typedef struct w5500 w5500_t;   // forward declaration
  * Setup
  */
 
-int inet_init(w5500_t* nic, int verbose_p);
-int inet_layer3_init(int verbose_p);
-
+int inet_init(w5500_t* nic, const verbose_t* verbosity); // This is in DATA-LINK.C
+verbose_t inet_verbosity_init();
 /**********************************************************
  * Layer 2
  */

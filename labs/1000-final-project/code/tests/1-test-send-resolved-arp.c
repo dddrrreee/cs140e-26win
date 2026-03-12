@@ -4,39 +4,35 @@
 #include "spi.h"
 #include "../net-stack/inet.h"
 #include "../net-stack/arp.h"
+#include "test-setup.h"
 
-uint8_t target_ip[4] = {1,2,3,3};
-uint8_t hw_addr[6] = {0,0,0,0,0,0};
+uint8_t PYTHON_SCRIPT_IP[4] = {1,2,3,4};
+uint8_t PYTHON_SCRIPT_MAC[6] = {0x00,0x11,0x22,0x33,0x44,0x55};
 
 void notmain(void) { 
 
-    w5500_conf_t config = {
-        .chip_select = 0,
-        .clk_div = 80,
-        .hw_addr = {0x76, 0x67, 0x67, 0x67, 0x67, 0x67},
-        .ipv4_addr = {192, 168, 0, 3},
-        .gateway_addr = {192, 168, 0, 1},
-        .subnet_mask = {255, 255, 255, 0},
-        .phy_mode = W5500_ALL_CAPABLE_AUTO_NEG_EN,
-    };
+    w5500_conf_t config = get_test_w5500_config();
     w5500_t nic;
-    
+
     w5500_init(&nic, &config);
+
+    // verbose_t v = inet_verbosity_init();
+    // v.all = 1;
     inet_init(&nic, 0);
 
     uint32_t entry_index = ARP_TABLE_SIZE;
     trace("Polling for frames...\n");
 
+    uint8_t mac_buf[6];
+
     while(1) {
 
         inet_poll_frame(1);
 
-        int err = inet_resolve_ip_address(target_ip, hw_addr);
+        int err = inet_resolve_ip_address(PYTHON_SCRIPT_IP, mac_buf);
 
         if (err == INET_SUCCESS) {
-            trace("ARP entry discovered:\n");
-            print_arp_entry(target_ip, hw_addr, 1);
-            trace("\n");
+
             break;
         }
 
@@ -46,6 +42,21 @@ void notmain(void) {
         delay_ms(10);
     }
 
+    // Correct IP was added to table
+    trace("ARP entry discovered:\n");
     trace_arp_table("ARP Table now!");
 
+    // Resolves to correct MAC address
+    if (memcmp(mac_buf, PYTHON_SCRIPT_MAC, MAC_ADDR_LENGTH) != 0 ) {
+        trace("IP address was found in table but not resolved to correct MAC\n");
+        panic("Expected: {0x%X:0x%X:0x%X:0x%X:0x%X:0x%X}",
+            mac_buf[0], mac_buf[1], mac_buf[2], mac_buf[3], mac_buf[4], mac_buf[5]);
+    }
+
+    // Sending packet back to that ip ()
+    const char* r = "Ping response from 1-test-send-resolved-arp.c";
+    inet_send_ping(PYTHON_SCRIPT_IP, ICMP_ECHO_MSG, r, strlen(r));
+
+
+    // TODO: finish the verbose pinging 
 }

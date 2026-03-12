@@ -1,9 +1,5 @@
 /*
-LAYER 3: Packet handling! 
-
-IP layer and all the packet handling logic
-- ARP and IPv4
-
+LAYER 3: IPV4
 */ 
 
 #include "inet.h"
@@ -12,7 +8,7 @@ IP layer and all the packet handling logic
 #include "../crc-16.h"
 #include "../print-utilities.h"
 
-#include "network.h"
+#include "ipv4.h"
 
 #include "icmp.h"
 
@@ -24,11 +20,11 @@ static int _verbose_p = 0;
  * Setup
  */
 
-int inet_layer3_init(int verbose_p) {
-
-    _verbose_p = (verbose_p >> 3) & 1;
-    
-    return INET_SUCCESS;
+void ipv4_init(const verbose_t* verbosity) {
+    if (verbosity->network || verbosity->all) {
+        _verbose_p = 1;
+        trace("Network layer verbosity enabled\n");
+    }
 }
 
 /**********************************************************
@@ -74,51 +70,6 @@ int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, 
     return inet_send_frame(dest_hw_addr, FRAME_IPV4, &packet, packet_length);
 }
 
-/**********************************************************
- * Private interface
- */
-
-int ipv4_check_header(const ipv4_t* packet, uint16_t header_bytes) {
-
-    // Make sure it is IPV4!!!!!
-    if (packet->version != IPV4_VERS_4) {
-        return INET_NOT_IPV4;
-    }
-
-    if (packet->header_length_words != IPV4_PACKET_HEADER_WORDS) {
-        trace("INET_IPV4_UNSUPPORTED_HEADER_LEN: %d, expected %d\n", packet->header_length_words, IPV4_PACKET_HEADER_WORDS);
-        return INET_IPV4_UNSUPPORTED_HEADER_LEN;
-    }
-
-    if (header_bytes < ICMP_HEADER_BYTES || header_bytes > IPV4_MAX_SIZE) {
-        trace("Invalid IPv4 length: total=%u header_len=%u max=%u\n",
-            header_bytes, ICMP_HEADER_BYTES, IPV4_MAX_SIZE);
-        return INET_ERROR;
-    }
-
-    return INET_SUCCESS;
-}
-
-
-// https://datatracker.ietf.org/doc/html/rfc1340
-// https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml
-int ipv4_protocol_handler(const ipv4_t* packet, uint16_t packet_bytes)  {
-    int err;
-    uint8_t protocol = packet->protocol;
-
-    switch(protocol) {
-        case PROTOCOL_ICMP:
-            err = inet_icmp_handler(packet->data, packet->src_ipv4_address, packet_bytes - IPV4_PACKET_HEADER_BYTES);
-            return err;
-        default:
-            return INET_IPV4_UNSUPPORTED_PROTOCOL;
-    }
-
-    
-    trace("IPv4 Not Handled quite yet\n");
-    return INET_SUCCESS;
-}
-
 int inet_ipv4_handler(const uint8_t* data, uint16_t packet_bytes) {
     int err;
     memcpy(&_ipv4_rx, data, packet_bytes);
@@ -150,6 +101,51 @@ int inet_ipv4_handler(const uint8_t* data, uint16_t packet_bytes) {
     return ipv4_protocol_handler(&_ipv4_rx, packet_bytes);
 }
 
+
 /**********************************************************
- * Write!
+ * Helpers for ipv4
  */
+
+int ipv4_check_header(const ipv4_t* packet, uint16_t header_bytes) {
+
+    // Make sure it is IPV4!!!!!
+    if (packet->version != IPV4_VERS_4) {
+        return INET_NOT_IPV4;
+    }
+
+    if (packet->header_length_words != IPV4_PACKET_HEADER_WORDS) {
+        if (_verbose_p)
+            trace("INET_IPV4_UNSUPPORTED_HEADER_LEN: %d, expected %d\n", packet->header_length_words, IPV4_PACKET_HEADER_WORDS);
+        return INET_IPV4_UNSUPPORTED_HEADER_LEN;
+    }
+
+    if (header_bytes < ICMP_HEADER_BYTES || header_bytes > IPV4_MAX_SIZE) {
+        if (_verbose_p)
+            trace("Invalid IPv4 length: total=%u header_len=%u max=%u\n",
+            header_bytes, ICMP_HEADER_BYTES, IPV4_MAX_SIZE);
+        return INET_ERROR;
+    }
+
+    return INET_SUCCESS;
+}
+
+
+// https://datatracker.ietf.org/doc/html/rfc1340
+// https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml
+int ipv4_protocol_handler(const ipv4_t* packet, uint16_t packet_bytes)  {
+    int err;
+    uint8_t protocol = packet->protocol;
+
+    switch(protocol) {
+        case PROTOCOL_ICMP:
+            err = inet_icmp_handler(packet->data, packet->src_ipv4_address, packet_bytes - IPV4_PACKET_HEADER_BYTES);
+            return err;
+        default:
+            return INET_IPV4_UNSUPPORTED_PROTOCOL;
+    }
+
+    if (_verbose_p)
+        trace("IPv4 Not Handled quite yet\n");
+    return INET_SUCCESS;
+}
+

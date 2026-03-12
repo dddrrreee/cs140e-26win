@@ -213,5 +213,20 @@ typedef struct {
 } arp_table_entry_t;
 _Static_assert(sizeof(arp_table_entry_t) == 11, "arp_table_t size wrong");
 
+//*******************************************************************************************************************
+//                          Verbosity
+//*******************************************************************************************************************
+
+typedef struct {
+    uint32_t    all:1,
+                data_link_FULL_FRAME:1,
+                data_link:1,
+                arp:1,
+                network:1,
+                icmp:1,
+                unused:28;
+} verbose_t;
+
+
 
 #endif

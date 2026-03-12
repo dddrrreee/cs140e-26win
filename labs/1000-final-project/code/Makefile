@@ -5,13 +5,13 @@ COMMON_SRC += net-stack/data-link.c
 COMMON_SRC += net-stack/arp.c
 
 # Layer 3
-COMMON_SRC += net-stack/network.c 
+COMMON_SRC += net-stack/ipv4.c 
 COMMON_SRC += net-stack/icmp.c
 
 # Tests
-PROGS += tests/1-test-arp-table.c
-PROGS += tests/1-test-fill-arp-table.c
-# PROGS += tests/1-test-send-resolved-arp.c
+# PROGS += tests/1-test-arp-table.c
+# PROGS += tests/1-test-fill-arp-table.c
+PROGS += tests/1-test-send-resolved-arp.c
 
 # Playgrounds
 # PROGS += tests/0-playground-nrf.c

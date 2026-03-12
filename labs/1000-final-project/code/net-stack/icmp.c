@@ -3,30 +3,44 @@
 #include "inet.h"
 
 #include "../crc-16.h"
+#include "../print-utilities.h"
 
-static int verbose_p = 0;
+static int _verbose_p = 0;
 
-void ping_verbose(int verbose) { verbose_p = verbose; }
+void icmp_init(const verbose_t* verbosity) {
+    if (verbosity->icmp || verbosity->all) {
+        _verbose_p = 1;
+        trace("ICMP layer verbosity enabled\n");
+    }
+}
 
 int inet_icmp_handler(const uint8_t* data, const uint8_t* src_addr, uint16_t icmp_bytes) {
     
     // https://www.rfc-editor.org/rfc/rfc792
     uint8_t icmp_type = data[0];
 
+    if (_verbose_p)
+        trace("ICMP packet received from %d.%d.%d.%d, type=%d, bytes=%d\n",
+                src_addr[0], src_addr[1], src_addr[2], src_addr[3], icmp_type, icmp_bytes);
+
+
     switch (icmp_type) {
         case ICMP_ECHO_MSG: // Send back to the source of the echo request
-            if (verbose_p)
-                trace("Sending ICMP echo to {%d.%d.%d.%d}\n", src_addr[0], src_addr[1], src_addr[2], src_addr[3]);
+            if (_verbose_p)
+                trace("Sending ping ECHO reply to {%d.%d.%d.%d}\n", src_addr[0], src_addr[1], src_addr[2], src_addr[3]);
             const char* msg = "THIS IS A REPLY";
-            inet_send_ping(src_addr, ICMP_ECHO_REPLY, msg, strlen(msg));
-            return INET_SUCCESS;
+            return inet_send_ping(src_addr, ICMP_ECHO_REPLY, msg, strlen(msg));
 
         case ICMP_ECHO_REPLY:
-            if (verbose_p)
-                trace("Received ICMP REPLY!\n");
+            if (_verbose_p)
+                trace("Received ping REPLY from {%d.%d.%d.%d}\n",
+                    src_addr[0], src_addr[1], src_addr[2], src_addr[3]);
             return INET_SUCCESS;
 
         default:
+            if (_verbose_p)
+                trace("INET_ICMP_UNSUPPORTED_TYPE %d received from {%d.%d.%d.%d}\n",
+                    icmp_type, src_addr[0], src_addr[1], src_addr[2], src_addr[3]);
             return INET_ICMP_UNSUPPORTED_TYPE;
     }
 
@@ -54,7 +68,11 @@ int inet_send_ping(const uint8_t* dest_ipv4_addr, uint8_t ping_type, const void*
     *cksum_ptr = ( (checksum >> 8) & 0xFF);
     *(cksum_ptr + 1) = (checksum & 0xFF);
 
-    // print_bytes("ICMP packet: ", &icmp, icmp_length);
+    if (_verbose_p)
+        trace("Sending ping of type %d and length %d {%d.%d.%d.%d}\n",
+            ping_type, icmp_length,
+            dest_ipv4_addr[0], dest_ipv4_addr[1],
+            dest_ipv4_addr[2], dest_ipv4_addr[3]);
 
     return inet_send_ipv4_packet(dest_ipv4_addr, PROTOCOL_ICMP, &icmp, icmp_length);
 }
