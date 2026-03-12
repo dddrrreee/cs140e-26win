@@ -35,3 +35,9 @@
 - IPv4
 - UDP / ICMP
 
+
+
+## Adding new protocol
+- Change lower level protocol handler
+- Add verbosity
+- Add init to inet_init

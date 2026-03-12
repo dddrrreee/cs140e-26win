@@ -11,10 +11,12 @@ LAYER 3: IPV4
 #include "ipv4.h"
 
 #include "icmp.h"
+#include "udp.h"
 
 static ipv4_t _ipv4_rx; // IPv4 buffer. will do one for each protocol perhaps
 
 static int _verbose_p = 0;
+static int _verbose_full_p = 0;
 
 /**********************************************************
  * Setup
@@ -24,6 +26,11 @@ void ipv4_init(const verbose_t* verbosity) {
     if (verbosity->ipv4 || verbosity->all) {
         _verbose_p = 1;
         trace("IPV4 layer verbosity enabled\n");
+    }
+
+    if (_verbose_full_p) {
+        _verbose_full_p = 1;
+        trace("IPV4 layer full packet verbosity enabled\n");
     }
 }
 
@@ -46,8 +53,8 @@ int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, 
     packet.ttl = IPV4_DEFAULT_TTL;
     packet.protocol = ipv4_protocol;
     packet.checksum = 0; // Checksum to be filled later but must be 0 for now
-    memcpy(packet.src_ipv4_address, inet_get_ipv4_addr(), IPV4_ADDR_LENGTH);
-    memcpy(packet.dest_ip_address, dest_ipv4_addr, IPV4_ADDR_LENGTH);
+    memcpy(packet.src_ipv4_address, inet_get_ipv4_addr(), IPV4_ADDR_BYTES);
+    memcpy(packet.dest_ip_address, dest_ipv4_addr, IPV4_ADDR_BYTES);
     memcpy(packet.data, data, nbytes);
 
     // ---------- Packet conditioning for endianness and stuff ---------- 
@@ -89,8 +96,7 @@ int inet_ipv4_handler(const uint8_t* data, uint16_t packet_bytes) {
     // TODO: more checks?
 
 
-    if (_verbose_p) {
-        print_bytes("Layer 3 ipv4: ", &_ipv4_rx, packet_bytes);
+    if (_verbose_full_p) {
         print_bytes("Layer 3 ipv4: ", &_ipv4_rx, packet_bytes);
     }
 
@@ -144,7 +150,12 @@ int ipv4_protocol_handler(const ipv4_t* packet, uint16_t packet_bytes)  {
         case PROTOCOL_ICMP:
             return inet_icmp_handler(packet->data, packet->src_ipv4_address, packet_bytes - IPV4_PACKET_HEADER_BYTES);
             
+        case PROTOCOL_UDP:
+
+            return inet_udp_handler(packet->data, packet->src_ipv4_address, packet_bytes - IPV4_PACKET_HEADER_BYTES);
         default:
+            if (_verbose_p)
+                trace("Unhandled IPV4 Protocol %d\n", protocol);
             return INET_IPV4_UNSUPPORTED_PROTOCOL;
     }
 

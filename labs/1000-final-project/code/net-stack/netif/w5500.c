@@ -29,10 +29,10 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
     assert(nic->spi.chip == config->chip_select);
 
     // Addresses
-    memcpy(nic->hw_addr, config->hw_addr, MAC_ADDR_LENGTH);
-    memcpy(nic->ipv4_addr, config->ipv4_addr, IPV4_ADDR_LENGTH);
-    memcpy(nic->gateway_addr, config->gateway_addr, IPV4_ADDR_LENGTH);
-    memcpy(nic->subnet_mask, config->subnet_mask, IPV4_ADDR_LENGTH);
+    memcpy(nic->hw_addr, config->hw_addr, MAC_ADDR_BYTES);
+    memcpy(nic->ipv4_addr, config->ipv4_addr, IPV4_ADDR_BYTES);
+    memcpy(nic->gateway_addr, config->gateway_addr, IPV4_ADDR_BYTES);
+    memcpy(nic->subnet_mask, config->subnet_mask, IPV4_ADDR_BYTES);
 
     cq_init(&nic->recvq, 1);  // initialize the circular queue (forgot errors_fatal_p meaning)
 
@@ -62,10 +62,10 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
     w5500_put8_chk(nic, W5500_BLK_COMMON, W5500_REG_MR, val);
     
     // Set addresses (p. 33)
-    w5500_putn_chk(nic, W5500_BLK_COMMON, W5500_REG_GAR0, nic->gateway_addr, IPV4_ADDR_LENGTH);
-    w5500_putn_chk(nic, W5500_BLK_COMMON, W5500_REG_SUBR0, nic->subnet_mask, IPV4_ADDR_LENGTH);
-    w5500_putn_chk(nic, W5500_BLK_COMMON, W5500_REG_SHAR0, nic->hw_addr, MAC_ADDR_LENGTH);
-    w5500_putn_chk(nic, W5500_BLK_COMMON, W5500_REG_SIPR0, nic->ipv4_addr, IPV4_ADDR_LENGTH);
+    w5500_putn_chk(nic, W5500_BLK_COMMON, W5500_REG_GAR0, nic->gateway_addr, IPV4_ADDR_BYTES);
+    w5500_putn_chk(nic, W5500_BLK_COMMON, W5500_REG_SUBR0, nic->subnet_mask, IPV4_ADDR_BYTES);
+    w5500_putn_chk(nic, W5500_BLK_COMMON, W5500_REG_SHAR0, nic->hw_addr, MAC_ADDR_BYTES);
+    w5500_putn_chk(nic, W5500_BLK_COMMON, W5500_REG_SIPR0, nic->ipv4_addr, IPV4_ADDR_BYTES);
 
     trace("# ----- After addresses -----\n");
     
@@ -373,11 +373,11 @@ uint8_t w5500_get8(const w5500_t* nic, uint8_t block, uint16_t reg) {
     tx[3] = 0;
 
     // trace("TX: {%x, %x, %x, %x}\n", tx[0], tx[1], tx[2], tx[3]);
-    spi_n_transfer(nic->spi, rx,tx,IPV4_ADDR_LENGTH);
+    spi_n_transfer(nic->spi, rx,tx,IPV4_ADDR_BYTES);
     // trace("Received {%x}\n", rx[3]);
 
     // trace("wr8: sent: tx[0]=%b, tx[1]=%b\n", tx[0], tx[1]);
-    // spi_n_transfer(nic->spi, rx,tx,IPV4_ADDR_LENGTH);
+    // spi_n_transfer(nic->spi, rx,tx,IPV4_ADDR_BYTES);
     // trace("wr8: recv: rx[0]=%b, rx[1]=%b\n", rx[0], rx[1]);
     
     return rx[3];
@@ -392,7 +392,7 @@ uint8_t w5500_put8(const w5500_t* nic, uint8_t block, uint16_t reg, uint8_t val)
     tx[3] = val;
 
     // trace("TX: {%x, %x, %x, %x}\n", tx[0], tx[1], tx[2], tx[3]);
-    spi_n_transfer(nic->spi, rx,tx,IPV4_ADDR_LENGTH);
+    spi_n_transfer(nic->spi, rx,tx,IPV4_ADDR_BYTES);
     // trace("Received {%x}\n", rx[3]);
     
     return rx[0]; // Status

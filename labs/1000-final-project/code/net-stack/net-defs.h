@@ -51,6 +51,13 @@ enum {
     INET_ICMP_PING_SENT = 60,
     INET_ICMP_PING_RECV = 61,
 
+    // UDP
+    INET_UDP_RECEIVED = 70,
+    INET_UDP_SENT = 71,
+    INET_UDP_LENGTH_MISMATCH = -70,
+    INET_UDP_UNSUPPORTED_PORT = -71,
+    INET_UDP_DATA_TOO_LONG = -72,
+
     // Unsupported
     INET_FRAME_UNSUPPORTED_ETHERTYPE = -200,
     INET_IPV4_UNSUPPORTED_PROTOCOL = -201,
@@ -63,8 +70,8 @@ enum {
 
 /* ---------- Length Constants ---------- */
 enum {
-    MAC_ADDR_LENGTH = 6,
-    IPV4_ADDR_LENGTH = 4,
+    MAC_ADDR_BYTES = 6,
+    IPV4_ADDR_BYTES = 4,
 
     // Frame
     FRAME_HEADER_BYTES = 14, // 6 bytes dest hw addr, 6 bytes src hw addr, 2 bytes length/length
@@ -86,6 +93,10 @@ enum {
     ICMP_HEADER_BYTES = 8,
     ICMP_MAX_DATA_SIZE = ICMP_MAX_SIZE - ICMP_HEADER_BYTES,
 
+    // UDP
+    UDP_MAX_SIZE = IPV4_MAX_DATA_SIZE,
+    UDP_HEADER_BYTES = 8,
+    UDP_MAX_DATA_SIZE = UDP_MAX_SIZE - UDP_HEADER_BYTES,
 };
 
 
@@ -134,9 +145,22 @@ enum {
 //                          ICMP
 //*******************************************************************************************************************
 
-enum { // https://www.rfc-editor.org/rfc/rfc792
+enum { // https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml
     ICMP_ECHO_REQUEST = 8,
     ICMP_ECHO_REPLY = 0,
+};
+
+//*******************************************************************************************************************
+//                          UDP
+//*******************************************************************************************************************
+
+enum { // https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
+    UDP_PORT_SSH = 22,
+    UDP_PORT_DNS = 53,
+    UDP_PORT_DHCP_SERVER = 67,
+    UDP_PORT_DHCP_CLIENT = 68,
+    UDP_PORT_HTTP = 80,
+    
 };
 
 //*******************************************************************************************************************
@@ -218,18 +242,42 @@ typedef struct {
 _Static_assert(sizeof(arp_table_entry_t) == 11, "arp_table_t size wrong");
 
 //*******************************************************************************************************************
+//                          udp
+//*******************************************************************************************************************
+
+
+typedef struct { // https://www.rfc-editor.org/rfc/rfc768.txt
+    uint16_t src_port; 
+    uint16_t dest_port;
+    uint16_t length; // header (8) + data_len
+    uint16_t checksum;
+    uint8_t data[UDP_MAX_DATA_SIZE];
+} udp_t;
+_Static_assert(sizeof(udp_t) == UDP_MAX_SIZE, "udp_t size wrong");
+
+// https://www.rfc-editor.org/rfc/rfc2131.txt
+
+//*******************************************************************************************************************
 //                          Verbosity
 //*******************************************************************************************************************
 
 typedef struct {
     uint32_t    all:1,
+
+                // Layer 2
                 data_link_FULL_FRAME:1,
                 data_link:1,
                 data_link_send:1,
                 arp:1,
+
+                // Layer 3
                 ipv4:1,
+                ipv4_full:1,
                 icmp:1,
-                unused:25;
+
+                // Layer 4
+                udp:1,
+                unused:23;
 } verbose_t;
 
 

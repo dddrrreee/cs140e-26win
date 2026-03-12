@@ -58,6 +58,13 @@ int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, 
 int inet_send_ping(const uint8_t* dest_ipv4_addr, uint8_t ping_type, const void* data, uint16_t nbytes);
 
 /**********************************************************
+ * Layer 4!
+ */
+int inet_udp_send(uint16_t src_port, uint16_t dest_port, const uint8_t* dest_ip, const void* data, uint16_t data_len);
+// uint16_t tcp_udp_recv(void* buffer, uint16_t buffer_len, uint8_t* src_ip, uint16_t* src_port);
+
+
+/**********************************************************
  * Internal Helpers
  */
 

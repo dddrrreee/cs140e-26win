@@ -3,10 +3,12 @@
 #include "inet.h"
 #include "netif/w5500.h"
 #include "data-link.h"
-
 #include "arp.h"
+
 #include "ipv4.h"
 #include "icmp.h"
+
+#include "udp.h"
 
 #include "../crc-16.h"
 #include "../endian.h"
@@ -61,6 +63,9 @@ int inet_init(w5500_t* nic, const verbose_t* verbosity) {
     ipv4_init(verbosity);
     icmp_init(verbosity);
 
+    // Layer 4
+    udp_init(verbosity);
+
     return INET_SUCCESS;
 }
 
@@ -87,7 +92,7 @@ int inet_poll_frame(int flush_buffer) {
 
     // 1. Verify MAC address (multicast or unicast to us), and still returns so we can peek at the packet
     int is_multicast = (_frame_rx.dest_hw_addr[0] & 0x01);
-    int is_for_us = (memcmp(_frame_rx.dest_hw_addr, _nic->hw_addr, MAC_ADDR_LENGTH) == 0);
+    int is_for_us = (memcmp(_frame_rx.dest_hw_addr, _nic->hw_addr, MAC_ADDR_BYTES) == 0);
 
     if (!(is_multicast || is_for_us)) {
         if (_verbose_p)
@@ -118,8 +123,8 @@ int inet_send_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, const void*
     uint16_t frame_length = nbytes + FRAME_HEADER_BYTES;
 
     frame_t frame;
-    memcpy(frame.dest_hw_addr, dest_hw_addr, MAC_ADDR_LENGTH);
-    memcpy(frame.src_hw_addr, _nic->hw_addr, MAC_ADDR_LENGTH);
+    memcpy(frame.dest_hw_addr, dest_hw_addr, MAC_ADDR_BYTES);
+    memcpy(frame.src_hw_addr, _nic->hw_addr, MAC_ADDR_BYTES);
     frame.ethertype = ethertype;
     memcpy(frame.data, data, nbytes);
 
@@ -179,7 +184,7 @@ int handle_ethertype(frame_t* frame, uint16_t frame_nbytes) {
     
     // Jump to protocol handler based on ethertype
     switch (frame->ethertype) {
-
+        
         case FRAME_IPV4:
             if (_verbose_p)
                 trace("Dispatching to IPv4 handler\n");

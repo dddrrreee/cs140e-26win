@@ -37,7 +37,7 @@ int find_arp_entry_by_ipv4(const uint8_t* ipv4_addr, uint32_t* table_index) {
     *table_index = ARP_TABLE_SIZE; // Place that is not in the table as the default in case table is full
     for (uint32_t i = 0; i < ARP_TABLE_SIZE; i++) {
 
-        if (memcmp(_arp_table[i].ip_addr, ipv4_addr, IPV4_ADDR_LENGTH) == 0 ) {
+        if (memcmp(_arp_table[i].ip_addr, ipv4_addr, IPV4_ADDR_BYTES) == 0 ) {
             *table_index = i;
             if (!_arp_table[i].valid)
                 return INET_ARP_FOUND_BUT_INVALID;
@@ -59,7 +59,7 @@ int find_arp_entry_by_mac(const uint8_t* hw_addr, uint32_t* table_index) {
     *table_index = ARP_TABLE_SIZE; // Place that is not in the table as the default in case table is full
     for (uint32_t i = 0; i < ARP_TABLE_SIZE; i++) {
 
-        if (memcmp(_arp_table[i].hw_addr, hw_addr, MAC_ADDR_LENGTH) == 0 ) {
+        if (memcmp(_arp_table[i].hw_addr, hw_addr, MAC_ADDR_BYTES) == 0 ) {
             *table_index = i;
             if (!_arp_table[i].valid)
                 return INET_ARP_FOUND_BUT_INVALID;
@@ -83,8 +83,8 @@ int inet_add_arp_entry(const uint8_t* their_ipv4_addr, const uint8_t* their_hw_a
     switch (err) {
         case INET_ARP_NO_TABLE_ENTRY:
         case INET_SUCCESS:
-            memcpy(_arp_table[idx].hw_addr, their_hw_addr, MAC_ADDR_LENGTH);
-            memcpy(_arp_table[idx].ip_addr, their_ipv4_addr, IPV4_ADDR_LENGTH);
+            memcpy(_arp_table[idx].hw_addr, their_hw_addr, MAC_ADDR_BYTES);
+            memcpy(_arp_table[idx].ip_addr, their_ipv4_addr, IPV4_ADDR_BYTES);
             _arp_table[idx].valid = 1;
 
             trace("ARP table updated: {%d.%d.%d.%d} -> {%X:%X:%X:%X:%X:%X}\n",
@@ -108,9 +108,9 @@ int inet_resolve_ip_address(const uint8_t* ipv4_addr, uint8_t* hw_addr) { // TOD
     int err = find_arp_entry_by_ipv4(ipv4_addr, &entry_index);
         
     if (err == INET_SUCCESS)
-        memcpy(hw_addr, _arp_table[entry_index].hw_addr, MAC_ADDR_LENGTH);
+        memcpy(hw_addr, _arp_table[entry_index].hw_addr, MAC_ADDR_BYTES);
     else
-        memcpy(hw_addr, MAC_BROADCAST, MAC_ADDR_LENGTH);
+        memcpy(hw_addr, MAC_BROADCAST, MAC_ADDR_BYTES);
         
     
     return err;
@@ -121,9 +121,9 @@ int inet_resolve_hw_address(const uint8_t* hw_addr, uint8_t* ipv4_addr) { // TOD
     int err = find_arp_entry_by_mac(hw_addr, &entry_index);
         
     if (err == INET_SUCCESS)
-        memcpy(ipv4_addr, _arp_table[entry_index].ip_addr, IPV4_ADDR_LENGTH);
+        memcpy(ipv4_addr, _arp_table[entry_index].ip_addr, IPV4_ADDR_BYTES);
     else
-        memcpy(ipv4_addr, IPV4_BROADCAST, IPV4_ADDR_LENGTH);
+        memcpy(ipv4_addr, IPV4_BROADCAST, IPV4_ADDR_BYTES);
     
     return err;
 }
@@ -163,7 +163,7 @@ int inet_arp_handler(const uint8_t* data, uint16_t nbytes) {
         trace("Invalid ARP hardware type %x\n", arp->hardware_type);
         return INET_ARP_BAD_HTYPE; 
     }
-    if (arp->hardware_len != MAC_ADDR_LENGTH) { 
+    if (arp->hardware_len != MAC_ADDR_BYTES) { 
         trace("Invalid ARP hardware length %d\n", arp->hardware_len);
         return INET_ARP_INVALID_MAC_LEN; 
     }
@@ -174,7 +174,7 @@ int inet_arp_handler(const uint8_t* data, uint16_t nbytes) {
         trace("Invalid ARP protocol type %x\n", arp->protocol_type);
         return INET_ARP_BAD_HTYPE; 
     }
-    if (arp->protocol_len != IPV4_ADDR_LENGTH) { 
+    if (arp->protocol_len != IPV4_ADDR_BYTES) { 
         trace("Invalid ARP protocol length %d\n", arp->protocol_len);
         return INET_ARP_INVALID_IP_LEN; 
     }
@@ -183,7 +183,7 @@ int inet_arp_handler(const uint8_t* data, uint16_t nbytes) {
     // ---------- 3. Logic ----------
 
     // "?Am I the target protocol address?" -rfc
-    if (memcmp(arp->dest_ipv4_addr, inet_get_ipv4_addr(), IPV4_ADDR_LENGTH) != 0) {
+    if (memcmp(arp->dest_ipv4_addr, inet_get_ipv4_addr(), IPV4_ADDR_BYTES) != 0) {
         if (_verbose_p)
             trace("ARP packet not for us, but for {%d.%d.%d.%d}\n",
                 arp->dest_ipv4_addr[0], arp->dest_ipv4_addr[1], arp->dest_ipv4_addr[2], arp->dest_ipv4_addr[3]);
@@ -223,14 +223,14 @@ int inet_send_arp(const uint8_t* their_hw_addr, const uint8_t* their_ipv4_addr, 
     arp_packet_t arp;
     arp.hardware_type = ARP_HTYPE_ETHERNET;
     arp.protocol_type = FRAME_IPV4;
-    arp.hardware_len = MAC_ADDR_LENGTH;
-    arp.protocol_len = IPV4_ADDR_LENGTH;
+    arp.hardware_len = MAC_ADDR_BYTES;
+    arp.protocol_len = IPV4_ADDR_BYTES;
     arp.operation = operation;
 
-    memcpy(arp.src_hw_addr, inet_get_hw_addr(), MAC_ADDR_LENGTH);
-    memcpy(arp.src_ipv4_addr, inet_get_ipv4_addr(), IPV4_ADDR_LENGTH);
-    memcpy(arp.dest_hw_addr, their_hw_addr, MAC_ADDR_LENGTH);
-    memcpy(arp.dest_ipv4_addr, their_ipv4_addr, IPV4_ADDR_LENGTH);
+    memcpy(arp.src_hw_addr, inet_get_hw_addr(), MAC_ADDR_BYTES);
+    memcpy(arp.src_ipv4_addr, inet_get_ipv4_addr(), IPV4_ADDR_BYTES);
+    memcpy(arp.dest_hw_addr, their_hw_addr, MAC_ADDR_BYTES);
+    memcpy(arp.dest_ipv4_addr, their_ipv4_addr, IPV4_ADDR_BYTES);
 
     // ---------- 2. Swap endian ----------
     swapEndian16(&arp.hardware_type);

@@ -17,8 +17,10 @@ void notmain(void) {
     w5500_init(&nic, &config);
 
     verbose_t v = inet_verbosity_init();
-    v.arp = 1;
-    v.icmp = 1;
+    // v.arp = 1;
+    // v.icmp = 1;
+    // v.ipv4 = 1;
+    v.udp = 1;
     v.data_link_send = 1;
     inet_init(&nic, &v); // 0 IS THE ONE CLOSEST TO IMU
 
