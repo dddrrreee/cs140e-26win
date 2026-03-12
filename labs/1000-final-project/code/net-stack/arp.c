@@ -107,9 +107,11 @@ int inet_resolve_ip_address(const uint8_t* ipv4_addr, uint8_t* hw_addr) { // TOD
     uint32_t entry_index;
     int err = find_arp_entry_by_ipv4(ipv4_addr, &entry_index);
         
-    if (err == INET_SUCCESS) {
+    if (err == INET_SUCCESS)
         memcpy(hw_addr, _arp_table[entry_index].hw_addr, MAC_ADDR_LENGTH);
-    }
+    else
+        memcpy(hw_addr, MAC_BROADCAST, MAC_ADDR_LENGTH);
+        
     
     return err;
 }
@@ -118,9 +120,10 @@ int inet_resolve_hw_address(const uint8_t* hw_addr, uint8_t* ipv4_addr) { // TOD
     uint32_t entry_index;
     int err = find_arp_entry_by_mac(hw_addr, &entry_index);
         
-    if (err == INET_SUCCESS) {
+    if (err == INET_SUCCESS)
         memcpy(ipv4_addr, _arp_table[entry_index].ip_addr, IPV4_ADDR_LENGTH);
-    }
+    else
+        memcpy(ipv4_addr, IPV4_BROADCAST, IPV4_ADDR_LENGTH);
     
     return err;
 }
@@ -196,7 +199,7 @@ int inet_arp_handler(const uint8_t* data, uint16_t nbytes) {
         case ARP_REQUEST:
             return inet_send_arp(arp->src_hw_addr, arp->src_ipv4_addr, ARP_REPLY);
             
-        case ARP_REPLY: // Do nothing
+        case ARP_REPLY: // Do nothing. not passing through
             if (_verbose_p)
                 trace("ARP from {%d.%d.%d.%d} is reply. Doing nothing now\n",
                     arp->src_ipv4_addr[0], arp->src_ipv4_addr[1], arp->src_ipv4_addr[2], arp->src_ipv4_addr[3]);

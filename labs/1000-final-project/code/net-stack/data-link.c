@@ -18,6 +18,7 @@ static frame_t _frame_rx; // Buffer for reading frames
 
 static int _verbose_p = 0;
 static int _FULL_FRAME_verbose_p = 0;
+static int _verbose_send_p = 0;
 
 /**********************************************************
  * Setup
@@ -44,6 +45,11 @@ int inet_init(w5500_t* nic, const verbose_t* verbosity) {
     if (verbosity->data_link_FULL_FRAME) {
         _FULL_FRAME_verbose_p = 1;
         trace("Data link MEGA FRAME verbosity enabled\n");    
+    }  
+
+    if (verbosity->data_link_send) {
+        _verbose_send_p = 1;
+        trace("Data link sending frame verbosity enabled\n");    
     }  
 
     // Layer 2
@@ -93,7 +99,7 @@ int inet_poll_frame(int flush_buffer) {
 
     // 2. Handle based on ethertype (for now just handle IPv4, but could add more handling here)
     err = handle_ethertype(&_frame_rx, read_bytes);
-    if (err != INET_SUCCESS) {
+    if (err < INET_SUCCESS) {
         return err; // Ethertype not handled
     }
 
@@ -102,7 +108,7 @@ int inet_poll_frame(int flush_buffer) {
         w5500_fast_flush_rx(_nic, INET_NIC_SOCKET);
     }
 
-    return INET_SUCCESS;
+    return err;
 }
 
 int inet_send_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, const void* data, uint16_t nbytes) {
@@ -114,15 +120,18 @@ int inet_send_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, const void*
     memcpy(frame.dest_hw_addr, dest_hw_addr, MAC_ADDR_LENGTH);
     memcpy(frame.src_hw_addr, _nic->hw_addr, MAC_ADDR_LENGTH);
     frame.ethertype = ethertype;
-    memcpy(&frame.data, data, nbytes);
+    memcpy(frame.data, data, nbytes);
 
     swapEndian16(&frame.ethertype); // Swap ethertype since it is sent big endian
 
-    if (_verbose_p)
+    if (_verbose_send_p || _FULL_FRAME_verbose_p) {
         trace("Sending frame, ethertype %x, dest MAC {%X:%X:%X:%X:%X:%X}, length %d\n", ethertype,
             dest_hw_addr[0], dest_hw_addr[1], dest_hw_addr[2],
             dest_hw_addr[3], dest_hw_addr[4], dest_hw_addr[5],
             frame_length);
+        print_bytes("", &frame, frame_length);
+    }
+        
      
     uint16_t bytes_written = w5500_write_tx_bytes(_nic, &frame, frame_length, INET_NIC_SOCKET);
     if (bytes_written == 0)

@@ -21,9 +21,9 @@ static int _verbose_p = 0;
  */
 
 void ipv4_init(const verbose_t* verbosity) {
-    if (verbosity->network || verbosity->all) {
+    if (verbosity->ipv4 || verbosity->all) {
         _verbose_p = 1;
-        trace("Network layer verbosity enabled\n");
+        trace("IPV4 layer verbosity enabled\n");
     }
 }
 
@@ -64,7 +64,11 @@ int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, 
     uint8_t dest_hw_addr[6];
     inet_resolve_ip_address(dest_ipv4_addr, dest_hw_addr);
 
-    // print_bytes("Packet: ", &packet, packet_length);
+    if (_verbose_p)
+        trace("Sending IPV4 packet of type %d with payload length %d to {%d.%d.%d.%d}\n",
+            ipv4_protocol, packet_length,
+            dest_ipv4_addr[0], dest_ipv4_addr[1],
+            dest_ipv4_addr[2], dest_ipv4_addr[3]);
     
     // ---------- Make frame (Layer 2)! ---------- 
     return inet_send_frame(dest_hw_addr, FRAME_IPV4, &packet, packet_length);
@@ -138,8 +142,8 @@ int ipv4_protocol_handler(const ipv4_t* packet, uint16_t packet_bytes)  {
 
     switch(protocol) {
         case PROTOCOL_ICMP:
-            err = inet_icmp_handler(packet->data, packet->src_ipv4_address, packet_bytes - IPV4_PACKET_HEADER_BYTES);
-            return err;
+            return inet_icmp_handler(packet->data, packet->src_ipv4_address, packet_bytes - IPV4_PACKET_HEADER_BYTES);
+            
         default:
             return INET_IPV4_UNSUPPORTED_PROTOCOL;
     }

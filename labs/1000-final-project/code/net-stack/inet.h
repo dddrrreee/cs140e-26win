@@ -26,8 +26,8 @@ verbose_t inet_verbosity_init();
 int inet_poll_frame(int flush_buffer); 
 
 int inet_send_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, const void* data, uint16_t nbytes);
-#define inet_send_broadcast_frame(nic, data, nbytes) \
-    inet_send_frame(nic, MAC_BROADCAST, data, nbytes)
+#define inet_send_broadcast_frame(ethertype, data, nbytes) \
+    inet_send_frame(MAC_BROADCAST, ethertype, data, nbytes)
 
 // https://www.rfc-editor.org/rfc/rfc826.html
 int inet_send_arp(const uint8_t* their_hw_addr, const uint8_t* their_ipv4_addr, uint8_t operation);

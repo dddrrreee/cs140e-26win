@@ -5,8 +5,9 @@
 
 #include "netif/w5500-defs.h" // ???
 
-const static uint8_t MAC_BROADCAST[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; // FF:FF:FF:FF:FF:FF
-const static uint8_t IPV4_BROADCAST[4] = {255, 255, 255, 255}; // 255.255.255.255
+#define MAC_BROADCAST ((uint8_t[6]){0xFF,0xFF,0xFF,0xFF,0xFF,0xFF})
+#define IPV4_BROADCAST ((uint8_t[4]){255,255,255,255})
+
 #define INET_NIC_SOCKET W5500_SOCKET_0
 //*******************************************************************************************************************
 //                          Error Codes
@@ -46,6 +47,10 @@ enum {
     INET_IPV4_UNSUPPORTED_VERS = -50,
     INET_IPV4_UNSUPPORTED_HEADER_LEN = -51,
 
+    // ICMP
+    INET_ICMP_PING_SENT = 60,
+    INET_ICMP_PING_RECV = 61,
+
     // Unsupported
     INET_FRAME_UNSUPPORTED_ETHERTYPE = -200,
     INET_IPV4_UNSUPPORTED_PROTOCOL = -201,
@@ -80,7 +85,6 @@ enum {
     ICMP_MAX_SIZE = IPV4_MAX_DATA_SIZE,
     ICMP_HEADER_BYTES = 8,
     ICMP_MAX_DATA_SIZE = ICMP_MAX_SIZE - ICMP_HEADER_BYTES,
-
 
 };
 
@@ -131,7 +135,7 @@ enum {
 //*******************************************************************************************************************
 
 enum { // https://www.rfc-editor.org/rfc/rfc792
-    ICMP_ECHO_MSG = 8,
+    ICMP_ECHO_REQUEST = 8,
     ICMP_ECHO_REPLY = 0,
 };
 
@@ -191,7 +195,7 @@ typedef struct { // https://www.rfc-editor.org/rfc/rfc826.html
     uint16_t hardware_type; // 1 indicated Ethernet
     uint16_t protocol_type; // For IPV4, same as protocol (0x0800)
     uint8_t hardware_len; // Length of hw_addr (6 bytes)
-    uint8_t protocol_len; // Length of ip_addr (6 bytes)
+    uint8_t protocol_len; // Length of ip_addr (4 bytes)
     uint16_t operation; // 1 for request, 2 for reply
 
     uint8_t src_hw_addr[6];
@@ -221,10 +225,11 @@ typedef struct {
     uint32_t    all:1,
                 data_link_FULL_FRAME:1,
                 data_link:1,
+                data_link_send:1,
                 arp:1,
-                network:1,
+                ipv4:1,
                 icmp:1,
-                unused:28;
+                unused:25;
 } verbose_t;
 
 

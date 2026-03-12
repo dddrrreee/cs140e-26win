@@ -11,7 +11,7 @@ COMMON_SRC += net-stack/icmp.c
 # Tests
 # PROGS += tests/1-test-arp-table.c
 # PROGS += tests/1-test-fill-arp-table.c
-PROGS += tests/1-test-send-resolved-arp.c
+# PROGS += tests/1-test-send-resolved-arp.c
 
 # Playgrounds
 # PROGS += tests/0-playground-nrf.c
@@ -19,7 +19,9 @@ PROGS += tests/1-test-send-resolved-arp.c
 # PROGS += tests/0-playground-driver.c
 # PROGS += tests/0-playground-frame-testing.c
 # PROGS += tests/0-playground-rx.c
-# PROGS += tests/0-playground-net-stack.c
+
+# Just run the stack
+PROGS += tests/0-playground-net-stack.c
 
 
 # next week you'll get rid of all of these
