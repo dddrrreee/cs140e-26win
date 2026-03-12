@@ -1,0 +1,55 @@
+
+0-hello.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00400000 <__text_start__>:
+  400000:	ea00001e 	b	400080 <libos_cstart>
+
+00400004 <PUT32>:
+  400004:	e5801000 	str	r1, [r0]
+  400008:	e12fff1e 	bx	lr
+
+0040000c <GET32>:
+  40000c:	e5900000 	ldr	r0, [r0]
+  400010:	e12fff1e 	bx	lr
+
+00400014 <syscall_invoke_asm>:
+  400014:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+  400018:	ef000000 	svc	0x00000000
+  40001c:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+  400020:	e12fff1e 	bx	lr
+
+00400024 <notmain>:
+  400024:	e92d4010 	push	{r4, lr}
+  400028:	e3a01068 	mov	r1, #104	; 0x68
+  40002c:	e3a00080 	mov	r0, #128	; 0x80
+  400030:	ebfffff7 	bl	400014 <syscall_invoke_asm>
+  400034:	e3a01065 	mov	r1, #101	; 0x65
+  400038:	e3a00080 	mov	r0, #128	; 0x80
+  40003c:	ebfffff4 	bl	400014 <syscall_invoke_asm>
+  400040:	e3a0106c 	mov	r1, #108	; 0x6c
+  400044:	e3a00080 	mov	r0, #128	; 0x80
+  400048:	ebfffff1 	bl	400014 <syscall_invoke_asm>
+  40004c:	e3a0106c 	mov	r1, #108	; 0x6c
+  400050:	e3a00080 	mov	r0, #128	; 0x80
+  400054:	ebffffee 	bl	400014 <syscall_invoke_asm>
+  400058:	e3a0106f 	mov	r1, #111	; 0x6f
+  40005c:	e3a00080 	mov	r0, #128	; 0x80
+  400060:	ebffffeb 	bl	400014 <syscall_invoke_asm>
+  400064:	e3a0100a 	mov	r1, #10
+  400068:	e3a00080 	mov	r0, #128	; 0x80
+  40006c:	ebffffe8 	bl	400014 <syscall_invoke_asm>
+  400070:	e3a01000 	mov	r1, #0
+  400074:	e3a00001 	mov	r0, #1
+  400078:	ebffffe5 	bl	400014 <syscall_invoke_asm>
+  40007c:	e8bd8010 	pop	{r4, pc}
+
+00400080 <libos_cstart>:
+  400080:	e92d4010 	push	{r4, lr}
+  400084:	ebffffe6 	bl	400024 <notmain>
+  400088:	e3a01000 	mov	r1, #0
+  40008c:	e3a00001 	mov	r0, #1
+  400090:	ebffffdf 	bl	400014 <syscall_invoke_asm>
+  400094:	e8bd8010 	pop	{r4, pc}

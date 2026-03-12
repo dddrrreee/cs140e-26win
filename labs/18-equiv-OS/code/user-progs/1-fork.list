@@ -1,0 +1,219 @@
+
+1-fork.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00400000 <__text_start__>:
+  400000:	ea00008e 	b	400240 <libos_cstart>
+
+00400004 <PUT32>:
+  400004:	e5801000 	str	r1, [r0]
+  400008:	e12fff1e 	bx	lr
+
+0040000c <GET32>:
+  40000c:	e5900000 	ldr	r0, [r0]
+  400010:	e12fff1e 	bx	lr
+
+00400014 <syscall_invoke_asm>:
+  400014:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+  400018:	ef000000 	svc	0x00000000
+  40001c:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+  400020:	e12fff1e 	bx	lr
+
+00400024 <output>:
+  400024:	e92d000f 	push	{r0, r1, r2, r3}
+  400028:	e92d4030 	push	{r4, r5, lr}
+  40002c:	e24dd00c 	sub	sp, sp, #12
+  400030:	e59d5018 	ldr	r5, [sp, #24]
+  400034:	e28d301c 	add	r3, sp, #28
+  400038:	e58d3004 	str	r3, [sp, #4]
+  40003c:	ea00002a 	b	4000ec <output+0xc8>
+  400040:	e59d3004 	ldr	r3, [sp, #4]
+  400044:	e2832004 	add	r2, r3, #4
+  400048:	e58d2004 	str	r2, [sp, #4]
+  40004c:	e5931000 	ldr	r1, [r3]
+  400050:	e3a00082 	mov	r0, #130	; 0x82
+  400054:	ebffffee 	bl	400014 <syscall_invoke_asm>
+  400058:	ea000023 	b	4000ec <output+0xc8>
+  40005c:	e59d3004 	ldr	r3, [sp, #4]
+  400060:	e2832004 	add	r2, r3, #4
+  400064:	e58d2004 	str	r2, [sp, #4]
+  400068:	e5931000 	ldr	r1, [r3]
+  40006c:	e3a00083 	mov	r0, #131	; 0x83
+  400070:	ebffffe7 	bl	400014 <syscall_invoke_asm>
+  400074:	ea00001c 	b	4000ec <output+0xc8>
+  400078:	e59d3004 	ldr	r3, [sp, #4]
+  40007c:	e2832004 	add	r2, r3, #4
+  400080:	e58d2004 	str	r2, [sp, #4]
+  400084:	e5934000 	ldr	r4, [r3]
+  400088:	ea000002 	b	400098 <output+0x74>
+  40008c:	e2844001 	add	r4, r4, #1
+  400090:	e3a00080 	mov	r0, #128	; 0x80
+  400094:	ebffffde 	bl	400014 <syscall_invoke_asm>
+  400098:	e5d41000 	ldrb	r1, [r4]
+  40009c:	e3510000 	cmp	r1, #0
+  4000a0:	1afffff9 	bne	40008c <output+0x68>
+  4000a4:	ea000010 	b	4000ec <output+0xc8>
+  4000a8:	e1a02004 	mov	r2, r4
+  4000ac:	e59f30cc 	ldr	r3, [pc, #204]	; 400180 <output+0x15c>
+  4000b0:	e3a00003 	mov	r0, #3
+  4000b4:	e1a01000 	mov	r1, r0
+  4000b8:	e3500000 	cmp	r0, #0
+  4000bc:	e2400001 	sub	r0, r0, #1
+  4000c0:	0a000004 	beq	4000d8 <output+0xb4>
+  4000c4:	e4d21001 	ldrb	r1, [r2], #1
+  4000c8:	e4d3c001 	ldrb	ip, [r3], #1
+  4000cc:	e151000c 	cmp	r1, ip
+  4000d0:	0afffff7 	beq	4000b4 <output+0x90>
+  4000d4:	e041100c 	sub	r1, r1, ip
+  4000d8:	e3510000 	cmp	r1, #0
+  4000dc:	1a000018 	bne	400144 <output+0x120>
+  4000e0:	e3a00084 	mov	r0, #132	; 0x84
+  4000e4:	ebffffca 	bl	400014 <syscall_invoke_asm>
+  4000e8:	e2855004 	add	r5, r5, #4
+  4000ec:	e1a04005 	mov	r4, r5
+  4000f0:	e4d41001 	ldrb	r1, [r4], #1
+  4000f4:	e3510000 	cmp	r1, #0
+  4000f8:	0a00001c 	beq	400170 <output+0x14c>
+  4000fc:	e3510024 	cmp	r1, #36	; 0x24
+  400100:	0affffe8 	beq	4000a8 <output+0x84>
+  400104:	e3510025 	cmp	r1, #37	; 0x25
+  400108:	1a000014 	bne	400160 <output+0x13c>
+  40010c:	e2855002 	add	r5, r5, #2
+  400110:	e5d43000 	ldrb	r3, [r4]
+  400114:	e3530073 	cmp	r3, #115	; 0x73
+  400118:	0affffd6 	beq	400078 <output+0x54>
+  40011c:	e3530078 	cmp	r3, #120	; 0x78
+  400120:	0affffc6 	beq	400040 <output+0x1c>
+  400124:	e3530064 	cmp	r3, #100	; 0x64
+  400128:	0affffcb 	beq	40005c <output+0x38>
+  40012c:	e59f0050 	ldr	r0, [pc, #80]	; 400184 <output+0x160>
+  400130:	ebffffbb 	bl	400024 <output>
+  400134:	e3a01001 	mov	r1, #1
+  400138:	e1a00001 	mov	r0, r1
+  40013c:	ebffffb4 	bl	400014 <syscall_invoke_asm>
+  400140:	eaffffe9 	b	4000ec <output+0xc8>
+  400144:	e1a01004 	mov	r1, r4
+  400148:	e59f0038 	ldr	r0, [pc, #56]	; 400188 <output+0x164>
+  40014c:	ebffffb4 	bl	400024 <output>
+  400150:	e3a01001 	mov	r1, #1
+  400154:	e1a00001 	mov	r0, r1
+  400158:	ebffffad 	bl	400014 <syscall_invoke_asm>
+  40015c:	eaffffdf 	b	4000e0 <output+0xbc>
+  400160:	e3a00080 	mov	r0, #128	; 0x80
+  400164:	ebffffaa 	bl	400014 <syscall_invoke_asm>
+  400168:	e1a05004 	mov	r5, r4
+  40016c:	eaffffde 	b	4000ec <output+0xc8>
+  400170:	e28dd00c 	add	sp, sp, #12
+  400174:	e8bd4030 	pop	{r4, r5, lr}
+  400178:	e28dd010 	add	sp, sp, #16
+  40017c:	e12fff1e 	bx	lr
+  400180:	00400258 	.word	0x00400258
+  400184:	0040025c 	.word	0x0040025c
+  400188:	0040026c 	.word	0x0040026c
+
+0040018c <notmain>:
+  40018c:	e92d4070 	push	{r4, r5, r6, lr}
+  400190:	e24dd008 	sub	sp, sp, #8
+  400194:	e3a00002 	mov	r0, #2
+  400198:	ebffff9d 	bl	400014 <syscall_invoke_asm>
+  40019c:	e2504000 	subs	r4, r0, #0
+  4001a0:	1a00000c 	bne	4001d8 <notmain+0x4c>
+  4001a4:	e3a0300b 	mov	r3, #11
+  4001a8:	e59f2078 	ldr	r2, [pc, #120]	; 400228 <notmain+0x9c>
+  4001ac:	e59f1078 	ldr	r1, [pc, #120]	; 40022c <notmain+0xa0>
+  4001b0:	e59f0078 	ldr	r0, [pc, #120]	; 400230 <notmain+0xa4>
+  4001b4:	ebffff9a 	bl	400024 <output>
+  4001b8:	e59f1074 	ldr	r1, [pc, #116]	; 400234 <notmain+0xa8>
+  4001bc:	e3a00001 	mov	r0, #1
+  4001c0:	ebffff93 	bl	400014 <syscall_invoke_asm>
+  4001c4:	e3a01000 	mov	r1, #0
+  4001c8:	e3a00001 	mov	r0, #1
+  4001cc:	ebffff90 	bl	400014 <syscall_invoke_asm>
+  4001d0:	e28dd008 	add	sp, sp, #8
+  4001d4:	e8bd8070 	pop	{r4, r5, r6, pc}
+  4001d8:	e59f6048 	ldr	r6, [pc, #72]	; 400228 <notmain+0x9c>
+  4001dc:	e59f5048 	ldr	r5, [pc, #72]	; 40022c <notmain+0xa0>
+  4001e0:	e58d4000 	str	r4, [sp]
+  4001e4:	e3a0300e 	mov	r3, #14
+  4001e8:	e1a02006 	mov	r2, r6
+  4001ec:	e1a01005 	mov	r1, r5
+  4001f0:	e59f0040 	ldr	r0, [pc, #64]	; 400238 <notmain+0xac>
+  4001f4:	ebffff8a 	bl	400024 <output>
+  4001f8:	e3a02004 	mov	r2, #4
+  4001fc:	e1a01004 	mov	r1, r4
+  400200:	e1a00002 	mov	r0, r2
+  400204:	ebffff82 	bl	400014 <syscall_invoke_asm>
+  400208:	e58d0004 	str	r0, [sp, #4]
+  40020c:	e58d4000 	str	r4, [sp]
+  400210:	e3a03010 	mov	r3, #16
+  400214:	e1a02006 	mov	r2, r6
+  400218:	e1a01005 	mov	r1, r5
+  40021c:	e59f0018 	ldr	r0, [pc, #24]	; 40023c <notmain+0xb0>
+  400220:	ebffff7f 	bl	400024 <output>
+  400224:	eaffffe6 	b	4001c4 <notmain+0x38>
+  400228:	00400314 	.word	0x00400314
+  40022c:	00400284 	.word	0x00400284
+  400230:	00400290 	.word	0x00400290
+  400234:	deadbeef 	.word	0xdeadbeef
+  400238:	004002b0 	.word	0x004002b0
+  40023c:	004002dc 	.word	0x004002dc
+
+00400240 <libos_cstart>:
+  400240:	e92d4010 	push	{r4, lr}
+  400244:	ebffffd0 	bl	40018c <notmain>
+  400248:	e3a01000 	mov	r1, #0
+  40024c:	e3a00001 	mov	r0, #1
+  400250:	ebffff6f 	bl	400014 <syscall_invoke_asm>
+  400254:	e8bd8010 	pop	{r4, pc}
+  400258:	00646970 	.word	0x00646970
+  40025c:	20646162 	.word	0x20646162
+  400260:	72616863 	.word	0x72616863
+  400264:	65746361 	.word	0x65746361
+  400268:	00000a72 	.word	0x00000a72
+  40026c:	6e6b6e75 	.word	0x6e6b6e75
+  400270:	206e776f 	.word	0x206e776f
+  400274:	6d726f66 	.word	0x6d726f66
+  400278:	203a7461 	.word	0x203a7461
+  40027c:	3e73253c 	.word	0x3e73253c
+  400280:	0000000a 	.word	0x0000000a
+  400284:	6f662d31 	.word	0x6f662d31
+  400288:	632e6b72 	.word	0x632e6b72
+  40028c:	00000000 	.word	0x00000000
+  400290:	253a7325 	.word	0x253a7325
+  400294:	64253a73 	.word	0x64253a73
+  400298:	4245443a 	.word	0x4245443a
+  40029c:	633a4755 	.word	0x633a4755
+  4002a0:	646c6968 	.word	0x646c6968
+  4002a4:	64697020 	.word	0x64697020
+  4002a8:	6970243d 	.word	0x6970243d
+  4002ac:	00000a64 	.word	0x00000a64
+  4002b0:	253a7325 	.word	0x253a7325
+  4002b4:	64253a73 	.word	0x64253a73
+  4002b8:	4245443a 	.word	0x4245443a
+  4002bc:	703a4755 	.word	0x703a4755
+  4002c0:	6e657261 	.word	0x6e657261
+  4002c4:	69702074 	.word	0x69702074
+  4002c8:	70243d64 	.word	0x70243d64
+  4002cc:	202c6469 	.word	0x202c6469
+  4002d0:	6c696863 	.word	0x6c696863
+  4002d4:	64253d64 	.word	0x64253d64
+  4002d8:	00000a21 	.word	0x00000a21
+  4002dc:	253a7325 	.word	0x253a7325
+  4002e0:	64253a73 	.word	0x64253a73
+  4002e4:	4245443a 	.word	0x4245443a
+  4002e8:	703a4755 	.word	0x703a4755
+  4002ec:	6e657261 	.word	0x6e657261
+  4002f0:	69702074 	.word	0x69702074
+  4002f4:	70243d64 	.word	0x70243d64
+  4002f8:	202c6469 	.word	0x202c6469
+  4002fc:	6c696863 	.word	0x6c696863
+  400300:	65722064 	.word	0x65722064
+  400304:	6e727574 	.word	0x6e727574
+  400308:	203a6465 	.word	0x203a6465
+  40030c:	0a217825 	.word	0x0a217825
+  400310:	00000000 	.word	0x00000000
+
+00400314 <__FUNCTION__.0>:
+  400314:	6d746f6e 006e6961 00000000              notmain.....

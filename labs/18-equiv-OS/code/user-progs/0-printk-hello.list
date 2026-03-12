@@ -1,0 +1,148 @@
+
+0-printk-hello.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00400000 <__text_start__>:
+  400000:	ea000069 	b	4001ac <libos_cstart>
+
+00400004 <PUT32>:
+  400004:	e5801000 	str	r1, [r0]
+  400008:	e12fff1e 	bx	lr
+
+0040000c <GET32>:
+  40000c:	e5900000 	ldr	r0, [r0]
+  400010:	e12fff1e 	bx	lr
+
+00400014 <syscall_invoke_asm>:
+  400014:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+  400018:	ef000000 	svc	0x00000000
+  40001c:	e49de004 	pop	{lr}		; (ldr lr, [sp], #4)
+  400020:	e12fff1e 	bx	lr
+
+00400024 <output>:
+  400024:	e92d000f 	push	{r0, r1, r2, r3}
+  400028:	e92d4030 	push	{r4, r5, lr}
+  40002c:	e24dd00c 	sub	sp, sp, #12
+  400030:	e59d5018 	ldr	r5, [sp, #24]
+  400034:	e28d301c 	add	r3, sp, #28
+  400038:	e58d3004 	str	r3, [sp, #4]
+  40003c:	ea00002a 	b	4000ec <output+0xc8>
+  400040:	e59d3004 	ldr	r3, [sp, #4]
+  400044:	e2832004 	add	r2, r3, #4
+  400048:	e58d2004 	str	r2, [sp, #4]
+  40004c:	e5931000 	ldr	r1, [r3]
+  400050:	e3a00082 	mov	r0, #130	; 0x82
+  400054:	ebffffee 	bl	400014 <syscall_invoke_asm>
+  400058:	ea000023 	b	4000ec <output+0xc8>
+  40005c:	e59d3004 	ldr	r3, [sp, #4]
+  400060:	e2832004 	add	r2, r3, #4
+  400064:	e58d2004 	str	r2, [sp, #4]
+  400068:	e5931000 	ldr	r1, [r3]
+  40006c:	e3a00083 	mov	r0, #131	; 0x83
+  400070:	ebffffe7 	bl	400014 <syscall_invoke_asm>
+  400074:	ea00001c 	b	4000ec <output+0xc8>
+  400078:	e59d3004 	ldr	r3, [sp, #4]
+  40007c:	e2832004 	add	r2, r3, #4
+  400080:	e58d2004 	str	r2, [sp, #4]
+  400084:	e5934000 	ldr	r4, [r3]
+  400088:	ea000002 	b	400098 <output+0x74>
+  40008c:	e2844001 	add	r4, r4, #1
+  400090:	e3a00080 	mov	r0, #128	; 0x80
+  400094:	ebffffde 	bl	400014 <syscall_invoke_asm>
+  400098:	e5d41000 	ldrb	r1, [r4]
+  40009c:	e3510000 	cmp	r1, #0
+  4000a0:	1afffff9 	bne	40008c <output+0x68>
+  4000a4:	ea000010 	b	4000ec <output+0xc8>
+  4000a8:	e1a02004 	mov	r2, r4
+  4000ac:	e59f30cc 	ldr	r3, [pc, #204]	; 400180 <output+0x15c>
+  4000b0:	e3a00003 	mov	r0, #3
+  4000b4:	e1a01000 	mov	r1, r0
+  4000b8:	e3500000 	cmp	r0, #0
+  4000bc:	e2400001 	sub	r0, r0, #1
+  4000c0:	0a000004 	beq	4000d8 <output+0xb4>
+  4000c4:	e4d21001 	ldrb	r1, [r2], #1
+  4000c8:	e4d3c001 	ldrb	ip, [r3], #1
+  4000cc:	e151000c 	cmp	r1, ip
+  4000d0:	0afffff7 	beq	4000b4 <output+0x90>
+  4000d4:	e041100c 	sub	r1, r1, ip
+  4000d8:	e3510000 	cmp	r1, #0
+  4000dc:	1a000018 	bne	400144 <output+0x120>
+  4000e0:	e3a00084 	mov	r0, #132	; 0x84
+  4000e4:	ebffffca 	bl	400014 <syscall_invoke_asm>
+  4000e8:	e2855004 	add	r5, r5, #4
+  4000ec:	e1a04005 	mov	r4, r5
+  4000f0:	e4d41001 	ldrb	r1, [r4], #1
+  4000f4:	e3510000 	cmp	r1, #0
+  4000f8:	0a00001c 	beq	400170 <output+0x14c>
+  4000fc:	e3510024 	cmp	r1, #36	; 0x24
+  400100:	0affffe8 	beq	4000a8 <output+0x84>
+  400104:	e3510025 	cmp	r1, #37	; 0x25
+  400108:	1a000014 	bne	400160 <output+0x13c>
+  40010c:	e2855002 	add	r5, r5, #2
+  400110:	e5d43000 	ldrb	r3, [r4]
+  400114:	e3530073 	cmp	r3, #115	; 0x73
+  400118:	0affffd6 	beq	400078 <output+0x54>
+  40011c:	e3530078 	cmp	r3, #120	; 0x78
+  400120:	0affffc6 	beq	400040 <output+0x1c>
+  400124:	e3530064 	cmp	r3, #100	; 0x64
+  400128:	0affffcb 	beq	40005c <output+0x38>
+  40012c:	e59f0050 	ldr	r0, [pc, #80]	; 400184 <output+0x160>
+  400130:	ebffffbb 	bl	400024 <output>
+  400134:	e3a01001 	mov	r1, #1
+  400138:	e1a00001 	mov	r0, r1
+  40013c:	ebffffb4 	bl	400014 <syscall_invoke_asm>
+  400140:	eaffffe9 	b	4000ec <output+0xc8>
+  400144:	e1a01004 	mov	r1, r4
+  400148:	e59f0038 	ldr	r0, [pc, #56]	; 400188 <output+0x164>
+  40014c:	ebffffb4 	bl	400024 <output>
+  400150:	e3a01001 	mov	r1, #1
+  400154:	e1a00001 	mov	r0, r1
+  400158:	ebffffad 	bl	400014 <syscall_invoke_asm>
+  40015c:	eaffffdf 	b	4000e0 <output+0xbc>
+  400160:	e3a00080 	mov	r0, #128	; 0x80
+  400164:	ebffffaa 	bl	400014 <syscall_invoke_asm>
+  400168:	e1a05004 	mov	r5, r4
+  40016c:	eaffffde 	b	4000ec <output+0xc8>
+  400170:	e28dd00c 	add	sp, sp, #12
+  400174:	e8bd4030 	pop	{r4, r5, lr}
+  400178:	e28dd010 	add	sp, sp, #16
+  40017c:	e12fff1e 	bx	lr
+  400180:	004001c4 	.word	0x004001c4
+  400184:	004001c8 	.word	0x004001c8
+  400188:	004001d8 	.word	0x004001d8
+
+0040018c <notmain>:
+  40018c:	e92d4010 	push	{r4, lr}
+  400190:	e59f0010 	ldr	r0, [pc, #16]	; 4001a8 <notmain+0x1c>
+  400194:	ebffffa2 	bl	400024 <output>
+  400198:	e3a01000 	mov	r1, #0
+  40019c:	e3a00001 	mov	r0, #1
+  4001a0:	ebffff9b 	bl	400014 <syscall_invoke_asm>
+  4001a4:	e8bd8010 	pop	{r4, pc}
+  4001a8:	004001f0 	.word	0x004001f0
+
+004001ac <libos_cstart>:
+  4001ac:	e92d4010 	push	{r4, lr}
+  4001b0:	ebfffff5 	bl	40018c <notmain>
+  4001b4:	e3a01000 	mov	r1, #0
+  4001b8:	e3a00001 	mov	r0, #1
+  4001bc:	ebffff94 	bl	400014 <syscall_invoke_asm>
+  4001c0:	e8bd8010 	pop	{r4, pc}
+  4001c4:	00646970 	.word	0x00646970
+  4001c8:	20646162 	.word	0x20646162
+  4001cc:	72616863 	.word	0x72616863
+  4001d0:	65746361 	.word	0x65746361
+  4001d4:	00000a72 	.word	0x00000a72
+  4001d8:	6e6b6e75 	.word	0x6e6b6e75
+  4001dc:	206e776f 	.word	0x206e776f
+  4001e0:	6d726f66 	.word	0x6d726f66
+  4001e4:	203a7461 	.word	0x203a7461
+  4001e8:	3e73253c 	.word	0x3e73253c
+  4001ec:	0000000a 	.word	0x0000000a
+  4001f0:	6c6c6568 	.word	0x6c6c6568
+  4001f4:	70203a6f 	.word	0x70203a6f
+  4001f8:	243d6469 	.word	0x243d6469
+  4001fc:	0a646970 	.word	0x0a646970
+	...
