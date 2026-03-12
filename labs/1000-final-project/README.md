@@ -41,3 +41,7 @@
 - Change lower level protocol handler
 - Add verbosity
 - Add init to inet_init
+
+
+- Had to edit rpi_yield to make sure it is only yielding if threads are enabled
+- put structs statically in their files (like udp_t)

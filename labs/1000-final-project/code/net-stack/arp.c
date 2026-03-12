@@ -12,6 +12,8 @@ static arp_table_entry_t _arp_table[ARP_TABLE_SIZE];
 
 static int _verbose_p = 0;
 
+arp_packet_t _arp_tx;
+
 void arp_init(const verbose_t* verbosity) {
     if (verbosity->arp || verbosity->all) {
         _verbose_p = 1;
@@ -218,27 +220,27 @@ int inet_send_arp(const uint8_t* their_hw_addr, const uint8_t* their_ipv4_addr, 
     }
 
     // ---------- 1. Make and populate packet ----------
-    arp_packet_t arp;
-    arp.hardware_type = ARP_HTYPE_ETHERNET;
-    arp.protocol_type = FRAME_IPV4;
-    arp.hardware_len = MAC_ADDR_BYTES;
-    arp.protocol_len = IPV4_ADDR_BYTES;
-    arp.operation = operation;
+    memset(&_arp_tx, 0, sizeof(_arp_tx));
+    _arp_tx.hardware_type = ARP_HTYPE_ETHERNET;
+    _arp_tx.protocol_type = FRAME_IPV4;
+    _arp_tx.hardware_len = MAC_ADDR_BYTES;
+    _arp_tx.protocol_len = IPV4_ADDR_BYTES;
+    _arp_tx.operation = operation;
 
-    memcpy(arp.src_hw_addr, inet_get_hw_addr(), MAC_ADDR_BYTES);
-    memcpy(arp.src_ipv4_addr, inet_get_ipv4_addr(), IPV4_ADDR_BYTES);
-    memcpy(arp.dest_hw_addr, their_hw_addr, MAC_ADDR_BYTES);
-    memcpy(arp.dest_ipv4_addr, their_ipv4_addr, IPV4_ADDR_BYTES);
+    memcpy(_arp_tx.src_hw_addr, inet_get_hw_addr(), MAC_ADDR_BYTES);
+    memcpy(_arp_tx.src_ipv4_addr, inet_get_ipv4_addr(), IPV4_ADDR_BYTES);
+    memcpy(_arp_tx.dest_hw_addr, their_hw_addr, MAC_ADDR_BYTES);
+    memcpy(_arp_tx.dest_ipv4_addr, their_ipv4_addr, IPV4_ADDR_BYTES);
 
     // ---------- 2. Swap endian ----------
-    swapEndian16(&arp.hardware_type);
-    swapEndian16(&arp.protocol_type);
-    swapEndian16(&arp.operation);
+    swapEndian16(&_arp_tx.hardware_type);
+    swapEndian16(&_arp_tx.protocol_type);
+    swapEndian16(&_arp_tx.operation);
 
     trace("Sending ARP reply to {%d.%d.%d.%d}\n",
         their_ipv4_addr[0], their_ipv4_addr[1], their_ipv4_addr[2], their_ipv4_addr[3]);
 
-    return inet_send_frame(their_hw_addr, FRAME_ARP, &arp, ARP_MESSAGE_BYTES);
+    return inet_send_frame(their_hw_addr, FRAME_ARP, &_arp_tx, ARP_MESSAGE_BYTES);
 }
 
 

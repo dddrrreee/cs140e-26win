@@ -7,7 +7,7 @@
 
 // if you want to turn off tracing, just 
 // change to "if 0"
-#if 1
+#if 0
 #   define th_trace(args...) trace(args)
 #else
 #   define th_trace(args...) do { } while(0)
@@ -21,6 +21,8 @@
 #else
 #   define RZ_CHECK() do { } while(0)
 #endif
+
+static int running_threads = 0; // **
 
 
 /******************************************************************
@@ -182,6 +184,9 @@ void rpi_exit(int exitcode) {
 //      * context switch to the new thread.
 //        make sure to set cur_thread correctly!
 void rpi_yield(void) {
+
+    if (!running_threads)
+        return;
     RZ_CHECK();
     // NOTE: if you switch to another thread: print the statement:
     //     th_trace("switching from tid=%d to tid=%d\n", old->tid, t->tid);
@@ -211,6 +216,8 @@ void rpi_yield(void) {
 void rpi_thread_start(void) {
     RZ_CHECK();
     th_trace("starting threads!\n");
+
+    running_threads = 1; // To enable rpi_wait to work or not
 
     // no other runnable thread: return.
     if(Q_empty(&runq))

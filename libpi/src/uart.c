@@ -29,6 +29,8 @@
 // implement bit-banged UART yourself.
 #include "rpi.h"
 
+#include "rpi-thread.h" // For thread
+
 // change "1" to "0" if you want to comment out
 // the entire block.
 #if 1
@@ -179,7 +181,7 @@ void uart_disable(void) {
 // at least one byte.
 int uart_get8(void) {
     dev_barrier();
-    while (!uart_has_data()) {} // BLOCKS until there is data :(
+    while (!uart_has_data()) { rpi_yield(); } // BLOCKS until there is data :(
     uint32_t val = GET32(AUX_MU_IO);
     dev_barrier();
     return val & 0xFF;
@@ -196,7 +198,7 @@ int uart_can_put8(void) {
 // until the FIFO has space.
 int uart_put8(uint8_t c) {
     dev_barrier();
-    while (!(uart_can_put8())) {} // BLOCKS until can send data :(
+    while (!(uart_can_put8())) { rpi_yield(); } // BLOCKS until can send data :(
     PUT32(AUX_MU_IO, c);
     dev_barrier();
     return 1;
@@ -238,5 +240,5 @@ int uart_tx_is_empty(void) {
 // received.
 void uart_flush_tx(void) {
     while(!uart_tx_is_empty())
-        rpi_wait();
+        rpi_yield(); 
 }

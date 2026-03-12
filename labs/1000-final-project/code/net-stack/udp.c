@@ -7,7 +7,7 @@ LAYER 3: IPV4
 #include "../endian.h"
 #include "../print-utilities.h"
 
-static udp_t _udp_rx; // UDP buffer. will do one for each protocol perhaps
+static udp_t _udp; // UDP buffer. will do one for each protocol perhaps
 
 static int _verbose_p = 0;
 
@@ -64,19 +64,19 @@ int inet_udp_send(uint16_t src_port, uint16_t dest_port, const uint8_t* dest_ip,
     }
 
     // 2. Make UDP struct to send
-    udp_t udp_tx;
-    udp_tx.src_port = src_port;
-    udp_tx.dest_port = dest_port;
-    udp_tx.length = data_len;
-    udp_tx.checksum = 0; // Not doing this lmaoooo
-    memcpy(udp_tx.data, data, data_len);
+    memset(&_udp, 0, sizeof(_udp));
+    _udp.src_port = src_port;
+    _udp.dest_port = dest_port;
+    _udp.length = data_len;
+    _udp.checksum = 0; // Not doing this lmaoooo
+    memcpy(_udp.data, data, data_len);
 
     // 3. Flip endians (literally everything smh)
-    swapEndian16(&udp_tx.dest_port);
-    swapEndian16(&udp_tx.src_port);
-    swapEndian16(&udp_tx.length);
+    swapEndian16(&_udp.dest_port);
+    swapEndian16(&_udp.src_port);
+    swapEndian16(&_udp.length);
     
-    int err = inet_send_ipv4_packet(dest_ip, PROTOCOL_UDP, &udp_tx, data_len + UDP_HEADER_BYTES);
+    int err = inet_send_ipv4_packet(dest_ip, PROTOCOL_UDP, &_udp, data_len + UDP_HEADER_BYTES);
     if (err >= INET_SUCCESS) {
         return INET_UDP_SENT;
     }
@@ -91,7 +91,7 @@ int inet_udp_send(uint16_t src_port, uint16_t dest_port, const uint8_t* dest_ip,
 
 int inet_udp_handler(const uint8_t* data, const uint8_t* src_ipv4_addr, uint16_t nbytes) {
     int err;
-    memcpy(&_udp_rx, data, nbytes);
+    memcpy(&_udp, data, nbytes);
 
     if (_verbose_p)
         trace("Received UDP packet of %d bytes\n", nbytes);
@@ -102,29 +102,29 @@ int inet_udp_handler(const uint8_t* data, const uint8_t* src_ipv4_addr, uint16_t
 
 
     // 1. Flipping endians (literally everything smh)
-    swapEndian16(&_udp_rx.dest_port);
-    swapEndian16(&_udp_rx.src_port);
-    swapEndian16(&_udp_rx.length);
-    // swapEndian16(&_udp_rx.checksum); // Don't care about this lowkey
+    swapEndian16(&_udp.dest_port);
+    swapEndian16(&_udp.src_port);
+    swapEndian16(&_udp.length);
+    // swapEndian16(&_udp.checksum); // Don't care about this lowkey
 
     // 2. Length checking
-    if (_udp_rx.length > nbytes) {
+    if (_udp.length > nbytes) {
         if (_verbose_p)
-            trace("Packet claims udp_length is %d bytes but only received %d bytes\n", _udp_rx.length, nbytes);
+            trace("Packet claims udp_length is %d bytes but only received %d bytes\n", _udp.length, nbytes);
         return INET_UDP_LENGTH_MISMATCH;
     }
-    uint16_t payload_len = _udp_rx.length - UDP_HEADER_BYTES;
+    uint16_t payload_len = _udp.length - UDP_HEADER_BYTES;
 
     // 3. Route to correct ports
-    uint16_t their_port = _udp_rx.src_port;
-    uint16_t our_port = _udp_rx.dest_port;
+    uint16_t their_port = _udp.src_port;
+    uint16_t our_port = _udp.dest_port;
 
     for (uint32_t i = 0; i < UDP_PORT_TABLE_SIZE; i++) {
         if (_port_handlers[i].handler && _port_handlers[i].port == our_port) {
             if (_verbose_p)
                 trace("Calling UDP handler for port %d {%d.%d.%d.%d:%d}\n", our_port,
                     src_ipv4_addr[0], src_ipv4_addr[1], src_ipv4_addr[2], src_ipv4_addr[3], their_port);
-            _port_handlers[i].handler(src_ipv4_addr, their_port, our_port, _udp_rx.data, payload_len);
+            _port_handlers[i].handler(src_ipv4_addr, their_port, our_port, _udp.data, payload_len);
             return INET_UDP_SEND_TO_HANDLER;
         }
     }

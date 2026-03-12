@@ -20,9 +20,6 @@ void port_handler(const uint8_t* src_ip, uint16_t src_port, uint16_t dest_port,
 }
 
 void notmain(void) { 
-
-    int verbose_p = 0b0000; // Layer 3 debug
-
     w5500_conf_t config = get_test_w5500_config();
     w5500_t nic;
     w5500_init(&nic, &config);

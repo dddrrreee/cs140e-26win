@@ -25,9 +25,6 @@ static int _verbose_p = 0;
 static int _FULL_FRAME_verbose_p = 0;
 static int _verbose_send_p = 0;
 
-static int HAT_LED = 27;
-static int PI_LED = 47;
-
 /**********************************************************
  * Setup
  */
@@ -74,8 +71,8 @@ int inet_init(w5500_t* nic, const verbose_t* verbosity) {
     // Layer 4
     udp_init(verbosity);
 
-    gpio_set_output(PI_LED);
-    gpio_set_off(PI_LED);
+    gpio_set_output(GPIO_PI_LED);
+    gpio_set_off(GPIO_PI_LED);
 
     return INET_SUCCESS;
 }
@@ -134,24 +131,24 @@ int inet_send_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, const void*
 
     uint16_t frame_length = nbytes + FRAME_HEADER_BYTES;
 
-    frame_t frame;
-    memcpy(frame.dest_hw_addr, dest_hw_addr, MAC_ADDR_BYTES);
-    memcpy(frame.src_hw_addr, _nic->hw_addr, MAC_ADDR_BYTES);
-    frame.ethertype = ethertype;
-    memcpy(frame.data, data, nbytes);
+    memset(&_frame_rx, 0, sizeof(_frame_rx));
+    memcpy(_frame_rx.dest_hw_addr, dest_hw_addr, MAC_ADDR_BYTES);
+    memcpy(_frame_rx.src_hw_addr, _nic->hw_addr, MAC_ADDR_BYTES);
+    _frame_rx.ethertype = ethertype;
+    memcpy(_frame_rx.data, data, nbytes);
 
-    swapEndian16(&frame.ethertype); // Swap ethertype since it is sent big endian
+    swapEndian16(&_frame_rx.ethertype); // Swap ethertype since it is sent big endian
 
     if (_verbose_send_p || _FULL_FRAME_verbose_p) {
         trace("Sending frame, ethertype %x, dest MAC {%X:%X:%X:%X:%X:%X}, length %d\n", ethertype,
             dest_hw_addr[0], dest_hw_addr[1], dest_hw_addr[2],
             dest_hw_addr[3], dest_hw_addr[4], dest_hw_addr[5],
             frame_length);
-        print_bytes("", &frame, frame_length);
+        print_bytes("", &_frame_rx, frame_length);
     }
         
      
-    uint16_t bytes_written = w5500_write_tx_bytes(_nic, &frame, frame_length, INET_NIC_SOCKET);
+    uint16_t bytes_written = w5500_write_tx_bytes(_nic, &_frame_rx, frame_length, INET_NIC_SOCKET);
     if (bytes_written == 0)
         return INET_WRITE_FRAME_ERROR;
 

@@ -13,7 +13,7 @@ LAYER 3: IPV4
 #include "icmp.h"
 #include "udp.h"
 
-static ipv4_t _ipv4_rx; // IPv4 buffer. will do one for each protocol perhaps
+static ipv4_t _ipv4; // IPv4 buffer. will do one for each protocol perhaps
 
 static int _verbose_p = 0;
 static int _verbose_full_p = 0;
@@ -42,28 +42,29 @@ int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, 
 
     // ---------- TX packet ---------- 
     uint16_t packet_length = nbytes + IPV4_PACKET_HEADER_BYTES;
-    ipv4_t packet;
-    packet.version = IPV4_VERS_4; // Gonna assume we aren't changing this
-    packet.header_length_words = IPV4_PACKET_HEADER_WORDS;
-    packet.type_of_service = N_A;
-    packet.total_length = packet_length;
-    packet.identification = N_A;
-    packet.flags = N_A;
-    packet.fragment_offset = N_A;
-    packet.ttl = IPV4_DEFAULT_TTL;
-    packet.protocol = ipv4_protocol;
-    packet.checksum = 0; // Checksum to be filled later but must be 0 for now
-    memcpy(packet.src_ipv4_address, inet_get_ipv4_addr(), IPV4_ADDR_BYTES);
-    memcpy(packet.dest_ip_address, dest_ipv4_addr, IPV4_ADDR_BYTES);
-    memcpy(packet.data, data, nbytes);
+
+    memset(&_ipv4, 0, sizeof(_ipv4));
+    _ipv4.version = IPV4_VERS_4; // Gonna assume we aren't changing this
+    _ipv4.header_length_words = IPV4_PACKET_HEADER_WORDS;
+    _ipv4.type_of_service = N_A;
+    _ipv4.total_length = packet_length;
+    _ipv4.identification = N_A;
+    _ipv4.flags = N_A;
+    _ipv4.fragment_offset = N_A;
+    _ipv4.ttl = IPV4_DEFAULT_TTL;
+    _ipv4.protocol = ipv4_protocol;
+    _ipv4.checksum = 0; // Checksum to be filled later but must be 0 for now
+    memcpy(_ipv4.src_ipv4_address, inet_get_ipv4_addr(), IPV4_ADDR_BYTES);
+    memcpy(_ipv4.dest_ip_address, dest_ipv4_addr, IPV4_ADDR_BYTES);
+    memcpy(_ipv4.data, data, nbytes);
 
     // ---------- Packet conditioning for endianness and stuff ---------- 
-    swapNibbles8(&packet);                  // Swap version / header length byte [0]
-    swapEndian16(&packet.total_length);     // Swap total length (little->big endian) [2:3]
+    swapNibbles8(&_ipv4);                  // Swap version / header length byte [0]
+    swapEndian16(&_ipv4.total_length);     // Swap total length (little->big endian) [2:3]
 
     // ---------- crc16 ---------- 
-    uint8_t* cksum_ptr = (uint8_t*)&packet.checksum;
-    uint16_t checksum = our_crc16(&packet, IPV4_PACKET_HEADER_BYTES);
+    uint8_t* cksum_ptr = (uint8_t*)&_ipv4.checksum;
+    uint16_t checksum = our_crc16(&_ipv4, IPV4_PACKET_HEADER_BYTES);
     *cksum_ptr = ( (checksum >> 8) & 0xFF);
     *(cksum_ptr + 1) = (checksum & 0xFF);
 
@@ -78,36 +79,36 @@ int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, 
             dest_ipv4_addr[2], dest_ipv4_addr[3]);
     
     // ---------- Make frame (Layer 2)! ---------- 
-    return inet_send_frame(dest_hw_addr, FRAME_IPV4, &packet, packet_length);
+    return inet_send_frame(dest_hw_addr, FRAME_IPV4, &_ipv4, packet_length);
 }
 
 int inet_ipv4_handler(const uint8_t* data, uint16_t packet_bytes) {
     int err;
-    memcpy(&_ipv4_rx, data, packet_bytes);
+    memcpy(&_ipv4, data, packet_bytes);
 
     // 1. Checksum TODO
     // uint16_t recv_cksum = ipv4->checksum;
     // swapEndian16(&ipv4->total_length);
 
     // 2. Flipping endians
-    swapNibbles8(&_ipv4_rx);                  // Swap version / header length byte [0]
-    swapEndian16(&_ipv4_rx.total_length);     // Swap total length (little->big endian) [2:3]
+    swapNibbles8(&_ipv4);                  // Swap version / header length byte [0]
+    swapEndian16(&_ipv4.total_length);     // Swap total length (little->big endian) [2:3]
 
     // TODO: more checks?
 
 
     if (_verbose_full_p) {
-        print_bytes("Layer 3 ipv4: ", &_ipv4_rx, packet_bytes);
+        print_bytes("Layer 3 ipv4: ", &_ipv4, packet_bytes);
     }
 
     // 3. Check header
-    if ((err = ipv4_check_header(&_ipv4_rx, packet_bytes)) < INET_SUCCESS) {
+    if ((err = ipv4_check_header(&_ipv4, packet_bytes)) < INET_SUCCESS) {
         return err;
     }
 
     // 4. ipv4_addr checks
 
-    return ipv4_protocol_handler(&_ipv4_rx, packet_bytes);
+    return ipv4_protocol_handler(&_ipv4, packet_bytes);
 }
 
 

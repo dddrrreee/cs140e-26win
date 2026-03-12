@@ -15,7 +15,8 @@ COMMON_SRC += net-stack/udp.c
 # PROGS += tests/1-test-arp-table.c
 # PROGS += tests/1-test-fill-arp-table.c
 # PROGS += tests/1-test-send-resolved-arp.c
-PROGS += tests/1-test-send-recv-udp.c
+# PROGS += tests/1-test-send-recv-udp.c
+# PROGS += tests/1-test-udp-thread.c
 
 # Playgrounds
 # PROGS += tests/0-playground-nrf.c
@@ -26,16 +27,19 @@ PROGS += tests/1-test-send-recv-udp.c
 
 # Just run the stack
 # PROGS += tests/0-playground-net-stack.c
+PROGS += tests/1-playground-udp-thread.c
 
 
 # next week you'll get rid of all of these
 O = $(CS140E_2026_PATH)/libpi
-STAFF_OBJS += $(O)/staff-objs/staff-full-except.o
-STAFF_OBJS += $(O)/staff-objs/staff-full-except-asm.o
-STAFF_OBJS += $(O)/staff-objs/staff-switchto-asm.o
+# STAFF_OBJS += $(O)/staff-objs/staff-full-except.o
+# STAFF_OBJS += $(O)/staff-objs/staff-full-except-asm.o
+# STAFF_OBJS += $(O)/staff-objs/staff-switchto-asm.o
 STAFF_OBJS += $(O)/staff-objs/staff-kmalloc.o
-
 STAFF_OBJS += $(O)/staff-objs/staff-hw-spi.o
+
+# STAFF_OBJS += $(O)/staff-objs/staff-rpi-thread-asm.o
+# STAFF_OBJS += $(O)/staff-objs/staff-rpi-thread.o
 
 BOOTLOADER = my-install
 TTYUSB = 

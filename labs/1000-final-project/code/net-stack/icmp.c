@@ -14,6 +14,8 @@ void icmp_init(const verbose_t* verbosity) {
     }
 }
 
+static icmp_echo_t _icmp;
+
 int inet_icmp_handler(const uint8_t* data, const uint8_t* src_addr, uint16_t icmp_bytes) {
     
     // https://www.rfc-editor.org/rfc/rfc792
@@ -49,16 +51,16 @@ int inet_send_ping(const uint8_t* dest_ipv4_addr, uint8_t ping_type, const void*
 
     uint16_t icmp_length = nbytes + ICMP_HEADER_BYTES;
 
-    icmp_echo_t icmp;
-    icmp.type = ping_type;
-    icmp.code = 0;
-    icmp.checksum = 0; // Checksum to be filled
-    icmp.identifier = N_A; // Not used in icmp echo
-    icmp.seq_number = N_A; // Not used in icmp echo
-    memcpy(icmp.data, data, nbytes);
+    memset(&_icmp, 0, sizeof(_icmp));
+    _icmp.type = ping_type;
+    _icmp.code = 0;
+    _icmp.checksum = 0; // Checksum to be filled
+    _icmp.identifier = N_A; // Not used in icmp echo
+    _icmp.seq_number = N_A; // Not used in icmp echo
+    memcpy(_icmp.data, data, nbytes);
 
-    uint8_t* cksum_ptr = (uint8_t*)&icmp.checksum;
-    uint16_t checksum = our_crc16(&icmp, icmp_length);
+    uint8_t* cksum_ptr = (uint8_t*)&_icmp.checksum;
+    uint16_t checksum = our_crc16(&_icmp, icmp_length);
     *cksum_ptr = ( (checksum >> 8) & 0xFF);
     *(cksum_ptr + 1) = (checksum & 0xFF);
 
@@ -68,7 +70,7 @@ int inet_send_ping(const uint8_t* dest_ipv4_addr, uint8_t ping_type, const void*
             dest_ipv4_addr[0], dest_ipv4_addr[1],
             dest_ipv4_addr[2], dest_ipv4_addr[3]);
 
-    int err = inet_send_ipv4_packet(dest_ipv4_addr, PROTOCOL_ICMP, &icmp, icmp_length);
+    int err = inet_send_ipv4_packet(dest_ipv4_addr, PROTOCOL_ICMP, &_icmp, icmp_length);
     if (err > INET_SUCCESS)
         return INET_ICMP_PING_SENT;
     

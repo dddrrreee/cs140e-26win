@@ -7,6 +7,8 @@
 // GPIO pin mappings for UART
 #define GPIO_TX 14
 #define GPIO_RX 15
+#define GPIO_HAT_LED 27
+#define GPIO_PI_LED 47
 
 // different functions we can set GPIO pins to.
 typedef enum {

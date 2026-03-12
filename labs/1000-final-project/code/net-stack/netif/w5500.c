@@ -23,8 +23,8 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
     volatile uint8_t val;
 
     // Status LED turn ON
-    gpio_set_output(PI_LED);
-    gpio_set_off(PI_LED);
+    gpio_set_output(GPIO_PI_LED);
+    gpio_set_off(GPIO_PI_LED);
     
     // TODO: look in BCM2835 datasheet p. 156 for clock div
     // "SCLK = Core Clock / CDIV
@@ -131,7 +131,7 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
     trace("PHYCFGR  = %x\n", w5500_get8(nic,W5500_BLK_COMMON,W5500_REG_PHYCFGR));
     trace("Sn_SR    = %x\n", w5500_get8(nic,W5500_SOCKET_0|W5500_BLK_SOCKET_REG, W5500_Sn_REG_SR));
 
-    gpio_set_off(PI_LED);
+    gpio_set_on(GPIO_PI_LED);
 }
 
 /********************************************************************************************************************
