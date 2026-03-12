@@ -71,11 +71,12 @@ void arp_add_entry_test(const uint8_t* ip_addr, const uint8_t* mac_addr) {
         temp_ip[3] = i;
         temp_mac[5] = i;
         int err = inet_add_arp_entry(temp_ip, temp_mac);
+        if (err > INET_SUCCESS) {
+            trace("Return code %d\n", i);
+            break;
+        }
 
         switch (err) {
-            case INET_SUCCESS:
-                trace("Found at entry %d\n", i);
-                break;
             case INET_ARP_NO_TABLE_ENTRY:
                 panic("Entry %d not found, supposed to be at index %d\n", i, i);
             case INET_ARP_FOUND_BUT_INVALID:

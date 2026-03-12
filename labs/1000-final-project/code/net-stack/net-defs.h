@@ -23,6 +23,7 @@ enum {
 
 
     // Frame
+    INET_WROTE_FRAME = 10,
     INET_MAC_FILTERED = -12,
     INET_NOT_IPV4 = -13,
     INET_MAC_NOT_FOR_US = -14,
@@ -54,9 +55,11 @@ enum {
     // UDP
     INET_UDP_RECEIVED = 70,
     INET_UDP_SENT = 71,
+    INET_UDP_SEND_TO_HANDLER = 72,
     INET_UDP_LENGTH_MISMATCH = -70,
     INET_UDP_UNSUPPORTED_PORT = -71,
     INET_UDP_DATA_TOO_LONG = -72,
+    INET_UDP_PORT_TABLE_FULL = -73,
 
     // Unsupported
     INET_FRAME_UNSUPPORTED_ETHERTYPE = -200,
@@ -97,6 +100,7 @@ enum {
     UDP_MAX_SIZE = IPV4_MAX_DATA_SIZE,
     UDP_HEADER_BYTES = 8,
     UDP_MAX_DATA_SIZE = UDP_MAX_SIZE - UDP_HEADER_BYTES,
+    UDP_PORT_TABLE_SIZE = 32,
 };
 
 
@@ -254,6 +258,23 @@ typedef struct { // https://www.rfc-editor.org/rfc/rfc768.txt
     uint8_t data[UDP_MAX_DATA_SIZE];
 } udp_t;
 _Static_assert(sizeof(udp_t) == UDP_MAX_SIZE, "udp_t size wrong");
+
+// Handler responsible to memcpy data
+typedef void (*udp_port_handler_t)(
+
+    const uint8_t src_ip[4],
+    uint16_t src_port,
+    uint16_t dest_port,
+    const uint8_t* data,
+    uint16_t len
+);
+
+typedef struct { // https://www.rfc-editor.org/rfc/rfc768.txt
+    udp_port_handler_t handler;
+    uint16_t port; 
+} udp_port_t;
+// _Static_assert(sizeof(udp_port_t) == 6, "udp_t size wrong"); // compiler thinks this is 64-bit which is dunmb
+
 
 // https://www.rfc-editor.org/rfc/rfc2131.txt
 

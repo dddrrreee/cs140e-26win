@@ -33,8 +33,8 @@ void notmain(void) {
 
         int err = inet_resolve_ip_address(target_ip, hw_addr);
 
-        if (err == INET_SUCCESS) {
-            trace("ARP entry discovered:\n");
+        if (err > INET_SUCCESS) {
+            trace("ARP entry discovered with return code (should be 0 or greater): %d\n", err);
             print_arp_entry(target_ip, hw_addr, 1);
             trace("\n");
             break;

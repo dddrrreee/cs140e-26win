@@ -14,6 +14,9 @@
 #include "../endian.h"
 #include "../print-utilities.h"
 
+#include "gpio.h"
+
+
 static w5500_t* _nic = NULL;
 
 static frame_t _frame_rx; // Buffer for reading frames
@@ -21,6 +24,9 @@ static frame_t _frame_rx; // Buffer for reading frames
 static int _verbose_p = 0;
 static int _FULL_FRAME_verbose_p = 0;
 static int _verbose_send_p = 0;
+
+static int HAT_LED = 27;
+static int PI_LED = 47;
 
 /**********************************************************
  * Setup
@@ -30,6 +36,8 @@ static int _verbose_send_p = 0;
 verbose_t inet_verbosity_init() {
     return (verbose_t){0};  // Sets all verbosities to 0
 }
+
+// TODO: NET STATUS LED fn
 
 int inet_init(w5500_t* nic, const verbose_t* verbosity) {
 
@@ -66,6 +74,9 @@ int inet_init(w5500_t* nic, const verbose_t* verbosity) {
     // Layer 4
     udp_init(verbosity);
 
+    gpio_set_output(PI_LED);
+    gpio_set_off(PI_LED);
+
     return INET_SUCCESS;
 }
 
@@ -75,11 +86,11 @@ int inet_init(w5500_t* nic, const verbose_t* verbosity) {
 
 int inet_poll_frame(int flush_buffer) {
     if (_nic == NULL) return INET_NIC_NOT_INITIALIZED;
+    int err;
 
     // Read frame
     uint16_t read_bytes;
-    int err = inet_read_frame(&_frame_rx, &read_bytes);
-    if (err != INET_SUCCESS) {
+    if ((err = inet_read_frame(&_frame_rx, &read_bytes)) < INET_SUCCESS) {
         return err;
     }
 
@@ -104,13 +115,14 @@ int inet_poll_frame(int flush_buffer) {
     }
 
     // 2. Handle based on ethertype (for now just handle IPv4, but could add more handling here)
-    err = handle_ethertype(&_frame_rx, read_bytes);
-    if (err < INET_SUCCESS) {
+    if ((err = handle_ethertype(&_frame_rx, read_bytes)) < INET_SUCCESS) {
         return err; // Ethertype not handled
     }
 
     // 3. Flush at end
     if (flush_buffer) {
+        if (_verbose_p || _verbose_send_p)
+            trace("Flushing W5500 buffer\n");
         w5500_fast_flush_rx(_nic, INET_NIC_SOCKET);
     }
 
@@ -143,7 +155,7 @@ int inet_send_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, const void*
     if (bytes_written == 0)
         return INET_WRITE_FRAME_ERROR;
 
-    return INET_SUCCESS;
+    return INET_WROTE_FRAME;
 }
 
 /**********************************************************
@@ -196,13 +208,12 @@ int handle_ethertype(frame_t* frame, uint16_t frame_nbytes) {
             // FRAME_HEADER_BYTES + ARP_MESSAGE_BYTES = 46
             // Therefore we strip the padding and stick to the protocol
             return inet_arp_handler(frame->data, ARP_MESSAGE_BYTES);
-        default:
-            if (_verbose_p)
-                trace("Unsupported ethertype %x\n", frame->ethertype);
-            return INET_FRAME_UNSUPPORTED_ETHERTYPE; // Don't handle this protocol
+        
     }
 
-    return INET_SUCCESS;
+    if (_verbose_p)
+        trace("Unsupported ethertype %x\n", frame->ethertype);
+    return INET_FRAME_UNSUPPORTED_ETHERTYPE; // Don't handle this protocol
 }
 /**********************************************************
  * Internal Helpers

@@ -54,14 +54,14 @@ int process_packets(const w5500_t* nic, uint8_t* rx_buffer) {
     frame_t frame;
     uint16_t nbytes;
     err = inet_read_frame(&frame, &nbytes);
-    if (err != INET_SUCCESS) {
-        // trace("Error reading frame: %d\n", err);
+    trace("Read frame return code (should be 0 or greater): %d\n", err);
+    if (err < INET_SUCCESS) {
         return err;
     }
     print_ethertype(frame.ethertype);
 
     if (frame.ethertype != FRAME_IPV4) {
-        w5500_fast_flush_rx(nic);
+        w5500_fast_flush_rx(nic, W5500_SOCKET_0);
         return 0;
     }
 
@@ -87,19 +87,19 @@ int process_packets(const w5500_t* nic, uint8_t* rx_buffer) {
 
     if (version != 4) {
         trace("Not IPv4\n");
-        w5500_fast_flush_rx(nic, socket);
+        w5500_fast_flush_rx(nic, W5500_SOCKET_0);
         return 0;
     }
 
     if (ihl < 20) {
         trace("Invalid IHL: %d\n", ihl);
-        w5500_fast_flush_rx(nic, socket);
+        w5500_fast_flush_rx(nic, W5500_SOCKET_0);
         return 0;
     }
 
     if (ihl != 20) {
         trace("IPv4 options unsupported (IHL=%d)\n", ihl);
-        w5500_fast_flush_rx(nic, socket);
+        w5500_fast_flush_rx(nic, W5500_SOCKET_0);
         return 0;
     }
 
@@ -114,20 +114,20 @@ int process_packets(const w5500_t* nic, uint8_t* rx_buffer) {
     if (total_length < ihl || total_length > packet_length) {
         trace("Invalid IPv4 length: total=%u ihl=%u packet=%u\n",
             total_length, ihl, packet_length);
-        w5500_fast_flush_rx(nic, socket);
+        w5500_fast_flush_rx(nic, W5500_SOCKET_0);
         return 0;
     }
 
     if (packet.protocol != PROTOCOL_ICMP) {
         trace("Skipping non-ICMP IPv4 packet (proto: %x)\n", packet.protocol);
-        w5500_fast_flush_rx(nic, socket);
+        w5500_fast_flush_rx(nic, W5500_SOCKET_0);
         return 0;
     }
 
     // ---------- ICMP Echo ----------
-    if ((packet.data[0] != ICMP_ECHO_MSG) && (packet.data[0] != ICMP_ECHO_REPLY)) {
+    if ((packet.data[0] != ICMP_ECHO_REQUEST) && (packet.data[0] != ICMP_ECHO_REPLY)) {
         trace("Skipping non-echo ICMP packet (type: %x)\n", packet.data[0]);
-        w5500_fast_flush_rx(nic, socket);
+        w5500_fast_flush_rx(nic, W5500_SOCKET_0);
         return 0;
     }
     icmp_echo_t echo;
@@ -141,21 +141,21 @@ int process_packets(const w5500_t* nic, uint8_t* rx_buffer) {
 
 
     // ---------- Flush the buffer after processing one packet ---------- (ik it's bad)
-    w5500_fast_flush_rx(nic, socket);
+    w5500_fast_flush_rx(nic, W5500_SOCKET_0);
 
     return nbytes;
 }
 
 #if 0
-int process_packets(const w5500_t* nic, uint8_t* rx_buffer, uint8_t socket) {
+int process_packets(const w5500_t* nic, uint8_t* rx_buffer, uint8_t W5500_SOCKET_0) {
 
     // Only if there are bytes are available
-    uint16_t bytes_available = w5500_rx_available(nic, socket);
+    uint16_t bytes_available = w5500_rx_available(nic, W5500_SOCKET_0);
     if (bytes_available == 0)
         return 0;
 
     // Attempt to read bytes
-    uint16_t read_bytes = w5500_read_rx_bytes(nic, rx_buffer, W5500_SOCKET_0);
+    uint16_t read_bytes = w5500_read_rx_bytes(nic, rx_buffer, W5500_W5500_SOCKET_0_0);
 
     // Filter frame length
     if (read_bytes < FRAME_MIN_SIZE) {
@@ -231,12 +231,12 @@ void notmain(void) {
 
     while(1) {
 
-        inet_send_ping(IPV4_BROADCAST, ICMP_ECHO_MSG, message, msg_len);
-        // int status = process_packets(&nic, rx_buffer, W5500_SOCKET_0);
+        inet_send_ping(IPV4_BROADCAST, ICMP_ECHO_REQUEST, message, msg_len);
+        // int status = process_packets(&nic, rx_buffer, W5500_W5500_SOCKET_0_0);
         uint8_t flush_buffer = 1;
         inet_poll_frame(flush_buffer);
 
-        // uint16_t rx_bytes = w5500_rx_available(&nic, W5500_SOCKET_0);
+        // uint16_t rx_bytes = w5500_rx_available(&nic, W5500_W5500_SOCKET_0_0);
         delay_ms(10);
 
         

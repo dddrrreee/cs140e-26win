@@ -101,8 +101,7 @@ int inet_ipv4_handler(const uint8_t* data, uint16_t packet_bytes) {
     }
 
     // 3. Check header
-    err = ipv4_check_header(&_ipv4_rx, packet_bytes);
-    if (err != INET_SUCCESS) {
+    if ((err = ipv4_check_header(&_ipv4_rx, packet_bytes)) < INET_SUCCESS) {
         return err;
     }
 
@@ -151,16 +150,11 @@ int ipv4_protocol_handler(const ipv4_t* packet, uint16_t packet_bytes)  {
             return inet_icmp_handler(packet->data, packet->src_ipv4_address, packet_bytes - IPV4_PACKET_HEADER_BYTES);
             
         case PROTOCOL_UDP:
-
             return inet_udp_handler(packet->data, packet->src_ipv4_address, packet_bytes - IPV4_PACKET_HEADER_BYTES);
-        default:
-            if (_verbose_p)
-                trace("Unhandled IPV4 Protocol %d\n", protocol);
-            return INET_IPV4_UNSUPPORTED_PROTOCOL;
     }
 
     if (_verbose_p)
-        trace("IPv4 Not Handled quite yet\n");
-    return INET_SUCCESS;
+        trace("Unhandled IPV4 Protocol %d\n", protocol);
+    return INET_IPV4_UNSUPPORTED_PROTOCOL;
 }
 

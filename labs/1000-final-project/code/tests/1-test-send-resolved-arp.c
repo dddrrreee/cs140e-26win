@@ -34,7 +34,8 @@ void notmain(void) {
         inet_poll_frame(1);
         int err = inet_resolve_ip_address(PYTHON_SCRIPT_IP, mac_buf);
 
-        if (err == INET_SUCCESS) {
+        if (err > INET_SUCCESS) {
+            trace("Return code: %d\n", err);
             break;
         }
 

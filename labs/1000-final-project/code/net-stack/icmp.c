@@ -36,15 +36,12 @@ int inet_icmp_handler(const uint8_t* data, const uint8_t* src_addr, uint16_t icm
                 trace("Received ping REPLY from {%d.%d.%d.%d}\n",
                     src_addr[0], src_addr[1], src_addr[2], src_addr[3]);
             return INET_ICMP_PING_RECV;
-
-        default:
-            if (_verbose_p)
-                trace("INET_ICMP_UNSUPPORTED_TYPE %d received from {%d.%d.%d.%d}\n",
-                    icmp_type, src_addr[0], src_addr[1], src_addr[2], src_addr[3]);
-            return INET_ICMP_UNSUPPORTED_TYPE;
     }
 
-    return INET_SUCCESS;
+    if (_verbose_p)
+        trace("INET_ICMP_UNSUPPORTED_TYPE %d received from {%d.%d.%d.%d}\n",
+            icmp_type, src_addr[0], src_addr[1], src_addr[2], src_addr[3]);
+    return INET_ICMP_UNSUPPORTED_TYPE;
 }
 
 
@@ -72,8 +69,7 @@ int inet_send_ping(const uint8_t* dest_ipv4_addr, uint8_t ping_type, const void*
             dest_ipv4_addr[2], dest_ipv4_addr[3]);
 
     int err = inet_send_ipv4_packet(dest_ipv4_addr, PROTOCOL_ICMP, &icmp, icmp_length);
-
-    if (err == INET_SUCCESS)
+    if (err > INET_SUCCESS)
         return INET_ICMP_PING_SENT;
     
     return err;

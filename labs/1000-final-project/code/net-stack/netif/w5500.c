@@ -9,6 +9,10 @@
 #define BUFFER_SIZE_KB 2
 #define RX_BUFFER_SIZE_BYTES (BUFFER_SIZE_KB * 1024)
 #define TX_BUFFER_SIZE_BYTES (BUFFER_SIZE_KB * 1024)
+
+static uint8_t HAT_LED = 27;
+
+static uint8_t PI_LED = 47;
 /**********************************************************
  * Hardware routines that use SPI to read/write 
  * registers
@@ -18,6 +22,9 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
 
     volatile uint8_t val;
 
+    // Status LED turn ON
+    gpio_set_output(PI_LED);
+    gpio_set_off(PI_LED);
     
     // TODO: look in BCM2835 datasheet p. 156 for clock div
     // "SCLK = Core Clock / CDIV
@@ -123,6 +130,8 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
     trace("VERSIONR = %x\n", w5500_get8(nic,W5500_BLK_COMMON,W5500_REG_VERSIONR));
     trace("PHYCFGR  = %x\n", w5500_get8(nic,W5500_BLK_COMMON,W5500_REG_PHYCFGR));
     trace("Sn_SR    = %x\n", w5500_get8(nic,W5500_SOCKET_0|W5500_BLK_SOCKET_REG, W5500_Sn_REG_SR));
+
+    gpio_set_off(PI_LED);
 }
 
 /********************************************************************************************************************

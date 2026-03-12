@@ -35,8 +35,8 @@ int find_arp_entry_by_ipv4(const uint8_t* ipv4_addr, uint32_t* table_index) {
 
     int found_empty = 0;
     *table_index = ARP_TABLE_SIZE; // Place that is not in the table as the default in case table is full
+    
     for (uint32_t i = 0; i < ARP_TABLE_SIZE; i++) {
-
         if (memcmp(_arp_table[i].ip_addr, ipv4_addr, IPV4_ADDR_BYTES) == 0 ) {
             *table_index = i;
             if (!_arp_table[i].valid)
@@ -203,11 +203,9 @@ int inet_arp_handler(const uint8_t* data, uint16_t nbytes) {
             if (_verbose_p)
                 trace("ARP from {%d.%d.%d.%d} is reply. Doing nothing now\n",
                     arp->src_ipv4_addr[0], arp->src_ipv4_addr[1], arp->src_ipv4_addr[2], arp->src_ipv4_addr[3]);
-            return INET_SUCCESS;
-
-        default:
-            return INET_ARP_INVALID_OP;
+            return INET_ARP_RECEIVED;
     }
+    return INET_ARP_INVALID_OP;
 }
 
 // https://www.rfc-editor.org/rfc/rfc826.html

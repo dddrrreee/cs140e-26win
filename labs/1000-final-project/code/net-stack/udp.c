@@ -11,6 +11,9 @@ static udp_t _udp_rx; // UDP buffer. will do one for each protocol perhaps
 
 static int _verbose_p = 0;
 
+static udp_port_t _port_handlers[UDP_PORT_TABLE_SIZE];
+
+
 //----------------------------------------------------------
 //              Setup
 //----------------------------------------------------------
@@ -21,6 +24,30 @@ void udp_init(const verbose_t* verbosity) {
         _verbose_p = 1;
         trace("UDP verbosity enabled\n");
     }
+
+    inet_clear_port_handlers();
+}
+
+int inet_clear_port_handlers() { 
+    memset(_port_handlers, 0, sizeof(_port_handlers)); 
+    if (_verbose_p)
+        trace("Cleared UDP port table with %d entries\n", UDP_PORT_TABLE_SIZE);
+    return INET_SUCCESS;
+}
+
+int inet_udp_add_port_handler(uint16_t port, udp_port_handler_t handler){
+
+    for (uint32_t i = 0; i < UDP_PORT_TABLE_SIZE; i++) {
+        if (_port_handlers[i].handler == NULL) {
+            _port_handlers[i].port = port;
+            _port_handlers[i].handler = handler;
+            if (_verbose_p)
+                trace("Added UDP Port %d handler with function at %x\n", port, handler);
+            return INET_SUCCESS;
+        }
+    }
+
+    return INET_UDP_PORT_TABLE_FULL;
 }
 
 //----------------------------------------------------------
@@ -29,7 +56,6 @@ void udp_init(const verbose_t* verbosity) {
 
 
 int inet_udp_send(uint16_t src_port, uint16_t dest_port, const uint8_t* dest_ip, const void* data, uint16_t data_len) {
-
     // 1. Just data checking I think
     if (data_len > UDP_MAX_SIZE) {
         if (_verbose_p)
@@ -51,7 +77,7 @@ int inet_udp_send(uint16_t src_port, uint16_t dest_port, const uint8_t* dest_ip,
     swapEndian16(&udp_tx.length);
     
     int err = inet_send_ipv4_packet(dest_ip, PROTOCOL_UDP, &udp_tx, data_len + UDP_HEADER_BYTES);
-    if (err == INET_SUCCESS) {
+    if (err >= INET_SUCCESS) {
         return INET_UDP_SENT;
     }
 
@@ -67,6 +93,9 @@ int inet_udp_handler(const uint8_t* data, const uint8_t* src_ipv4_addr, uint16_t
     int err;
     memcpy(&_udp_rx, data, nbytes);
 
+    if (_verbose_p)
+        trace("Received UDP packet of %d bytes\n", nbytes);
+
     // 0. Checksum TODO???
     // uint16_t recv_cksum = ipv4->checksum;
     // swapEndian16(&ipv4->total_length);
@@ -81,7 +110,7 @@ int inet_udp_handler(const uint8_t* data, const uint8_t* src_ipv4_addr, uint16_t
     // 2. Length checking
     if (_udp_rx.length > nbytes) {
         if (_verbose_p)
-            trace("UDP claims udp_length %d bytes but only received %d bytes\n", _udp_rx.length, nbytes);
+            trace("Packet claims udp_length is %d bytes but only received %d bytes\n", _udp_rx.length, nbytes);
         return INET_UDP_LENGTH_MISMATCH;
     }
     uint16_t payload_len = _udp_rx.length - UDP_HEADER_BYTES;
@@ -90,21 +119,20 @@ int inet_udp_handler(const uint8_t* data, const uint8_t* src_ipv4_addr, uint16_t
     uint16_t their_port = _udp_rx.src_port;
     uint16_t our_port = _udp_rx.dest_port;
 
-
-    switch (our_port) {
-        case 42069:
-            print_bytes("UDP: ", data, nbytes);
-            print_dec("UDP: ", data, nbytes);
-            print_as_string("UDP: ", data, nbytes);
-            return INET_UDP_RECEIVED;
-        default:
+    for (uint32_t i = 0; i < UDP_PORT_TABLE_SIZE; i++) {
+        if (_port_handlers[i].handler && _port_handlers[i].port == our_port) {
             if (_verbose_p)
-                trace("UDP unsupported port %d from {%d.%d.%d.%d:%d}\n", our_port,
+                trace("Calling UDP handler for port %d {%d.%d.%d.%d:%d}\n", our_port,
                     src_ipv4_addr[0], src_ipv4_addr[1], src_ipv4_addr[2], src_ipv4_addr[3], their_port);
-            return INET_UDP_UNSUPPORTED_PORT;
+            _port_handlers[i].handler(src_ipv4_addr, their_port, our_port, _udp_rx.data, payload_len);
+            return INET_UDP_SEND_TO_HANDLER;
+        }
     }
 
-    return INET_SUCCESS;
+    if (_verbose_p)
+        trace("UDP unsupported port %d from {%d.%d.%d.%d:%d}\n", our_port,
+            src_ipv4_addr[0], src_ipv4_addr[1], src_ipv4_addr[2], src_ipv4_addr[3], their_port);
+    return INET_UDP_UNSUPPORTED_PORT;
 }
 
 
