@@ -9,8 +9,9 @@ COMMON_SRC += net-stack/network.c
 COMMON_SRC += net-stack/icmp.c
 
 # Tests
-# PROGS += tests/1-test-arp-table.c
-PROGS += tests/1-test-arp-table-frame.c
+PROGS += tests/1-test-arp-table.c
+PROGS += tests/1-test-fill-arp-table.c
+# PROGS += tests/1-test-send-resolved-arp.c
 
 # Playgrounds
 # PROGS += tests/0-playground-nrf.c

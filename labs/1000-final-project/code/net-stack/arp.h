@@ -5,6 +5,8 @@
 #include <stdint.h>
 #include "net-defs.h"
 
+// TODO: make more fields and invalidate, etc.
+
 
 void arp_set_verbose_p(int verbose);
 

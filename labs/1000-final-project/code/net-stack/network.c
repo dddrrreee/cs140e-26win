@@ -65,7 +65,8 @@ int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, 
     *(cksum_ptr + 1) = (checksum & 0xFF);
 
     // TODO: resolve IP ADDRESS
-    const uint8_t* dest_hw_addr = MAC_BROADCAST;
+    uint8_t dest_hw_addr[6];
+    inet_resolve_ip_address(dest_ipv4_addr, dest_hw_addr);
 
     // print_bytes("Packet: ", &packet, packet_length);
     

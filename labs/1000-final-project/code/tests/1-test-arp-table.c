@@ -1,6 +1,4 @@
 #include "rpi.h"
-#include "../net-stack/inet.h"
-#include "../net-stack/arp.h"
 #include "test-setup.h"
 
 const uint8_t ip_addr[4] = {1,2,3,0};
@@ -16,4 +14,6 @@ void notmain(void) {
     trace_arp_table("ARP Table after calling 'inet_add_arp_entry()':");
     arp_entry_should_exist_test(ip_addr, hw_addr);
     trace_arp_table("ARP Table after calling 'find_arp_entry()' again:");
+
+    printk("PASS: %s\n", __FILE__);
 }

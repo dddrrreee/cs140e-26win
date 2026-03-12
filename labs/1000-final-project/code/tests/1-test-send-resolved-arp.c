@@ -1,11 +1,9 @@
+// with tests/arp_test.py
+
 #include "rpi.h"
 #include "spi.h"
-#include "../print-utilities.h"
-#include "../crc-16.h"
-#include "../net-stack/netif/w5500.h"
 #include "../net-stack/inet.h"
 #include "../net-stack/arp.h"
-#include "../net-stack/data-link.h"
 
 uint8_t target_ip[4] = {1,2,3,3};
 uint8_t hw_addr[6] = {0,0,0,0,0,0};
@@ -19,7 +17,6 @@ void notmain(void) {
         .ipv4_addr = {192, 168, 0, 3},
         .gateway_addr = {192, 168, 0, 1},
         .subnet_mask = {255, 255, 255, 0},
-        // .sockets_enabled = 0b00000001,
         .phy_mode = W5500_ALL_CAPABLE_AUTO_NEG_EN,
     };
     w5500_t nic;
@@ -27,17 +24,14 @@ void notmain(void) {
     w5500_init(&nic, &config);
     inet_init(&nic, 0);
 
-    
-
     uint32_t entry_index = ARP_TABLE_SIZE;
-    int err;
     trace("Polling for frames...\n");
 
     while(1) {
 
         inet_poll_frame(1);
 
-        err = inet_resolve_ip_address(target_ip, hw_addr);
+        int err = inet_resolve_ip_address(target_ip, hw_addr);
 
         if (err == INET_SUCCESS) {
             trace("ARP entry discovered:\n");
@@ -53,4 +47,5 @@ void notmain(void) {
     }
 
     trace_arp_table("ARP Table now!");
+
 }

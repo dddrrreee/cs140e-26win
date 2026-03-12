@@ -4,21 +4,28 @@
 
 #include "../crc-16.h"
 
+static int verbose_p = 0;
+
+void ping_verbose(int verbose) { verbose_p = verbose; }
+
 int inet_icmp_handler(const uint8_t* data, const uint8_t* src_addr, uint16_t icmp_bytes) {
     
     // https://www.rfc-editor.org/rfc/rfc792
     uint8_t icmp_type = data[0];
 
     switch (icmp_type) {
-        case ICMP_ECHO_MSG:
-            // trace("ICMP ECHO!\n");
+        case ICMP_ECHO_MSG: // Send back to the source of the echo request
+            if (verbose_p)
+                trace("Sending ICMP echo to {%d.%d.%d.%d}\n", src_addr[0], src_addr[1], src_addr[2], src_addr[3]);
             const char* msg = "THIS IS A REPLY";
-            // Send back to the source of the echo request
             inet_send_ping(src_addr, ICMP_ECHO_REPLY, msg, strlen(msg));
             return INET_SUCCESS;
+
         case ICMP_ECHO_REPLY:
-            trace("ICMP REPLY!\n");
+            if (verbose_p)
+                trace("Received ICMP REPLY!\n");
             return INET_SUCCESS;
+
         default:
             return INET_ICMP_UNSUPPORTED_TYPE;
     }
