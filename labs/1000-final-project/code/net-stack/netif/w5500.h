@@ -85,10 +85,10 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config);
  */
 
 
-uint16_t w5500_tx_available(const w5500_t* nic, uint8_t socket);
+// uint16_t w5500_tx_available(const w5500_t* nic, uint8_t socket);
 uint16_t w5500_write_tx_bytes(const w5500_t* nic, const void* buffer, uint32_t nbytes, uint8_t socket);
 
-uint16_t w5500_rx_available(const w5500_t* nic, uint8_t socket);
+// uint16_t w5500_rx_available(const w5500_t* nic, uint8_t socket);
 uint16_t w5500_read_rx_bytes(const w5500_t* nic, void* buffer, uint8_t socket);
 
 void w5500_fast_flush_rx(const w5500_t* nic, uint8_t socket);

@@ -8,6 +8,7 @@
 
 #define BUFFER_SIZE_KB 2
 #define RX_BUFFER_SIZE_BYTES (BUFFER_SIZE_KB * 1024)
+#define TX_BUFFER_SIZE_BYTES (BUFFER_SIZE_KB * 1024)
 /**********************************************************
  * Hardware routines that use SPI to read/write 
  * registers
@@ -124,51 +125,107 @@ void w5500_init(w5500_t* nic, w5500_conf_t* config) {
     trace("Sn_SR    = %x\n", w5500_get8(nic,W5500_SOCKET_0|W5500_BLK_SOCKET_REG, W5500_Sn_REG_SR));
 }
 
-/**********************************************************
- * Buffers
+/********************************************************************************************************************
+ *                  TX
  */
-
+#if 0
 uint16_t w5500_tx_available(const w5500_t* nic, uint8_t socket) {
     uint8_t buf[2];
     w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_TX_FSR0, buf, 2);
     return (buf[0] << 8) | buf[1];
 }
 
+
+
+// Helper: Advance `uint16_t* tx_ptr` AND CONFIRM BY SENDING RECV COMMAND
+static void w5500_advance_tx_pointer(const w5500_t* nic, uint8_t socket, uint16_t* tx_ptr, uint16_t data_len) {
+    *tx_ptr += data_len;
+    *tx_ptr %= TX_BUFFER_SIZE_BYTES;
+}
+
+// Helper: Write frame data with circular buffer wrap AND ADVANCE `uint16_t* tx_ptr`
+static void w5500_write_frame_data(const w5500_t* nic, uint8_t socket, uint16_t* tx_ptr, void* buffer, uint16_t data_len) {
+    uint16_t bytes_to_end = TX_BUFFER_SIZE_BYTES - *tx_ptr;
+    if (data_len <= bytes_to_end) {
+        w5500_putn(nic, socket | W5500_BLK_SOCKET_TX_BUF, *tx_ptr, buffer, data_len);
+    } else {
+        w5500_putn(nic, socket | W5500_BLK_SOCKET_TX_BUF, *tx_ptr, buffer, bytes_to_end);
+        w5500_putn(nic, socket | W5500_BLK_SOCKET_TX_BUF, 0, (uint8_t*)buffer + bytes_to_end, data_len - bytes_to_end);
+    }
+    w5500_advance_tx_pointer(nic, socket, tx_ptr, data_len);
+}
+
 uint16_t w5500_write_tx_bytes(const w5500_t* nic, const void* buffer, uint32_t nbytes, uint8_t socket) {
+    uint16_t avail = w5500_tx_available(nic, socket);
+    if (avail < nbytes) return 0;
 
     uint16_t tx_ptr;
     uint8_t ptr_buf[2];
 
-    // ---------- Get TX buffer pointer ---------- 
+    // ---------- Get TX buffer pointer (where the W5500 will send data) ---------- 
     w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_TX_WR0, ptr_buf, 2);
     tx_ptr = (ptr_buf[0] << 8) | ptr_buf[1];
-    
-    // TODO: implement buffer length checking. Default value of 2KB for TX buffer size
-    
-    // ---------- Advance TX buffer pointer ---------- 
-    // TODO: wrap / mod
-    tx_ptr += nbytes;
+
+    // ---------- write data ---------- 
+    w5500_write_frame_data(nic, socket, &tx_ptr, buffer, nbytes);
+
+    // ---------- advance and write back tx pointer ----------
     ptr_buf[0] = tx_ptr >> 8;
     ptr_buf[1] = tx_ptr & 0xFF;
-    
-
-    // ---------- write data ----------
-    w5500_putn(nic, socket | W5500_BLK_SOCKET_TX_BUF, tx_ptr, buffer, nbytes);
-
-    // ---------- update ptr and send ---------- 
     w5500_putn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_TX_WR0, ptr_buf, 2);
+
+    // ---------- tell chip to send frame ---------- 
     w5500_put8(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_CR, W5500_SEND_MAC);
 
     return nbytes;
 }
+#endif
 
+uint16_t w5500_write_tx_bytes(const w5500_t* nic, const void* buffer, uint32_t nbytes, uint8_t socket) {
+    uint8_t ptr_buf[2];
+
+    // ---------- Get free bytes ----------
+    w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_TX_FSR0, ptr_buf, 2);
+    uint16_t free_bytes = (ptr_buf[0] << 8) | ptr_buf[1];
+    if (free_bytes < nbytes) 
+        return 0;
+
+    // ---------- Get TX write pointer ----------
+    w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_TX_WR0, ptr_buf, 2);
+    uint16_t tx_ptr = (ptr_buf[0] << 8) | ptr_buf[1];
+
+    // ---------- Write with circular wrap ----------
+    uint16_t bytes_to_end = TX_BUFFER_SIZE_BYTES - tx_ptr;
+    if (nbytes <= bytes_to_end) {
+        w5500_putn(nic, socket | W5500_BLK_SOCKET_TX_BUF, tx_ptr, buffer, nbytes);
+    } else {
+        w5500_putn(nic, socket | W5500_BLK_SOCKET_TX_BUF, tx_ptr, buffer, bytes_to_end);
+        w5500_putn(nic, socket | W5500_BLK_SOCKET_TX_BUF, 0, (uint8_t*)buffer + bytes_to_end, nbytes - bytes_to_end);
+    }
+
+    // ---------- Set TX pointer ----------
+    tx_ptr = (tx_ptr + nbytes) % TX_BUFFER_SIZE_BYTES;
+    ptr_buf[0] = tx_ptr >> 8;
+    ptr_buf[1] = tx_ptr & 0xFF;
+    w5500_putn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_TX_WR0, ptr_buf, 2);
+
+    // ---------- Tel W5500 to send ----------
+    w5500_put8(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_CR, W5500_SEND_MAC);
+    return nbytes;
+}
+
+
+/********************************************************************************************************************
+ *                  RX
+ */
+#if 0
 uint16_t w5500_rx_available(const w5500_t* nic, uint8_t socket) {
     uint8_t buf[2];
     w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RSR0, buf, 2);
 
     uint16_t bytes_available = (buf[0] << 8) | buf[1];
 
-    if (bytes_available > BUFFER_SIZE_KB * 1024 || bytes_available == 0xFFFF) {  // Invalid if > buffer size or all 1s
+    if (bytes_available > BUFFER_SIZE_KB * 1024) {  // Invalid if > buffer size or all 1s
         return 0;
     }
 
@@ -180,8 +237,8 @@ static void w5500_advance_rx_pointer(const w5500_t* nic, uint8_t socket, uint16_
     uint8_t ptr_buf[2];
     *rx_ptr += data_len;
     *rx_ptr %= RX_BUFFER_SIZE_BYTES;
-    ptr_buf[0] = *rx_ptr >> 8;
-    ptr_buf[1] = *rx_ptr & 0xFF;
+    
+    
     w5500_putn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RD0, ptr_buf, 2);
     w5500_put8(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_CR, W5500_RECV);
 }
@@ -201,7 +258,6 @@ static void w5500_read_frame_data(const w5500_t* nic, uint8_t socket, uint16_t* 
 // Helper: Read 2-byte length header AND ADVANCE `uint16_t* rx_ptr`
 static uint16_t w5500_read_length_header(const w5500_t* nic, uint8_t socket, uint16_t* rx_ptr) {
     uint8_t head[2];
-    uint8_t ptr_buf[2];
 
     // Read length header and advance pointer by 2
     w5500_getn(nic, socket | W5500_BLK_SOCKET_RX_BUF, *rx_ptr, head, 2);
@@ -217,11 +273,11 @@ uint16_t w5500_read_rx_bytes(const w5500_t* nic, void* buffer, uint8_t socket) {
     uint16_t rx_ptr;
     uint8_t ptr_buf[2];
 
-    // Get current RX read pointer
+    // ---------- Get current RX read pointer ----------
     w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RD0, ptr_buf, 2);
     rx_ptr = (ptr_buf[0] << 8) | ptr_buf[1];
 
-    // Read length header (which advances pointer)
+    // ---------- Read length header (which advances pointer) ----------
     uint16_t raw_len = w5500_read_length_header(nic, socket, &rx_ptr);
     uint16_t data_len = raw_len - 2;  // Subtract header size
 
@@ -233,12 +289,57 @@ uint16_t w5500_read_rx_bytes(const w5500_t* nic, void* buffer, uint8_t socket) {
         return 0;
     }
 
-    // Read frame data (and advance pointer)
-    uint16_t data_start = rx_ptr % RX_BUFFER_SIZE_BYTES;
+    // ---------- Read frame data (and advance pointer) ----------
     w5500_read_frame_data(nic, socket, &rx_ptr, buffer, data_len);
+
+    ptr_buf[0] = *rx_ptr >> 8;
+    ptr_buf[1] = *rx_ptr & 0xFF;
 
     return data_len;
 }
+#endif
+
+uint16_t w5500_read_rx_bytes(const w5500_t* nic, void* buffer, uint8_t socket) {
+    uint8_t ptr_buf[2];
+
+    // ---------- Makes sure we can read the length ----------
+    w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RSR0, ptr_buf, 2);
+    uint16_t available_bytes = (ptr_buf[0] << 8) | ptr_buf[1];
+    if (available_bytes < 2)
+        return 0;
+
+    // ---------- Get RX Read Pointer ----------
+    w5500_getn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RD0, ptr_buf, 2);
+    uint16_t rx_ptr = (ptr_buf[0] << 8) | ptr_buf[1];
+
+    // ---------- Read 2-byte length of frame ----------
+    uint8_t len_buf[2];
+    w5500_getn(nic, socket | W5500_BLK_SOCKET_RX_BUF, rx_ptr, len_buf, 2);
+    rx_ptr = (rx_ptr + 2) % RX_BUFFER_SIZE_BYTES;
+    uint16_t nbytes = (len_buf[0] << 8) | len_buf[1];
+    if (nbytes > FRAME_MAX_SIZE) return 0;
+
+    // ---------- Read with circular frame ----------
+    uint16_t to_end = RX_BUFFER_SIZE_BYTES - rx_ptr;
+    if (nbytes <= to_end) {
+        w5500_getn(nic, socket | W5500_BLK_SOCKET_RX_BUF, rx_ptr, buffer, nbytes);
+    } else {
+        w5500_getn(nic, socket | W5500_BLK_SOCKET_RX_BUF, rx_ptr, buffer, to_end);
+        w5500_getn(nic, socket | W5500_BLK_SOCKET_RX_BUF, 0, (uint8_t*)buffer + to_end, nbytes - to_end);
+    }
+
+    // ---------- Set TX pointer ----------
+    rx_ptr = (rx_ptr + nbytes) % RX_BUFFER_SIZE_BYTES;
+    ptr_buf[0] = rx_ptr >> 8;
+    ptr_buf[1] = rx_ptr & 0xFF;
+    w5500_putn(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_RX_RD0, ptr_buf, 2);
+
+    // ---------- Tel W5500 we are done ----------
+    w5500_put8(nic, socket | W5500_BLK_SOCKET_REG, W5500_Sn_REG_CR, W5500_RECV);
+
+    return nbytes;
+}
+
 
 void w5500_fast_flush_rx(const w5500_t* nic, uint8_t socket)
 {
