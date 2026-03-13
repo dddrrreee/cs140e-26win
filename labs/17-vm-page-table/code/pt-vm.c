@@ -7,16 +7,18 @@
 enum { verbose_p = 1 };
 enum { OneMB = 1024*1024 };
 
-vm_pt_t *vm_pt_alloc(unsigned n) {
+vm_pt_t *vm_pt_alloc(unsigned n) {  // *
     demand(n == 4096, we only handling a fully-populated page table right now);
 
     vm_pt_t *pt = 0;
     unsigned nbytes = n * sizeof *pt;
 
+
+
     // trivial:
     // allocate pt with n entries [should look just like you did 
     // for pinned vm]
-    pt = staff_vm_pt_alloc(n);
+    pt = kmalloc_aligned(nbytes, 1<<14);
 
     demand(is_aligned_ptr(pt, 1<<14), must be 14-bit aligned!);
     return pt;
@@ -76,7 +78,7 @@ vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr)
     assert(index < PT_LEVEL1_N);
 
     // 1. lookup the <pte> in <pt> using index.
-    vm_pte_t *pte = 0;
+    vm_pte_t *pte = &pt[index];
 
     // 2. use values in <attr> to set pte's:
     //  - nG
@@ -88,12 +90,33 @@ vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr)
     //  - XN
     // also: <tag> since its a 1mb section.
 
-    // 3. set <pte->sec_base_addr> to the right physical section.
 
-    return staff_vm_map_sec(pt,va,pa,attr);
+
+
+    pte->tag = 0b10;                            // p. B4-27 always 0b10 (makes it a section descriptor)
+    pte->B = (attr.mem_attr >> 1) & 1;          // p. B4-12 (same as pin_t)
+    pte->C = (attr.mem_attr & 1);               // p. B4-12 (same as pin_t)
+    pte->XN = !mem_perm_islegal(attr.AP_perm);  // p. B4-9 or B4-25???  // TODO: SET with CTRL reg
+    pte->domain = attr.dom;                     // p. B4-10 (same as pin_t)
+    pte->IMP = 0;                               // p. B4-26 (for 1MB sections)
+    pte->AP = attr.AP_perm & 0b011;             // p. B4-9 (same as pin_t)
+    pte->TEX = (attr.mem_attr >> 2) & 0b111;                               // p. B4-12 using strongly ordered            
+    pte->APX = (attr.AP_perm >> 2) & 1;         // p. B4-9 (same as pin_t)
+    pte->S = 0;                                 // p. B4-9 (deprecated)
+    pte->nG = !attr.G;                          // p. B4-9 (negative of pin_t)
+    pte->super = 0;                             // section (0) and supersection (1)
+    pte->_sbz1 = 0;                             // Always 0
+
+    cp15_ctrl_reg1_t ctrl = cp15_ctrl_reg1_rd();
+    if (ctrl.XP_pt == 1) // Is this how you do it?
+        pte->XN = 0;
+
+    // 3. set <pte->sec_base_addr> to the right physical section.
+    pte->sec_base_addr = (pa >> 20);
 
     // 4. you modified the page table!  
     //   - make sure you call your sync PTE (lab 15).
+    mmu_sync_pte_mods();
 
     if(verbose_p)
         vm_pte_print(pt,pte);

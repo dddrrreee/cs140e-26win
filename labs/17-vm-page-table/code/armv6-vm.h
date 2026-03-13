@@ -72,7 +72,7 @@
 // Part 0: define these bitfields: 
 //    as a bitfield example, see armv6-cp15.h:
 //      typedef struct control_reg1 {
-typedef struct first_level_descriptor {
+typedef struct first_level_descriptor { // PAGE B4-27
                     //<bitoffset>:<number of bits>
     unsigned
         tag:2,        // 0-1:2    should be 0b10
