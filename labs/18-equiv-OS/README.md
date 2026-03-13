@@ -1,3 +1,8 @@
+## clarifications.
+
+We've pushed a somewhat cleaned up `pix.c` into `code-2.0`; if you're
+going to modify probably good to copy it out.
+
 ## equiv OS.
 
 Today we'll have a very small, OS that does equivalance checking.
