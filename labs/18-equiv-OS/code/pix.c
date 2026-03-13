@@ -1,25 +1,28 @@
-// NOTES:
-//  - should we have a register pointing to the current 
-//    process? or just start w/ global var and have them 
-//    speed up?
-//  - where does the OS live?    if overlaps w/ user can't 
-//    run with and without vm.
-//  - for pitag: maybe should include the header w/ the code?  that
-//    way you can explicitly add space for register save areas etc.
-//    easy to redo.
+// really simple "OS" that:
+//  1. loads external programs (see the weird <_cstart>)
+//  2. runs each program in a single 1MB page address space 
+//     with pinned
+//  3. runs them with single stepping and computes register hashes
+//  4. on each exit checks that the exit hash matches what is 
+//     expected.
+//  5. handles fork, waitpid (sort of) exit, and various print
+//     routines --- you can add others!
+//  
+// the hashes are pre-computed and stored in a table.  
 //
-// TODO:
-//  - should customize the exception assembly so make simple.
-//  - check where come from and panic if in kernel?
-//    i think all faults should be user level.
-//  - probably should start using kr malloc for everything.
-// 
-//  - need a pi-install that goes over and grabs all the stuff.
-//    don't want to make output.
-//  - do FUSE
-//  - concat all the different things.
-//  - need to add argv, argc or can't control any of the UNIX
-//    programs.
+// downside: the code should be really simplified and redone (sorry :/)
+// however the algorithm for doing so is simple: just use epsilon
+// induction:
+//   1. run all the programs and make sure the hashes pass.
+//   2. make the smallest change that you can.
+//   3. rerun and make sure hashes pass.
+//   4. repeat.
+//
+// suggested order:
+//  1. treat the OS as a big test case.
+//  2. start swapping in your code for ours --- pinned, 
+//     single stepping, switchto.   
+//  3. then start making it more complete, faster, etc.
 #include "rpi.h"
 #include "switchto.h"
 #include "pix.h"
