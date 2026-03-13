@@ -13,6 +13,9 @@ void staff_set_procid_ttbr0(unsigned pid, unsigned asid, void *pt);
 void staff_mmu_disable_set_asm(cp15_ctrl_reg1_t c);
 void staff_mmu_enable_set_asm(cp15_ctrl_reg1_t c);
 
+void mmu_enable_set_asm(cp15_ctrl_reg1_t c);
+void mmu_disable_set_asm(cp15_ctrl_reg1_t c);
+
 //void cp15_domain_ctrl_wr(uint32_t dom_reg);
 void staff_cp15_domain_ctrl_wr(uint32_t dom_reg);
 
