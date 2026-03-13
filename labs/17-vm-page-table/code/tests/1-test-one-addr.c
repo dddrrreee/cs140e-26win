@@ -16,8 +16,8 @@
 #include "rpi.h"
 #include "full-except.h"
 #include "../pt-vm.h"
-#include "mmu.h"
-#include "memmap-default.h"
+#include "../mmu.h"
+#include "../memmap-default.h"
 
 void notmain(void) { 
     // our standard init.

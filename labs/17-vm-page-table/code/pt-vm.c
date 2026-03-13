@@ -89,13 +89,9 @@ vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr) // *
     //  - domain
     //  - XN
     // also: <tag> since its a 1mb section.
-
-
-
-
     pte->tag = 0b10;                            // p. B4-27 always 0b10 (makes it a section descriptor)
-    pte->B = (attr.mem_attr >> 1) & 1;          // p. B4-12 (same as pin_t)
-    pte->C = (attr.mem_attr & 1);               // p. B4-12 (same as pin_t)
+    pte->B = (attr.mem_attr & 1);               // p. B4-12 (same as pin_t)
+    pte->C = (attr.mem_attr >> 1) & 1;          // p. B4-12 (same as pin_t)
     pte->XN = !mem_perm_islegal(attr.AP_perm);  // p. B4-9 or B4-25???  // TODO: SET with CTRL reg
     pte->domain = attr.dom;                     // p. B4-10 (same as pin_t)
     pte->IMP = 0;                               // p. B4-26 (for 1MB sections)
@@ -127,12 +123,16 @@ vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr) // *
 // lookup 32-bit address va in pt and return the pte
 // if it exists, return 0 otherwise (use tag)
 vm_pte_t * vm_lookup(vm_pt_t *pt, uint32_t va) { // *
-    if (pt->tag != 0b10)
+    // Getting TLE
+    uint32_t table_index = va >> 20;
+    assert(table_index < PT_LEVEL1_N);
+
+    // Checking TLE
+    vm_pt_t* pte = &pt[table_index];
+    if (pte->tag != 0b10)
         return 0;
 
-    uint32_t pte = pt->sec_base_addr >> 20;
-    return (vm_pte_t*)pte;
-    // return staff_vm_lookup(pt,va);
+    return pte;
 }
 
 // manually translate <va> in page table <pt>
@@ -145,9 +145,25 @@ vm_pte_t * vm_lookup(vm_pt_t *pt, uint32_t va) { // *
 //   - we can't just return the <pa> b/c page 0 could be mapped.
 //   - the common unix kernel hack of returning (void*)-1 leads
 //     to really really nasty bugs.  so we don't.
-vm_pte_t *vm_xlate(uint32_t *pa, vm_pt_t *pt, uint32_t va) {
-    // unsigned table_addr = pt->
-    return staff_vm_xlate(pa,pt,va);
+vm_pte_t *vm_xlate(uint32_t *pa, vm_pt_t *pt, uint32_t va) { // *
+    
+    // Getting TLE
+    uint32_t table_index = va >> 20;
+    assert(table_index < PT_LEVEL1_N);
+
+    uint32_t table_base = (uint32_t)pt->sec_base_addr;
+    vm_pt_t* tle =  (vm_pt_t*)( (table_base << 20) & (table_index << 2) );
+
+    // Checking TLE
+    if (tle->tag != 0b10)
+        return 0;
+
+    // Getting PA
+    uint32_t sec_base_addr = tle->sec_base_addr;
+    uint32_t section_index = va & 0xFFFFF;
+    pa = (uint32_t*)( (sec_base_addr << 20) & section_index);
+
+    return tle;
 }
 
 // compute the default attribute for each type.
