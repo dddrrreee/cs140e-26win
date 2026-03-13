@@ -82,7 +82,7 @@ CAN_EMIT=1
 EXCLUDE ?= grep -v simple_boot
 include $(CS140E_2026_PATH)/libpi/mk/Makefile.robust-v3
 
-all::  tags init.bin
+all::  tags init.bin pix.bin
 
 # we just concat all binaries into one big binary and load it.
 init.bin:  pix.bin 

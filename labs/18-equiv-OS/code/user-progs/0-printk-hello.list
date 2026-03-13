@@ -1,5 +1,5 @@
 
-0-printk-hello.elf:     file format elf32-littlearm
+objs/l1/l2/l3//0-printk-hello.elf:     file format elf32-littlearm
 
 
 Disassembly of section .text:
