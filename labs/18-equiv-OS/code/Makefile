@@ -89,6 +89,7 @@ init.bin:  pix.bin
 	make -C user-progs
 	cat pix.bin $(USER_PROG) > init.bin
 	my-install init.bin
+	rm -f init.bin
 
 clean::
 	rm -f init.bin
