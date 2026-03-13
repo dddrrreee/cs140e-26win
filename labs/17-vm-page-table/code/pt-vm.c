@@ -66,7 +66,7 @@ void vm_mmu_init(uint32_t domain_reg) {
 // map the 1mb section starting at <va> to <pa>
 // with memory attribute <attr>.
 vm_pte_t *
-vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr) 
+vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr) // * 
 {
     assert(aligned(va, OneMB));
     assert(aligned(pa, OneMB));
@@ -126,8 +126,13 @@ vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr)
 
 // lookup 32-bit address va in pt and return the pte
 // if it exists, return 0 otherwise (use tag)
-vm_pte_t * vm_lookup(vm_pt_t *pt, uint32_t va) {
-    return staff_vm_lookup(pt,va);
+vm_pte_t * vm_lookup(vm_pt_t *pt, uint32_t va) { // *
+    if (pt->tag != 0b10)
+        return 0;
+
+    uint32_t pte = pt->sec_base_addr >> 20;
+    return (vm_pte_t*)pte;
+    // return staff_vm_lookup(pt,va);
 }
 
 // manually translate <va> in page table <pt>
@@ -141,6 +146,7 @@ vm_pte_t * vm_lookup(vm_pt_t *pt, uint32_t va) {
 //   - the common unix kernel hack of returning (void*)-1 leads
 //     to really really nasty bugs.  so we don't.
 vm_pte_t *vm_xlate(uint32_t *pa, vm_pt_t *pt, uint32_t va) {
+    // unsigned table_addr = pt->
     return staff_vm_xlate(pa,pt,va);
 }
 

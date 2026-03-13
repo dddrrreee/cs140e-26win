@@ -12,7 +12,7 @@
 //  there are some page numbers: if they start with a "B" they
 //  are from the armv6 pdf, if with a number, from arm1176 pdf
 #include "rpi.h"
-#include "pt-vm.h"
+#include "../pt-vm.h"
 #include "full-except.h"
 #include "memmap.h"
 

@@ -1,6 +1,6 @@
 // first test do low level setup of everything.
 #include "rpi.h"
-#include "pt-vm.h"
+#include "../pt-vm.h"
 
 void notmain(void) { 
     enum { OneMB = 1024*1024};

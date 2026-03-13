@@ -2,7 +2,7 @@
 // to check that different VM operations work correctly.
 
 #include "rpi.h"
-#include "pt-vm.h"
+#include "../pt-vm.h"
 #include "armv6-pmu.h"
 #include "cache-support.h"
 

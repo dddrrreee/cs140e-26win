@@ -15,7 +15,7 @@
 // we also switch to using the pinned calls.
 #include "rpi.h"
 #include "full-except.h"
-#include "pt-vm.h"
+#include "../pt-vm.h"
 #include "mmu.h"
 #include "memmap-default.h"
 
