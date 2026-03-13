@@ -186,12 +186,12 @@ _Static_assert(sizeof(frame_t) == FRAME_MAX_SIZE, "frame_t size wrong");
 //                          ipv4_t
 //*******************************************************************************************************************
 typedef struct { // https://www.rfc-editor.org/rfc/rfc791.txt
-    uint8_t version:4, 
+    uint8_t version:4,              // TODO: IS THIS DETERMINISATIC??A
             header_length_words:4;
     uint8_t type_of_service;
     uint16_t total_length;
     uint16_t identification;
-    uint16_t flags:3, 
+    uint16_t flags:3,               // TODO: IS THIS DETERMINISATIC??A
             fragment_offset:13;
     uint8_t ttl;
     uint8_t protocol;
@@ -272,11 +272,11 @@ typedef void (*udp_port_handler_t)(
     uint16_t len
 );
 
-typedef struct { // https://www.rfc-editor.org/rfc/rfc768.txt
+typedef struct __attribute__((packed)) { // https://www.rfc-editor.org/rfc/rfc768.txt
     udp_port_handler_t handler;
     uint16_t port; 
-} udp_port_t;
-// _Static_assert(sizeof(udp_port_t) == 6, "udp_t size wrong"); // compiler thinks this is 64-bit which is dunmb
+} udp_port_t; 
+_Static_assert(sizeof(udp_port_t) == 10, "udp_t size wrong"); // compiler thinks this is 64-bit which is dunmb
 
 
 // https://www.rfc-editor.org/rfc/rfc2131.txt
