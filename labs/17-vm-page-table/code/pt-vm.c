@@ -208,6 +208,7 @@ vm_pt_t *vm_map_kernel(procmap_t *p, int enable_p) {
     // 3. allocate a page table <vm_pt_alloc>
     vm_pt_t* pt = vm_pt_alloc(PT_LEVEL1_N);
 
+
     // 4. walk through procmap, mapping each entry <vm_map_sec>
     //    - note: for today we use identity map, so <addr> --> <addr>
     for (uint32_t i = 0; i < p->n; i++) {
