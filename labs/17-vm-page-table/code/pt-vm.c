@@ -92,7 +92,7 @@ vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr) // *
     pte->tag = 0b10;                            // p. B4-27 always 0b10 (makes it a section descriptor)
     pte->B = (attr.mem_attr & 1);               // p. B4-12 (same as pin_t)
     pte->C = (attr.mem_attr >> 1) & 1;          // p. B4-12 (same as pin_t)
-    pte->XN = !mem_perm_islegal(attr.AP_perm);  // p. B4-9 or B4-25???  // TODO: SET with CTRL reg
+    pte->XN = 0;  // p. B4-9 or B4-25???  // TODO: SET with CTRL reg
     pte->domain = attr.dom;                     // p. B4-10 (same as pin_t)
     pte->IMP = 0;                               // p. B4-26 (for 1MB sections)
     pte->AP = attr.AP_perm & 0b011;             // p. B4-9 (same as pin_t)
@@ -103,9 +103,9 @@ vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr) // *
     pte->super = 0;                             // section (0) and supersection (1)
     pte->_sbz1 = 0;                             // Always 0
 
-    cp15_ctrl_reg1_t ctrl = cp15_ctrl_reg1_rd();
-    if (ctrl.XP_pt == 1) // Is this how you do it?
-        pte->XN = 0;
+    // cp15_ctrl_reg1_t ctrl = cp15_ctrl_reg1_rd();
+    // if (ctrl.XP_pt == 1) // Is this how you do it?
+    //     pte->XN = 0;
 
     // 3. set <pte->sec_base_addr> to the right physical section.
     pte->sec_base_addr = (pa >> 20);
@@ -190,7 +190,6 @@ static inline pin_t attr_mk(pr_ent_t *e) {
 // you setup the page table and asid. use  
 // kern_asid, and kern_pid.
 vm_pt_t *vm_map_kernel(procmap_t *p, int enable_p) {
-    return staff_vm_map_kernel(p,enable_p);
 
     // install at least the default handlers so we get 
     // error messages.
@@ -201,15 +200,52 @@ vm_pt_t *vm_map_kernel(procmap_t *p, int enable_p) {
     enum { kern_asid = 1, kern_pid = 0x140e };
 
     // 1. compute domains being used.
+    uint32_t d = dom_perm(p->dom_ids, DOM_client);
+
     // 2. call <vm_mmu_init> to set domain reg (using 1) and init MMU.
+    vm_mmu_init(d);
+
     // 3. allocate a page table <vm_pt_alloc>
+    vm_pt_t* pt = vm_pt_alloc(PT_LEVEL1_N);
+
     // 4. walk through procmap, mapping each entry <vm_map_sec>
     //    - note: for today we use identity map, so <addr> --> <addr>
+    for (uint32_t i = 0; i < p->n; i++) {
+        pr_ent_t *entry = &p->map[i];           // Each process
+
+        // Was in procmap_pin
+        if(entry->nbytes != MB(1))
+            panic("assuming mapping 1MB segments: have=%d\n", 
+                    entry->nbytes);
+
+        
+        pin_t attr;
+
+        switch(entry->type) {
+            case MEM_DEVICE:
+                attr = pin_mk_device(entry->dom);
+                break;
+            case MEM_RW:
+                // currently everything is uncached.
+                attr = pin_mk_global(entry->dom, perm_rw_priv, MEM_uncached);
+                break;
+            case MEM_RO: panic("not handling\n");
+            default: panic("unknown type: %d\n", entry->type);
+        }
+
+        vm_map_sec(pt, entry->addr, entry->addr, attr);
+    }
+
     // 5. use <vm_mmu_switch> to setup <kern_asid>, <pt>, and <kern_pid>
+    vm_mmu_switch(pt, kern_pid, kern_asid);
+
     // 6. if <enable_p>=1
     //    - <mmu_sync_pte_mods> since modified page table.
     //    - <vm_mmu_enable> to turn on
-    vm_pt_t *pt = 0;
+    if (enable_p) {
+        mmu_sync_pte_mods(); 
+        vm_mmu_enable();
+    }
 
     // return page table.
     assert(pt);
