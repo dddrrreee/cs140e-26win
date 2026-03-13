@@ -7,6 +7,7 @@
 enum { verbose_p = 1 };
 enum { OneMB = 1024*1024 };
 
+
 vm_pt_t *vm_pt_alloc(unsigned n) {  // *
     demand(n == 4096, we only handling a fully-populated page table right now);
 
@@ -114,8 +115,8 @@ vm_map_sec(vm_pt_t *pt, uint32_t va, uint32_t pa, pin_t attr) // *
     //   - make sure you call your sync PTE (lab 15).
     mmu_sync_pte_mods();
 
-    if(verbose_p)
-        vm_pte_print(pt,pte);
+    // if(verbose_p)
+    //     vm_pte_print(pt,pte);
     assert(pte);
     return pte;
 }
@@ -151,9 +152,25 @@ vm_pte_t *vm_xlate(uint32_t *pa, vm_pt_t *pt, uint32_t va) { // *
     uint32_t table_index = va >> 20;
     assert(table_index < PT_LEVEL1_N);
 
-    uint32_t table_base = (uint32_t)pt->sec_base_addr;
-    vm_pt_t* tle =  (vm_pt_t*)( (table_base << 20) & (table_index << 2) );
+    // if (verbose_p) {
+    //     trace("Table index: %d\n", table_index);
+    //     trace("pt at (%x) with sec_base_addr: %x\n", pt, pt->sec_base_addr);
+    // }
 
+    // uint32_t table_base = (uint32_t)pt->sec_base_addr;
+    // vm_pte_t* tle = (vm_pte_t*)( (table_base << 20) | (table_index << 2) );
+
+    vm_pte_t* tle = pt + table_index;
+
+
+    // if (verbose_p) {
+    //     trace("Table index: %d\n", table_index);
+    //     trace("TLE at (%x): %d\n", tle, *tle);
+    //     trace("TLE sec_base_addr: %x\n", tle->sec_base_addr);
+    // }
+
+    // if (verbose_p)
+    //     trace("tle at (%x): %x\n", tle, tle->sec_base_addr);
     // Checking TLE
     if (tle->tag != 0b10)
         return 0;
