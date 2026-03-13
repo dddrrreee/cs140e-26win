@@ -7,8 +7,17 @@ TRACE:w5500_init:Connected!
 TRACE:w5500_init:VERSIONR = 0x4
 TRACE:w5500_init:PHYCFGR  = 0xff
 TRACE:w5500_init:Sn_SR    = 0x42
+TRACE:arp_init:ARP table initialized (cleared)
 TRACE:notmain:Polling for frames...
-TRACE:notmain:ARP entry discovered:
+TRACE:inet_add_arp_entry:ARP table updated: {1.2.3.0} -> {0:11:22:33:44:0}
+TRACE:inet_send_arp:Sending ARP reply to {1.2.3.0}
+TRACE:inet_add_arp_entry:ARP table updated: {1.2.3.1} -> {0:11:22:33:44:1}
+TRACE:inet_send_arp:Sending ARP reply to {1.2.3.1}
+TRACE:inet_add_arp_entry:ARP table updated: {1.2.3.2} -> {0:11:22:33:44:2}
+TRACE:inet_send_arp:Sending ARP reply to {1.2.3.2}
+TRACE:inet_add_arp_entry:ARP table updated: {1.2.3.3} -> {0:11:22:33:44:3}
+TRACE:inet_send_arp:Sending ARP reply to {1.2.3.3}
+TRACE:notmain:ARP entry discovered with return code (should be 0 or greater): 0
 TRACE:notmain:
 TRACE:ARP Table now!
 TRACE:0.	{1.2.3.0} --> {0:11:22:33:44:0} Valid

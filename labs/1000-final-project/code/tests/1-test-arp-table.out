@@ -66,10 +66,14 @@ TRACE:29.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
 TRACE:30.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
 TRACE:31.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
 TRACE:
-TRACE:arp_add_entry_test:Found at entry 0
-TRACE:arp_add_entry_test:Found at entry 1
-TRACE:arp_add_entry_test:Found at entry 2
-TRACE:arp_add_entry_test:Found at entry 3
+TRACE:inet_add_arp_entry:ARP table updated: {1.2.3.0} -> {1:2:3:4:5:0}
+TRACE:arp_add_entry_test:Return code 0
+TRACE:inet_add_arp_entry:ARP table updated: {1.2.3.1} -> {1:2:3:4:5:1}
+TRACE:arp_add_entry_test:Return code 0
+TRACE:inet_add_arp_entry:ARP table updated: {1.2.3.2} -> {1:2:3:4:5:2}
+TRACE:arp_add_entry_test:Return code 0
+TRACE:inet_add_arp_entry:ARP table updated: {1.2.3.3} -> {1:2:3:4:5:3}
+TRACE:arp_add_entry_test:Return code 0
 TRACE:ARP Table after calling 'inet_add_arp_entry()':
 TRACE:0.	{1.2.3.0} --> {1:2:3:4:5:0} Valid
 TRACE:1.	{1.2.3.1} --> {1:2:3:4:5:1} Valid
@@ -104,14 +108,14 @@ TRACE:29.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
 TRACE:30.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
 TRACE:31.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
 TRACE:
-TRACE:arp_entry_should_exist_test:Entry 0 Found!
-TRACE:arp_entry_should_exist_test:Entry 0 Found!
-TRACE:arp_entry_should_exist_test:Entry 1 Found!
-TRACE:arp_entry_should_exist_test:Entry 1 Found!
-TRACE:arp_entry_should_exist_test:Entry 2 Found!
-TRACE:arp_entry_should_exist_test:Entry 2 Found!
-TRACE:arp_entry_should_exist_test:Entry 3 Found!
-TRACE:arp_entry_should_exist_test:Entry 3 Found!
+TRACE:arp_entry_should_exist_test:Entry 0 resolved by IPV4 Found!
+TRACE:arp_entry_should_exist_test:Entry 0 resolved by MAC Found!
+TRACE:arp_entry_should_exist_test:Entry 1 resolved by IPV4 Found!
+TRACE:arp_entry_should_exist_test:Entry 1 resolved by MAC Found!
+TRACE:arp_entry_should_exist_test:Entry 2 resolved by IPV4 Found!
+TRACE:arp_entry_should_exist_test:Entry 2 resolved by MAC Found!
+TRACE:arp_entry_should_exist_test:Entry 3 resolved by IPV4 Found!
+TRACE:arp_entry_should_exist_test:Entry 3 resolved by MAC Found!
 TRACE:ARP Table after calling 'find_arp_entry()' again:
 TRACE:0.	{1.2.3.0} --> {1:2:3:4:5:0} Valid
 TRACE:1.	{1.2.3.1} --> {1:2:3:4:5:1} Valid

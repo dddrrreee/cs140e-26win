@@ -14,7 +14,7 @@ COMMON_SRC += net-stack/udp.c
 # Tests
 # PROGS += tests/1-test-arp-table.c
 # PROGS += tests/1-test-fill-arp-table.c
-# PROGS += tests/1-test-send-resolved-arp.c
+PROGS += tests/1-test-send-resolved-arp.c
 # PROGS += tests/1-test-send-recv-udp.c
 # PROGS += tests/1-test-udp-thread.c
 
@@ -27,7 +27,7 @@ COMMON_SRC += net-stack/udp.c
 
 # Just run the stack
 # PROGS += tests/0-playground-net-stack.c
-PROGS += tests/1-playground-udp-thread.c
+# PROGS += tests/1-playground-udp-thread.c
 
 
 # next week you'll get rid of all of these

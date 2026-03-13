@@ -19,7 +19,6 @@ void notmain(void) {
     verbose_t v = inet_verbosity_init();
     v.arp = 1;
     v.icmp = 1;
-    v.arp = 1;
     v.data_link_send = 1;
     inet_init(&nic, &v);
 
@@ -27,20 +26,21 @@ void notmain(void) {
     trace("Polling for frames...\n");
 
     uint8_t mac_buf[6];
-
+    int err;
     // Searching for ARP packet in order to fill the ARP table
     while(1) {
 
-        inet_poll_frame(1);
-        int err = inet_resolve_ip_address(PYTHON_SCRIPT_IP, mac_buf);
-
-        if (err > INET_SUCCESS) {
-            trace("Return code: %d\n", err);
-            break;
+        
+        err = inet_poll_frame(0);
+        if (err < INET_SUCCESS) {
+            // trace("Bad poll return code: %d\n", err);
         }
 
-        if (err == INET_ARP_FOUND_BUT_INVALID) {
-            trace("ARP entry seen but invalid, waiting...\n");
+        // INET_WROTE_FRAME
+        err = inet_resolve_ip_address(PYTHON_SCRIPT_IP, mac_buf);
+        if (err >= INET_SUCCESS) {
+            trace("Return code: %d\n", err);
+            break;
         }
         delay_ms(10);
     }
@@ -55,13 +55,13 @@ void notmain(void) {
 
     while(1) {
 
-        int err = inet_poll_frame(1);
-        if (err > 0) {
-            trace("Return code: %d\n", err);
+        int err = inet_poll_frame(0);
+        if (err == INET_ICMP_PING_SENT) {
+            trace("Ping handled, exiting loop\n");
             break;
         }
-        if (err == ICMP_ECHO_REPLY) {
-            trace("Ping handled, exiting loop\n");
+        if (err > 0) {
+            trace("Other good return code: %d\n", err);
             break;
         }
 

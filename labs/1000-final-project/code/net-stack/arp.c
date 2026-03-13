@@ -12,7 +12,7 @@ static arp_table_entry_t _arp_table[ARP_TABLE_SIZE];
 
 static int _verbose_p = 0;
 
-arp_packet_t _arp_tx;
+// arp_packet_t _arp_tx;
 
 void arp_init(const verbose_t* verbosity) {
     if (verbosity->arp || verbosity->all) {
@@ -21,7 +21,7 @@ void arp_init(const verbose_t* verbosity) {
     }
 
     inet_clear_arp_table();
-    trace("ARP table initalized (cleared)\n");
+    trace("ARP table initialized (cleared)\n");
 }
 
 /**********************************************************
@@ -82,6 +82,10 @@ int inet_add_arp_entry(const uint8_t* their_ipv4_addr, const uint8_t* their_hw_a
     uint32_t idx;
     int err = find_arp_entry_by_ipv4(their_ipv4_addr, &idx);
 
+
+    if (idx >= ARP_TABLE_SIZE)
+        return INET_ARP_TABLE_FULL;
+
     switch (err) {
         case INET_ARP_NO_TABLE_ENTRY:
         case INET_SUCCESS:
@@ -94,15 +98,13 @@ int inet_add_arp_entry(const uint8_t* their_ipv4_addr, const uint8_t* their_hw_a
                 their_ipv4_addr[2], their_ipv4_addr[3],
                 their_hw_addr[0], their_hw_addr[1], their_hw_addr[2],
                 their_hw_addr[3], their_hw_addr[4], their_hw_addr[5]);
-                
             return INET_SUCCESS;
 
         case INET_ARP_FOUND_BUT_INVALID:
-            return INET_NOT_IMPLEMENTED;
-
-        default:
-            return INET_ERROR;
+            return INET_ARP_FOUND_BUT_INVALID;
     }
+
+    return INET_NOT_IMPLEMENTED;
 }
 
 int inet_resolve_ip_address(const uint8_t* ipv4_addr, uint8_t* hw_addr) { // TODO
@@ -112,7 +114,7 @@ int inet_resolve_ip_address(const uint8_t* ipv4_addr, uint8_t* hw_addr) { // TOD
     if (err == INET_SUCCESS)
         memcpy(hw_addr, _arp_table[entry_index].hw_addr, MAC_ADDR_BYTES);
     else
-        memcpy(hw_addr, MAC_BROADCAST, MAC_ADDR_BYTES);
+        memcpy(hw_addr, MAC_EMPTY, MAC_ADDR_BYTES);
         
     
     return err;
@@ -125,7 +127,7 @@ int inet_resolve_hw_address(const uint8_t* hw_addr, uint8_t* ipv4_addr) { // TOD
     if (err == INET_SUCCESS)
         memcpy(ipv4_addr, _arp_table[entry_index].ip_addr, IPV4_ADDR_BYTES);
     else
-        memcpy(ipv4_addr, IPV4_BROADCAST, IPV4_ADDR_BYTES);
+        memcpy(ipv4_addr, IPV4_EMPTY, IPV4_ADDR_BYTES);
     
     return err;
 }
@@ -220,7 +222,8 @@ int inet_send_arp(const uint8_t* their_hw_addr, const uint8_t* their_ipv4_addr, 
     }
 
     // ---------- 1. Make and populate packet ----------
-    memset(&_arp_tx, 0, sizeof(_arp_tx));
+    arp_packet_t _arp_tx;
+    // memset(&_arp_tx, 0, sizeof(_arp_tx));
     _arp_tx.hardware_type = ARP_HTYPE_ETHERNET;
     _arp_tx.protocol_type = FRAME_IPV4;
     _arp_tx.hardware_len = MAC_ADDR_BYTES;
@@ -237,8 +240,13 @@ int inet_send_arp(const uint8_t* their_hw_addr, const uint8_t* their_ipv4_addr, 
     swapEndian16(&_arp_tx.protocol_type);
     swapEndian16(&_arp_tx.operation);
 
-    trace("Sending ARP reply to {%d.%d.%d.%d}\n",
-        their_ipv4_addr[0], their_ipv4_addr[1], their_ipv4_addr[2], their_ipv4_addr[3]);
+    if (_verbose_p) {
+        trace("Sending ARP reply to ");
+        print_arp_entry(their_ipv4_addr, their_hw_addr, 1);
+    }
+
+    // trace("Sending ARP reply to {%d:%d:%d:%d:%d:%d}\n",
+    //     their_hw_addr[0], their_hw_addr[1], their_hw_addr[2], their_hw_addr[3], );
 
     return inet_send_frame(their_hw_addr, FRAME_ARP, &_arp_tx, ARP_MESSAGE_BYTES);
 }

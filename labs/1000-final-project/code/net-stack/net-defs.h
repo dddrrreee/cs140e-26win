@@ -5,6 +5,9 @@
 
 #include "netif/w5500-defs.h" // ???
 
+#define MAC_EMPTY ((uint8_t[6]){0,0,0,0,0,0})
+#define IPV4_EMPTY ((uint8_t[4]){0,0,0,0})
+
 #define MAC_BROADCAST ((uint8_t[6]){0xFF,0xFF,0xFF,0xFF,0xFF,0xFF})
 #define IPV4_BROADCAST ((uint8_t[4]){255,255,255,255})
 

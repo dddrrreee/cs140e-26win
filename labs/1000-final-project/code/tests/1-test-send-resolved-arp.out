@@ -9,20 +9,17 @@ TRACE:w5500_init:PHYCFGR  = 0xff
 TRACE:w5500_init:Sn_SR    = 0x42
 TRACE:inet_init:Data link sending frame verbosity enabled
 TRACE:arp_init:ARP verbosity enabled
-TRACE:arp_init:ARP table initalized (cleared)
+TRACE:arp_init:ARP table initialized (cleared)
 TRACE:icmp_init:ICMP layer verbosity enabled
 TRACE:notmain:Polling for frames...
-TRACE:inet_icmp_handler:ICMP packet received from 1.2.3.4, type=8, bytes=29
-TRACE:inet_icmp_handler:Sending ping ECHO reply to {1.2.3.4}
-TRACE:inet_send_ping:Sending ping of type 0 and length 23 to {1.2.3.4}
-TRACE:inet_send_frame:Sending frame, ethertype 0x800, dest MAC {ff:ff:ff:ff:ff:ff}, length 57
 TRACE:inet_arp_handler:Received ARP packet of 28 bytes
-TRACE:inet_add_arp_entry:ARP table updated: {1.2.3.4} -> {82:a4:9f:79:21:4e}
-TRACE:inet_send_arp:Sending ARP reply to {1.2.3.4}
-TRACE:inet_send_frame:Sending frame, ethertype 0x806, dest MAC {82:a4:9f:79:21:4e}, length 42
+TRACE:inet_add_arp_entry:ARP table updated: {1.2.3.4} -> {a0:78:17:5c:47:44}
+TRACE:inet_send_arp:Sending ARP reply to {1.2.3.4} --> {a0:78:17:5c:47:44}
+TRACE:inet_send_frame:Sending frame, ethertype 0x806, dest MAC {a0:78:17:5c:47:44}, length 42
+TRACE:notmain:Return code: 0
 TRACE:notmain:ARP entry discovered:
 TRACE:ARP Table now!
-TRACE:0.	{1.2.3.4} --> {82:a4:9f:79:21:4e} Valid
+TRACE:0.	{1.2.3.4} --> {a0:78:17:5c:47:44} Valid
 TRACE:1.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
 TRACE:2.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
 TRACE:3.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
@@ -56,9 +53,9 @@ TRACE:30.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
 TRACE:31.	{0.0.0.0} --> {0:0:0:0:0:0} Invalid
 TRACE:
 TRACE:inet_send_ping:Sending ping of type 8 and length 11 to {1.2.3.4}
-TRACE:inet_send_frame:Sending frame, ethertype 0x800, dest MAC {82:a4:9f:79:21:4e}, length 45
+TRACE:inet_send_frame:Sending frame, ethertype 0x800, dest MAC {a0:78:17:5c:47:44}, length 45
 TRACE:inet_icmp_handler:ICMP packet received from 1.2.3.4, type=8, bytes=29
 TRACE:inet_icmp_handler:Sending ping ECHO reply to {1.2.3.4}
 TRACE:inet_send_ping:Sending ping of type 0 and length 23 to {1.2.3.4}
-TRACE:inet_send_frame:Sending frame, ethertype 0x800, dest MAC {82:a4:9f:79:21:4e}, length 57
-TRACE:notmain:Return code: 60
+TRACE:inet_send_frame:Sending frame, ethertype 0x800, dest MAC {a0:78:17:5c:47:44}, length 57
+TRACE:notmain:Ping handled, exiting loop

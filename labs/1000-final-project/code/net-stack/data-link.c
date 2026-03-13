@@ -17,7 +17,7 @@
 #include "gpio.h"
 
 
-static w5500_t* _nic = NULL;
+static const w5500_t* _nic = NULL;
 
 static frame_t _frame_rx; // Buffer for reading frames
 
@@ -100,7 +100,7 @@ int inet_poll_frame(int flush_buffer) {
 
     // 1. Verify MAC address (multicast or unicast to us), and still returns so we can peek at the packet
     int is_multicast = (_frame_rx.dest_hw_addr[0] & 0x01);
-    int is_for_us = (memcmp(_frame_rx.dest_hw_addr, _nic->hw_addr, MAC_ADDR_BYTES) == 0);
+    int is_for_us = (memcmp(_frame_rx.dest_hw_addr, inet_get_hw_addr(), MAC_ADDR_BYTES) == 0);
 
     if (!(is_multicast || is_for_us)) {
         if (_verbose_p)
@@ -131,24 +131,25 @@ int inet_send_frame(const uint8_t* dest_hw_addr, uint16_t ethertype, const void*
 
     uint16_t frame_length = nbytes + FRAME_HEADER_BYTES;
 
-    memset(&_frame_rx, 0, sizeof(_frame_rx));
-    memcpy(_frame_rx.dest_hw_addr, dest_hw_addr, MAC_ADDR_BYTES);
-    memcpy(_frame_rx.src_hw_addr, _nic->hw_addr, MAC_ADDR_BYTES);
-    _frame_rx.ethertype = ethertype;
-    memcpy(_frame_rx.data, data, nbytes);
+    // memset(&_frame_rx, 0, sizeof(_frame_rx));
+    frame_t _frame;
+    memcpy(_frame.dest_hw_addr, dest_hw_addr, MAC_ADDR_BYTES);
+    memcpy(_frame.src_hw_addr, _nic->hw_addr, MAC_ADDR_BYTES);
+    _frame.ethertype = ethertype;
+    memcpy(_frame.data, data, nbytes);
 
-    swapEndian16(&_frame_rx.ethertype); // Swap ethertype since it is sent big endian
+    swapEndian16(&_frame.ethertype); // Swap ethertype since it is sent big endian
 
     if (_verbose_send_p || _FULL_FRAME_verbose_p) {
         trace("Sending frame, ethertype %x, dest MAC {%X:%X:%X:%X:%X:%X}, length %d\n", ethertype,
             dest_hw_addr[0], dest_hw_addr[1], dest_hw_addr[2],
             dest_hw_addr[3], dest_hw_addr[4], dest_hw_addr[5],
             frame_length);
-        print_bytes("", &_frame_rx, frame_length);
+        print_bytes("", &_frame, frame_length);
     }
         
      
-    uint16_t bytes_written = w5500_write_tx_bytes(_nic, &_frame_rx, frame_length, INET_NIC_SOCKET);
+    uint16_t bytes_written = w5500_write_tx_bytes(_nic, &_frame, frame_length, INET_NIC_SOCKET);
     if (bytes_written == 0)
         return INET_WRITE_FRAME_ERROR;
 

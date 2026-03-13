@@ -43,8 +43,23 @@ void arp_should_be_missing_from_table_test(const uint8_t* ip_addr, const uint8_t
         err = inet_resolve_ip_address(ip, mac_buf);
         if (err != INET_ARP_NO_TABLE_ENTRY) // Want there to be nothing
             panic("Entry %d not found by ipv4 with error %d\n", i, err);
-        if (memcmp(mac_buf, zeros, MAC_ADDR_BYTES) != 0) // Want mac_buf to be unchanged
-            panic("Resolving by ipv4 set mac address%d\n", err);
+
+        if (memcmp(mac_buf, MAC_EMPTY, MAC_ADDR_BYTES) != 0) { // Want mac_buf to be all 0
+            trace("Resolving by mac set ip address%d\n", err);
+            trace("{%d.%d.%d.%d} --> {%X:%X:%X:%X:%X:%X}",
+                ip[0],
+                ip[1],
+                ip[2],
+                ip[3],
+                mac_buf[0],
+                mac_buf[1],
+                mac_buf[2],
+                mac_buf[3],
+                mac_buf[4],
+                mac_buf[5]
+            );
+            panic("Returning");
+        }
 
 
         // Resolving by mac
@@ -54,8 +69,22 @@ void arp_should_be_missing_from_table_test(const uint8_t* ip_addr, const uint8_t
         err = inet_resolve_hw_address(mac, ip_buf);
         if (err != INET_ARP_NO_TABLE_ENTRY) // Want there to be nothing
             panic("Entry %d not found by mac with error %d\n", i, err);
-        if (memcmp(ip_buf, zeros, IPV4_ADDR_BYTES) != 0) // Want mac_buf to be unchanged
-            panic("Resolving by mac set ip address%d\n", err);
+        if (memcmp(ip_buf, IPV4_EMPTY, IPV4_ADDR_BYTES) != 0) { // Want ip_buf to be all 0
+            trace("Resolving by mac set ip address%d\n", err);
+            trace("{%d.%d.%d.%d} --> {%X:%X:%X:%X:%X:%X}",
+                ip_buf[0],
+                ip_buf[1],
+                ip_buf[2],
+                ip_buf[3],
+                mac[0],
+                mac[1],
+                mac[2],
+                mac[3],
+                mac[4],
+                mac[5]
+            );
+            panic("Returning");
+        }
         
     }
 }
@@ -71,19 +100,12 @@ void arp_add_entry_test(const uint8_t* ip_addr, const uint8_t* mac_addr) {
         temp_ip[3] = i;
         temp_mac[5] = i;
         int err = inet_add_arp_entry(temp_ip, temp_mac);
-        if (err > INET_SUCCESS) {
-            trace("Return code %d\n", i);
-            break;
+        if (err >= INET_SUCCESS) {
+            trace("Return code %d\n", err);
+            continue;
         }
 
-        switch (err) {
-            case INET_ARP_NO_TABLE_ENTRY:
-                panic("Entry %d not found, supposed to be at index %d\n", i, i);
-            case INET_ARP_FOUND_BUT_INVALID:
-                panic("Entry %d found but invalid\n", i);
-            default:
-                panic("Unhandled error %d !?!?! \n", err);
-        }
+        panic("inet_add_arp_entry returned with error code: %d\n", err);
     }
 }
 
@@ -106,7 +128,7 @@ void arp_entry_should_exist_test(const uint8_t* ip_addr, const uint8_t* mac_addr
 
         switch (err) {
             case INET_SUCCESS:
-                trace("Entry %d Found!\n", i);
+                trace("Entry %d resolved by IPV4 Found!\n", i);
                 break;
             case INET_ARP_NO_TABLE_ENTRY:
                 panic("Entry %d not found, supposed to be at index %d\n", i, i);
@@ -130,7 +152,7 @@ void arp_entry_should_exist_test(const uint8_t* ip_addr, const uint8_t* mac_addr
 
         switch (err) {
             case INET_SUCCESS:
-                trace("Entry %d Found!\n", i);
+                trace("Entry %d resolved by MAC Found!\n", i);
                 break;
             case INET_ARP_NO_TABLE_ENTRY:
                 panic("Entry %d not found, supposed to be at index %d\n", i, i);
@@ -148,36 +170,5 @@ void arp_entry_should_exist_test(const uint8_t* ip_addr, const uint8_t* mac_addr
         
     }
 }
-
-// void arp_entry_should_exist_test(const uint8_t* ip_addr, const uint8_t* mac_addr) {
-//     uint8_t temp_ip[IPV4_ADDR_BYTES];
-//     uint8_t temp_mac[MAC_ADDR_BYTES];
-
-//     memcpy(temp_ip, ip_addr, IPV4_ADDR_BYTES);
-//     memcpy(temp_mac, mac_addr, MAC_ADDR_BYTES);
-
-//     uint32_t entry_index;
-
-//     for (int i = 0; i < 4; i++) {
-//         temp_ip[3] = i;
-//         temp_mac[5] = i;
-//         int err = find_arp_entry(temp_ip, &entry_index);
-        
-//         switch (err) {
-//             case INET_SUCCESS:
-//                 trace("Found at entry %d\n", i);
-//                 break;
-//             case INET_ARP_NO_TABLE_ENTRY:
-//                 panic("Entry %d not found, supposed to be at index %d\n", i, i);
-//             case INET_ARP_FOUND_BUT_INVALID:
-//                 panic("Entry %d found but invalid\n", i);
-//             default:
-//                 panic("Unhandled error %d !?!?! \n", err);
-//         }
-
-//         // if ()
-//     }
-// }
-
 
 #endif

@@ -43,28 +43,29 @@ int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, 
     // ---------- TX packet ---------- 
     uint16_t packet_length = nbytes + IPV4_PACKET_HEADER_BYTES;
 
-    memset(&_ipv4, 0, sizeof(_ipv4));
-    _ipv4.version = IPV4_VERS_4; // Gonna assume we aren't changing this
-    _ipv4.header_length_words = IPV4_PACKET_HEADER_WORDS;
-    _ipv4.type_of_service = N_A;
-    _ipv4.total_length = packet_length;
-    _ipv4.identification = N_A;
-    _ipv4.flags = N_A;
-    _ipv4.fragment_offset = N_A;
-    _ipv4.ttl = IPV4_DEFAULT_TTL;
-    _ipv4.protocol = ipv4_protocol;
-    _ipv4.checksum = 0; // Checksum to be filled later but must be 0 for now
-    memcpy(_ipv4.src_ipv4_address, inet_get_ipv4_addr(), IPV4_ADDR_BYTES);
-    memcpy(_ipv4.dest_ip_address, dest_ipv4_addr, IPV4_ADDR_BYTES);
-    memcpy(_ipv4.data, data, nbytes);
+    // memset(&_ipv4, 0, sizeof(_ipv4));
+    ipv4_t ipv4;
+    ipv4.version = IPV4_VERS_4; // Gonna assume we aren't changing this
+    ipv4.header_length_words = IPV4_PACKET_HEADER_WORDS;
+    ipv4.type_of_service = N_A;
+    ipv4.total_length = packet_length;
+    ipv4.identification = N_A;
+    ipv4.flags = N_A;
+    ipv4.fragment_offset = N_A;
+    ipv4.ttl = IPV4_DEFAULT_TTL;
+    ipv4.protocol = ipv4_protocol;
+    ipv4.checksum = 0; // Checksum to be filled later but must be 0 for now
+    memcpy(ipv4.src_ipv4_address, inet_get_ipv4_addr(), IPV4_ADDR_BYTES);
+    memcpy(ipv4.dest_ip_address, dest_ipv4_addr, IPV4_ADDR_BYTES);
+    memcpy(ipv4.data, data, nbytes);
 
     // ---------- Packet conditioning for endianness and stuff ---------- 
-    swapNibbles8(&_ipv4);                  // Swap version / header length byte [0]
-    swapEndian16(&_ipv4.total_length);     // Swap total length (little->big endian) [2:3]
+    swapNibbles8(&ipv4);                  // Swap version / header length byte [0]
+    swapEndian16(&ipv4.total_length);     // Swap total length (little->big endian) [2:3]
 
     // ---------- crc16 ---------- 
-    uint8_t* cksum_ptr = (uint8_t*)&_ipv4.checksum;
-    uint16_t checksum = our_crc16(&_ipv4, IPV4_PACKET_HEADER_BYTES);
+    uint8_t* cksum_ptr = (uint8_t*)&ipv4.checksum;
+    uint16_t checksum = our_crc16(&ipv4, IPV4_PACKET_HEADER_BYTES);
     *cksum_ptr = ( (checksum >> 8) & 0xFF);
     *(cksum_ptr + 1) = (checksum & 0xFF);
 
@@ -79,7 +80,7 @@ int inet_send_ipv4_packet(const uint8_t* dest_ipv4_addr, uint8_t ipv4_protocol, 
             dest_ipv4_addr[2], dest_ipv4_addr[3]);
     
     // ---------- Make frame (Layer 2)! ---------- 
-    return inet_send_frame(dest_hw_addr, FRAME_IPV4, &_ipv4, packet_length);
+    return inet_send_frame(dest_hw_addr, FRAME_IPV4, &ipv4, packet_length);
 }
 
 int inet_ipv4_handler(const uint8_t* data, uint16_t packet_bytes) {

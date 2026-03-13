@@ -64,25 +64,24 @@ int inet_udp_send(uint16_t src_port, uint16_t dest_port, const uint8_t* dest_ip,
     }
 
     // 2. Make UDP struct to send
-    memset(&_udp, 0, sizeof(_udp));
-    _udp.src_port = src_port;
-    _udp.dest_port = dest_port;
-    _udp.length = data_len;
-    _udp.checksum = 0; // Not doing this lmaoooo
-    memcpy(_udp.data, data, data_len);
+    // memset(&_udp, 0, sizeof(_udp));
+    static udp_t udp;
+    udp.src_port = src_port;
+    udp.dest_port = dest_port;
+    udp.length = data_len;
+    udp.checksum = 0; // Not doing this lmaoooo
+    memcpy(udp.data, data, data_len);
 
     // 3. Flip endians (literally everything smh)
-    swapEndian16(&_udp.dest_port);
-    swapEndian16(&_udp.src_port);
-    swapEndian16(&_udp.length);
+    swapEndian16(&udp.dest_port);
+    swapEndian16(&udp.src_port);
+    swapEndian16(&udp.length);
     
-    int err = inet_send_ipv4_packet(dest_ip, PROTOCOL_UDP, &_udp, data_len + UDP_HEADER_BYTES);
+    int err = inet_send_ipv4_packet(dest_ip, PROTOCOL_UDP, &udp, data_len + UDP_HEADER_BYTES);
     if (err >= INET_SUCCESS) {
         return INET_UDP_SENT;
     }
-
     return err;
-
 }
 
 //----------------------------------------------------------

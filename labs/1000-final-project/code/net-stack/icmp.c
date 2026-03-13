@@ -14,7 +14,7 @@ void icmp_init(const verbose_t* verbosity) {
     }
 }
 
-static icmp_echo_t _icmp;
+// static icmp_echo_t _icmp;
 
 int inet_icmp_handler(const uint8_t* data, const uint8_t* src_addr, uint16_t icmp_bytes) {
     
@@ -51,7 +51,8 @@ int inet_send_ping(const uint8_t* dest_ipv4_addr, uint8_t ping_type, const void*
 
     uint16_t icmp_length = nbytes + ICMP_HEADER_BYTES;
 
-    memset(&_icmp, 0, sizeof(_icmp));
+    // memset(&_icmp, 0, sizeof(_icmp));
+    icmp_echo_t _icmp;
     _icmp.type = ping_type;
     _icmp.code = 0;
     _icmp.checksum = 0; // Checksum to be filled
