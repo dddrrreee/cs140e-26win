@@ -272,11 +272,11 @@ typedef void (*udp_port_handler_t)(
     uint16_t len
 );
 
-typedef struct __attribute__((packed)) { // https://www.rfc-editor.org/rfc/rfc768.txt
+typedef struct { // https://www.rfc-editor.org/rfc/rfc768.txt
     udp_port_handler_t handler;
     uint16_t port; 
 } udp_port_t; 
-_Static_assert(sizeof(udp_port_t) == 10, "udp_t size wrong"); // compiler thinks this is 64-bit which is dunmb
+// _Static_assert(sizeof(udp_port_t) == 10, "udp_t size wrong"); // compiler thinks this is 64-bit which is dunmb
 
 
 // https://www.rfc-editor.org/rfc/rfc2131.txt

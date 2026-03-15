@@ -1,5 +1,7 @@
 COMMON_SRC += net-stack/netif/w5500.c 
 
+COMMON_SRC += tests/project-helpers.c
+
 # Layer 2
 COMMON_SRC += net-stack/data-link.c 
 COMMON_SRC += net-stack/arp.c
@@ -14,7 +16,7 @@ COMMON_SRC += net-stack/udp.c
 # Tests
 # PROGS += tests/1-test-arp-table.c
 # PROGS += tests/1-test-fill-arp-table.c
-PROGS += tests/1-test-send-resolved-arp.c
+# PROGS += tests/1-test-send-resolved-arp.c
 # PROGS += tests/1-test-send-recv-udp.c
 # PROGS += tests/1-test-udp-thread.c
 
@@ -28,6 +30,8 @@ PROGS += tests/1-test-send-resolved-arp.c
 # Just run the stack
 # PROGS += tests/0-playground-net-stack.c
 # PROGS += tests/1-playground-udp-thread.c
+
+PROGS += tests/final-project.c
 
 
 # next week you'll get rid of all of these
