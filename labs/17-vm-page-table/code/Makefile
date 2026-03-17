@@ -10,7 +10,7 @@ BOOTLOADER = my-install
 # PROGS += tests/4-test-vm-cache-mgmt.c
 
 # PROGS += tests/5-exceptions.c
-# PROGS += tests/6-addr-offset.c
+# PROGS += tests/6-applications.c
 PROGS += tests/7-easy-func.c
 
 # all the tests.

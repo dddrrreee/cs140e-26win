@@ -13,7 +13,7 @@ typedef struct {
     uint32_t pa; // Physical address
     uint32_t nbytes;
     // need to have privileged.
-    enum { MEM_DEVICE, MEM_RW, MEM_RO, MEM_uncached } type;
+    enum { MEM_DEVICE, MEM_RW, MEM_RO } type;
     unsigned dom;
 } pr_ent_t;
 static inline pr_ent_t

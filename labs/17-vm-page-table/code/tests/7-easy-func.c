@@ -66,12 +66,12 @@ void notmain(void) {
     enum { ASID1 = 6, ASID2 = 7 }; // Just for ease of reading
 
     procmap_t proc_map1 = procmap_default_mk(dom_kern);
-    procmap_push(&proc_map1, pr_ent_mk(asid1_pa1, MB(1), MEM_uncached, dom_user));
-    procmap_push(&proc_map1, pr_ent_mk(asid1_pa2, MB(1), MEM_uncached, dom_user));
+    procmap_push(&proc_map1, pr_ent_mk(asid1_pa1, MB(1), MEM_DEVICE, dom_user));
+    procmap_push(&proc_map1, pr_ent_mk(asid1_pa2, MB(1), MEM_DEVICE, dom_user));
     
     procmap_t proc_map2 = procmap_default_mk(dom_kern);
-    procmap_push(&proc_map2, pr_ent_mk(asid2_pa1, MB(1), MEM_uncached, dom_user));
-    procmap_push(&proc_map2, pr_ent_mk(asid2_pa2, MB(1), MEM_uncached, dom_user));
+    procmap_push(&proc_map2, pr_ent_mk(asid2_pa1, MB(1), MEM_DEVICE, dom_user));
+    procmap_push(&proc_map2, pr_ent_mk(asid2_pa2, MB(1), MEM_DEVICE, dom_user));
 
 
 
@@ -125,23 +125,24 @@ void notmain(void) {
     // vm_map_sec(pt1, user2_va_addr, asid1_pa2, asid1_usr);
 
     // For ASID2
-    vm_map_sec(pt2, user1_va_addr, asid2_pa1, asid2_usr);
+    // vm_map_sec(pt2, user1_va_addr, asid2_pa1, asid2_usr);
     // vm_map_sec(pt2, user2_va_addr, asid2_pa2, asid2_usr);
-
+    
     vm_pt_t *pt1 = vm_map_kernel(&proc_map1, virtual_addresses, 0);
     vm_pt_t *pt2 = vm_map_kernel(&proc_map2, virtual_addresses, 0);
-
+    
     // Set up addresses before turning vm on.
     PUT32(asid1_pa1, 0x11);
     PUT32(asid1_pa2, 0x12);
     PUT32(asid2_pa1, 0x21);
     PUT32(asid2_pa2, 0x22);
-
+    
     //****************************************************
     // 3. Turn on MMU and test ASID 1
     //    
     uint32_t translated_pa, res;
-
+    
+    panic("Pre pt??\n");
     vm_mmu_switch(pt1,0x140e,ASID1);
     vm_mmu_enable();
     if(vm_xlate(&translated_pa, pt2, SEG_ILLEGAL))
