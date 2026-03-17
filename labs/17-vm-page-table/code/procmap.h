@@ -13,7 +13,7 @@ typedef struct {
     uint32_t pa; // Physical address
     uint32_t nbytes;
     // need to have privileged.
-    enum { MEM_DEVICE, MEM_RW, MEM_RO } type;
+    enum { MEM_DEVICE, MEM_RW, MEM_RO, MEM_uncached } type;
     unsigned dom;
 } pr_ent_t;
 static inline pr_ent_t
@@ -29,7 +29,8 @@ pr_ent_mk(uint32_t pa, uint32_t nbytes, int type, unsigned dom) {
 }
 
 typedef struct {
-#   define MAX_ENT 8
+// #   define MAX_ENT 8
+#   define MAX_ENT 16
     unsigned n;
     unsigned dom_ids;       // all the domain ids in use.
     pr_ent_t map[MAX_ENT];

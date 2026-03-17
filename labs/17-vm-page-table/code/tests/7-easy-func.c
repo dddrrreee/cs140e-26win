@@ -31,29 +31,66 @@ void notmain(void) {
     pin_t kern = pin_mk_global(dom_kern, no_user, MEM_uncached);
 
     // TWO page tables for each 
-    vm_pt_t *pt1 = vm_pt_alloc(PT_LEVEL1_N/2);
-    vm_pt_t *pt2 = vm_pt_alloc(PT_LEVEL1_N/2);
+    // vm_pt_t *pt1 = vm_pt_alloc(PT_LEVEL1_N/2);
+    // vm_pt_t *pt2 = vm_pt_alloc(PT_LEVEL1_N/2);
 
     vm_mmu_init(~0);
     assert(!mmu_is_enabled());
 
+    // Non-identity map (keep OUT of kernel space)
+    enum { 
+        user1_va_addr = MB(60),
+        user2_va_addr = MB(70),
+
+        asid1_pa1    = MB(3),
+        asid1_pa2    = MB(4),
+
+        asid2_pa1    = MB(5),
+        asid2_pa2    = MB(6),
+    };
+
+
+    uint32_t virtual_addresses[] = {
+        SEG_CODE,       // (kern) 0x00000000
+        SEG_HEAP,       // (kern) 0x10000000
+        SEG_STACK,      // (kern) STACK_ADDR - MB(1) (0x7F00000)
+        SEG_INT_STACK,  // (kern) INT_STACK_ADDR - MB(1) (0x8F00000)
+        SEG_BCM_0,      // (dev) 0x20000000
+        SEG_BCM_1,      // (dev) 0x20100000
+        SEG_BCM_2,      // (dev) 0x20200000
+
+        user1_va_addr,      // (dev) super high up
+        user2_va_addr,      // (dev) super high up
+    };
+    
+    enum { ASID1 = 6, ASID2 = 7 }; // Just for ease of reading
+
+    procmap_t proc_map1 = procmap_default_mk(dom_kern);
+    procmap_push(&proc_map1, pr_ent_mk(asid1_pa1, MB(1), MEM_uncached, dom_user));
+    procmap_push(&proc_map1, pr_ent_mk(asid1_pa2, MB(1), MEM_uncached, dom_user));
+    
+    procmap_t proc_map2 = procmap_default_mk(dom_kern);
+    procmap_push(&proc_map2, pr_ent_mk(asid2_pa1, MB(1), MEM_uncached, dom_user));
+    procmap_push(&proc_map2, pr_ent_mk(asid2_pa2, MB(1), MEM_uncached, dom_user));
+
+
 
     // Need to map both to the same parts 
-    vm_map_sec(pt1, SEG_CODE, SEG_CODE, kern);
-    vm_map_sec(pt1, SEG_HEAP, SEG_HEAP, kern);
-    vm_map_sec(pt1, SEG_STACK, SEG_STACK, kern);
-    vm_map_sec(pt1, SEG_INT_STACK, SEG_INT_STACK, kern);
-    vm_map_sec(pt1, SEG_BCM_0, SEG_BCM_0, dev);
-    vm_map_sec(pt1, SEG_BCM_1, SEG_BCM_1, dev);
-    vm_map_sec(pt1, SEG_BCM_2, SEG_BCM_2, dev);
+    // vm_map_sec(pt1, SEG_CODE, SEG_CODE, kern);
+    // vm_map_sec(pt1, SEG_HEAP, SEG_HEAP, kern);
+    // vm_map_sec(pt1, SEG_STACK, SEG_STACK, kern);
+    // vm_map_sec(pt1, SEG_INT_STACK, SEG_INT_STACK, kern);
+    // vm_map_sec(pt1, SEG_BCM_0, SEG_BCM_0, dev);
+    // vm_map_sec(pt1, SEG_BCM_1, SEG_BCM_1, dev);
+    // vm_map_sec(pt1, SEG_BCM_2, SEG_BCM_2, dev);
 
-    vm_map_sec(pt2, SEG_CODE, SEG_CODE, kern);
-    vm_map_sec(pt2, SEG_HEAP, SEG_HEAP, kern);
-    vm_map_sec(pt2, SEG_STACK, SEG_STACK, kern);
-    vm_map_sec(pt2, SEG_INT_STACK, SEG_INT_STACK, kern);
-    vm_map_sec(pt2, SEG_BCM_0, SEG_BCM_0, dev);
-    vm_map_sec(pt2, SEG_BCM_1, SEG_BCM_1, dev);
-    vm_map_sec(pt2, SEG_BCM_2, SEG_BCM_2, dev);
+    // vm_map_sec(pt2, SEG_CODE, SEG_CODE, kern);
+    // vm_map_sec(pt2, SEG_HEAP, SEG_HEAP, kern);
+    // vm_map_sec(pt2, SEG_STACK, SEG_STACK, kern);
+    // vm_map_sec(pt2, SEG_INT_STACK, SEG_INT_STACK, kern);
+    // vm_map_sec(pt2, SEG_BCM_0, SEG_BCM_0, dev);
+    // vm_map_sec(pt2, SEG_BCM_1, SEG_BCM_1, dev);
+    // vm_map_sec(pt2, SEG_BCM_2, SEG_BCM_2, dev);
 
     //****************************************************
     // 2. Create user entries in TWO different address spaces
@@ -66,30 +103,33 @@ void notmain(void) {
     // for this test:
     //  - also uncached (like kernel)
     //  - ASID = 1
-    enum { ASID1 = 6, ASID2 = 7 }; // Just for ease of reading
 
-    pin_t asid1_usr = pin_mk_user(dom_user, ASID1, user_access, MEM_uncached);
-    pin_t asid2_usr = pin_mk_user(dom_user, ASID2, user_access, MEM_uncached);
+
+    // pin_t asid1_usr = pin_mk_user(dom_user, ASID1, user_access, MEM_uncached);
+    // pin_t asid2_usr = pin_mk_user(dom_user, ASID2, user_access, MEM_uncached);
     
     
     // Non-identity map (keep OUT of kernel space)
-    enum { 
-        user1_va_addr = MB(6),
-        user2_va_addr = MB(7),
+    // enum { 
+    //     user1_va_addr = MB(6),
+    //     user2_va_addr = MB(7),
 
-        asid1_pa1    = MB(16),
-        asid1_pa2    = MB(17),
+    //     asid1_pa1    = MB(16),
+    //     asid1_pa2    = MB(17),
 
-        asid2_pa1    = MB(18),
-        asid2_pa2    = MB(19),
-    };
+    //     asid2_pa1    = MB(18),
+    //     asid2_pa2    = MB(19),
+    // };
 
-    vm_map_sec(pt1, user1_va_addr, asid1_pa1, asid1_usr);
-    vm_map_sec(pt1, user2_va_addr, asid1_pa2, asid1_usr);
+    // vm_map_sec(pt1, user1_va_addr, asid1_pa1, asid1_usr);
+    // vm_map_sec(pt1, user2_va_addr, asid1_pa2, asid1_usr);
 
     // For ASID2
     vm_map_sec(pt2, user1_va_addr, asid2_pa1, asid2_usr);
-    vm_map_sec(pt2, user2_va_addr, asid2_pa2, asid2_usr);
+    // vm_map_sec(pt2, user2_va_addr, asid2_pa2, asid2_usr);
+
+    vm_pt_t *pt1 = vm_map_kernel(&proc_map1, virtual_addresses, 0);
+    vm_pt_t *pt2 = vm_map_kernel(&proc_map2, virtual_addresses, 0);
 
     // Set up addresses before turning vm on.
     PUT32(asid1_pa1, 0x11);

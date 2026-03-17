@@ -174,6 +174,8 @@ static inline pin_t attr_mk(pr_ent_t *e) {
     // kernel: currently everything is uncached.
     case MEM_RW:
         return pin_mk_global(e->dom, perm_rw_priv, MEM_uncached);
+    // case MEM_uncached
+        // return pin_mk_global(e->dom, perm_rw_priv, MEM_uncached);
    case MEM_RO: 
         panic("not handling\n");
    default: 
@@ -206,7 +208,7 @@ vm_pt_t *vm_map_kernel(procmap_t *p, const uint32_t* virt_addrs, int enable_p) {
     vm_mmu_init(d);
 
     // 3. allocate a page table <vm_pt_alloc>
-    vm_pt_t* pt = vm_pt_alloc(PT_LEVEL1_N);
+    vm_pt_t* pt = vm_pt_alloc(PT_LEVEL1_N/2);
 
 
     // 4. walk through procmap, mapping each entry <vm_map_sec>
