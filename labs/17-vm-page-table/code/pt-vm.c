@@ -220,19 +220,7 @@ vm_pt_t *vm_map_kernel(procmap_t *p, int enable_p) {
                     entry->nbytes);
 
         
-        pin_t attr;
-
-        switch(entry->type) {
-            case MEM_DEVICE:
-                attr = pin_mk_device(entry->dom);
-                break;
-            case MEM_RW:
-                // currently everything is uncached.
-                attr = pin_mk_global(entry->dom, perm_rw_priv, MEM_uncached);
-                break;
-            case MEM_RO: panic("not handling\n");
-            default: panic("unknown type: %d\n", entry->type);
-        }
+        pin_t attr = attr_mk(entry);
 
         vm_map_sec(pt, entry->addr, entry->addr, attr);
     }
