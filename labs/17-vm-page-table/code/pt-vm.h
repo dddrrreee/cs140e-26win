@@ -68,9 +68,9 @@ vm_pte_t *staff_vm_xlate(uint32_t *pa, vm_pt_t *pt, uint32_t va);
 // allocate new page table and copy pt
 vm_pt_t *vm_dup(vm_pt_t *pt);
 
-// do an identy map for the kernel.  if enable_p=1 will
+// do a map for the kernel with array of virtual addresses.  if enable_p=1 will
 // turn on vm.
-vm_pt_t *vm_map_kernel(procmap_t *p, int enable_p);
+vm_pt_t *vm_map_kernel(procmap_t *p, const uint32_t virt_addrs[], int enable_p);
 vm_pt_t *staff_vm_map_kernel(procmap_t *p, int enable_p);
 
 // arm-vm-helpers: print <f>

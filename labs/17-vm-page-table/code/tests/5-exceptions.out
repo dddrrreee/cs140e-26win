@@ -1,0 +1,19 @@
+HASH:	PTE crc:: hash=0xa0b5eb0e,nbytes=4
+HASH:	PTE crc:: hash=0xf653f334,nbytes=4
+HASH:	PTE crc:: hash=0xa753bc13,nbytes=4
+HASH:	PTE crc:: hash=0x5fe59de2,nbytes=4
+HASH:	PTE crc:: hash=0x10011b4e,nbytes=4
+HASH:	PTE crc:: hash=0x93505b9c,nbytes=4
+HASH:	PTE crc:: hash=0x66816268,nbytes=4
+HASH:	PTE crc:: hash=0xb3c5131b,nbytes=4
+TRACE:get_data_abort_handler:SUCCESS! Got GET32 fault on 0x802c
+TRACE:get_data_abort_handler:SUCCESS!: got fault status=0x9
+TRACE:get_data_abort_handler:Done with data_abort_handler() !  Reset domain permissions
+TRACE:notmain:This is an allowed GET32: 0xe3a0d302
+TRACE:get_data_abort_handler:SUCCESS! Got PUT32 fault on 0x802c
+TRACE:get_data_abort_handler:SUCCESS!: got fault status=0x9
+TRACE:get_data_abort_handler:Done with data_abort_handler() !  Reset domain permissions
+TRACE:notmain:This PUT32 succeeded: 0xdeadbeef
+TRACE:prefetch_handler:SUCCESS!: got a fault on pc=0x200000
+TRACE:prefetch_handler:SUCCESS!: got fault status=0x9
+TRACE:prefetch_handler:Done with prefetch_handler() !  Reset domain permissions

@@ -10,17 +10,18 @@
 // some simple routines to make cached, uncached, device
 // memory, readonly, etc
 typedef struct {
-    uint32_t addr, nbytes;
+    uint32_t pa; // Physical address
+    uint32_t nbytes;
     // need to have privileged.
     enum { MEM_DEVICE, MEM_RW, MEM_RO } type;
     unsigned dom;
 } pr_ent_t;
 static inline pr_ent_t
-pr_ent_mk(uint32_t addr, uint32_t nbytes, int type, unsigned dom) {
+pr_ent_mk(uint32_t pa, uint32_t nbytes, int type, unsigned dom) {
     demand(nbytes == 1024*1024, only doing sections first);
     demand(dom < 16, "illegal domain %d\n", dom);
     return (pr_ent_t) {
-        .addr = addr,
+        .pa = pa,
         .nbytes = nbytes,
         .type = type,
         .dom = dom
@@ -58,13 +59,13 @@ dom_perm(uint32_t doms, unsigned perm) {
 }
 
 static inline pr_ent_t *
-procmap_lookup(procmap_t *pmap, const void *addr) {
+procmap_lookup(procmap_t *pmap, const void *pa) {
     for(int i = 0; i < pmap->n; i++) {
         pr_ent_t *p = &pmap->map[i];
 
-        void *s = (void*)p->addr;
+        void *s = (void*)p->pa;
         void *e = s + p->nbytes;
-        if(addr >= s && addr < e)
+        if(pa >= s && pa < e)
             return p;
     }
     return 0;
@@ -142,7 +143,7 @@ static inline void procmap_pin(procmap_t *p) {
         case MEM_RO: panic("not handling\n");
         default: panic("unknown type: %d\n", e->type);
         }
-        pin_mmu_sec(i, e->addr, e->addr, g);
+        pin_mmu_sec(i, e->pa, e->pa, g);
     }
 }
 
@@ -165,6 +166,6 @@ static inline void procmap_pin_on(procmap_t *p) {
     // can only check this after MMU is on.
     pin_debug("going to check entries are pinned\n");
     for(unsigned i = 0; i < p->n; i++)
-        assert(pin_exists(p->map[i].addr,1));
+        assert(pin_exists(p->map[i].pa,1));
 }
 #endif

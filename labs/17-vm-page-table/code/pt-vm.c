@@ -9,7 +9,7 @@ enum { OneMB = 1024*1024 };
 
 
 vm_pt_t *vm_pt_alloc(unsigned n) {  // *
-    demand(n == 4096, we only handling a fully-populated page table right now);
+    // demand(n == 4096, we only handling a fully-populated page table right now);
 
     vm_pt_t *pt = 0;
     unsigned nbytes = n * sizeof *pt;
@@ -189,7 +189,7 @@ static inline pin_t attr_mk(pr_ent_t *e) {
 // if <enable_p>=1, should enable the MMU.  make sure
 // you setup the page table and asid. use  
 // kern_asid, and kern_pid.
-vm_pt_t *vm_map_kernel(procmap_t *p, int enable_p) {
+vm_pt_t *vm_map_kernel(procmap_t *p, const uint32_t* virt_addrs, int enable_p) {
 
     // install at least the default handlers so we get 
     // error messages.
@@ -222,7 +222,10 @@ vm_pt_t *vm_map_kernel(procmap_t *p, int enable_p) {
         
         pin_t attr = attr_mk(entry);
 
-        vm_map_sec(pt, entry->addr, entry->addr, attr);
+        uint32_t pa = entry->pa;
+        uint32_t va = (virt_addrs == NULL) ? entry->pa : virt_addrs[i];
+
+        vm_map_sec(pt, va, entry->pa, attr);
     }
 
     // 5. use <vm_mmu_switch> to setup <kern_asid>, <pt>, and <kern_pid>

@@ -1,16 +1,16 @@
 BOOTLOADER = my-install
 
 # roughly increasing difficulty
-PROGS += tests/1-test-basic-tutorial.c
-PROGS += tests/1-test-one-addr.c
-PROGS += tests/1-test-two-addr.c
-PROGS += tests/2-test-procmap.c
-PROGS += tests/3-test-cache.c
-PROGS += tests/4-test-dcache-inv.c  
-PROGS += tests/4-test-vm-cache-mgmt.c
+# PROGS += tests/1-test-basic-tutorial.c
+# PROGS += tests/1-test-one-addr.c
+# PROGS += tests/1-test-two-addr.c
+# PROGS += tests/2-test-procmap.c
+# PROGS += tests/3-test-cache.c
+# PROGS += tests/4-test-dcache-inv.c  
+# PROGS += tests/4-test-vm-cache-mgmt.c
 
 # PROGS += tests/5-exceptions.c
-# PROGS += tests/6-addr-offset.c
+PROGS += tests/6-addr-offset.c
 
 # all the tests.
 # PROGS := $(wildcard tests/[1234]-*c)

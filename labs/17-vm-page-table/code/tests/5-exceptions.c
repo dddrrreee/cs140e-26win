@@ -105,7 +105,7 @@ void notmain(void) {
     procmap_push(&procmap, pr_ent_mk(SEG_ILLEGAL, MB(1), MEM_RW, dom_bad));
     
     // Make page table kernel
-    vm_pt_t* page_table = vm_map_kernel(&procmap, 1);
+    vm_pt_t* page_table = vm_map_kernel(&procmap, 0, 1);
 
 
 

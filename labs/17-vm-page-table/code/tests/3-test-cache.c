@@ -208,7 +208,7 @@ void notmain(void) {
            dom_user = 2 };          
 
     procmap_t p = procmap_default_mk(dom_kern);
-    vm_pt_t *pt = vm_map_kernel(&p,0);
+    vm_pt_t *pt = vm_map_kernel(&p, 0, 0);
     assert(!mmu_is_enabled());
 
 

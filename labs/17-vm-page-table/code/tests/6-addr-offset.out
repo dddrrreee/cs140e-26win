@@ -1,0 +1,34 @@
+HASH:	PTE crc:: hash=0x5fe59de2,nbytes=4
+HASH:	PTE crc:: hash=0x10011b4e,nbytes=4
+HASH:	PTE crc:: hash=0x66816268,nbytes=4
+HASH:	PTE crc:: hash=0x93505b9c,nbytes=4
+HASH:	PTE crc:: hash=0xa0b5eb0e,nbytes=4
+HASH:	PTE crc:: hash=0xf653f334,nbytes=4
+HASH:	PTE crc:: hash=0xa753bc13,nbytes=4
+HASH:	PTE crc:: hash=0x5fe59de2,nbytes=4
+HASH:	PTE crc:: hash=0x10011b4e,nbytes=4
+HASH:	PTE crc:: hash=0x66816268,nbytes=4
+HASH:	PTE crc:: hash=0x93505b9c,nbytes=4
+HASH:	PTE crc:: hash=0xa0b5eb0e,nbytes=4
+HASH:	PTE crc:: hash=0xf653f334,nbytes=4
+HASH:	PTE crc:: hash=0xa753bc13,nbytes=4
+HASH:	PTE crc:: hash=0x201382f2,nbytes=4
+HASH:	PTE crc:: hash=0x1790092d,nbytes=4
+HASH:	PTE crc:: hash=0xae27fc32,nbytes=4
+HASH:	PTE crc:: hash=0xb5ae07e3,nbytes=4
+TRACE:notmain:asid1 all offsets from 0-1MB translated correctly
+TRACE:notmain:asid1 (MMU) = got: 0x11
+TRACE:notmain:asid1 (MMU) = got: 0x12
+TRACE:notmain:asid1 (NO MMU) = got: 0xaa7f1bd1
+TRACE:notmain:asid1 (NO MMU) = got: 0xaa7f1bd1
+TRACE:notmain:asid1 phys_addr (NO MMU) = got: 0x11
+TRACE:notmain:asid1 phys_addr (NO MMU) = got: 0x12
+TRACE:notmain:asid2 all offsets from 0-1MB translated correctly
+TRACE:notmain:asid2 (MMU) = got: 0x21
+TRACE:notmain:asid2 (MMU) = got: 0x22
+TRACE:notmain:asid1 (NO MMU) = got: 0xaa7f1bd1
+TRACE:notmain:asid1 (NO MMU) = got: 0xaa7f1bd1
+TRACE:notmain:asid2 phys_addr (NO MMU) = got: 0x21
+TRACE:notmain:asid2 phys_addr (NO MMU) = got: 0x22
+TRACE:notmain:MMU is off!
+TRACE:notmain:SUCCESS!

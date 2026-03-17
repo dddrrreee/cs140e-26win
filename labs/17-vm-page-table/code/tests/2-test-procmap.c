@@ -23,7 +23,7 @@ void notmain(void) {
     procmap_push(&p, pr_ent_mk(user_addr, OneMB, MEM_RW, dom_user));
 
     trace("about to enable\n");
-    vm_pt_t *pt = vm_map_kernel(&p,1);
+    vm_pt_t *pt = vm_map_kernel(&p, 0, 1);
 
     assert(mmu_is_enabled());
     trace("MMU is on and working!\n");
