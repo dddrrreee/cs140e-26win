@@ -9,6 +9,11 @@ SRC += src/sw-uart.c
 SRC += src/watchpoint.c
 SRC += src/breakpoint.c
 SRC += src/single-step.c
+SRC += src/mmu.c
+
+SRC += src/pinned-vm.c
+
+SRC += src/mmu-asm.S
 
 SRC += src/rpi-thread.c
 SRC += src/rpi-thread-asm.S 

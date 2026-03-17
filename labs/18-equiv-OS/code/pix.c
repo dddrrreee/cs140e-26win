@@ -33,6 +33,7 @@
 #include "small-prog.h"
 
 #include "syscall-num.h"
+#include "mmu-internal.h" // set_procid_ttbr0
 
 #include "pix-internal.h"
 config_t config = {
@@ -155,7 +156,8 @@ pin_map(unsigned idx, uint32_t va, uint32_t pa, pin_t attr) {
 
     // output("MAP: idx=%d: %x->%x\n", idx,va,pa);
     assert(idx<8);
-    staff_pin_mmu_sec(idx, va, pa, attr);
+    // staff_pin_mmu_sec(idx, va, pa, attr);
+    pin_mmu_sec(idx, va, pa, attr);
 }
 
 // we pin right away.
@@ -218,7 +220,8 @@ static void pin_vm_init(void) {
 
 static void pin_vm_on(void) {
     assert(!config.vm_off_p);
-    assert(!staff_mmu_is_enabled());
+    assert(!mmu_is_enabled());
+    // assert(!staff_mmu_is_enabled());
 #if 0
     assert(!config.vm_off_p);
     staff_domain_access_ctrl_set(dom_mask);
@@ -226,9 +229,12 @@ static void pin_vm_on(void) {
     staff_mmu_on_first_time(1, null_pt);
     assert(mmu_is_enabled());
 #else
-    staff_pin_mmu_init(dom_mask);
-    staff_pin_mmu_enable();
-    assert(staff_mmu_is_enabled());
+    // staff_pin_mmu_init(dom_mask);
+    // staff_pin_mmu_enable();
+    // assert(staff_mmu_is_enabled());
+    pin_mmu_init(dom_mask);
+    pin_mmu_enable();
+    assert(mmu_is_enabled());
 #endif
 
 }
@@ -368,7 +374,8 @@ static inline void proc_map_pins(proc_t *p) {
         pin_map(n_pin+i, pin->va, pin->pa, pin->attr);
     }
     assert(p->asid);
-    staff_set_procid_ttbr0(p->pid, p->asid, null_pt);
+    // staff_set_procid_ttbr0(p->pid, p->asid, null_pt);
+    cp15_set_procid_ttbr0((p->pid << 8) | p->asid, null_pt);
 }
 
 static void schedule(void) {
@@ -408,9 +415,11 @@ static void schedule(void) {
 // copying an entire MB is crazy.
 static void copysec(uint32_t dst, uint32_t src) {
     // XXX: very expensive!  good extension to remove.
-    staff_mmu_disable();
+    mmu_disable();
+    // staff_mmu_disable();
     memcpy((void*)dst, (void*)src, MB(1));
-    staff_mmu_enable();
+    mmu_enable();
+    // staff_mmu_enable();
 }
 
 // assumes is a va: should we do structs for typecheck?
