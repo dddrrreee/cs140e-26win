@@ -168,7 +168,7 @@ static inline pin_t pin_mk_device(uint32_t dom) {
 
 // call to initialize the MMU hardware.
 void pin_mmu_init(uint32_t domain_reg);
-// void staff_pin_mmu_init(uint32_t domain_reg);
+void staff_pin_mmu_init(uint32_t domain_reg);
 
 // simple wrappers
 static inline void pin_mmu_enable(void) {
@@ -186,7 +186,7 @@ static inline void pin_mmu_disable(void) {
 // enable MMU -- must have set the context
 // first.
 void pin_mmu_enable(void);
-// void staff_pin_mmu_enable(void);
+void staff_pin_mmu_enable(void);
 
 // disable MMU
 void pin_mmu_disable(void);
@@ -210,10 +210,10 @@ void pin_mmu_sec(unsigned idx,
                 uint32_t pa,
                 pin_t attr);
 
-// void staff_pin_mmu_sec(unsigned idx,
-//                 uint32_t va,
-//                 uint32_t pa,
-//                 pin_t attr);
+void staff_pin_mmu_sec(unsigned idx,
+                uint32_t va,
+                uint32_t pa,
+                pin_t attr);
 
 
 // do a manual translation in tlb and see if exists (1)
